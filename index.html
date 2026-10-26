@@ -2666,7 +2666,7 @@ function aiUpdate(dt){const r=rtFor(M.id);if(!r.pop)populate(M,r);const pl=mapPl
   for(const e of r.enemies){const d=EN[e.type];if(!e.alive)continue;if(e.dying){e.dying-=dt;if(e.dying<=0)e.alive=false;continue}if(e.hp<=0)continue;if(!pl.some(p=>Math.abs(p.x-e.x)<30&&Math.abs(p.y-e.y)<22)){e.moving=false;continue}
     e.cd-=dt;e.rcd-=dt;e.scd-=dt;e.lcd-=dt;e.pcd=(e.pcd??1.5)-dt;e.slcd=(e.slcd??1)-dt;
     if(e.kx||e.ky){moveBody(e,e.kx*dt*8,e.ky*dt*8,d.r);e.kx*=Math.max(0,1-dt*10);e.ky*=Math.max(0,1-dt*10);if(Math.abs(e.kx)+Math.abs(e.ky)<.01)e.kx=e.ky=0}
-    let tg=null,td=1e9;if(!M.safe)for(const p of pl){const dd=Math.hypot(p.x-e.x,p.y-e.y);const lim=(e.seen&&e.tg===p.id)?d.aggro*2.2:d.aggro*(p.ag||1);if(dd<lim&&dd<td){td=dd;tg=p}}
+    let tg=null,td=1e9;if(!M.safe)for(const p of pl){if(typeof inSafe==='function'&&inSafe(p.x,p.y))continue;const dd=Math.hypot(p.x-e.x,p.y-e.y);const lim=(e.seen&&e.tg===p.id)?d.aggro*2.2:d.aggro*(p.ag||1);if(dd<lim&&dd<td){td=dd;tg=p}}
     if(tg){if(!e.seen)sfx.voice(e.type,e.x,e.y,'aggro');e.seen=true;e.tg=tg.id}else{e.seen=false;e.tg=''}
     const dx=tg?tg.x-e.x:0,dy=tg?tg.y-e.y:0,dist=tg?Math.hypot(dx,dy):1e9,toP=Math.atan2(dy,dx),tMe=!!(tg&&tg.me);
     let vx=0,vy=0,spd=d.spd;
@@ -3061,7 +3061,8 @@ const WT={scrap:1,rag:.2,tape:.15,spring:.05,powder:.3,hide:1.2,rubber:.4,shroom
  parcel:1,stash:2,bag:0,codelock:.4,box:4,shovel:2,stashkit:4.4};
 const wOf=id=>WT[id]??({ammo:.02,weapon:3,body:3,head:.5,face:.3,back:1.5,hands:.2,amulet:.1,use:.3,res:.5,junk:.3,trophy:.3,quest:.5}[ITEMS[id]?.k]??.5);
 const fmtKg=v=>(v<1&&v>0?v.toFixed(2).replace(/0$/,''):v.toFixed(1)).replace('.',',')+' кг';
-function invWeight(){let w=0;for(const [id,q] of Object.entries(S.inv))w+=wOf(id)*q;return Math.round(w*100)/100}
+// Надетое снаряжение и оружие в слотах в груз не входят — считается только то, что лежит в рюкзаке.
+function invWeight(){let w=0;for(const [id,q] of Object.entries(S.inv))w+=wOf(id)*Math.max(0,q-equippedCount(id));return Math.round(w*100)/100}
 function carryCap(){return 12+(ITEMS[S.eq.back]?.cap||0)+(S.eq.body==='exo'?40:0)+sk('heavy')+sk('str')*.5}
 let loadWarn=0;
 function loadK(){if(!S)return 1;const w=invWeight(),c=carryCap();const k=w<=c?1:w<=c*1.3?.7:.4;if(k<1&&now>loadWarn){loadWarn=now+20000;log('Перегруз: '+fmtKg(w)+' из '+fmtKg(c)+'. Вы идёте медленнее. Продайте лишнее или купите рюкзак побольше.','bad')}return k}
@@ -4166,6 +4167,13 @@ addEventListener('keydown',e=>{if(!S||!titleEl.hidden||!ov.hidden||document.acti
 {const _sv=setView;setView=function(is3d){_sv(is3d);updViewBtn()}}
 // ---------- Кнопки телефона вызывают актуальные действия (тайники, шкафы, доска объявлений) ----------
 (function(){for(const [id,fn] of [['bUse',()=>interact()],['bRel',()=>startReload()],['bSwap',()=>swapWeapon()],['bHeal',()=>quickHeal()]]){const b=document.getElementById(id);if(!b)continue;const n=b.cloneNode(true);b.replaceWith(n);hold(id,fn)}})();
+// ---------- Застава «Северная» в Городе — безопасная зона: внутри забора нет PvP, мутанты не нападают ----------
+function inSafe(x,y){const o=typeof CITY_OUT!=='undefined'&&CITY_OUT;return !!(M&&M.id==='city'&&o&&x>=o.x&&x<o.x+o.w&&y>=o.y&&y<o.y+o.h)}
+{const _ph=pvpHit;pvpHit=function(pe,dmg){if(inSafe(P.x,P.y)||inSafe(pe.x,pe.y)){if(now-(pvpHit.t||0)>1500){pvpHit.t=now;floatText(pe.x,pe.y-.9,'безопасная зона','#95d03a')}return}_ph(pe,dmg)}}
+{const _od=onDeal;onDeal=function(msg){const d=msg.data;if(d&&d.t==='hit'&&inSafe(P.x,P.y))return;_od(msg)}}
+let wasSafe=false;
+setInterval(()=>{if(!S||!M)return;const s=inSafe(P.x,P.y);if(s!==wasSafe){wasSafe=s;log(s?'Застава «Северная» — безопасная зона: здесь нельзя нападать на игроков, мутанты не трогают.':'Вы покинули заставу. Здесь снова опасная зона PvP.',s?'good':'bad');
+  const mn=document.getElementById('mapname');if(mn)mn.textContent=M.name+(s?' · застава · безопасно':M.safe?' · безопасно':' · опасно')+(M.pvp&&!s?' · PvP':'')}},400);
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
