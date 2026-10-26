@@ -4149,6 +4149,21 @@ drawWater=function(c,px,py,x,y,deep,t,h){const mid=M.pal||M.id;drawGround(c,px,p
   if(isW(tAt(x,y))){c.strokeStyle='rgba(190,240,110,.16)';c.lineWidth=1;for(let i=0;i<2;i++){const yy=py+8+i*13;c.beginPath();c.moveTo(px,yy);c.quadraticCurveTo(px+8,yy-2,px+16,yy);c.quadraticCurveTo(px+24,yy+2,px+T,yy);c.stroke()}
     if(h>.6){c.fillStyle='rgba(120,150,60,.5)';ellp(c,px+8+h*14,py+10+h*10,3,1.6);c.fill()}}
   c.restore()};
+// ---------- Вкладки меню: на компьютере в два ряда, на телефоне листаются пальцем и колесом ----------
+{const st=document.createElement('style');st.textContent='@media (pointer:fine){.win .tabs{flex-wrap:wrap;overflow:visible;row-gap:4px}}.win .tabs{scroll-behavior:smooth;-webkit-overflow-scrolling:touch}#viewBtn .vl{position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);font:600 8px var(--mono);color:var(--accent-2);background:var(--panel);border-radius:4px;padding:0 3px}@media (pointer:coarse){#viewBtn{display:none!important}}';document.head.append(st)}
+document.addEventListener('wheel',e=>{const tb=e.target.closest&&e.target.closest('.tabs');if(!tb||tb.scrollWidth<=tb.clientWidth)return;tb.scrollLeft+=e.deltaY+e.deltaX;e.preventDefault()},{passive:false});
+{const _ow=openWin;openWin=function(title,build,o){_ow(title,build,o);const sel=ov.querySelector('.tabs [aria-selected="true"]');if(sel)try{sel.scrollIntoView({block:'nearest',inline:'center'})}catch(e){}}}
+// ---------- Кнопка смены вида: 3D сверху → 3D за спиной → 2D; выбор запоминается ----------
+const VIEWS=[['top','3D сверху'],['back','3D за спиной'],['2d','2D плоский']];
+const curView=()=>!V3.want?'2d':V3.cam;
+function applyView(v,silent){if(v==='2d'){setView(false)}else{if(V3.cam!==v){V3.cam=v;V3.built=null;V3.cd=null}try{localStorage.setItem('osadok_cam',v)}catch(e){}setView(true)}
+  if(document.pointerLockElement&&v!=='back')document.exitPointerLock();updViewBtn();if(!silent)log('Вид: '+VIEWS.find(x=>x[0]===v)[1]+'. Переключить — кнопка с глазом сверху или клавиша F (А).')}
+function cycleView(){if(!PC3D())return;const i=VIEWS.findIndex(x=>x[0]===curView());applyView(VIEWS[(i+1)%VIEWS.length][0])}
+function updViewBtn(){const b=document.getElementById('viewBtn');if(!b)return;const l=b.querySelector('.vl');if(l)l.textContent={top:'3D',back:'TPS','2d':'2D'}[curView()];b.title='Вид: '+VIEWS.find(x=>x[0]===curView())[1]+' (F)'}
+(function(){const tb=document.getElementById('topbar');if(!tb)return;const b=document.createElement('button');b.id='viewBtn';b.setAttribute('aria-label','Сменить вид');
+  b.innerHTML='<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span class="vl">3D</span>';b.onclick=()=>{cycleView();b.blur()};tb.insertBefore(b,document.getElementById('chatBtn'));updViewBtn()})();
+addEventListener('keydown',e=>{if(!S||!titleEl.hidden||!ov.hidden||document.activeElement===chatIn)return;const k=keyOf(e);if(k==='f'&&!e.repeat){e.preventDefault();cycleView()}});
+{const _sv=setView;setView=function(is3d){_sv(is3d);updViewBtn()}}
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
