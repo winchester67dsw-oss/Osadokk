@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793057597";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793058421";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -1675,7 +1675,7 @@ let lastBoard='';
 async function pushBoard(){if(!db||!uid||!S)return;const d={n:S.name.slice(0,16),lv:S.lvl,k:kills(S),q:S.stats.quests,score:S.lvl*10000+S.xp};const js=JSON.stringify(d);if(js===lastBoard)return;lastBoard=js;try{await db.doc('board/'+uid).set(d)}catch(e){}}
 let lastPres='';
 function sendPresence(){if(!room||!S||!M)return;const e={};for(const k of GEAR)if(S.eq[k])e[k]=S.eq[k];
-  const pr={m:M.id,x:Math.round(P.x*100)/100,y:Math.round(P.y*100)/100,a:Math.round(P.a*100)/100,w:curW(),sh:P.shotN%1000,n:S.name.slice(0,16),lv:S.lvl,k:S.karma|0,adm:S.admin?1:0,v:5,fl:typeof myFlId==='function'?myFlId():'',pid:S.pid||'',dv:typeof DEVID!=='undefined'?DEVID:'',sq:(typeof SQ!=='undefined'&&SQ.id)||'',hp:Math.round(S.hp/effMax()*100),ag:Math.round((1+stats().aggroPct/100)*100)/100,lk:{g:S.lk.g,skin:S.lk.skin,hair:S.lk.hair,hc:S.lk.hc,outfit:S.lk.outfit,beard:S.lk.beard||'none',eye:S.lk.eye|0},e};
+  const pr={m:M.id,x:Math.round(P.x*100)/100,y:Math.round(P.y*100)/100,a:Math.round(P.a*100)/100,w:curW(),sh:P.shotN%1000,n:S.name.slice(0,16),lv:S.lvl,k:S.karma|0,adm:S.admin?1:0,v:5,fl:typeof myFlId==='function'?myFlId():'',fc:typeof myFac==='function'?(myFac()||''):'',pid:S.pid||'',dv:typeof DEVID!=='undefined'?DEVID:'',sq:(typeof SQ!=='undefined'&&SQ.id)||'',hp:Math.round(S.hp/effMax()*100),ag:Math.round((1+stats().aggroPct/100)*100)/100,lk:{g:S.lk.g,skin:S.lk.skin,hair:S.lk.hair,hc:S.lk.hc,outfit:S.lk.outfit,beard:S.lk.beard||'none',eye:S.lk.eye|0},e};
   const js=JSON.stringify(pr);if(js===lastPres)return;lastPres=js;room.presence(pr).catch(()=>{})}
 // Онлайн без Claude (itch.io и любой сайт): все игроки подключаются к общим публичным серверам-посредникам (MQTT),
 // сразу к двум — если один недоступен, связь идёт через второй. Отдаёт тот же набор вызовов, что и комната Claude.
@@ -1712,7 +1712,7 @@ async function p2pRoom(){
 async function initOnline(){
   if(!window.claude||!window.claude.use){
     try{room=await p2pRoom()}catch(e){room=null;return}
-    room.on('chat',m=>{const d=m.data||{};const t=typeof d.t==='string'?cleanText(d.t,120):'';if(!t)return;const nm=(typeof d.n==='string'?cleanText(d.n,16):'')||'Выживший';if(!m.sameTab&&typeof modMuted==='function'&&modMuted(nm,'chat'))return;if(d.sq){if(typeof SQ!=='undefined'&&SQ.id===d.sq)addChat(nm,t,m.sameTab,'squad');return}if(d.z){zoneIn(t,m.sameTab);return}logChat(nm,t,m.sameTab);bubbles.set(m.sameTab?'me':m.peer,{text:t,until:now+5000})});
+    room.on('chat',m=>{const d=m.data||{};const t=typeof d.t==='string'?cleanText(d.t,120):'';if(d.del&&typeof chatDelLocal==='function'){chatDelLocal(d.del,m);return}if(!t)return;const nm=(typeof d.n==='string'?cleanText(d.n,16):'')||'Выживший';if(!m.sameTab&&typeof modMuted==='function'&&modMuted(nm,'chat'))return;if(d.sq){if(typeof SQ!=='undefined'&&SQ.id===d.sq)addChat(nm,t,m.sameTab,'squad');return}if(d.z){zoneIn(t,m.sameTab,d.h);return}logChat(nm,t,m.sameTab);if(d.h&&chatLog.length)chatLog[chatLog.length-1].h=String(d.h).slice(0,24);bubbles.set(m.sameTab?'me':m.peer,{text:t,until:now+5000})});
     room.onPeers(ch=>{for(const p of ch.joined){if(S&&p.presence&&typeof p.presence.n==='string')log(cleanText(p.presence.n,16)+' вошёл(ла) в Пустошь.')}for(const p of ch.left)peerPos.delete(p.peer);updateHud()});
     room.on('deal',onDeal);room.on('voice',onVoice);room.on('mob',onMob);
     lastPres='';sendPresence();updateHud();return}
@@ -1721,7 +1721,7 @@ async function initOnline(){
   if(db){if(uid&&!S){try{const snap=await db.doc('data/users/'+uid+'/save').get();if(snap.exists){const d=snap.data();const loc=loadLocal();if(!loc||(d.at||0)>(loc.at||0)){const rs=migrate(JSON.parse(d.s));if(rs){remoteSave=rs;if(!S)renderTitle()}}}}catch(e){}}
     try{db.collection('board').orderBy('score','desc').limit(60).onSnapshot(s=>{board=s.docs.map(d=>({...d.data(),_id:d.id}))},()=>{})}catch(e){}}
   try{room=await window.claude.use('room')}catch(e){room=null}
-  if(room){room.on('deal',onDeal,()=>{});room.on('chat',m=>{const d=m.data||{};const t=typeof d.t==='string'?cleanText(d.t,120):'';if(!t)return;const nm=(typeof d.n==='string'?cleanText(d.n,16):'')||'Выживший';if(!m.sameTab&&typeof modMuted==='function'&&modMuted(nm,'chat'))return;if(d.sq){if(typeof SQ!=='undefined'&&SQ.id===d.sq)addChat(nm,t,m.sameTab,'squad');return}if(d.z){zoneIn(t,m.sameTab);return}logChat(nm,t,m.sameTab);bubbles.set(m.sameTab?'me':m.peer,{text:t,until:now+5000})},()=>{});
+  if(room){room.on('deal',onDeal,()=>{});room.on('chat',m=>{const d=m.data||{};const t=typeof d.t==='string'?cleanText(d.t,120):'';if(d.del&&typeof chatDelLocal==='function'){chatDelLocal(d.del,m);return}if(!t)return;const nm=(typeof d.n==='string'?cleanText(d.n,16):'')||'Выживший';if(!m.sameTab&&typeof modMuted==='function'&&modMuted(nm,'chat'))return;if(d.sq){if(typeof SQ!=='undefined'&&SQ.id===d.sq)addChat(nm,t,m.sameTab,'squad');return}if(d.z){zoneIn(t,m.sameTab,d.h);return}logChat(nm,t,m.sameTab);if(d.h&&chatLog.length)chatLog[chatLog.length-1].h=String(d.h).slice(0,24);bubbles.set(m.sameTab?'me':m.peer,{text:t,until:now+5000})},()=>{});
     room.onPeers(ch=>{for(const p of ch.joined){if(!p.sameTab&&p.kind==='viewer'&&S&&p.presence&&typeof p.presence.n==='string')log(cleanText(p.presence.n,16)+' вошёл(ла) в Пустошь.')}for(const p of ch.left)peerPos.delete(p.peer);updateHud()},()=>{room=null;updateHud()});
     sendPresence();updateHud()}}
 
@@ -1845,7 +1845,7 @@ function closeChat(){chatEl.hidden=true;chatIn.blur();renderChat()}
 document.getElementById('chatBtn').onclick=()=>chatEl.hidden?openChat():closeChat();
 document.getElementById('chatClose').onclick=closeChat;
 chatForm.addEventListener('submit',async e=>{e.preventDefault();const text=cleanText(chatIn.value,120);if(!text)return;if(!room){log('Нет связи с другими игроками — сообщение не ушло.','bad');return}chatIn.value='';
-  try{await room.emit('chat',chatCh==='squad'&&SQ.id?{t:text,n:S.name,sq:SQ.id}:{t:text,n:S.name})}catch(err){log(err&&err.code==='not_permitted'?'У вас доступ только для просмотра — писать в чат нельзя.':'Сообщение не ушло. Проверьте связь.','bad')}});
+  const __h=!(chatCh==='squad'&&SQ.id)&&typeof chatSave==='function'?chatSave('all',text):null;try{await room.emit('chat',chatCh==='squad'&&SQ.id?{t:text,n:S.name,sq:SQ.id}:{t:text,n:S.name,h:__h})}catch(err){log(err&&err.code==='not_permitted'?'У вас доступ только для просмотра — писать в чат нельзя.':'Сообщение не ушло. Проверьте связь.','bad')}});
 
 // ================= ТЕЛЕФОН: ПОВОРОТ И ПОЛНЫЙ ЭКРАН =================
 let rotDismissed=false;try{rotDismissed=localStorage.getItem('osadok_rot')==='1'}catch(e){}
@@ -4809,8 +4809,225 @@ function repairWin(n){const R=REPAIRER[n.id];openWin('Починка: '+n.n,b=>{
 {const _nd=npcDialog;npcDialog=function(n){_nd(n);if(!REPAIRER[n.id]||!S)return;const o=ov.querySelector('.opts');if(!o)return;const worn=[...Object.values(S.eq),...Object.keys(S.inv)].some(id=>id&&wearable(id)&&durOf(id)<100);o.insertBefore(btn('🔧 Починить '+REPAIRER[n.id].n+(worn?' (есть износ)':''),()=>repairWin(n),worn?'btn primary':'btn'),o.firstChild)}}
 // патроны из гильз и пороха — на верстаке
 RECIPES.push({cat:'Патроны',out:'a9',q:12,need:{casing:12,powder:1},bench:1},{cat:'Патроны',out:'a12',q:8,need:{casing:8,powder:2},bench:1},{cat:'Патроны',out:'a545',q:12,need:{casing:12,powder:2},bench:1,craft:1},{cat:'Патроны',out:'a762',q:8,need:{casing:8,powder:2},bench:1,craft:2},{cat:'Патроны',out:'a939',q:6,need:{casing:6,powder:3},bench:1,craft:4});
+// полоска состояния под иконкой: короче и краснее с износом (зелёный → жёлтый → оранжевый → красный)
+const durCol=d=>d>70?'#6ec23a':d>45?'#e0c83a':d>20?'#e8892a':'#e0442a';
+{const _ic=iconCanvas;iconCanvas=function(id,size=40){const c=_ic(id,size);if(!S||!wearable(id))return c;try{const x=c.getContext('2d');const d=durOf(id);const k=c.width/size;x.setTransform(k,0,0,k,0,0);const w=size-6,h=Math.max(3,size/12),y=size-h-1.5;
+  x.fillStyle='rgba(0,0,0,.7)';x.fillRect(2.5,y-.5,w+1,h+1);x.fillStyle=durCol(d);x.fillRect(3,y,w*Math.max(0,d)/100,h)}catch(e){}return c}}
+// иконки фонариков
+{const _gi=drawGearIcon;drawGearIcon=function(c,id,x,y){const it=ITEMS[id];if(!it||it.k!=='light')return _gi(c,id,x,y);const big=id==='fl4',L=big?13:id==='fl3'?12:id==='fl2'?10:8,W=big?6:id==='fl1'?3:4;
+  c.save();c.translate(x,y);c.rotate(-.6);c.fillStyle=id==='fl3'?'#2a2c30':big?'#3a3a2a':'#4a5a6a';rrp(c,-L/2,-W/2,L,W,1.2);c.fill();strokeO(c,.6);c.fillStyle='#8a8a7a';rrp(c,L/2-1.5,-W/2-1,3.5,W+2,1);c.fill();strokeO(c,.5);
+  c.fillStyle='rgba(255,236,150,.9)';c.beginPath();c.ellipse(L/2+2,0,1.2,W/2+.6,0,0,7);c.fill();c.fillStyle='rgba(255,236,150,.25)';c.beginPath();c.moveTo(L/2+2,-W/2);c.lineTo(L/2+9,-W);c.lineTo(L/2+9,W);c.lineTo(L/2+2,W/2);c.fill();c.restore()}}
 // у оружия в руках показываем износ
 {const _uh=updateHud;updateHud=function(){_uh();try{const id=curW&&curW();const wn=document.getElementById('wName');if(wn&&id&&wearable(id)){const d=Math.round(durOf(id));if(d<50)wn.textContent=ITEMS[id].n+' · '+d+'%'}}catch(e){}}}
+
+// ================= ГРУППИРОВКИ: РЕНЕГАТЫ И ВОЕННЫЕ =================
+// Данные группировки (состав, ранги, склад, общак, журнал) — один документ в облаке на группировку.
+// Базы — отдельные локации: ренегаты к югу от Гнилого болота, военные в Городе Заречном. Внутрь пускают только своих.
+const FAC={ren:{id:'ren',n:'Ренегаты',short:'Р',col:'#e8c040',base:'base_ren',arena:'arena_ren',from:'swamp'},
+           mil:{id:'mil',n:'Военные',short:'В',col:'#6ab04a',base:'base_mil',arena:'arena_mil',from:'city'}};
+const RANKS_F=['leader','deputy','commander','master','gunsmith','member'];
+const RANKN={leader:'Лидер',deputy:'Заместитель',commander:'Командир',master:'Мастер',gunsmith:'Оружейник',member:'Боец'};
+const RANKLIM={leader:1,deputy:4,commander:10,master:2,gunsmith:2,member:999};
+const facT=f=>'osadok/'+(TESTROOM?'t_'+TESTROOM:'v1')+'/fac/'+f;
+const FACD={};
+const myFac=()=>S&&S.fac&&FAC[S.fac.id]?S.fac.id:null;
+const myRank=()=>{const f=myFac();const d=f&&FACD[f];return d&&d.members[S.pid]?d.members[S.pid].r:(S&&S.fac&&S.fac.rank)||'member'};
+const isMgr=()=>['leader','deputy'].includes(myRank());
+function emptyFac(){return {members:{},fund:0,store:{},cap:100,log:[],at:0}}
+async function facLoad(f){try{const p=await cloudGet(facT(f),4000);FACD[f]=p&&p.ct?Object.assign(emptyFac(),JSON.parse(p.ct)):(FACD[f]||emptyFac())}catch(e){FACD[f]=FACD[f]||emptyFac()}return FACD[f]}
+async function facMut(f,fn){const d=await facLoad(f);const r=fn(d);if(r===false)return false;d.log=(d.log||[]).slice(-200);d.at=Date.now();await cloudPut(facT(f),{v:1,at:d.at,ct:JSON.stringify(d)});FACD[f]=d;return true}
+const facLog=(d,a,extra)=>{d.log.push(Object.assign({t:Date.now(),n:S.name,a},extra||{}))};
+// эмблемы: жёлтый скорпион и зелёная летучая мышь на щитке
+function emblemSVG(f,sz=48){const shield='<path d="M50 4L92 17V48C92 74 72 90 50 97C28 90 8 74 8 48V17Z" fill="#1c1a16" stroke="'+FAC[f].col+'" stroke-width="5"/>';
+  const scorp='<g fill="#e8c040" stroke="#3a2c08" stroke-width="1.5"><ellipse cx="50" cy="58" rx="9" ry="13"/><ellipse cx="50" cy="42" rx="7" ry="6"/><path d="M50 70C50 82 64 84 66 72C67 66 62 62 60 66" fill="none" stroke="#e8c040" stroke-width="5" stroke-linecap="round"/><path d="M60 64l6-5-1 8z"/><path d="M44 40C34 36 28 30 30 24M56 40C66 36 72 30 70 24" fill="none" stroke="#e8c040" stroke-width="4" stroke-linecap="round"/><path d="M26 22l8-4-2 9zM74 22l-8-4 2 9z"/><path d="M41 52l-12-4M41 58l-13 1M41 64l-11 5M59 52l12-4M59 58l13 1M59 64l11 5" stroke="#e8c040" stroke-width="3" stroke-linecap="round"/></g>';
+  const bat='<path fill="#6ab04a" stroke="#1e3a10" stroke-width="1.5" d="M50 38c-3 0-5 3-5 6l-3-6-1 7C34 38 22 36 14 44c6 1 10 4 12 9 4-3 8-3 11 0 2-3 5-4 8-2 1 6 3 10 5 14 2-4 4-8 5-14 3-2 6-1 8 2 3-3 7-3 11 0 2-5 6-8 12-9-8-8-20-6-27 1l-1-7-3 6c0-3-2-6-5-6z"/>';
+  return '<svg viewBox="0 0 100 100" width="'+sz+'" height="'+sz+'" aria-hidden="true">'+shield+(f==='ren'?scorp:bat)+'</svg>'}
+const facBadge=(f,sz)=>{const s=el('span');s.innerHTML=emblemSVG(f,sz||28);s.style.cssText='display:inline-flex;vertical-align:middle';return s};
+
+// ---------- Снаряжение группировок (носить могут только свои) ----------
+const FGEAR={
+ ren_jacket:{n:'Куртка «Скорпион»',k:'body',st:{def:4,speedPct:5},p:520,fac:'ren',col:'#2a2418'},
+ ren_helm:{n:'Каска ренегата',k:'head',st:{def:3},p:240,fac:'ren',look:'s3h'},
+ ren_mask:{n:'Балаклава ренегата',k:'face',st:{def:1,radRes:.1},p:160,fac:'ren',look:'balaclava'},
+ ren_aks:{n:'АКС «Жало»',k:'weapon',p:900,fac:'ren',look:'aks',boost:1.12},
+ ren_saiga:{n:'Сайга «Хвост»',k:'weapon',p:800,fac:'ren',look:'saiga',boost:1.1},
+ mil_vest:{n:'Бронежилет «Нетопырь»',k:'body',st:{def:5,maxHp:5},p:600,fac:'mil',col:'#3e4a2e'},
+ mil_helm:{n:'Шлем военного',k:'head',st:{def:3,radRes:.05},p:260,fac:'mil',look:'helmet'},
+ mil_gas:{n:'Противогаз военного',k:'face',st:{def:1,radRes:.25},p:220,fac:'mil',look:'gasmask'},
+ mil_ak:{n:'АК-74М «Нетопырь»',k:'weapon',p:950,fac:'mil',look:'ak',boost:1.12},
+ mil_svd:{n:'СВД «Ночь»',k:'weapon',p:1400,fac:'mil',look:'svd',boost:1.1}};
+for(const [id,g] of Object.entries(FGEAR)){const base=g.look&&ITEMS[g.look];const it=g.k==='weapon'?Object.assign({},base,{n:g.n,p:g.p,fac:g.fac,look:g.look,dmg:Math.round(base.dmg*g.boost)}):Object.assign({},g);delete it.boost;delete it.col;it.r=3;it.fac=g.fac;it.d='Снаряжение группировки «'+FAC[g.fac].n+'». Носить могут только её члены.';ITEMS[id]=it;
+  if(g.look){if(typeof PX!=='undefined'&&PX[g.look])PX[id]=PX[g.look];if(typeof WSND!=='undefined'&&WSND[g.look])WSND[id]=WSND[g.look];WT[id]=WT[g.look]??1}else WT[id]=g.k==='body'?3.5:.5;
+  if(g.col&&typeof BODYCOL!=='undefined')BODYCOL[id]=g.col}
+const lookOf=id=>(ITEMS[id]&&ITEMS[id].look)||id;
+{const _dg=drawGun;drawGun=function(c,w){return _dg(c,lookOf(w))}}
+if(typeof weapon3==='function'){const _w3=weapon3;weapon3=function(w){return _w3(lookOf(w))}}
+{const _hg=headgear;headgear=function(c,id,...a){return _hg(c,lookOf(id),...a)}}
+{const _fg=facegear;facegear=function(c,id,...a){return _fg(c,lookOf(id),...a)}}
+{const alias=o=>{if(!o||!o.eq)return o;const eq=Object.assign({},o.eq);for(const k of ['head','face'])if(eq[k])eq[k]=lookOf(eq[k]);return Object.assign({},o,{eq,weapon:o.weapon?lookOf(o.weapon):o.weapon})};
+  const _dh=drawHuman;drawHuman=function(c,x,y,o){return _dh(c,x,y,alias(o))};if(typeof buildHuman==='function'){const _bh=buildHuman;buildHuman=function(o){return _bh(alias(o))}}}
+{const _eq=equip;equip=function(id,hint){const it=ITEMS[id];if(it&&it.fac&&myFac()!==it.fac&&!equippedCount(id)){log('Это снаряжение группировки «'+FAC[it.fac].n+'». Носить его могут только её члены.','bad');return}return _eq(id,hint)}}
+
+// ---------- Базы ----------
+const FPOI={};
+function genBase(f){const id=FAC[f].base,mil=f==='mil';const W=44,H=30;
+  const m=genRoom(id,mil?'База «Военных»':'База «Ренегатов»',W,H,'base',g=>{
+    const wallR=(x0,y0,x1,y1,doorX,doorY)=>{for(let x=x0;x<=x1;x++){g[y0][x]='#';g[y1][x]='#'}for(let y=y0;y<=y1;y++){g[y][x0]='#';g[y][x1]='#'}for(let y=y0+1;y<y1;y++)for(let x=x0+1;x<x1;x++)g[y][x]='_';if(doorX!=null)g[doorY][doorX]=':'};
+    wallR(1,1,13,10,7,10);wallR(30,1,42,10,36,10);wallR(1,19,13,28,7,19);wallR(30,19,42,28,36,19);
+    for(let x=2;x<=12;x++){g[2][x]='M';if(x!==7)g[5][x]='M'}for(let x=3;x<=11;x+=2)g[8][x]='o';            // склад: стеллажи
+    for(let x=32;x<=40;x++)g[2][x]='n';g[5][35]='n';g[5][36]='n';g[5][37]='n';g[6][34]='h';g[6][38]='h';     // штаб: столы
+    g[21][3]='K';g[21][4]='K';g[24][11]='K';g[26][3]='P';g[26][4]='P';                                     // мастерская
+    g[21][32]='K';g[21][33]='K';g[24][40]='K';g[26][40]='M';g[26][39]='M';                                  // оружейная
+    g[15][22]='f';for(const [x,y] of [[20,14],[24,14],[20,16],[24,16]])g[y][x]='h';                          // костёр
+    for(const [x,y] of [[17,4],[26,4],[17,25],[26,25],[2,14],[41,14]])g[y][x]='o';g[H-1][22]=':';g[0][22]=':'},
+    [[22,15,1],[7,5,1],[36,5,1],[7,24,1],[36,24,1],[22,25,1],[22,4,1]]);
+  m.fac=f;m.dark=.2;m.fires=[{id:'fire_'+f,x:22,y:15,sx:22.5,sy:17.5,n:mil?'Костёр военных':'Костёр ренегатов'}];ALLFIRES.push({...m.fires[0],m:id});
+  FPOI[id]={store:[7,4,'Склад'],hq:[36,4,'Штаб'],work:[7,23,'Мастерская'],armory:[36,23,'Оружейная']};MAPS[id]=m;
+  // тренировочная арена группировки
+  const aid=FAC[f].arena;MAPS[aid]=genRoom(aid,(mil?'Тир военных':'Яма ренегатов')+' · арена',28,18,'base',g=>{for(const [x,y] of [[8,5],[8,12],[19,5],[19,12],[13,8],[14,9]])g[y][x]='o';for(const [x,y] of [[11,3],[16,14],[5,9],[22,8]])g[y][x]='M';g[17][14]=':'},[[7,8,1],[20,8,1],[14,4,1],[14,13,1]]);
+  Object.assign(MAPS[aid],{safe:false,pvp:true,train:true,fac:f,dark:.15});
+  const link=(a,ax,ay,b,bx,by,la,lb)=>{const A=MAPS[a],B=MAPS[b];const ta=arrivalAt(B,bx,by),tb=arrivalAt(A,ax,ay);A.exits.push({x:ax,y:ay,w:1,h:1,to:b,tx:ta[0],ty:ta[1],label:la,door:1});B.exits.push({x:bx,y:by,w:1,h:1,to:a,tx:tb[0],ty:tb[1],label:lb,door:1})};
+  link(id,22,0,aid,14,17,'Арена группировки','На базу');
+  // вход: дверь в локации-соседе
+  const src=MAPS[FAC[f].from];let pos=null;
+  if(f==='ren'){for(let y=src.h-2;y>src.h*.6&&!pos;y--)for(let dx=0;dx<src.w/2&&!pos;dx++)for(const x of [Math.floor(src.w/2)+dx,Math.floor(src.w/2)-dx]){const c=src.g[y]?.[x];if(c&&walkable(c)&&c!=='~'&&c!=='W'&&c!=='='&&notExit(src,x,y)&&walkable(src.g[y-1]?.[x])){pos=[x,y];break}}}
+  else{const R=rng(777);pos=randFree(src.g,R,(x,y)=>x<src.w*.35&&y>src.h*.6&&notExit(src,x,y)&&walkable(src.g[y-1]?.[x])&&walkable(src.g[y+1]?.[x])&&!(typeof inSafe==='function'&&inSafe(x+.5,y+.5)),4000)}
+  if(pos){src.g[pos[1]][pos[0]]='D';link(FAC[f].from,pos[0],pos[1],id,22,H-1,mil?'КПП базы «Военных»':'Ворота базы «Ренегатов»','Выход с базы');FGATE[f]=pos}}
+const FGATE={};
+genBase('ren');genBase('mil');
+// жители баз
+{const L=(g,skin,hair,hc,outfit,beard,eye)=>({g,skin,hair,hc,outfit,beard,eye});
+ NPCS.push(
+  {id:'ren_rec',map:'base_ren',x:22,y:26,a:Math.PI/2,n:'Ренегат Шрам',role:'Вербовщик: приём в группировку',lk:L('m',1,'spikes','black',2,'stubble',0),eq:{body:'ren_jacket',face:'ren_mask',w1:'ren_saiga'},lines:['Сюда чужие не ходят. Хочешь к нам — докажи делом.','У нас один закон: своих не бросаем.','Жёлтый скорпион на щитке — значит, ты под защитой.']},
+  {id:'ren_trader',map:'base_ren',x:8,y:3,a:Math.PI/2,n:'Ренегат Барыга',role:'Торговец группировки',lk:L('m',2,'bald','black',2,'beard',1),eq:{body:'ren_jacket'},lines:['Скидка своим. Чужим — по тройной.','Патроны, аптечки, железо — всё по полочкам.']},
+  {id:'ren_boss',map:'base_ren',x:24,y:13,a:Math.PI/2,n:'Ренегат Седой',role:'Задания для своих',lk:L('m',0,'slick','ash',2,'beard',3),eq:{body:'ren_jacket',head:'ren_helm',w1:'ren_aks'},lines:['Работа есть всегда. Вопрос — потянешь ли.','Болото кормит тех, кто умеет ждать.']},
+  {id:'ren_master',map:'base_ren',x:8,y:25,a:-Math.PI/2,n:'Ренегат Паяльник',role:'Мастерская: броня',lk:L('m',1,'short','rust',0,'mustache',0),eq:{body:'ren_jacket',hands:'tgloves'},lines:['Шов к шву — и броня как новая.']},
+  {id:'ren_gun',map:'base_ren',x:35,y:25,a:-Math.PI/2,n:'Ренегат Затвор',role:'Оружейная',lk:L('m',2,'undercut','black',2,'stubble',1),eq:{body:'ren_jacket',w1:'ren_aks'},lines:['Ствол любит чистоту и масло.']},
+  {id:'mil_rec',map:'base_mil',x:22,y:26,a:Math.PI/2,n:'Военный Прапор',role:'Вербовщик: приём в группировку',lk:L('m',0,'short','chestnut',1,'none',2),eq:{body:'mil_vest',head:'mil_helm',w1:'mil_ak'},lines:['Стой, кто идёт! А, свои… Или пока нет?','Порядок, дисциплина, зелёная мышь на шевроне.']},
+  {id:'mil_trader',map:'base_mil',x:8,y:3,a:Math.PI/2,n:'Военный Каптёр',role:'Торговец группировки',lk:L('m',1,'bald','black',1,'mustache',0),eq:{body:'mil_vest'},lines:['Расписывайся и получай. По уставу.']},
+  {id:'mil_boss',map:'base_mil',x:24,y:13,a:Math.PI/2,n:'Военный Майор',role:'Задания для своих',lk:L('m',0,'short','ash',1,'none',3),eq:{body:'mil_vest',head:'mil_helm',w1:'mil_svd'},lines:['Город должен быть зачищен. Квартал за кварталом.','Без приказа — ни шагу.']},
+  {id:'mil_master',map:'base_mil',x:8,y:25,a:-Math.PI/2,n:'Военный Техник',role:'Мастерская: броня',lk:L('m',2,'short','black',1,'stubble',1),eq:{body:'mil_vest',hands:'tgloves'},lines:['Кевлар не любит пуль. Я тоже.']},
+  {id:'mil_gun',map:'base_mil',x:35,y:25,a:-Math.PI/2,n:'Военный Оружейник',role:'Оружейная',lk:L('m',1,'short','chestnut',1,'none',0),eq:{body:'mil_vest',head:'mil_helm'},lines:['Каждый патрон — на учёте.']})}
+// вербовщики стоят снаружи, у ворот базы — иначе чужак до них не дойдёт
+for(const f of ['ren','mil']){const n=NPCS.find(x=>x.id===f+'_rec'),g=FGATE[f],src=MAPS[FAC[f].from];if(!n||!g)continue;
+  for(const [dx,dy] of [[1,1],[-1,1],[2,1],[-2,1],[1,0],[-1,0],[2,0],[-2,0],[1,2],[-1,2]]){const x=g[0]+dx,y=g[1]+dy,c=src.g[y]?.[x];if(c&&walkable(c)&&c!=='~'&&c!=='W'&&notExit(src,x,y)){Object.assign(n,{map:src.id,x,y,a:Math.atan2(g[1]-y,g[0]-x)});break}}}
+SELL.ren_trader=[['bandage',7],['medkit',30],['antirad',22],['a545',3],['a12',3],['a9',2],['cells',12],['powder',8],['ren_mask',150,0],['ren_helm',230,5],['ren_jacket',500,8],['ren_saiga',780,10],['ren_aks',880,12]];
+SELL.mil_trader=[['bandage',7],['medkit',30],['antirad',20],['a545',3],['a762',5],['a9',2],['cells',12],['powder',8],['mil_gas',210,0],['mil_helm',250,5],['mil_vest',580,8],['mil_ak',930,12],['mil_svd',1350,15]];
+Object.assign(QUESTS,{
+ q_ren1:{giver:'ren_boss',t:'Болотная зачистка',d:'Упыри на Гнилом болоте мешают нашим ходкам. Убей десятерых.',goal:{kill:'ghoul',n:10},rew:{caps:180,xp:260,items:{cells:2,medkit:1}},rep:1},
+ q_ren2:{giver:'ren_boss',t:'Железо для базы',d:'Нужны оружейные детали — 4 комплекта. Где взять — не моё дело.',goal:{bring:'gunparts',n:4},rew:{caps:260,xp:300,items:{ren_mask:1}}},
+ q_mil1:{giver:'mil_boss',t:'Зачистка квартала',d:'Ржавые Вороны засели в Заречном. Ликвидируй восьмерых.',goal:{kill:'raider',n:8},rew:{caps:200,xp:280,items:{cells:2,a545:30}},rep:1},
+ q_mil2:{giver:'mil_boss',t:'Секретные документы',d:'В домах Заречного остались документы штаба. Принеси две папки.',goal:{bring:'docs',n:2},rew:{caps:320,xp:340,items:{mil_gas:1}}}});
+// пускаем на базу и арену только своих
+let facWarn=0;
+{const _ce=checkExit;checkExit=function(){const tx=Math.floor(P.x),ty=Math.floor(P.y);for(const e of M.exits){if(!(tx>=e.x&&tx<e.x+e.w&&ty>=e.y&&ty<e.y+e.h))continue;const tm=MAPS[e.to];if(tm&&tm.fac&&tm.fac!==myFac()&&!(S.admin&&S.god)){
+      if(now>facWarn){facWarn=now+3500;log('Сюда пускают только членов группировки «'+FAC[tm.fac].n+'». Вступить можно у вербовщика — он стоит у ворот базы.','bad')}
+      for(const [dx,dy] of [[0,-1],[0,1],[1,0],[-1,0],[1,-1],[-1,-1]]){const nx=tx+dx,ny=ty+dy;if(walkable(M.g[ny]?.[nx])&&!M.exits.some(x=>nx>=x.x&&nx<x.x+x.w&&ny>=x.y&&ny<x.y+x.h)){P.x=nx+.5;P.y=ny+.5;break}}return false}}
+  return _ce()}}
+if(typeof hideNick==='function'){const _hn=hideNick;hideNick=function(x,y){if(M&&M.train)return false;return _hn(x,y)}}
+
+// ---------- Вступление, выход, синхронизация ----------
+async function facJoin(f){if(myFac()&&myFac()!==f){log('Вы уже в группировке «'+FAC[myFac()].n+'». Сначала выйдите из неё в штабе.','bad');return}
+  let rank='member';const ok=await facMut(f,d=>{if(d.members[S.pid])return false;rank=Object.keys(d.members).length?'member':'leader';d.members[S.pid]={n:S.name,r:rank,lv:S.lvl,at:Date.now()};facLog(d,'join')});
+  S.fac={id:f,rank};dirty=true;saveLocal();sendPresence();zoneMsg('☆ '+S.name+' вступил'+(S.lk.g==='f'?'а':'')+' в группировку «'+FAC[f].n+'»',true);log(rank==='leader'?'Вы основали группировку и стали её лидером!':'Добро пожаловать в «'+FAC[f].n+'»!','good')}
+async function facLeave(){const f=myFac();if(!f)return;await facMut(f,d=>{const was=d.members[S.pid];delete d.members[S.pid];facLog(d,'leave');if(was&&was.r==='leader'){const rest=Object.entries(d.members).sort((a,b)=>RANKS_F.indexOf(a[1].r)-RANKS_F.indexOf(b[1].r)||a[1].at-b[1].at);if(rest[0])rest[0][1].r='leader'}});
+  S.fac=null;dirty=true;saveLocal();sendPresence();log('Вы вышли из группировки.','sys');if(M.fac)enterMap(FAC[f].from,MAPS[FAC[f].from].exits.find(e=>e.to===FAC[f].base).x+.5,MAPS[FAC[f].from].exits.find(e=>e.to===FAC[f].base).y+1.5)}
+async function facSync(){const f=myFac();if(!f)return;const d=await facLoad(f);const me=d.members[S.pid];if(!me){if(Object.keys(d.members).length){S.fac=null;dirty=true;log('Вас исключили из группировки «'+FAC[f].n+'».','bad');sendPresence()}return}
+  S.fac.rank=me.r;if(me.lv!==S.lvl||me.n!==S.name||Date.now()-(me.at2||0)>6*3600e3){facMut(f,dd=>{const mm=dd.members[S.pid];if(!mm)return false;mm.lv=S.lvl;mm.n=S.name;mm.at2=Date.now()})}}
+setInterval(()=>{if(S&&!document.hidden)facSync()},120000);
+{const _as=afterStart;afterStart=async function(){const r=await _as();facSync();return r}}
+
+// ---------- Окна: склад, штаб, мастерская, оружейная ----------
+const SHELF=[['all','Всё'],['med','Медикаменты'],['wpn','Оружие'],['ammo','Патроны'],['gear','Снаряжение'],['art','Артефакты'],['food','Еда и вода'],['mat','Материалы'],['etc','Прочее']];
+function shelfOf(id){const it=ITEMS[id];if(!it)return 'etc';if(it.art)return 'art';if(it.k==='weapon')return 'wpn';if(it.k==='ammo')return 'ammo';if(GEAR.includes(it.k)||it.k==='back')return 'gear';if(it.k==='use'){if(it.use&&(it.use.hp||it.use.rad<0)&&!it.use.hunger)return 'med';return 'food'}if(['res','junk','trophy'].includes(it.k))return 'mat';return 'etc'}
+const storeKg=d=>Math.round(Object.entries(d.store).reduce((a,[id,q])=>a+wOf(id)*q,0)*10)/10;
+let shelfSel='all';
+async function storeWin(f){await facLoad(f);const d=FACD[f];openWin('Склад группировки «'+FAC[f].n+'»',b=>{
+  const kg=storeKg(d);b.append(el('p','small','Заполнено: '+fmtKg(kg)+' из '+fmtKg(d.cap)+'. Положить может любой член группировки, каждое действие пишется в журнал штаба.'));
+  const cb=el('div','cats');for(const [k,n] of SHELF){const x=el('button',null,n);x.setAttribute('aria-pressed',shelfSel===k);x.onclick=()=>{shelfSel=k;storeWin(f)};cb.append(x)}b.append(cb);
+  const g=el('div','grid2');const L=el('div'),R=el('div');g.append(L,R);b.append(g);
+  L.append(el('div','sec','На полках'));const ls=el('div','list');const ids=Object.keys(d.store).filter(id=>ITEMS[id]&&d.store[id]>0&&(shelfSel==='all'||shelfOf(id)===shelfSel));if(!ids.length)ls.append(el('div','muted small','Пусто.'));
+  for(const id of ids){const q=d.store[id];const r=el('div','row');r.append(iconCanvas(id,32));const gw=el('div','grow');gw.append(el('div','t',ITEMS[id].n+(q>1?' ×'+q:'')),el('div','s',SHELF.find(s=>s[0]===shelfOf(id))[1]));r.append(gw,btn('Взять',()=>storeOp(f,'take',id,1)),q>1?btn('Всё',()=>storeOp(f,'take',id,q)):el('span'));ls.append(r)}L.append(ls);
+  R.append(el('div','sec','Из рюкзака'));const rs=el('div','list');const inv=Object.keys(S.inv).filter(id=>ITEMS[id]&&ITEMS[id].k!=='quest'&&freeQty(id)>0&&(shelfSel==='all'||shelfOf(id)===shelfSel));if(!inv.length)rs.append(el('div','muted small','Нечего положить.'));
+  for(const id of inv){const q=freeQty(id);const r=el('div','row');r.append(iconCanvas(id,32));const gw=el('div','grow');gw.append(el('div','t',ITEMS[id].n),el('div','s','есть: '+q));r.append(gw,btn('Положить',()=>storeOp(f,'put',id,1)),q>1?btn('Всё',()=>storeOp(f,'put',id,q)):el('span'));rs.append(r)}R.append(rs)})}
+let storeBusy=false;
+async function storeOp(f,a,id,q){if(storeBusy)return;storeBusy=true;try{
+  if(a==='put'){if(freeQty(id)<q){log('Столько нет.','bad');return}const ok=await facMut(f,d=>{if(storeKg(d)+wOf(id)*q>d.cap+1e-6){log('Склад переполнен. Лидер может расширить его в штабе.','bad');return false}d.store[id]=(d.store[id]||0)+q;facLog(d,'put',{i:id,q})});if(ok){take(id,q);saveLocal();log('Положено на склад: '+ITEMS[id].n+(q>1?' ×'+q:''),'good')}}
+  else{const ok=await facMut(f,d=>{if((d.store[id]||0)<q){log('На складе уже нет столько — кто-то забрал раньше.','bad');return false}d.store[id]-=q;if(d.store[id]<=0)delete d.store[id];facLog(d,'take',{i:id,q})});if(ok){add(id,q);saveLocal();log('Взято со склада: '+ITEMS[id].n+(q>1?' ×'+q:''),'good')}}
+ }catch(e){log('Нет связи с облаком — попробуйте ещё раз.','bad')}finally{storeBusy=false}storeWin(f)}
+const LOGTXT={join:'вступил(а) в группировку',leave:'вышел(шла) из группировки',put:'положил(а) на склад',take:'взял(а) со склада','fund+':'внёс(ла) в общак','fund-':'взял(а) из общака',rank:'изменил(а) ранг',kick:'исключил(а)',cap:'расширил(а) склад',clear:'очистил(а) журнал',craft:'изготовил(а)'};
+let hqTab='roster';
+async function hqWin(f){await facLoad(f);const d=FACD[f];const mgr=isMgr();openWin('Штаб «'+FAC[f].n+'»',b=>{
+  const head=el('div','startrow');head.style.alignItems='center';head.append(facBadge(f,44));const ht=el('div');const mem=Object.keys(d.members).length;ht.append(el('b',null,FAC[f].n+' · '+mem+' чел.'),el('div','muted small','Ваш ранг: '+RANKN[myRank()]+' · рейтинг группировки: '+facRating(f,d)));head.append(ht);b.append(head);
+  const tb=el('div','cats');for(const [k,n] of [['roster','Состав'],['log','Журнал'],['fund','Общак'],['manage','Управление']]){const x=el('button',null,n);x.setAttribute('aria-pressed',hqTab===k);x.onclick=()=>{hqTab=k;hqWin(f)};tb.append(x)}b.append(tb);
+  if(hqTab==='roster'){const pres={};if(room)for(const p of room.peers()){const pr=p.presence||{};if(pr.pid)pres[pr.pid]=pr}
+    const l=el('div','list');for(const [pid,m] of Object.entries(d.members).sort((a,b)=>RANKS_F.indexOf(a[1].r)-RANKS_F.indexOf(b[1].r)||b[1].lv-a[1].lv)){const r=el('div','row');const gw=el('div','grow');const on=pid===S.pid?{m:M.id,x:P.x,y:P.y}:pres[pid];
+      gw.append(el('div','t',m.n+' · '+RANKN[m.r]+' · ур. '+(m.lv|0)),el('div','s',on&&MAPS[on.m]?'● в сети · '+MAPS[on.m].name+', сектор '+secName(on.x,on.y,MAPS[on.m]):'не в сети'));r.append(gw);
+      if(mgr&&pid!==S.pid&&m.r!=='leader'&&!(myRank()==='deputy'&&m.r==='deputy')){const sel=el('select');for(const rk of RANKS_F){if(rk==='leader'&&myRank()!=='leader')continue;const o=el('option',null,RANKN[rk]);o.value=rk;if(rk===m.r)o.selected=true;sel.append(o)}
+        sel.onchange=()=>facRank(f,pid,sel.value);r.append(sel,btn('Исключить',()=>{if(confirm('Исключить '+m.n+' из группировки?'))facKick(f,pid)}))}l.append(r)}b.append(l);
+    b.append(el('p','muted small','Лимиты рангов: лидер — 1, заместители — 4, командиры — 10, мастера — 2 (чинят и шьют броню), оружейники — 2 (чинят и собирают оружие и патроны).'))}
+  else if(hqTab==='log'){if(mgr)b.append(btn('Очистить журнал',async()=>{if(!confirm('Очистить журнал?'))return;await facMut(f,dd=>{dd.log=[];facLog(dd,'clear')});hqWin(f)}));const l=el('div','notifList');for(const e of (d.log||[]).slice().reverse()){const r=el('div','nrow'+(e.a==='take'||e.a==='fund-'||e.a==='kick'?' bad':e.a==='put'||e.a==='fund+'?' good':''));const tm=new Date(e.t);
+      r.append(el('span','nt',tm.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'})+' '+String(tm.getHours()).padStart(2,'0')+':'+String(tm.getMinutes()).padStart(2,'0')),el('span','nx',e.n+' '+(LOGTXT[e.a]||e.a)+(e.i&&ITEMS[e.i]?': '+ITEMS[e.i].n+(e.q>1?' ×'+e.q:''):'')+(e.c?': '+e.c+' крыш.':'')+(e.who?': '+e.who+(e.r?' → '+RANKN[e.r]:''):'')));l.append(r)}if(!(d.log||[]).length)l.append(el('p','muted','Журнал пуст.'));b.append(l)}
+  else if(hqTab==='fund'){b.append(el('p',null,'В общаке: '),el('h2',null,(d.fund|0)+' крышек'));const r=el('div','startrow');for(const c of [10,100,500,1000])r.append(btn('Внести '+c,()=>facFund(f,c),'btn',S.caps<c));b.append(el('div','sec','Внести'),r);
+    if(mgr){const r2=el('div','startrow');for(const c of [100,500,1000])r2.append(btn('Взять '+c,()=>facFund(f,-c),'btn',(d.fund|0)<c));b.append(el('div','sec','Взять (лидер и заместители)'),r2)}}
+  else{if(!mgr)b.append(el('p','muted','Полный функционал штаба доступен лидеру и заместителям.'));else{b.append(el('div','sec','Склад'),el('p','small','Вместимость: '+fmtKg(d.cap)+'. Расширение +50 кг стоит 1500 крышек из общака.'),btn('Расширить склад (+50 кг)',async()=>{const ok=await facMut(f,dd=>{if((dd.fund|0)<1500){log('В общаке не хватает крышек.','bad');return false}dd.fund-=1500;dd.cap+=50;facLog(dd,'cap')});if(ok)log('Склад расширен до '+fmtKg(FACD[f].cap)+'.','good');hqWin(f)},'btn',(d.fund|0)<1500))}
+    b.append(el('div','sec','Выход из группировки'),btn('Выйти из «'+FAC[f].n+'»',()=>{if(confirm('Выйти из группировки?')){closeWin();facLeave()}}))}})}
+async function facRank(f,pid,rk){const ok=await facMut(f,d=>{const m=d.members[pid];if(!m)return false;const cnt=Object.values(d.members).filter(x=>x.r===rk).length;if(rk!=='member'&&cnt>=RANKLIM[rk]){log('Лимит ранга «'+RANKN[rk]+'»: '+RANKLIM[rk]+'.','bad');return false}
+  if(rk==='leader'){const me=d.members[S.pid];if(me)me.r='deputy'}m.r=rk;facLog(d,'rank',{who:m.n,r:rk})});if(ok)log('Ранг изменён.','good');facSync();hqWin(f)}
+async function facKick(f,pid){await facMut(f,d=>{const m=d.members[pid];if(!m)return false;delete d.members[pid];facLog(d,'kick',{who:m.n})});hqWin(f)}
+async function facFund(f,c){if(c>0&&S.caps<c)return;const ok=await facMut(f,d=>{if(c<0&&(d.fund|0)<-c)return false;d.fund=(d.fund|0)+c;facLog(d,c>0?'fund+':'fund-',{c:Math.abs(c)})});if(ok){S.caps-=c;dirty=true;saveLocal()}hqWin(f)}
+function facRating(f,d){d=d||FACD[f];if(!d)return 0;const lv=Object.values(d.members).reduce((a,m)=>a+(m.lv|0),0);const sec=(typeof SECT!=='undefined'?SECT.owned(f):0);return lv*10+sec*100+Math.floor((d.fund|0)/100)}
+// мастерская и оружейная: починка своим за полцены; мастера и оружейники изготавливают снаряжение группировки
+const FCRAFT={work:{ren:[['ren_mask',{rag:4,tape:2}],['ren_helm',{scrap:6,tape:3,rubber:2}],['ren_jacket',{rag:8,kevlar:2,tape:4,hide:2}]],mil:[['mil_gas',{rubber:4,lens:1,chem:1}],['mil_helm',{scrap:7,tape:3,kevlar:1}],['mil_vest',{kevlar:4,scrap:6,tape:4}]]},
+  armory:{ren:[['ren_saiga',{gunparts:4,scrap:6,spring:2}],['ren_aks',{gunparts:5,scrap:6,spring:2,wire:2}]],mil:[['mil_ak',{gunparts:5,scrap:6,spring:2,wire:2}],['mil_svd',{gunparts:7,scrap:6,lens:2,spring:2}]]}};
+function facShopWin(f,kind){const armory=kind==='armory';const can=['leader',armory?'gunsmith':'master'].includes(myRank());
+  openWin((armory?'Оружейная':'Мастерская')+' «'+FAC[f].n+'»',b=>{b.append(el('div','sec',armory?'Починка оружия (своим — за полцены)':'Починка брони и снаряжения (своим — за полцены)'));
+    const ids=[...new Set([...Object.values(S.eq).filter(Boolean),...Object.keys(S.inv)])].filter(id=>ITEMS[id]&&wearable(id)&&(S.inv[id]>0||equippedCount(id))&&durOf(id)<100&&(armory===(ITEMS[id].k==='weapon')));const l=el('div','list');if(!ids.length)l.append(el('div','muted small','Чинить нечего.'));
+    for(const id of ids){const pr=Math.max(1,Math.round(repPrice(id)*.5));const r=el('div','row');r.append(iconCanvas(id,32));const gw=el('div','grow');gw.append(el('div','t',ITEMS[id].n),el('div','s','состояние '+Math.round(durOf(id))+'%'));r.append(gw,btn('Починить · '+pr,()=>{if(S.caps<pr)return;S.caps-=pr;S.dur[id]=100;statCache=null;dirty=true;log('Починено: '+ITEMS[id].n,'good');facShopWin(f,kind)},'btn primary',S.caps<pr));l.append(r)}b.append(l);
+    b.append(el('div','sec',armory?'Изготовление (оружейники и лидер)':'Изготовление (мастера и лидер)'));if(!can)b.append(el('p','muted small','Изготавливать снаряжение группировки могут только '+(armory?'оружейники':'мастера')+' и лидер. Ранг назначают в штабе.'));
+    const list=[...FCRAFT[kind][f]];if(armory)list.push(['a545',{casing:15,powder:2},20],['a762',{casing:10,powder:3},12],['a12',{casing:10,powder:2},10]);
+    const cl=el('div','list');for(const [out,need,q] of list){const okM=Object.entries(need).every(([k,v])=>(S.inv[k]||0)>=v);const r=el('div','row');r.append(iconCanvas(out,32));const gw=el('div','grow');gw.append(el('div','t',ITEMS[out].n+(q>1?' ×'+q:'')),el('div','s',Object.entries(need).map(([k,v])=>(ITEMS[k]?ITEMS[k].n:k)+' '+(S.inv[k]||0)+'/'+v).join(', ')));
+      r.append(gw,btn('Изготовить',async()=>{if(!can||!okM)return;for(const [k,v] of Object.entries(need))take(k,v);add(out,q||1);saveLocal();log('Изготовлено: '+ITEMS[out].n+(q>1?' ×'+q:''),'good');facMut(f,d=>{facLog(d,'craft',{i:out,q:q||1})}).catch(()=>{});facShopWin(f,kind)},'btn primary',!can||!okM));cl.append(r)}b.append(cl)})}
+// взаимодействие на базе: подходим к точке и жмём ДЕЛО
+{const _in=interact;interact=function(){if(!paused&&S&&M&&FPOI[M.id]&&M.fac){const P0=FPOI[M.id];for(const [k,[x,y]] of Object.entries(P0))if(Math.hypot(P.x-x-.5,P.y-y-.5)<1.9){const f=M.fac;if(k==='store')storeWin(f);else if(k==='hq')hqWin(f);else facShopWin(f,k==='work'?'work':'armory');return}}return _in()}}
+// вербовщик: вступление
+{const _nd=npcDialog;npcDialog=function(n){_nd(n);const f=n.id==='ren_rec'?'ren':n.id==='mil_rec'?'mil':null;if(!f)return;const o=ov.querySelector('.opts');if(!o)return;const box=el('div');box.append(facBadge(f,56));
+  if(myFac()===f)box.append(el('p','small','Вы уже в группировке. Ваш ранг: '+RANKN[myRank()]+'.'));else if(myFac())box.append(el('p','small','Вы состоите в группировке «'+FAC[myFac()].n+'». Двух флагов не бывает.'));
+  else box.append(btn('Вступить в группировку «'+FAC[f].n+'»',async()=>{closeWin();await facJoin(f)},'btn primary'));o.insertBefore(box,o.firstChild)}}
+// подписи точек на базе и подсказка
+let poiHint=0;
+setInterval(()=>{if(!S||!M||!FPOI[M.id]||paused)return;for(const [k,[x,y,n]] of Object.entries(FPOI[M.id]))if(Math.hypot(P.x-x-.5,P.y-y-.5)<3.2){floatText(x+.5,y-.2,n+' · ДЕЛО','#f2d28a');break}},2200);
+{const _dt=drawTilesCached;drawTilesCached=function(c,x0,y0,x1,y1,t){_dt(c,x0,y0,x1,y1,t);if(!FPOI[M.id])return;c.save();c.font='700 12px "IBM Plex Mono",monospace';c.textAlign='center';c.lineWidth=3;c.strokeStyle='rgba(0,0,0,.8)';for(const [k,[x,y,n]] of Object.entries(FPOI[M.id])){c.strokeText(n,(x+.5)*T,(y-.3)*T);c.fillStyle='#f2d28a';c.fillText(n,(x+.5)*T,(y-.3)*T)}c.restore()}}
+// во вкладке «Выжившие» — ваша группировка
+{const _sv=TABVIEW.settings;TABVIEW.settings=b=>{const f=myFac();const box=el('div');box.append(el('div','sec','Группировка'));if(f){const r=el('div','startrow');r.style.alignItems='center';r.append(facBadge(f,36),el('span',null,FAC[f].n+' · '+RANKN[myRank()]));box.append(r)}else box.append(el('p','muted small','Вы не в группировке. Ренегаты — к югу от Гнилого болота, военные — в Городе Заречном. Вступить можно у их вербовщика.'));b.append(box);_sv(b)}}
+
+// ================= ИСТОРИЯ ЧАТА И «ЗОНЫ» =================
+// Каждое сообщение общего чата и «Зоны» сохраняется в облаке в одну из 300 ячеек (по секунде отправки),
+// поэтому история ограничена по размеру и подгружается при входе в игру (за последние 3 суток).
+// Удалить сообщение или очистить весь чат может только администратор.
+const CHLOG_T='osadok/'+(TESTROOM?'t_'+TESTROOM:'v1')+'/chatlog/';
+const CH_SLOTS=300,CH_AGE=3*864e5;
+async function chatPub(slot,payload){try{const cs=await cloud();for(const c of cs){const go=()=>c.publish(CHLOG_T+slot,payload,{retain:true,qos:1});c.connected?go():c.once('connect',go)}}catch(e){}}
+function chatSave(ch,text){if(!S)return null;const t=Date.now(),slot=Math.floor(t/1000)%CH_SLOTS,h=slot+'.'+Math.random().toString(36).slice(2,8);chatPub(slot,JSON.stringify({at:t,ct:JSON.stringify({h,t,n:ch==='zone'?'Зона':S.name,x:String(text).slice(0,120),ch})}));
+  setTimeout(()=>{const m=chatLog.slice().reverse().find(m=>!m.h&&m.me&&m.text===String(text).slice(0,120)&&(m.ch||'all')===ch);if(m)m.h=h},0);return h}
+async function chatHistory(){let cs;try{cs=await cloud()}catch(e){return}const got=new Map();const pat=CHLOG_T+'+';
+  await new Promise(res=>{const hs=[];const fin=()=>{for(const [c,h] of hs){c.removeListener('message',h);try{c.unsubscribe(pat)}catch(e){}}res()};setTimeout(fin,3500);
+    for(const c of cs){const h=(tp,buf)=>{if(!tp.startsWith(CHLOG_T))return;try{const s=dec.decode(buf);if(!s)return;const p=JSON.parse(s);const m=JSON.parse(p.ct);if(m&&m.h&&typeof m.x==='string'&&Date.now()-m.t<CH_AGE)got.set(m.h,m)}catch(e){}};hs.push([c,h]);c.on('message',h);const sub=()=>c.subscribe(pat,{qos:1});c.connected?sub():c.once('connect',sub)}});
+  if(!got.size)return;const have=new Set(chatLog.map(m=>m.h).filter(Boolean));const hist=[...got.values()].filter(m=>!have.has(m.h)&&!CHDEL.has(m.h)).sort((a,b)=>a.t-b.t).map(m=>({name:cleanText(m.n,16)||'Выживший',text:cleanText(m.x,120),me:!!S&&m.n===S.name,t:new Date(m.t),ch:m.ch==='zone'?'zone':'all',h:m.h,old:1}));
+  chatLog.splice(0,0,...hist);while(chatLog.length>300)chatLog.shift();renderChat()}
+const CHDEL=new Set();
+function chatDelLocal(h,msg){if(msg&&!msg.sameTab){const p=room&&room.peers().find(x=>x.peer===msg.peer);if(!(p&&p.presence&&p.presence.adm))return}
+  if(h==='*'){chatLog.length=0}else{CHDEL.add(String(h));for(let i=chatLog.length-1;i>=0;i--)if(chatLog[i].h===h)chatLog.splice(i,1)}renderChat()}
+async function chatDelete(h){if(!S||!S.admin)return;const slot=String(h).split('.')[0];if(h==='*'){for(let i=0;i<CH_SLOTS;i++)chatPub(i,'')}else chatPub(slot,'');chatDelLocal(h);try{room&&room.emit('chat',{t:'',n:S.name,del:h})}catch(e){}}
+// «Зона»: сообщения тоже сохраняются
+{const _zm=zoneMsg;zoneMsg=function(text,broadcast){if(!broadcast||!room)return _zm(text,broadcast);addChat('Зона',text,false,'zone');log(text,text.startsWith('☠')||text.startsWith('⚠')||text.startsWith('☢')?'bad':'sys');const h=chatSave('zone',text);if(chatLog.length)chatLog[chatLog.length-1].h=h;try{const r=room.emit('chat',{t:text.slice(0,120),n:'Зона',z:1,h});if(r&&r.catch)r.catch(()=>{})}catch(e){}}}
+{const _zi=zoneIn;zoneIn=function(t,mine,h){if(mine)return;_zi(t,mine);if(h&&chatLog.length)chatLog[chatLog.length-1].h=String(h).slice(0,24)}}
+// админ: ✕ у каждого сообщения и «Очистить чат»
+{const _rc=renderChat;renderChat=function(){_rc();if(!S||!S.admin||chatEl.hidden)return;const list=chatLog.filter(m=>(m.ch||'all')===chatCh);const kids=[...chatList.querySelectorAll('.m')];
+  kids.forEach((d,i)=>{const m=list[i];if(!m||!m.h)return;const x=el('button','chdel','✕');x.title='Удалить сообщение (админ)';x.onclick=e=>{e.stopPropagation();chatDelete(m.h)};d.append(x)});
+  let cl=document.getElementById('chatClear');if(!cl){cl=el('button','btn','🗑 Очистить чат');cl.id='chatClear';cl.style.cssText='margin:4px 8px;font-size:12px;padding:4px 10px';cl.onclick=()=>{if(confirm('Удалить всю историю чата и «Зоны» у всех игроков?'))chatDelete('*')};chatEl.insertBefore(cl,chatList)}}}
+{const st=document.createElement('style');st.textContent='#chatList .m .chdel{float:right;margin-left:6px;background:none;border:0;color:#e0442a;cursor:pointer;font-size:13px;padding:0 4px}#chatList .m.old{opacity:.8}';document.head.append(st)}
+{const _as=afterStart;afterStart=async function(){const r=await _as();chatHistory();return r}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
