@@ -1549,7 +1549,7 @@ function render(t){
     const lk=pr.lk&&typeof pr.lk==='object'?{g:pr.lk.g==='f'?'f':'m',skin:pr.lk.skin|0,hair:HAIRS[pr.lk.hair]?pr.lk.hair:'short',hc:HCOL[pr.lk.hc]?pr.lk.hc:'black',outfit:pr.lk.outfit|0,beard:BEARDS[pr.lk.beard]?pr.lk.beard:'none',eye:pr.lk.eye|0}:{};
     const eq={};if(pr.e&&typeof pr.e==='object')for(const k of GEAR)if(ITEMS[pr.e[k]]&&ITEMS[pr.e[k]].k===k)eq[k]=pr.e[k];
     const wpn=ITEMS[pr.w]&&ITEMS[pr.w].k==='weapon'?pr.w:null;const nm=(typeof pr.n==='string'?cleanText(pr.n,16):'')||'Выживший';const a=typeof pr.a==='number'?pr.a:Math.PI/2;const x=pp.x*T,y=pp.y*T;
-    ents.push({y:pp.y,f:()=>drawHuman(ctx,x,y-4,{lk,eq,view:viewOf(a),aim:a,weapon:wpn,moving:mvd>.005,phase:pp.ph,flashT:pp.ft}),lab:()=>{label(ctx,x,y-36,tagPre(nm)+(pr.adm?'★ ':'')+nm+' · '+(pr.lv|0),tagCol(nm)||karmaRank(pr.k|0)[1]);const bb=bubbles.get(p.peer);if(bb&&bb.until>now)bubble(ctx,x,y-42,bb.text)}})}}
+    ents.push({y:pp.y,f:()=>drawHuman(ctx,x,y-4,{lk,eq,view:viewOf(a),aim:a,weapon:wpn,moving:mvd>.005,phase:pp.ph,flashT:pp.ft}),lab:()=>{if(!hideNick(x/T,y/T))label(ctx,x,y-36,tagPre(nm)+(pr.adm?'★ ':'')+nm+' · '+(pr.lv|0),tagCol(nm)||karmaRank(pr.k|0)[1]);const bb=bubbles.get(p.peer);if(bb&&bb.until>now)bubble(ctx,x,y-42,bb.text)}})}}
   ents.push({y:P.y,f:()=>drawHuman(ctx,ppx,ppy-4,{lk:S.lk,eq:S.eq,view:viewOf(P.a),aim:P.a,weapon:curW(),moving:P.moving,phase:P.phase,swing:P.swing,recoil:P.recoil,flash:P.hurt>now,flashT:P.lastShot,reload:P.reloadT>0?1-P.reloadT/P.reloadDur:0}),
     lab:()=>{label(ctx,ppx,ppy-36,(S.admin?'★ ':'')+S.name,karmaRank(S.karma|0)[1]);const bb=bubbles.get('me');if(bb&&bb.until>now)bubble(ctx,ppx,ppy-42,bb.text)}});
   ents.sort((a,b)=>a.y-b.y);for(const en of ents)en.f();
@@ -1566,8 +1566,8 @@ function render(t){
   if(dark>.03){nctx.setTransform(.5,0,0,.5,0,0);nctx.globalCompositeOperation='source-over';nctx.clearRect(0,0,W,H);nctx.fillStyle='rgba(6,9,22,'+dark+')';nctx.fillRect(0,0,W,H);
     nctx.globalCompositeOperation='destination-out';
     const cut=(wx,wy,rr,str=1)=>{const [a,b]=toS(wx,wy);const R=rr*ZOOM*DPR;const g=nctx.createRadialGradient(a,b,0,a,b,R);g.addColorStop(0,'rgba(0,0,0,'+str+')');g.addColorStop(1,'rgba(0,0,0,0)');nctx.fillStyle=g;nctx.fillRect(a-R,b-R,R*2,R*2)};
-    cut(ppx,ppy,60,.85);for(const q of peerLights()){cut(q.x*T,q.y*T,45,.7);if(dark>.25){const [a,b]=toS(q.x*T,q.y*T-6);const R=200*ZOOM*DPR;nctx.save();nctx.beginPath();nctx.moveTo(a,b);nctx.arc(a,b,R,q.a-.42,q.a+.42);nctx.closePath();nctx.clip();const g=nctx.createRadialGradient(a,b,0,a,b,R);g.addColorStop(0,'rgba(0,0,0,.85)');g.addColorStop(1,'rgba(0,0,0,0)');nctx.fillStyle=g;nctx.fillRect(a-R,b-R,R*2,R*2);nctx.restore()}}
-    if(dark>.25){const [a,b]=toS(ppx,ppy-6);const R=230*ZOOM*DPR;nctx.save();nctx.beginPath();nctx.moveTo(a,b);nctx.arc(a,b,R,P.a-.42,P.a+.42);nctx.closePath();nctx.clip();const g=nctx.createRadialGradient(a,b,0,a,b,R);g.addColorStop(0,'rgba(0,0,0,.95)');g.addColorStop(1,'rgba(0,0,0,0)');nctx.fillStyle=g;nctx.fillRect(a-R,b-R,R*2,R*2);nctx.restore()}
+    cut(ppx,ppy,flAmb(),.6);for(const q of peerLights()){const fs=FLS[q.fl]||FLS.fl2;cut(q.x*T,q.y*T,40,.6);if(dark>.25){const [a,b]=toS(q.x*T,q.y*T-6);const R=fs.r*ZOOM*DPR;nctx.save();nctx.beginPath();nctx.moveTo(a,b);nctx.arc(a,b,R,q.a-fs.a,q.a+fs.a);nctx.closePath();nctx.clip();const g=nctx.createRadialGradient(a,b,0,a,b,R);g.addColorStop(0,'rgba(0,0,0,.85)');g.addColorStop(1,'rgba(0,0,0,0)');nctx.fillStyle=g;nctx.fillRect(a-R,b-R,R*2,R*2);nctx.restore()}}
+    const MF=myFl();if(dark>.25&&MF){const [a,b]=toS(ppx,ppy-6);const R=MF.r*ZOOM*DPR;nctx.save();nctx.beginPath();nctx.moveTo(a,b);nctx.arc(a,b,R,P.a-MF.a,P.a+MF.a);nctx.closePath();nctx.clip();const g=nctx.createRadialGradient(a,b,0,a,b,R);g.addColorStop(0,'rgba(0,0,0,.95)');g.addColorStop(1,'rgba(0,0,0,0)');nctx.fillStyle=g;nctx.fillRect(a-R,b-R,R*2,R*2);nctx.restore()}
     for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++)if(M.g[y][x]==='f')cut(x*T+16,y*T+16,120);if(M.lamps)for(const l of M.lamps)if(l[2]||Math.random()<.05)cut(l[0]*T,l[1]*T,M.theme==='bar'?165:118,.85);for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const q=M.g[y][x];if(q==='A'||q==='j'||q==='I'||q==='O'||q==='D'&&M.interior)cut(x*T+16,y*T+16,q==='A'?64:46,.7)}
     for(const e of r.enemies)if(e.alive&&e.type==='glow')cut(e.x*T,e.y*T,70,.8);
     for(const l of fxLights)cut(l.x*T,l.y*T,l.r*T,.9);
@@ -1675,7 +1675,7 @@ let lastBoard='';
 async function pushBoard(){if(!db||!uid||!S)return;const d={n:S.name.slice(0,16),lv:S.lvl,k:kills(S),q:S.stats.quests,score:S.lvl*10000+S.xp};const js=JSON.stringify(d);if(js===lastBoard)return;lastBoard=js;try{await db.doc('board/'+uid).set(d)}catch(e){}}
 let lastPres='';
 function sendPresence(){if(!room||!S||!M)return;const e={};for(const k of GEAR)if(S.eq[k])e[k]=S.eq[k];
-  const pr={m:M.id,x:Math.round(P.x*100)/100,y:Math.round(P.y*100)/100,a:Math.round(P.a*100)/100,w:curW(),sh:P.shotN%1000,n:S.name.slice(0,16),lv:S.lvl,k:S.karma|0,adm:S.admin?1:0,v:5,pid:S.pid||'',dv:typeof DEVID!=='undefined'?DEVID:'',sq:(typeof SQ!=='undefined'&&SQ.id)||'',hp:Math.round(S.hp/effMax()*100),ag:Math.round((1+stats().aggroPct/100)*100)/100,lk:{g:S.lk.g,skin:S.lk.skin,hair:S.lk.hair,hc:S.lk.hc,outfit:S.lk.outfit,beard:S.lk.beard||'none',eye:S.lk.eye|0},e};
+  const pr={m:M.id,x:Math.round(P.x*100)/100,y:Math.round(P.y*100)/100,a:Math.round(P.a*100)/100,w:curW(),sh:P.shotN%1000,n:S.name.slice(0,16),lv:S.lvl,k:S.karma|0,adm:S.admin?1:0,v:5,fl:typeof myFlId==='function'?myFlId():'',pid:S.pid||'',dv:typeof DEVID!=='undefined'?DEVID:'',sq:(typeof SQ!=='undefined'&&SQ.id)||'',hp:Math.round(S.hp/effMax()*100),ag:Math.round((1+stats().aggroPct/100)*100)/100,lk:{g:S.lk.g,skin:S.lk.skin,hair:S.lk.hair,hc:S.lk.hc,outfit:S.lk.outfit,beard:S.lk.beard||'none',eye:S.lk.eye|0},e};
   const js=JSON.stringify(pr);if(js===lastPres)return;lastPres=js;room.presence(pr).catch(()=>{})}
 // Онлайн без Claude (itch.io и любой сайт): все игроки подключаются к общим публичным серверам-посредникам (MQTT),
 // сразу к двум — если один недоступен, связь идёт через второй. Отдаёт тот же набор вызовов, что и комната Claude.
@@ -2750,8 +2750,8 @@ const LOOTT=[['tape',1,1,3,0],['spring',1,1,3,0],['powder',2,3,3,0],['a9',8,14,3
   ['a939',6,12,1,3],['labdrive',1,1,.5,3],['docs',1,1,.6,3],['aks',1,1,.2,3],['mosin',1,1,.15,3],['seva',1,1,.05,3],['art_flash',1,1,.12,3],['art_jelly',1,1,.06,4],['val',1,1,.05,4],['art_stone',1,1,.05,4]];
 function rollLoot(tier,n){const pool=LOOTT.filter(e=>e[4]<=tier);const lk=1+stats().lootPct/100;const got=[];
   for(let i=0;i<n;i++){let tot=0;for(const e of pool)tot+=e[3]*(e[4]>=2?lk:1);let r=Math.random()*tot;for(const e of pool){r-=e[3]*(e[4]>=2?lk:1);if(r<=0){const q=e[1]+Math.floor(Math.random()*(e[2]-e[1]+1));add(e[0],q);got.push(ITEMS[e[0]].n+(q>1?' ×'+q:''));if(ITEMS[e[0]].art)S.stats.arts=(S.stats.arts|0)+1;break}}}return got}
-crate=function(x,y){const r=rtFor(M.id),k=x+','+y;if(r.crates[k]&&r.crates[k]>now){log('Ящик пуст. Кто-то (вы) уже всё вынес.');return}
-  lockpick(ok=>{if(!ok){r.crates[k]=now+30000;log('Замок заклинило. Попробуйте позже.','bad');return}
+crate=function(x,y){const r=rtFor(M.id),k=x+','+y;if(r.crates[k]&&r.crates[k]>now){log(r.crates[k]-now<=600000?'Замок заклинило. Попробуйте через '+Math.ceil((r.crates[k]-now)/60000)+' мин.':'Ящик пуст. Кто-то (вы) уже всё вынес.');return}
+  lockpick(ok=>{if(!ok){r.crates[k]=now+600000;log('Замок заклинило. Следующая попытка — через 10 минут.','bad');return}
     r.crates[k]=now+600000;S.stats.locks++;const tier=M.tier||0;const n=2+(Math.random()<.4?1:0)+(Math.random()*100<stats().lootPct?1:0);
     const got=rollLoot(tier,n);const caps=Math.round((5+Math.floor(Math.random()*15))*(1+tier*.6));S.caps+=caps;got.push(caps+' крыш.');sfx.pickup();log('Ящик вскрыт: '+got.join(', '),'good');checkAch()})};
 const CONT={z:[['can',1],['condmilk',1],['sausage',1],['kvass',1],['water',1],['dwater',1],['bread',1],['vodka',.7]],k:[['can',1],['scrap',1],['bread',1],['glue',.6]],
@@ -3817,7 +3817,7 @@ function sync3(dt,t){V3.frame=(V3.frame||0)+1;LBL.length=0;const near=(x,y)=>Mat
     const lk=pr.lk&&typeof pr.lk==='object'?{g:pr.lk.g==='f'?'f':'m',skin:pr.lk.skin|0,hair:HAIRS[pr.lk.hair]?pr.lk.hair:'short',hc:HCOL[pr.lk.hc]?pr.lk.hc:'black',outfit:pr.lk.outfit|0,beard:BEARDS[pr.lk.beard]?pr.lk.beard:'none',eye:pr.lk.eye|0}:{};
     const eq={};if(pr.e&&typeof pr.e==='object')for(const k of GEAR)if(ITEMS[pr.e[k]]&&ITEMS[pr.e[k]].k===k)eq[k]=pr.e[k];const wp=ITEMS[pr.w]&&ITEMS[pr.w].k==='weapon'?pr.w:null;const a=typeof pr.a==='number'?pr.a:Math.PI/2;
     const r=ent3('p:'+p.peer,()=>buildHuman({lk,eq,weapon:wp}),lookKey(lk,eq,wp));place3(r,pp.x,pp.y,a);animHuman(r.m,{moving:mvd>.004,phase:pp.ph,recoil:now-pp.ft<100?1:0},dt);
-    const nm=(typeof pr.n==='string'?cleanText(pr.n,16):'')||'Выживший';LBL.push({x:pp.x,y:pp.y,h:1.35,text:tagPre(nm)+(pr.adm?'★ ':'')+nm+' · '+(pr.lv|0),col:tagCol(nm)||karmaRank(pr.k|0)[1],bb:p.peer})}
+    const nm=(typeof pr.n==='string'?cleanText(pr.n,16):'')||'Выживший';if(!(typeof hideNick==='function'&&hideNick(pp.x,pp.y)))LBL.push({x:pp.x,y:pp.y,h:1.35,text:tagPre(nm)+(pr.adm?'★ ':'')+nm+' · '+(pr.lv|0),col:tagCol(nm)||karmaRank(pr.k|0)[1],bb:p.peer})}
   // мутанты
   const rt=rtFor(M.id);const live=new Set();
   for(const e of rt.enemies){if(!e.alive||!near(e.x,e.y))continue;const k='e:'+e.id;live.add(k);const r=ent3(k,()=>buildEnemy3(e));r.e=e;place3(r,e.x,e.y,e.a);const d=EN[e.type];
@@ -4253,6 +4253,8 @@ const LOGO_SRC='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAUDBAQEA
 // Если в PINNED_PUB вписан открытый ключ, игроки доверяют только ему (защита от подмены ключа).
 const NEWS_T='osadok/'+(TESTROOM?'t_'+TESTROOM:'v1')+'/news',NEWSK_T=NEWS_T+'key';
 const PINNED_PUB=null;
+// Ключ разработчика: им подписываются новости об обновлениях, которые публикуются вместе с новой версией игры.
+const DEV_PUB={kty:'EC',crv:'P-256',x:'M9v0nqw8rDbz5b8nJfufiNdRIrk22FlDPVpoh_xv1iM',y:'0gBLkM1h57-LdWTtDGm3NNvf-KU5NDdXDw_mbC0CVb0'};
 const NEWS={items:[],at:0,loaded:false,bad:false,priv:null,code:null};
 const NTAG={new:['Новое','#7ee07a'],fix:['Исправлено','#5ad8ff'],event:['Ивент','#f2a64a'],info:['Объявление','#d8c8a8']};
 const ECP={name:'ECDSA',namedCurve:'P-256'},ECS={name:'ECDSA',hash:'SHA-256'};
@@ -4262,7 +4264,7 @@ function markNewsSeen(){const m=NEWS.items.reduce((a,n)=>Math.max(a,n.at),0);try
 function updNewsBadges(){const n=newsUnread();for(const b of document.querySelectorAll('.newsBadge')){b.hidden=!n;b.textContent=n>9?'9+':String(n)}}
 async function newsPub(){if(PINNED_PUB)return PINNED_PUB;const k=await cloudGet(NEWSK_T,4000);return k&&k.pub}
 async function loadNews(){try{const p=await cloudGet(NEWS_T,5000);NEWS.loaded=true;if(!p){NEWS.items=[];NEWS.bad=false;updNewsBadges();return}
-  const pub=await newsPub();let ok=false;if(pub&&p.sig){try{const key=await crypto.subtle.importKey('jwk',pub,ECP,false,['verify']);ok=await crypto.subtle.verify(ECS,key,unb64(p.sig),enc.encode(p.ct))}catch(e){}}
+  const pub=await newsPub();let ok=false;if(p.sig)for(const k of [pub,DEV_PUB]){if(!k||ok)continue;try{const key=await crypto.subtle.importKey('jwk',k,ECP,false,['verify']);ok=await crypto.subtle.verify(ECS,key,unb64(p.sig),enc.encode(p.ct))}catch(e){}}
   NEWS.bad=!ok;NEWS.items=ok?JSON.parse(p.ct):[];NEWS.at=p.at||0;updNewsBadges()}catch(e){NEWS.loaded=true}}
 // Ключ администратора: расшифровываем из облака, а при первом использовании (или если ключ подменили) создаём новый.
 async function newsKey(code){code=code.trim().toUpperCase();if(await shaHex(code)!==ADMIN_HASH)throw new Error('code');
@@ -4488,6 +4490,188 @@ body.hudc #mini.big{transform:none;margin:0;left:calc(8px + var(--sal));top:calc
   const hud=document.getElementById('hud');if(hud){const tg=document.createElement('button');tg.id='hudTog';tg.setAttribute('aria-label','Свернуть или развернуть панель');hud.append(tg);
     const setH=c=>{document.body.classList.toggle('hudc',c);tg.textContent=c?'▸':'▾';tg.title=c?'Показать всё':'Свернуть';ss('osadok_hudc',c?'1':'0')};
     tg.onclick=e=>{e.stopPropagation();setH(!document.body.classList.contains('hudc'));tg.blur()};setH(ls('osadok_hudc','1')==='1')}}
+
+// ================= ОКНА: ВКЛАДКИ СБОКУ, СОДЕРЖИМОЕ СПРАВА =================
+{const st=document.createElement('style');st.textContent=`
+.win:has(> .tabs){display:grid;grid-template-columns:clamp(150px,21%,210px) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);width:min(1120px,100%)}
+.win:has(> .tabs)>header{grid-column:1/-1}
+.win:has(> .tabs)>.tabs{display:flex;flex-direction:column!important;flex-wrap:nowrap!important;overflow-x:hidden!important;overflow-y:auto!important;border-right:1px solid var(--line);border-bottom:0!important;padding:8px 6px!important;gap:3px!important;align-items:stretch;margin:0!important}
+.win:has(> .tabs)>.tabs button{justify-content:flex-start;width:100%;text-align:left;white-space:nowrap;flex:none}
+.win:has(> .tabs)>.body{min-width:0;min-height:0}
+@media (max-width:560px){.win:has(> .tabs){display:flex}.win:has(> .tabs)>.tabs{flex-direction:row!important;overflow-x:auto!important;border-right:0;border-bottom:1px solid var(--line)!important}.win:has(> .tabs)>.tabs button{width:auto}}
+.wmap .locs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;align-items:center}
+.wmap .locs button{padding:6px 10px;border-radius:9px;border:1px solid var(--line);background:var(--panel2);color:var(--fg);font:inherit;font-size:13px;cursor:pointer}
+.wmap .locs button[aria-pressed=true]{border-color:var(--accent);background:rgba(217,139,43,.18)}
+.wmap .locs select{background:var(--panel2);border:1px solid var(--line);border-radius:9px;color:var(--fg);padding:6px 8px;font:inherit;font-size:13px}
+.wmap .plan{overflow:auto;max-width:100%;border:1px solid var(--line);border-radius:10px;background:#0b0a07}
+.wmap .plan canvas{display:block}
+.wmap .info{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 8px;font-size:13px;color:var(--muted)}
+.wmap .info b{color:var(--fg)}`;document.head.append(st)}
+
+// ================= КАРТА: ВСЕ ЛОКАЦИИ И ПЛАН ПО НАЖАТИЮ =================
+// На плане — строения, выходы и костры. Жителей, мутантов и других игроков не показываем.
+const MAPV={sel:null};
+const DANGER=t=>['безопасно','низкая','средняя','высокая','очень высокая'][Math.max(0,Math.min(4,t|0))];
+function drawPlan(m,maxW){const s=Math.max(4,Math.min(12,Math.floor(maxW/m.w)));const d=Math.min(2,window.devicePixelRatio||1);const cnv=document.createElement('canvas');cnv.width=m.w*s*d;cnv.height=m.h*s*d;cnv.style.width=m.w*s+'px';cnv.style.height=m.h*s+'px';const c=cnv.getContext('2d');c.scale(d,d);
+  const gr=GROUND[m.id]||GROUND.ruins;const gcol=m.interior?'#4a4034':gr['.'][0],gcol2=m.interior?'#453b30':gr[','][0];
+  for(let y=0;y<m.h;y++)for(let x=0;x<m.w;x++){const ch=m.g[y][x];c.fillStyle=MAPCOL[ch]||(ch===','?gcol2:ch===':'||ch==='_'?(m.interior?'#5a4a38':MAPCOL._):gcol);if(ch==='='&&(m.id==='hub'||m.id==='swamp'))c.fillStyle='#7a6648';if(ch==='R')c.fillStyle='#5a3a2a';c.fillRect(x*s,y*s,s,s)}
+  c.font='bold 10px "IBM Plex Mono",monospace';c.textAlign='center';c.lineWidth=3;c.strokeStyle='rgba(0,0,0,.85)';const lab=(x,y,t,col)=>{c.strokeText(t,x,y);c.fillStyle=col;c.fillText(t,x,y)};
+  for(const e of m.exits){c.fillStyle='rgba(242,182,92,.85)';c.fillRect(e.x*s,e.y*s,e.w*s,e.h*s)}
+  for(const e of m.exits){const ex=(e.x+e.w/2)*s,ey=(e.y+e.h/2)*s;lab(Math.max(40,Math.min(m.w*s-40,ex)),Math.max(12,Math.min(m.h*s-4,ey+(e.y===0?16:-6))),'→ '+e.label,'#f2b65c')}
+  for(const f of m.fires||[]){c.fillStyle=S.fires.includes(f.id)?'#ff9a3a':'#7a5a3a';circ(c,(f.x+.5)*s,(f.y+.5)*s,Math.max(3,s*.6))}
+  if(m.id===M.id){c.save();c.translate(P.x*s,P.y*s);c.rotate(P.a);c.fillStyle='#ffb347';c.beginPath();c.moveTo(7,0);c.lineTo(-5,-5);c.lineTo(-2,0);c.lineTo(-5,5);c.closePath();c.fill();c.strokeStyle='#000';c.lineWidth=1.2;c.stroke();c.restore()}
+  return cnv}
+TABVIEW.map=b=>{const w=el('div','wmap');b.append(w);const sel=MAPV.sel&&MAPS[MAPV.sel]?MAPV.sel:M.id;const m=MAPS[sel];
+  const locs=el('div','locs');const main=['hub','ruins','swamp','chem','city','bar','shops','mayor','workshop','cellar','lab1','lab2','lab3'].filter(id=>MAPS[id]);
+  for(const id of main){const x=el('button',null,(id===M.id?'● ':'')+MAPS[id].name.replace('Лаборатория «Х-9» · ','Х-9 · '));x.setAttribute('aria-pressed',id===sel);x.onclick=()=>{MAPV.sel=id;openTab('map')};locs.append(x)}
+  const others=Object.keys(MAPS).filter(id=>!main.includes(id)&&!MAPS[id].arena).sort((a,b)=>MAPS[a].name.localeCompare(MAPS[b].name,'ru',{numeric:true}));
+  if(others.length){const s2=el('select');s2.append(el('option',null,'Другие здания…'));for(const id of others){const o=el('option',null,MAPS[id].name);o.value=id;if(id===sel)o.selected=true;s2.append(o)}s2.onchange=()=>{if(MAPS[s2.value]){MAPV.sel=s2.value;openTab('map')}};locs.append(s2)}
+  w.append(locs);
+  const info=el('div','info');const sp=(k,v)=>{const x=el('span',null,k+': ');x.append(el('b',null,v));info.append(x)};sp('Локация',m.name);sp('Опасность',m.safe?'безопасно':DANGER(m.tier));if(m.pvp)sp('PvP','да, ники скрыты');if(String(m.id).startsWith('lab'))sp('Вход','по ключ-карте «Х-9»');w.append(info);
+  const plan=el('div','plan');plan.append(drawPlan(m,Math.max(320,(b.clientWidth||700)-30)));w.append(plan);
+  const lg=el('div','legend');for(const [col,t] of [['#ffb347','вы'],['#ff9a3a','костёр (найден)'],['#7a5a3a','костёр (не найден)'],['#f2b65c','выход']]){const s3=el('span');const i=el('i');i.style.background=col;s3.append(i,document.createTextNode(t));lg.append(s3)}w.append(lg);
+  w.append(el('p','muted small','Жители, мутанты и другие игроки на плане не показываются.'))};
+
+// ================= PvP: НИКИ СКРЫТЫ =================
+function hideNick(x,y){return !!(M&&M.pvp&&!M.arena&&!(typeof inSafe==='function'&&inSafe(x,y)))}
+
+// ================= НОЧЬ: КРОМЕШНАЯ ТЬМА, ВИДНО ТОЛЬКО С ФОНАРИКОМ =================
+darkLevel=function(cyc){const night=Math.max(0,Math.cos(cyc*Math.PI*2));const em=emState().st==='active'&&!M.interior?.1:0;
+  if(M.interior)return Math.max(M.dark||.5,Math.min(.85,night*.9));
+  return Math.min(.97,Math.min(1,night*1.6)*.97+weather.rain*.08+em)};
+
+// ================= ФОНАРИКИ И БАТАРЕЙКИ =================
+Object.assign(ITEMS,{
+ fl1:{n:'Фонарик-жучок',k:'res',p:35,r:0,d:'Тусклый, но лучше, чем ничего. Свет — на пару шагов. Включается клавишей L (Д) или кнопкой 🔦. Работает от батареек.'},
+ fl2:{n:'Карманный фонарь',k:'res',p:140,r:1,d:'Обычный довоенный фонарь. Луч средней дальности. Работает от батареек.'},
+ fl3:{n:'Тактический фонарь',k:'res',p:480,r:2,d:'Яркий узкий луч, бьёт далеко. Работает от батареек.'},
+ fl4:{n:'Прожектор «Луч»',k:'res',p:1800,r:3,d:'Переносной прожектор. Заливает светом всё впереди, но быстро ест батарейки.'},
+ cells:{n:'Батарейки',k:'res',p:14,r:0,d:'Комплект пальчиковых батареек. Полностью заряжает фонарик.'}});
+Object.assign(WT,{fl1:.1,fl2:.25,fl3:.35,fl4:1.6,cells:.1});
+const FLS={fl1:{r:120,a:.28,s:.7,min:7},fl2:{r:200,a:.36,s:.85,min:9},fl3:{r:290,a:.42,s:.95,min:11},fl4:{r:430,a:.62,s:1,min:7}};
+const FLIDS=['fl4','fl3','fl2','fl1'];
+const myFlId=()=>{if(!S||!S.flOn)return '';return FLIDS.find(id=>(S.inv[id]||0)>0)||''};
+const myFl=()=>{const id=myFlId();return id?FLS[id]:null};
+const flAmb=()=>{const f=myFl();return f?(f===FLS.fl4?70:48):30};
+function flCharge(id){S.flc=S.flc||{};if(S.flc[id]==null)S.flc[id]=1;return S.flc[id]}
+function toggleFl(force){if(!S)return;const id=FLIDS.find(i=>(S.inv[i]||0)>0);if(!id){S.flOn=false;log('У вас нет фонарика. Его можно купить у Калибра или найти в Пустоши.','bad');updFlBtn();return}
+  const on=force!=null?force:!S.flOn;if(on&&flCharge(id)<=0&&!swapCells(id)){log(ITEMS[id].n+' разряжен. Нужны батарейки.','bad');S.flOn=false;updFlBtn();return}
+  S.flOn=on;sfx.click&&sfx.click();log(on?'🔦 '+ITEMS[id].n+' включён · заряд '+Math.round(flCharge(id)*100)+'%':'🔦 Фонарик выключен.');sendPresence();updFlBtn();dirty=true}
+function swapCells(id){if((S.inv.cells||0)<=0)return false;take('cells',1);S.flc[id]=1;log('🔋 Вставили новые батарейки: '+ITEMS[id].n+' заряжен.','good');return true}
+setInterval(()=>{if(!S||paused||!S.flOn)return;const id=myFlId();if(!id){S.flOn=false;updFlBtn();sendPresence();return}const f=FLS[id];flCharge(id);S.flc[id]=Math.max(0,S.flc[id]-1/(f.min*60));
+  if(S.flc[id]<=0){if(!swapCells(id)){S.flOn=false;log('🔦 '+ITEMS[id].n+' сел. Нужны батарейки.','bad');sendPresence()}}else if(Math.abs(S.flc[id]-.1)<1/(f.min*60))log('🔦 Заряд фонарика: 10%.','bad');updFlBtn()},1000);
+function updFlBtn(){const b=document.getElementById('bLight');if(!b)return;const id=FLIDS.find(i=>S&&(S.inv[i]||0)>0);b.classList.toggle('on',!!(S&&S.flOn));b.textContent=S&&S.flOn&&id?'🔦'+Math.round(flCharge(id)*100):'🔦'}
+{const a=document.getElementById('acts');if(a){const b=document.createElement('button');b.id='bLight';b.textContent='🔦';b.setAttribute('aria-label','Фонарик');b.onclick=e=>{e.preventDefault();toggleFl()};a.append(b)}
+  const st=document.createElement('style');st.textContent='#acts #bLight{right:252px;bottom:150px;width:52px;height:52px;font-size:13px;padding:0}#acts #bLight.on{border-color:#ffe08a;box-shadow:0 0 14px rgba(255,224,138,.45);color:#ffe08a}';document.head.append(st)}
+addEventListener('keydown',e=>{if(!S||!titleEl.hidden||!ov.hidden||document.activeElement===chatIn||e.repeat)return;const k=keyOf(e);if(k==='l'||k==='д'){e.preventDefault();toggleFl()}});
+// свет других игроков: только у тех, у кого фонарик включён (старые версии игры светят как карманный фонарь)
+peerLights=function(){const out=[];if(!room||!M)return out;for(const p of room.peers()){if(p.isMe||p.sameTab)continue;const pr=p.presence||{};if(pr.m!==M.id||typeof pr.x!=='number')continue;const fl=pr.fl===undefined?'fl2':pr.fl;if(!fl)continue;const pp=peerPos.get(p.peer);out.push({x:pp?pp.x:pr.x,y:pp?pp.y:pr.y,a:typeof pr.a==='number'?pr.a:Math.PI/2,fl})}return out};
+// продажа и лут
+SELL.kalibr.push(['fl1',40],['fl2',160,3],['fl3',520,10],['cells',16]);SELL.seny.push(['cells',18],['fl1',45]);SELL.hmury&&SELL.hmury.push(['cells',20],['fl2',170],['fl3',560,10],['fl4',1900,20]);
+LOOTT.push(['cells',1,2,2.2,0],['fl1',1,1,.5,0],['fl2',1,1,.35,1],['fl3',1,1,.18,2],['fl4',1,1,.05,3]);
+for(const k of ['Z','M','k'])CONT[k]&&CONT[k].push(['cells',k==='Z'?1.2:.6]);
+for(const m of Object.values(MAPS))if(m.loot&&m.loot.pool&&!m.safe){m.loot.pool.push(['cells',4]);if((m.tier|0)>=2)m.loot.pool.push(['fl2',.6]);if((m.tier|0)>=3)m.loot.pool.push(['fl3',.3])}
+// 3D: свет фонарика зависит от модели, без фонарика ночью почти ничего не видно
+if(typeof lights3==='function'){const _l3=lights3;lights3=function(t){_l3(t);const cyc=timeLock==='day'?.5:timeLock==='night'?0:(Date.now()/1000%5760)/5760;const dk=darkLevel(cyc);const out=!M.interior;
+  if(out){const n=Math.max(0,Math.min(1,(dk-.35)/.6));L3.hemi.intensity*=1-.93*n;L3.sun.intensity*=1-.97*n;if(n>.5){SC.fog.near=Math.max(4,SC.fog.near*(1-n*.7));SC.fog.far=Math.max(14,SC.fog.far*(1-n*.6))}}
+  const f=myFl();const need=dk>.25||M.interior;L3.flash.intensity=f&&need?1.1+f.s*1.6:0;if(f){L3.flash.distance=f.r/14;L3.flash.angle=f.a+.06}
+  const pl=peerLights().sort((a,b)=>Math.hypot(a.x-P.x,a.y-P.y)-Math.hypot(b.x-P.x,b.y-P.y));L3.pflash.forEach((s,i)=>{const q=pl[i];if(q&&need){const fs=FLS[q.fl]||FLS.fl2;s.intensity=1+fs.s;s.distance=fs.r/14;s.angle=fs.a+.06;s.position.set(q.x,1.15,q.y);s.target.position.set(q.x+Math.cos(q.a)*6,.2,q.y+Math.sin(q.a)*6)}else s.intensity=0})}}
+
+// ================= МУТАНТЫ: ЧЕМ ДАЛЬШЕ ОТ ПОСЁЛКА, ТЕМ СИЛЬНЕЕ =================
+EN.boar={n:'Кабан-мутант',hp:62,spd:3.9,dmg:11,cd:1,r:.38,xp:16,aggro:7,loot:[['hide',.6],['fang',.35]],caps:[0,3],blood:'#7a1a14'};
+if(typeof LOOK3!=='undefined')LOOK3.boar={len:.92,h:.44,leg:.2,lw:.06,head:.17,snout:1.1,pig:1,fur:'#4b3a2a',skin:'#6a4a3a',mange:4,eye:'red',tusk:1,tail:.12,tw:.02,s:1};
+{const _de=drawEnemy;drawEnemy=function(c,e,x,y,t){if(e.type!=='boar')return _de(c,e,x,y,t);const d=EN.boar,fl=e.flash>now;
+  if(e.dying){c.save();c.globalAlpha=Math.max(0,Math.min(1,e.dying/.4));c.translate(x,y+10);c.rotate((1-e.dying/.8)*1.4*(Math.cos(e.dieA||0)>=0?1:-1));c.translate(-x,-y-10)}
+  quad(c,e,x,y+4,t,fl,{s:1.25,len:21,w:12,head:5.4,fur:'#4b3a2a',leg:'#2a2018',legL:2.4,tc:'#3a2c20',tw:1.3,ear:'#3a2a1c',ribs:0,tail:.4});
+  const hx=x+Math.cos(e.a)*15,hy=y+2+Math.sin(e.a)*8;c.strokeStyle='#efe6cf';c.lineWidth=1.4;c.beginPath();c.moveTo(hx-2,hy);c.lineTo(hx-1+Math.cos(e.a)*3,hy-3);c.moveTo(hx+2,hy);c.lineTo(hx+1+Math.cos(e.a)*3,hy-3);c.stroke();
+  if(e.dying){c.restore();return}if(e.hp<d.hp&&e.hp>0){const w=20,yy=y-25;rrp(c,x-w/2-1,yy,w+2,4,2);c.fillStyle='rgba(0,0,0,.75)';c.fill();c.fillStyle='#c4452f';rrp(c,x-w/2,yy+1,w*Math.max(0,e.hp)/d.hp,2,1);c.fill()}}}
+// ближние локации — крысы, плоти, кабаны, псы; дальние — сильные мутанты
+if(MAPS.ruins&&MAPS.ruins.mob)MAPS.ruins.mob.table=[['rat',30],['boar',12,x=>x>12,[1,2]],['flesh',10,x=>x>14],['dog',10,null,[2,3]],['raider',10,x=>x>28],['zombie',6,x=>x>18],['jumper',4,x=>x>30],['gunner',3,x=>x>44]];
+if(MAPS.swamp&&MAPS.swamp.mob)MAPS.swamp.mob.table=[['ghoul',22,(x,y)=>y>7],['rat',10],['boar',10,(x,y)=>y>8,[1,2]],['flesh',8,(x,y)=>y>10],['dog',6,(x,y)=>y>12,[2,3]],['glow',5,(x,y)=>y>12],['bloat',3,(x,y)=>y>16]];
+if(MAPS.chem&&MAPS.chem.mob)MAPS.chem.mob.table.push(['sucker',3,x=>x>24],['boar',4,x=>x<20,[1,2]]);
+for(let l=1;l<=3;l++){const m=MAPS['lab'+l];if(!m||!m.mob)continue;const T3=[['zombie',8],['sucker',8],['cleaner',6],['brain',3+l],['dwarf',4],['brute',l>=2?3+l:1],['chimera',l>=3?4:l===2?1:0]].filter(e=>e[1]>0);m.mob.table=T3;m.mob.n=Math.round(m.mob.n*1.35)}
+const TIERK={0:1,1:.9,2:1,3:1.25,4:1.75};
+{const _mk=mkEnemy;mkEnemy=function(t,x,y){const e=_mk(t,x,y);const k=TIERK[(M&&M.tier)|0]||1;if(k!==1&&!EN[t].boss){e.hp=Math.round(e.hp*k)}return e}}
+
+// ================= ПОЯВЛЕНИЕ: РАВНОМЕРНО ПО СЕКТОРАМ, НАКОПИТЕЛЬНО ПОСЛЕ ВЫБРОСА =================
+// Сразу после выброса мутантов мало, затем их становится больше (за ~45 минут до полного числа).
+function lastEmEnd(){const t=Date.now(),ph=t%EMP;return ph>=EMA?t-ph+EMA:t-ph-EMP+EMA}
+const hashN=n=>{n=(n^61)^(n>>>16);n=n+(n<<3);n^=n>>>4;n=Math.imul(n,0x27d4eb2d);n^=n>>>15;return (n>>>0)/4294967296};
+for(const m of Object.values(MAPS)){if(!m.mob||m.mob.n0!=null)continue;const mob=m.mob;mob.n0=mob.n;const seed=[...m.id].reduce((a,ch)=>a*31+ch.charCodeAt(0)|0,7);
+  Object.defineProperty(mob,'n',{configurable:true,get(){if(emState().st==='active')return 0;const f=Math.min(1,.3+.7*(Date.now()-lastEmEnd())/(45*60e3));const w=.85+.3*hashN(seed+Math.floor(Date.now()/600000));return Math.max(1,Math.round(mob.n0*f*w))},set(v){mob.n0=v}})}
+{const _sr=spawnRandom;spawnRandom=function(m,r){const mob=m.mob;if(!mob)return;const G=3,cnt=Array(G*G).fill(0);for(const e of r.enemies)if(e.alive){const sx=Math.min(G-1,Math.floor(e.x/m.w*G)),sy=Math.min(G-1,Math.floor(e.y/m.h*G));cnt[sy*G+sx]++}
+  const mn=Math.min(...cnt);const cand=cnt.map((c,i)=>c===mn?i:-1).filter(i=>i>=0);const sct=cand[Math.floor(Math.random()*cand.length)];const sx=sct%G,sy=Math.floor(sct/G);
+  const x0=Math.floor(sx*m.w/G),x1=Math.floor((sx+1)*m.w/G),y0=Math.floor(sy*m.h/G),y1=Math.floor((sy+1)*m.h/G);const oc=mob.cond;const before=r.enemies.length;
+  mob.cond=(x,y)=>x>=x0&&x<x1&&y>=y0&&y<y1&&(oc?oc(x,y):true);try{_sr(m,r)}finally{mob.cond=oc}if(r.enemies.length===before)_sr(m,r)}}
+
+// ================= ВЫБРОС СТИРАЕТ ВСЁ С ЗЕМЛИ, ПОСЛЕ НЕГО — НОВОЕ ПОЯВЛЕНИЕ =================
+// Не трогает: рюкзаки и тайники игроков, шкафчики, задания-тайники и секретные записки лаборатории.
+const EMW2={last:null};
+function wipeWorld(){for(const [id,r] of Object.entries(RT)){r.enemies=[];r.drops=[];r.pop=false;r.pickups=r.pickups.filter(p=>!p.art);for(const p of r.pickups){if(p.rq||p.keep)continue;p.gone=now+1e12;p.cnt=1}}
+  projs=[];zoneMsg('☢ Выброс стёр всё с земли: мутантов, артефакты и брошенные вещи.',false)}
+function respawnWorld(){for(const [id,r] of Object.entries(RT)){const m=MAPS[id];r.pop=false;r.crates={};r.searched={};for(const p of r.pickups){if(p.rq||p.keep||p.quest)continue;p.cnt=0;if(placeLoot(m,p))p.gone=0;else p.gone=now+30000}}
+  zoneMsg('Пустошь оживает: появились новые находки, а мутанты постепенно возвращаются.',false)}
+{const _et=envTick;envTick=function(dt){const st=emState().st;if(EMW2.last===null)EMW2.last=st;
+  if(st!==EMW2.last){if(st==='active')wipeWorld();else if(EMW2.last==='active')respawnWorld();EMW2.last=st}
+  labTick(dt);_et(dt)}}
+
+// ================= ВЗЛОМ: ТРИ СПОСОБА =================
+// 1) реакция — бегунок, одна попытка; 2) электронный замок (повтор вспышек); 3) кодовый замок (подбор цифр).
+function reactPuzzle(done){const tier=(M&&M.tier)|0;const zone=Math.max(.08,.2-tier*.025+sk('craft')*.004);const z0=.15+Math.random()*(.7-zone);let pos=0,dir=1,raf=0,last=performance.now(),over=false;const spd=.75+tier*.18;
+  openWin('Взлом: механический замок',b=>{b.append(el('p',null,'Остановите бегунок в светлой зоне. Попытка одна — если промахнётесь, замок заклинит на 10 минут.'));
+    const tr=el('div');tr.style.cssText='position:relative;height:38px;border-radius:10px;background:#0c0b08;border:1px solid var(--line);margin:16px 0;overflow:hidden';
+    const zn=el('div');zn.style.cssText='position:absolute;top:0;bottom:0;left:'+(z0*100)+'%;width:'+(zone*100)+'%;background:linear-gradient(180deg,#95d03a,#5a8a20);opacity:.85';
+    const mk=el('div');mk.style.cssText='position:absolute;top:-2px;bottom:-2px;width:6px;margin-left:-3px;border-radius:3px;background:#ffe08a;box-shadow:0 0 10px #ffe08a';tr.append(zn,mk);b.append(tr);
+    const stop=()=>{if(over)return;over=true;cancelAnimationFrame(raf);const ok=pos>=z0&&pos<=z0+zone;mk.style.background=ok?'#95d03a':'#e0442a';sfx.click&&sfx.click();setTimeout(()=>{stopLock=null;closeWin();done(ok)},450)};
+    const go=btn('Стоп!',stop,'btn primary');go.style.cssText='width:100%;padding:14px;font-size:17px';b.append(go);
+    const key=e=>{if(e.key===' '||e.key==='Enter'||keyOf(e)==='e'||keyOf(e)==='у'){e.preventDefault();stop()}};addEventListener('keydown',key);
+    const loop=t=>{const dt=Math.min(.05,(t-last)/1000);last=t;pos+=dir*spd*dt;if(pos>1){pos=1;dir=-1}if(pos<0){pos=0;dir=1}mk.style.left=(pos*100)+'%';if(!over)raf=requestAnimationFrame(loop)};raf=requestAnimationFrame(loop);
+    stopLock=()=>{over=true;cancelAnimationFrame(raf);removeEventListener('keydown',key);stopLock=null};setTimeout(()=>go.focus(),50)})}
+lockpick=function(done){const r=Math.random();const wrap=ok=>{done(ok)};if(r<.34)return reactPuzzle(wrap);if(r<.67)return simonPuzzle(wrap);return dialPuzzle(wrap)};
+
+// ================= ЛАБОРАТОРИЯ «Х-9»: КЛЮЧ-КАРТА, СЕЙФ, ЗАПИСКИ, РАДИАЦИЯ =================
+Object.assign(ITEMS,{keycard:{n:'Ключ-карта «Х-9»',k:'quest',p:0,r:4,d:'Пластиковая карта с магнитной полосой и логотипом лаборатории. Открывает люк «Х-9» в Городе Заречном. Не расходуется.'},
+ labnote1:{n:'Секретный документ «Х-9» №1',k:'quest',p:0,r:3,d:''},labnote2:{n:'Секретный документ «Х-9» №2',k:'quest',p:0,r:3,d:''},labnote3:{n:'Секретный документ «Х-9» №3',k:'quest',p:0,r:3,d:''}});
+Object.assign(WT,{keycard:.02,labnote1:.01,labnote2:.01,labnote3:.01});
+// Код сейфа меняется раз в неделю. Три записки по две цифры, порядок частей игрок подбирает сам.
+const LW=Math.floor(Date.now()/(7*864e5));
+const LABCODE=(()=>{const R=rng(LW*9973+17);return [0,1,2].map(()=>String(Math.floor(R()*10))+String(Math.floor(R()*10)))})();
+for(let i=1;i<=3;i++)ITEMS['labnote'+i].d='Обрывок листа с грифом «Совершенно секретно». Карандашом обведены две цифры: «'+LABCODE[i-1]+'». Похоже на часть кода от сейфа на третьем уровне. Код меняется каждую неделю.';
+let LABSAFE=null;
+{const m=MAPS.lab3;if(m){const R=rng(4040);const open=(x,y)=>{for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)if(!walkable(m.g[y+dy]?.[x+dx])||m.g[y+dy][x+dx]==='=')return false;return true};
+  const pos=randFree(m.g,R,(x,y)=>x>2&&y>2&&x<m.w-3&&y<m.h-3&&Math.hypot(x-2,y-2)>14&&open(x,y)&&notExit(m,x,y),3000);if(pos){LABSAFE=pos;m.g[pos[1]][pos[0]]='L'}}}
+function notePos(l){const m=MAPS['lab'+l];if(!m)return null;return randFree(m.g,rng(LW*131+l*7),(x,y)=>notExit(m,x,y)&&Math.hypot(x-2,y-2)>8&&(!LABSAFE||l!==3||Math.hypot(x-LABSAFE[0],y-LABSAFE[1])>4),2000)}
+{const _aq=addQuestPickups;addQuestPickups=function(mid,r){_aq(mid,r);const mm=/^lab([123])$/.exec(mid);if(!mm||!S)return;const id='labnote'+mm[1];if((S.inv[id]||0)>0||r.pickups.some(p=>p.item===id))return;const pos=notePos(+mm[1]);if(pos)r.pickups.push({item:id,q:1,x:pos[0]+.5,y:pos[1]+.5,gone:0,quest:1,keep:1})}}
+// записки прошлой недели истлевают
+{const _as=afterStart;afterStart=async function(){if(S){if(S.flags.lw!==LW){let had=0;for(let i=1;i<=3;i++)if(S.inv['labnote'+i]){delete S.inv['labnote'+i];had=1}S.flags.lw=LW;if(had)log('Старые записки из «Х-9» истлели — код сейфа сменился.','sys')}updFlBtn()}return _as()}}
+// люк лаборатории открывается только ключ-картой
+let kcWarn=0;
+{const _ce=checkExit;checkExit=function(){const tx=Math.floor(P.x),ty=Math.floor(P.y);for(const e of M.exits)if(e.to==='lab1'&&M.id==='city'&&tx>=e.x&&tx<e.x+e.w&&ty>=e.y&&ty<e.y+e.h&&!(S.inv.keycard>0)&&!(S.admin&&S.god)){
+    if(now>kcWarn){kcWarn=now+3500;log('Люк «Х-9» заперт электронным замком. Нужна ключ-карта: её даёт медсестра Оля за сложное поручение, изредка она попадается в дальних локациях.','bad')}
+    for(const [dx,dy] of [[0,1],[0,-1],[1,0],[-1,0],[1,1],[-1,1],[1,-1],[-1,-1]]){const nx=tx+dx,ny=ty+dy;if(walkable(M.g[ny]?.[nx])&&!M.exits.some(x=>nx>=x.x&&nx<x.x+x.w&&ny>=x.y&&ny<x.y+x.h)){P.x=nx+.5;P.y=ny+.5;break}}return false}
+  return _ce()}}
+// ключ-карта изредка выпадает с мутантов в дальних локациях
+{const _ck=creditKill;creditKill=function(e){const r=_ck(e);try{if(M&&(M.tier|0)>=3&&!(S.inv.keycard>0)&&Math.random()<.004){add('keycard',1);log('✦ Среди останков вы нашли ключ-карту «Х-9»!','good');sfx.pickup()}}catch(x){}return r}}
+QUESTS.q_keycard={giver:'olya',lvl:15,t:'Пропуск в «Х-9»',d:'Мне нужна сыворотка для раненых, а делается она из щупалец кровососа. Принеси 3 щупальца — кровососы прячутся в домах Заречного и на Химкомбинате. Взамен отдам ключ-карту погибшего учёного от люка «Х-9». Только учти: внизу очень опасно и сильно фонит.',goal:{bring:'suckerTent',n:3},rew:{caps:300,xp:800,items:{keycard:1}}};
+// сильная радиация в лаборатории
+let labAcc=0,safeHint=0;
+function labTick(dt){if(!M||!/^lab\d$/.test(M.id))return;labAcc+=dt;if(labAcc>=1){labAcc=0;if(!(S.admin&&S.god))addRad(3)}
+  if(M.id==='lab3'&&LABSAFE&&Math.hypot(P.x-LABSAFE[0]-.5,P.y-LABSAFE[1]-.5)<2.2&&now>safeHint){safeHint=now+60000;log('Перед вами массивный сейф с кодовым замком на 6 цифр. Нажмите ДЕЛО.','sys')}}
+// сейф: 6 цифр, после неудач — пауза; содержимое обновляется после каждого выброса
+{const _in=interact;interact=function(){if(!paused&&S&&M&&M.id==='lab3'&&LABSAFE&&Math.hypot(P.x-LABSAFE[0]-.5,P.y-LABSAFE[1]-.5)<1.9){safeDialog();return}return _in()}}
+function safeDialog(){S.safe=S.safe||{};const em=lastEmEnd();if((S.safe.at||0)>em){log('Сейф пуст — вы уже забрали всё. Новое содержимое появится после следующего выброса.');return}
+  if((S.safe.lock||0)>Date.now()){log('Замок сейфа заблокирован после неверных попыток. Подождите '+Math.ceil((S.safe.lock-Date.now())/60000)+' мин.','bad');return}
+  openWin('Сейф «Х-9»',b=>{b.append(el('p',null,'Электронный замок. Введите шесть цифр. Нашли записки с цифрами? Части кода могут идти в любом порядке.'));
+    const have=[1,2,3].filter(i=>S.inv['labnote'+i]>0).map(i=>'№'+i+': «'+LABCODE[i-1]+'»');b.append(el('p','muted small',have.length?'Ваши записки — '+have.join(', '):'У вас нет ни одной записки. Они разбросаны по трём уровням лаборатории.'));
+    const i=el('input');i.inputMode='numeric';i.maxLength=6;i.placeholder='••••••';i.style.cssText='font:700 30px var(--mono);letter-spacing:.35em;text-align:center;width:100%;max-width:300px;background:#0c0b08;border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--fg)';i.oninput=()=>{i.value=i.value.replace(/\D/g,'').slice(0,6)};
+    const err=el('div','err','');const left=3-((S.safe.miss|0)%3);
+    b.append(i,el('p','muted small','Осталось попыток до блокировки: '+left),err,btn('Открыть',()=>{if(i.value.length!==6){err.textContent='Нужно 6 цифр.';return}
+      if(i.value===LABCODE.join('')){S.safe.at=Date.now();S.safe.miss=0;closeWin();openSafe();return}
+      S.safe.miss=(S.safe.miss|0)+1;sfx.click&&sfx.click();if(S.safe.miss%3===0){S.safe.lock=Date.now()+5*60000;closeWin();log('Неверный код. Замок сейфа заблокирован на 5 минут.','bad');return}err.textContent='Неверный код.';i.value=''},'btn primary'));setTimeout(()=>i.focus(),50)})}
+function openSafe(){const got=[];const g=(id,q)=>{if(!ITEMS[id])return;add(id,q);got.push(ITEMS[id].n+(q>1?' ×'+q:''))};
+  g('goldchain',2+Math.floor(Math.random()*3));g('labdrive',1+Math.floor(Math.random()*2));g('docs',1);if(Math.random()<.5)g('art_moon',1);if(Math.random()<.3)g('art_soul',1);if(Math.random()<.25)g('val',1);if(Math.random()<.15)g('seva',1);if(Math.random()<.08)g('exo',1);g('stim',2);g('radx',2);
+  const caps=600+Math.floor(Math.random()*900);S.caps+=caps;got.push(caps+' крыш.');sfx.pickup();dirty=true;saveLocal();
+  zoneMsg('✦ '+S.name+' вскрыл сейф в лаборатории «Х-9»!',true);openWin('Сейф открыт!',b=>{b.append(el('p',null,'Внутри:'),el('p','good',got.join(', ')),btn('Забрать',closeWin,'btn primary'))})}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
