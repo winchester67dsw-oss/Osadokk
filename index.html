@@ -3087,7 +3087,7 @@ function buryStash(){S.stashes=S.stashes||[];const lim=rankOf(S.lvl);
   take('stashkit');S.stashes.push({id:rid(),map:M.id,x:Math.round(P.x*10)/10,y:Math.round(P.y*10)/10,items:{},at:Date.now()});emit(16,{x:P.x,y:P.y+.3,v:2,life:.8,size:4,color:'rgba(110,90,60,.5)',type:'smoke'});sfx.reload();
   log('Тайник закопан. Его видите только вы. Вместимость — '+STASH_CAP+' кг. Тайников: '+S.stashes.length+'/'+lim,'good');dirty=true;saveLocal()}
 {const _ui=useItem;useItem=function(id){if(id==='stashkit'){if(has(id))buryStash();return}_ui(id)}}
-function nearStash(r=1.4){if(!S||!S.stashes||!M)return null;let b=null,bd=r;for(const s of S.stashes){if(s.map!==M.id)continue;const d=Math.hypot(s.x-P.x,s.y-P.y);if(d<bd){bd=d;b=s}}return b}
+function nearStash(r=2){if(!S||!S.stashes||!M)return null;let b=null,bd=r;for(const s of S.stashes){if(s.map!==M.id)continue;const d=Math.hypot(s.x-P.x,s.y-P.y);if(d<bd){bd=d;b=s}}return b}
 function openStash(s){const CAP=s.cap||STASH_CAP;openWin(s.home?'Личный шкафчик в баре':'Личный тайник',b=>{const w=stashW(s);b.append(el('p','muted small',(s.home?'Шкафчик под замком у Толика — открыть его можете только вы. ':'Его видите только вы. ')+'Занято '+fmtKg(w)+' из '+fmtKg(CAP)+'. Ваш груз: '+fmtKg(invWeight())+' / '+fmtKg(carryCap())+'.'));
   const pb=el('div','pbar');const u=document.createElement('u');u.style.width=Math.min(100,w/CAP*100)+'%';pb.append(u);b.append(pb);
   const g=el('div','grid2');g.style.marginTop='10px';const L=el('div'),R=el('div');g.append(L,R);b.append(g);
@@ -3170,7 +3170,7 @@ function drawMini(){const cv2=document.getElementById('mini');if(!cv2||!M||!S)re
 // ---------- Эффекты поверх кадра ----------
 {const _rd=render;render=function(t){_rd(t);if(!M||!S)return;const c=ctx;const m=c.getTransform();
   for(const st of (S.stashes||[]))if(st.map===M.id){const x=st.x*T,y=st.y*T;c.fillStyle='rgba(0,0,0,.3)';ellp(c,x,y+5,9,3);c.fill();c.fillStyle=lg(c,0,y-3,0,y+5,'#6a5434','#3e301e');ellp(c,x,y+2,8,4);c.fill();strokeO(c,.6);c.fillStyle='#8c8f93';rrp(c,x-2.5,y-4,5,4,1);c.fill();strokeO(c,.5);c.strokeStyle='#8c8f93';c.lineWidth=1;c.beginPath();c.arc(x,y-4,1.6,Math.PI,0);c.stroke();
-    if(Math.hypot(st.x-P.x,st.y-P.y)<3)label(c,x,y-10,coarse()?'ДЕЛО — тайник':'E — тайник','#c8a050')}
+    if(Math.hypot(st.x-P.x,st.y-P.y)<2)label(c,x,y-10,coarse()?'ДЕЛО — тайник':'E — тайник','#c8a050')}
   for(const g of rqTargets()){const x=g.x*T,y=g.y*T-30+Math.sin(t*3)*2;c.fillStyle='#c78aff';c.beginPath();c.moveTo(x,y-6);c.lineTo(x+5,y);c.lineTo(x,y+6);c.lineTo(x-5,y);c.closePath();c.fill();c.strokeStyle='rgba(0,0,0,.7)';c.lineWidth=1;c.stroke()}
   FX.rings=FX.rings.filter(r=>now-r.t<600);for(const r of FX.rings){const k=(now-r.t)/600;c.strokeStyle='rgba(220,190,140,'+(1-k)+')';c.lineWidth=3*(1-k)+1;c.beginPath();c.ellipse(r.x*T,r.y*T+4,r.r*T*k,r.r*T*k*.6,0,0,7);c.stroke()}
   FX.psy=FX.psy.filter(p=>now-p.t<500);for(const p of FX.psy){const k=(now-p.t)/500;c.strokeStyle='rgba(190,110,255,'+(1-k)*.8+')';c.lineWidth=2;c.beginPath();for(let i=0;i<=10;i++){const u=i/10;const x=(p.x+(p.tx-p.x)*u)*T+Math.sin(u*20+now/40)*4,y=(p.y+(p.ty-p.y)*u)*T-14+Math.cos(u*17+now/50)*4;i?c.lineTo(x,y):c.moveTo(x,y)}c.stroke()}
@@ -3840,7 +3840,7 @@ function sync3(dt,t){V3.frame=(V3.frame||0)+1;LBL.length=0;const near=(x,y)=>Mat
   for(const p of rt.drops){if(p.t<-1e8||!near(p.x,p.y))continue;const s=sprite(p,p.item);const age=(now-p.t)/1000;const hop=age<.7?Math.abs(Math.sin(age*Math.PI/.7*1.5))*(.7-age)*1.2:0;s.position.set(p.x,.32+hop+Math.sin(t*3+p.x)*.04,p.y);s.userData.ring.position.set(p.x,.02,p.y)}
   for(const [p,s] of V3.spr)if(!keep.has(p)){DYN.remove(s);DYN.remove(s.userData.ring);s.material.map.dispose();s.material.dispose();V3.spr.delete(p)}
   // личные тайники
-  for(const st of (S.stashes||[]))if(st.map===M.id&&near(st.x,st.y)){const r=ent3('st:'+st.id,()=>{const g=new THREE.Group();const mo=mesh3(gSph(.35,10),mat3('#5a4a30'));mo.scale.set(1,.3,1);g.add(mo);const lk2=mesh3(gBox(.14,.12,.05),mat3('#c9a640'));lk2.position.y=.18;g.add(lk2);return {root:g}});place3(r,st.x,st.y,0);if(Math.hypot(st.x-P.x,st.y-P.y)<3)LBL.push({x:st.x,y:st.y,h:.6,text:coarse()?'ДЕЛО — тайник':'E — тайник',col:'#c8a050'})}
+  for(const st of (S.stashes||[]))if(st.map===M.id&&near(st.x,st.y)){const r=ent3('st:'+st.id,()=>{const g=new THREE.Group();const mo=mesh3(gSph(.35,10),mat3('#5a4a30'));mo.scale.set(1,.3,1);g.add(mo);const lk2=mesh3(gBox(.14,.12,.05),mat3('#c9a640'));lk2.position.y=.18;g.add(lk2);return {root:g}});place3(r,st.x,st.y,0);if(Math.hypot(st.x-P.x,st.y-P.y)<2)LBL.push({x:st.x,y:st.y,h:.6,text:coarse()?'ДЕЛО — тайник':'E — тайник',col:'#c8a050'})}
   // снаряды
   let ti=0,bi=0;for(const p of projs){if(p.kind==='bullet'){const m=L3.trc[ti++];if(!m)continue;m.visible=true;m.position.set(p.x,1.0,p.y);m.rotation.y=Math.atan2(p.vx,p.vy);m.material=p.from==='p'?bas3('#ffe6a0'):bas3('#ff9a70')}else{const m=L3.blob[bi++];if(!m)continue;m.visible=true;m.position.set(p.x,.9,p.y);m.material=p.kind==='rock'?mat3('#7a746a'):bas3('#b8f04a')}}
   for(;ti<L3.trc.length;ti++)L3.trc[ti].visible=false;for(;bi<L3.blob.length;bi++)L3.blob[bi].visible=false;
@@ -4164,6 +4164,8 @@ function updViewBtn(){const b=document.getElementById('viewBtn');if(!b)return;co
   b.innerHTML='<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span class="vl">3D</span>';b.onclick=()=>{cycleView();b.blur()};tb.insertBefore(b,document.getElementById('chatBtn'));updViewBtn()})();
 addEventListener('keydown',e=>{if(!S||!titleEl.hidden||!ov.hidden||document.activeElement===chatIn)return;const k=keyOf(e);if(k==='f'&&!e.repeat){e.preventDefault();cycleView()}});
 {const _sv=setView;setView=function(is3d){_sv(is3d);updViewBtn()}}
+// ---------- Кнопки телефона вызывают актуальные действия (тайники, шкафы, доска объявлений) ----------
+(function(){for(const [id,fn] of [['bUse',()=>interact()],['bRel',()=>startReload()],['bSwap',()=>swapWeapon()],['bHeal',()=>quickHeal()]]){const b=document.getElementById(id);if(!b)continue;const n=b.cloneNode(true);b.replaceWith(n);hold(id,fn)}})();
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
