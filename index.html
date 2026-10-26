@@ -4681,6 +4681,28 @@ function openSafe(){const got=[];const g=(id,q)=>{if(!ITEMS[id])return;add(id,q)
   const caps=600+Math.floor(Math.random()*900);S.caps+=caps;got.push(caps+' крыш.');sfx.pickup();dirty=true;saveLocal();
   zoneMsg('✦ '+S.name+' вскрыл сейф в лаборатории «Х-9»!',true);openWin('Сейф открыт!',b=>{b.append(el('p',null,'Внутри:'),el('p','good',got.join(', ')),btn('Забрать',closeWin,'btn primary'))})}
 
+// ================= УВЕДОМЛЕНИЯ В ОТДЕЛЬНОМ ОКНЕ =================
+// На телефоне сообщения больше не всплывают поверх игры: они копятся за кнопкой 🔔 со счётчиком.
+// На компьютере короткие подсказки внизу остаются, а полная история тоже доступна по кнопке.
+const NOTIF={list:[],unread:0,bad:0};
+{const _log=log;log=function(text,cls='sys'){NOTIF.list.push({text:String(text),cls,at:Date.now()});if(NOTIF.list.length>150)NOTIF.list.shift();
+  if(!notifOpen()){NOTIF.unread++;if(cls==='bad')NOTIF.bad++}updNotif();return _log(text,cls)}}
+const notifOpen=()=>!ov.hidden&&!!ov.querySelector('.notifList');
+function updNotif(){const b=document.getElementById('notifBtn');if(!b)return;const bd=b.querySelector('.badge');bd.hidden=!NOTIF.unread;bd.textContent=NOTIF.unread>99?'99+':String(NOTIF.unread);b.classList.toggle('alert',NOTIF.bad>0)}
+function openNotif(){NOTIF.unread=0;NOTIF.bad=0;updNotif();openWin('Уведомления',b=>{
+  const top=el('div','startrow');top.style.marginBottom='8px';top.append(btn('Очистить',()=>{NOTIF.list=[];openNotif()}));b.append(top);
+  const l=el('div','notifList');if(!NOTIF.list.length)l.append(el('p','muted','Пока ничего не произошло.'));
+  for(const n of NOTIF.list.slice().reverse()){const r=el('div','nrow '+n.cls);const tm=new Date(n.at);r.append(el('span','nt',String(tm.getHours()).padStart(2,'0')+':'+String(tm.getMinutes()).padStart(2,'0')),el('span','nx',n.text));l.append(r)}b.append(l)})}
+{const st=document.createElement('style');st.textContent=`
+.notifList{display:flex;flex-direction:column;gap:4px}
+.notifList .nrow{display:flex;gap:10px;padding:7px 10px;border-radius:8px;background:rgba(255,240,210,.03);border-left:3px solid #6a5a44;line-height:1.4}
+.notifList .nrow.good{border-left-color:#95d03a}.notifList .nrow.bad{border-left-color:#e0442a}.notifList .nrow.bad .nx{color:#ffb8a8}.notifList .nrow.good .nx{color:#c8eaa0}
+.notifList .nt{font:600 12px var(--mono);color:var(--muted);flex:none;padding-top:1px}.notifList .nx{overflow-wrap:anywhere}
+#notifBtn.alert{border-color:#e0442a;box-shadow:0 0 10px rgba(224,68,42,.45)}
+@media (pointer:coarse){#log{display:none!important}#topbar.shut>button#notifBtn{display:grid!important}}`;document.head.append(st)}
+(function(){const tb=document.getElementById('topbar');if(!tb)return;const b=document.createElement('button');b.id='notifBtn';b.title='Уведомления';b.setAttribute('aria-label','Уведомления');
+  b.innerHTML='<svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15z"/><path d="M10 21h4"/></svg><span class="badge" hidden>0</span>';b.onclick=()=>{openNotif();b.blur()};tb.insertBefore(b,document.getElementById('chatBtn'))})();
+
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
