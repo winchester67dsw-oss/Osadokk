@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -4229,6 +4229,24 @@ const LOGO_SRC='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAUDBAQEA
       const vg=c.createRadialGradient(W/2,H/2,Math.min(W,H)*.3,W/2,H/2,Math.max(W,H)*.75);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.55)');c.fillStyle=vg;c.fillRect(0,0,W,H)}
     requestAnimationFrame(draw)};requestAnimationFrame(draw)})();
 
+// ================= УСТАНОВКА КАК ПРИЛОЖЕНИЕ (PWA) =================
+// Работает только в сборке для GitHub Pages: там в <head> есть манифест и регистрация sw.js.
+(function(){if(!document.querySelector('link[rel=manifest]'))return;
+  const standalone=()=>matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches||navigator.standalone===true;
+  if(standalone())return;
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  const st=document.createElement('style');st.textContent=`.instBox{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:linear-gradient(180deg,rgba(38,30,20,.92),rgba(22,18,13,.94));border:1px solid #5a4430;max-width:520px;margin:0 auto;width:100%}
+.instBox img{width:42px;height:42px;border-radius:10px;flex:none}.instBox .grow{flex:1;min-width:0;text-align:left}.instBox b{color:#f0dcb8;display:block}.instBox span{color:#a8977c;font-size:12.5px}`;document.head.append(st);
+  const box=el('div','instBox');box.hidden=true;const ic=document.createElement('img');ic.src=ICON_SRC;ic.alt='';const tx=el('div','grow');tx.append(el('b',null,'Осадок как приложение'),el('span',null,'Иконка на рабочем столе, игра на весь экран, обновляется сама.'));
+  const b=btn('Установить',async()=>{if(window.__bip){const p=window.__bip;window.__bip=null;p.prompt();try{const r=await p.userChoice;if(r.outcome==='accepted'){box.hidden=true;log('Игра установлена как приложение.','good')}}catch(e){}}else if(ios)iosHelp();else otherHelp()},'btn primary');
+  box.append(ic,tx,b);const hero=document.querySelector('#title .hero');if(hero)hero.after(box);else document.querySelector('#title .inner').prepend(box);
+  const show=()=>{box.hidden=false};
+  if(window.__bip||ios)show();addEventListener('osadok-installable',show);addEventListener('appinstalled',()=>{box.hidden=true});
+  function iosHelp(){modal('Установка на iPhone',[el('p',null,'1. Откройте игру в Safari.'),el('p',null,'2. Нажмите кнопку «Поделиться» (квадрат со стрелкой вверх) внизу экрана.'),el('p',null,'3. Выберите «На экран „Домой“» и нажмите «Добавить».'),el('p','muted small','Иконка «Осадок» появится на рабочем столе. Обновления приходят сами при запуске.')])}
+  function otherHelp(){modal('Установка игры',[el('p',null,'Откройте игру в Chrome или Edge.'),el('p',null,'На компьютере: значок установки справа в адресной строке или меню ⋮ → «Установить приложение».'),el('p',null,'На телефоне: меню ⋮ → «Добавить на главный экран» / «Установить приложение».')])}
+  function modal(h,ps){const o=el('div','overlay');o.style.zIndex=200;const c=el('div','tcard');c.style.cssText='max-width:440px;margin:auto;padding:18px 20px;border-radius:14px';c.append(el('h3',null,h),...ps,btn('Понятно',()=>o.remove(),'btn primary'));o.append(c);o.addEventListener('click',e=>{if(e.target===o)o.remove()});document.body.append(o)}
+})();
+
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
@@ -4245,10 +4263,10 @@ const hot=window.claude?.hot;hot?.ready?hot.ready(boot):boot(hot?.data??{});
   var modern=true;try{new Function('var a={b:{c:1}};var x=a?.b?.c??2;var o={...a};return async function(){await 0}')}catch(e){modern=false}
   if(modern){run(src);return}
   var box=document.createElement('div');box.style.cssText='position:fixed;left:0;right:0;bottom:0;z-index:98;background:#1c1812;color:#f2b65c;font:14px/1.5 sans-serif;padding:12px 16px;text-align:center;border-top:1px solid #d98b2b';
-  box.textContent='Р’РєР»СЋС‡Р°РµРј СЂРµР¶РёРј СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё РґР»СЏ РІР°С€РµРіРѕ С‚РµР»РµС„РѕРЅР°вЂ¦ Р­С‚Рѕ Р·Р°Р№РјС‘С‚ РЅРµСЃРєРѕР»СЊРєРѕ СЃРµРєСѓРЅРґ.';document.body.appendChild(box);
+  box.textContent='Включаем режим совместимости для вашего телефона… Это займёт несколько секунд.';document.body.appendChild(box);
   var b=document.createElement('script');b.src='https://cdn.jsdelivr.net/npm/@babel/standalone@7.29.9/babel.min.js';
-  b.onload=function(){try{var out=window.Babel.transform(src,{presets:[['env',{targets:{chrome:'58',safari:'11'},modules:false}]],sourceType:'script',compact:true}).code;box.parentNode.removeChild(box);run(out)}catch(e){box.textContent='РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РїСѓСЃС‚РёС‚СЊ РёРіСЂСѓ РЅР° СЌС‚РѕРј СѓСЃС‚СЂРѕР№СЃС‚РІРµ: '+e.message+'. РџРѕРїСЂРѕР±СѓР№С‚Рµ РѕС‚РєСЂС‹С‚СЊ РµС‘ РІ Chrome.'}};
-  b.onerror=function(){box.textContent='РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ СЂРµР¶РёРј СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё. РџСЂРѕРІРµСЂСЊС‚Рµ РёРЅС‚РµСЂРЅРµС‚ Рё РѕР±РЅРѕРІРёС‚Рµ СЃС‚СЂР°РЅРёС†Сѓ.'};
+  b.onload=function(){try{var out=window.Babel.transform(src,{presets:[['env',{targets:{chrome:'58',safari:'11'},modules:false}]],sourceType:'script',compact:true}).code;box.parentNode.removeChild(box);run(out)}catch(e){box.textContent='Не удалось запустить игру на этом устройстве: '+e.message+'. Попробуйте открыть её в Chrome.'}};
+  b.onerror=function(){box.textContent='Не удалось загрузить режим совместимости. Проверьте интернет и обновите страницу.'};
   document.head.appendChild(b);
 })();
 </script></body></html>
