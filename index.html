@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793057421";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793057597";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -688,8 +688,8 @@ function fire(){
     if(M.pvp)for(const pe of peerList()){const dd=Math.hypot(pe.x-P.x,pe.y-P.y);if(dd>it.reach+.35)continue;const aa=Math.atan2(pe.y-P.y,pe.x-P.x);if(Math.abs(angDiff(aa,P.a))>1.15)continue;pvpHit(pe,dmgB);hit=true}
     if(hit)shake=Math.max(shake,.25);return}
   const sw=wStats(id);
-  if((S.mag[id]||0)<=0){startReload();if(P.reloadT<=0){P.nextShot=now+300;floatText(P.x,P.y-1,'щёлк','#9d917a');sfx.empty()}return}
-  S.mag[id]--;sfx.gun(id);P.bloom=Math.min(2.2,(P.bloom||0)+((WSND[id]||[])[6]||.15));S.stats.shots++;P.shotN++;P.recoil=1;P.lastShot=now;
+  if(typeof gunBroken==='function'&&gunBroken(id)){P.nextShot=now+600;return}if((S.mag[id]||0)<=0){startReload();if(P.reloadT<=0){P.nextShot=now+300;floatText(P.x,P.y-1,'щёлк','#9d917a');sfx.empty()}return}
+  S.mag[id]--;sfx.gun(id);afterShot(id);P.bloom=Math.min(2.2,(P.bloom||0)+((WSND[id]||[])[6]||.15));S.stats.shots++;P.shotN++;P.recoil=1;P.lastShot=now;
   const acc=Math.max(.2,1-st.accPct/100);const pel=it.pellets||1;
   const mx=P.x+Math.cos(P.a)*.62,my=P.y-.28+Math.sin(P.a)*.62;
   for(let i=0;i<pel;i++){const a=P.a+(Math.random()-.5)*2*sw.spread*acc*(1+(P.bloom||0));const crit=Math.random()*100<st.critPct;
@@ -4774,6 +4774,43 @@ if(typeof drawPlan==='function'){const _dp=drawPlan;drawPlan=function(m,maxW){co
 {const _sv=TABVIEW.settings;TABVIEW.settings=b=>{const box=el('div');box.append(el('div','sec','Сетка секторов на карте'));const r=el('div','startrow');
   r.append(btn('Показывать',()=>{GRID.on=true;try{localStorage.setItem('osadok_grid','1')}catch(e){}TC.chunks.clear();openTab('settings')},GRID.on?'btn primary':'btn'),btn('Скрыть',()=>{GRID.on=false;try{localStorage.setItem('osadok_grid','0')}catch(e){}TC.chunks.clear();openTab('settings')},GRID.on?'btn':'btn primary'));
   box.append(r,el('p','muted small','У каждой локации своя сетка секторов: посёлок 10×10, болото 15×10, Мёртвый город 16×12, Заречный 30×24 — чем крупнее локация, тем больше клеток. Номер сектора — «столбец.ряд», считая слева и сверху. Он показан на мини-карте и на плане во вкладке «Карта».'));b.append(box);_sv(b)}}
+
+// ================= ИЗНОС СНАРЯЖЕНИЯ, ПОЧИНКА, ГИЛЬЗЫ =================
+// У оружия, брони, касок, противогазов и перчаток есть состояние 0–100%. Износ пока низкий.
+// Оружие изнашивается от выстрелов (при <25% бывают осечки, при 0% не стреляет), защита — от попаданий
+// (защита падает вместе с состоянием). Чинят жители: броню — мастер Люда, оружие — Калибр, всё — сталкер Хмурый.
+const WEAR_SLOTS=['head','face','body','hands'];
+const wearable=id=>{const it=ITEMS[id];return !!it&&(it.k==='weapon'&&it.cls!=='melee'||WEAR_SLOTS.includes(it.k))&&id!=='rags'};
+function durOf(id){if(!S||!wearable(id))return 100;S.dur=S.dur||{};return S.dur[id]==null?100:S.dur[id]}
+function wear(id,n){if(!wearable(id))return;S.dur=S.dur||{};const was=durOf(id);const v=Math.max(0,was-n);S.dur[id]=Math.round(v*100)/100;if(was>=25&&v<25)log('⚠ '+ITEMS[id].n+' сильно изношено ('+Math.round(v)+'%). Почините у жителей.','bad');if(was>0&&v<=0)log('✖ '+ITEMS[id].n+' сломано. Нужна починка.','bad');statCache=null;dirty=true}
+// оружие: перед выстрелом
+function gunBroken(id){const d=durOf(id);if(d<=0){if(now>(P.brokeT||0)){P.brokeT=now+2500;floatText(P.x,P.y-1,'сломано','#e0442a');log('✖ '+ITEMS[id].n+' сломано — стрелять нельзя. Почините у Калибра или Хмурого.','bad')}sfx.empty&&sfx.empty();return true}
+  if(d<25&&Math.random()<.03){floatText(P.x,P.y-1,'осечка','#e0a03a');sfx.empty&&sfx.empty();return true}return false}
+// оружие: после выстрела — износ и гильза под ногами
+ITEMS.casing={n:'Гильзы',k:'res',p:1,r:0,d:'Стреляные гильзы. Вместе с порохом из них собирают патроны на верстаке.'};WT.casing=.005;
+if(typeof ITEMDRAW!=='undefined')ITEMDRAW.casing=(c,x,y)=>{for(const [dx,dy,a] of [[-2,1,.4],[1.5,-1,-.6],[2,2,1.2]]){c.save();c.translate(x+dx,y+dy);c.rotate(a);c.fillStyle='#c8a048';c.fillRect(-2.2,-.9,4.4,1.8);c.fillStyle='#8a6a28';c.fillRect(1.6,-.9,.8,1.8);c.restore()}};
+function afterShot(id){wear(id,.04);const it=ITEMS[id];if(!it||it.cls==='melee'||Math.random()>.55)return;const r=rtFor(M.id);const bx=P.x+Math.cos(P.a+Math.PI/2)*.5+(Math.random()-.5)*.4,by=P.y+Math.sin(P.a+Math.PI/2)*.5+(Math.random()-.5)*.4;
+  const near=r.drops.find(p=>p.item==='casing'&&!p.bag&&Math.hypot(p.x-bx,p.y-by)<1.2);if(near){near.q=Math.min(99,(near.q||1)+1);near.t=now}else r.drops.push({x:bx,y:by,item:'casing',q:1,t:now})}
+// защита: износ при попаданиях
+{const _h=hurt;hurt=function(n,src){const env=['голод','жажда','выброс','радиация','аномалия'].includes(src);if(S&&!env&&n>0&&!(S.admin&&S.god))for(const k of WEAR_SLOTS){const id=S.eq[k];if(id)wear(id,k==='body'?.12:.07)}return _h(n,src)}}
+// защита снижается вместе с состоянием вещи
+{const _st=stats;stats=function(){const s=_st();if(!S||!S.dur)return s;let cut=0;for(const k of WEAR_SLOTS){const id=S.eq[k];const it=ITEMS[id];if(!it||!it.st||!it.st.def)continue;const d=durOf(id);if(d<100)cut+=it.st.def*(1-(.35+.65*d/100))}if(!cut)return s;return Object.assign({},s,{def:Math.round((s.def-cut)*10)/10})}}
+// состояние — в описании предмета
+{const _ds=describe;describe=function(id){const t=_ds(id);if(!wearable(id)||!S)return t;const d=Math.round(durOf(id));return t+' · состояние '+d+'%'+(d<=0?' (сломано)':d<25?' (изношено)':'')}}
+// починка у жителей
+const REPAIRER={luda:{kinds:'armor',n:'броню и снаряжение'},kalibr:{kinds:'weapon',n:'оружие'},hmury:{kinds:'all',n:'оружие и броню',k:1.3}};
+const repPrice=(id,k)=>Math.max(2,Math.round((ITEMS[id].p||20)*.12*(100-durOf(id))/100*(k||1)));
+function repairWin(n){const R=REPAIRER[n.id];openWin('Починка: '+n.n,b=>{b.append(el('p','muted small','Чиню '+R.n+'. Цена зависит от износа. Сейчас дёшево — пока не разобрались с ценами.'));
+  const ids=[...new Set([...Object.values(S.eq).filter(Boolean),...Object.keys(S.inv)])].filter(id=>ITEMS[id]&&wearable(id)&&(S.inv[id]>0||equippedCount(id))&&durOf(id)<100&&(R.kinds==='all'||(R.kinds==='weapon')===(ITEMS[id].k==='weapon')));
+  const l=el('div','list');if(!ids.length)l.append(el('p','muted','Чинить нечего — всё в порядке.'));let total=0;
+  for(const id of ids){const pr=repPrice(id,R.k);total+=pr;const r=el('div','row');r.append(iconCanvas(id,34));const gw=el('div','grow');gw.append(el('div','t',ITEMS[id].n),el('div','s','состояние '+Math.round(durOf(id))+'%'));
+    r.append(gw,btn('Починить · '+pr+' крыш.',()=>{if(S.caps<pr){log('Не хватает крышек.','bad');return}S.caps-=pr;S.dur[id]=100;statCache=null;dirty=true;sfx.reload&&sfx.reload();log('Починено: '+ITEMS[id].n+' (−'+pr+' крыш.)','good');repairWin(n)},'btn primary',S.caps<pr));l.append(r)}
+  b.append(l);const o=el('div','startrow');o.style.marginTop='10px';if(ids.length>1)o.append(btn('Починить всё · '+total+' крыш.',()=>{if(S.caps<total){log('Не хватает крышек.','bad');return}S.caps-=total;for(const id of ids)S.dur[id]=100;statCache=null;dirty=true;log('Всё починено (−'+total+' крыш.)','good');repairWin(n)},'btn',S.caps<total));o.append(btn('Назад',()=>npcDialog(n)));b.append(o)})}
+{const _nd=npcDialog;npcDialog=function(n){_nd(n);if(!REPAIRER[n.id]||!S)return;const o=ov.querySelector('.opts');if(!o)return;const worn=[...Object.values(S.eq),...Object.keys(S.inv)].some(id=>id&&wearable(id)&&durOf(id)<100);o.insertBefore(btn('🔧 Починить '+REPAIRER[n.id].n+(worn?' (есть износ)':''),()=>repairWin(n),worn?'btn primary':'btn'),o.firstChild)}}
+// патроны из гильз и пороха — на верстаке
+RECIPES.push({cat:'Патроны',out:'a9',q:12,need:{casing:12,powder:1},bench:1},{cat:'Патроны',out:'a12',q:8,need:{casing:8,powder:2},bench:1},{cat:'Патроны',out:'a545',q:12,need:{casing:12,powder:2},bench:1,craft:1},{cat:'Патроны',out:'a762',q:8,need:{casing:8,powder:2},bench:1,craft:2},{cat:'Патроны',out:'a939',q:6,need:{casing:6,powder:3},bench:1,craft:4});
+// у оружия в руках показываем износ
+{const _uh=updateHud;updateHud=function(){_uh();try{const id=curW&&curW();const wn=document.getElementById('wName');if(wn&&id&&wearable(id)){const d=Math.round(durOf(id));if(d<50)wn.textContent=ITEMS[id].n+' · '+d+'%'}}catch(e){}}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
