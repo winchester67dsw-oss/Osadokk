@@ -881,7 +881,7 @@ function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className
 function btn(label,fn,cls='btn',dis=false){const b=el('button',cls,label);b.onclick=fn;b.disabled=dis;return b}
 function itemRow(id,right){const r=el('div','row');const gw=el('div','grow');gw.append(el('div','t',ITEMS[id].n),el('div','s',describe(id)));r.append(gw);if(right)for(const x of right)r.append(x);return r}
 
-const TABS=[['inv','Снаряжение'],['craft','Крафт'],['map','Карта'],['quests','Задания'],['skills','Навыки'],['ach','Достижения'],['people','Выжившие'],['settings','Настройки']];
+const TABS=[['inv','Снаряжение'],['craft','Крафт'],['map','Карта'],['quests','Задания'],['rating','Рейтинг'],['skills','Навыки'],['ach','Достижения'],['people','Выжившие'],['settings','Настройки']];
 function openTab(k){openWin('Выживший: '+S.name,body=>TABVIEW[k](body),{tabs:S&&S.admin?[...TABS,['admin','Админ']]:TABS,active:k,onTab:openTab})}
 let invCat='all',craftCat='all';
 const TABVIEW={
@@ -1717,7 +1717,7 @@ async function initOnline(){
   try{user=await window.claude.use('user');uid=user?await user.id():null}catch(e){}
   try{db=await window.claude.use('db')}catch(e){db=null}
   if(db){if(uid&&!S){try{const snap=await db.doc('data/users/'+uid+'/save').get();if(snap.exists){const d=snap.data();const loc=loadLocal();if(!loc||(d.at||0)>(loc.at||0)){const rs=migrate(JSON.parse(d.s));if(rs){remoteSave=rs;if(!S)renderTitle()}}}}catch(e){}}
-    try{db.collection('board').orderBy('score','desc').limit(15).onSnapshot(s=>{board=s.docs.map(d=>d.data())},()=>{})}catch(e){}}
+    try{db.collection('board').orderBy('score','desc').limit(60).onSnapshot(s=>{board=s.docs.map(d=>({...d.data(),_id:d.id}))},()=>{})}catch(e){}}
   try{room=await window.claude.use('room')}catch(e){room=null}
   if(room){room.on('deal',onDeal,()=>{});room.on('chat',m=>{const d=m.data||{};const t=typeof d.t==='string'?cleanText(d.t,120):'';if(!t)return;const nm=(typeof d.n==='string'?cleanText(d.n,16):'')||'Выживший';logChat(nm,t,m.sameTab);bubbles.set(m.sameTab?'me':m.peer,{text:t,until:now+5000})},()=>{});
     room.onPeers(ch=>{for(const p of ch.joined){if(!p.sameTab&&p.kind==='viewer'&&S&&p.presence&&typeof p.presence.n==='string')log(cleanText(p.presence.n,16)+' вошёл(ла) в Пустошь.')}for(const p of ch.left)peerPos.delete(p.peer);updateHud()},()=>{room=null;updateHud()});
@@ -1758,7 +1758,7 @@ function startGame(save,fresh){
   camX=P.x*T-VW/2;camY=P.y*T-VH/2;updateHud();saveLocal();pushBoard();
   if(fresh){log('Добро пожаловать в Ржавый Колокол, '+S.name+'. В руках самопал, в кармане заточка. Поговорите с жителями (E).','good');log(coarse()?'Джойстик — идти, ОГОНЬ — стрелять (прицел наводится сам), СМЕНА — другое оружие.':'Мышь — прицел, ЛКМ — огонь, Q — сменить оружие, R — перезарядка.')}
   else log('С возвращением, '+S.name+'. Пустошь по вам не скучала.');
-  if(fresh)pushCloud(true);
+  if(fresh)pushCloud(true);setTimeout(()=>pushRating(true),3000);
   if(coarse())document.getElementById('hint').hidden=true;else setTimeout(()=>{document.getElementById('hint').style.opacity=0},20000);
   checkRotate();resize()}
 
@@ -2097,7 +2097,7 @@ function onDeal(msg){const d=msg.data;if(!d||typeof d!=='object'||!S||d.to!==myP
     case 'cancel':if(TR&&TR.peer===from){log(name+' отменил обмен.');TR=null;closeWin()}break;
     case 'gift':{const o=cleanOffer(d.o);for(const [id,q] of Object.entries(o.i))add(id,q);S.caps+=o.c;sfx.pickup();log(name+' подарил вам: '+offerText(o),'good');saveLocal();break}
     case 'hit':if(M&&M.pvp&&d.m===M.id&&!(S.admin&&S.god)){lastHit={peer:from,name,t:now};hurt(Math.max(0,Math.min(150,+d.dmg||0)),'игрок '+name)}break;
-    case 'killed':{const vk=+d.k||0;if(vk<=-10)addKarma(3,'побеждён бандит '+name);else addKarma(-10,'убит игрок '+name);const c=Math.max(0,Math.min(1e5,Math.floor(+d.c||0)));if(c){S.caps+=c;log('Трофей: '+c+' крыш.','good')}break}
+    case 'killed':{S.stats.pk=(S.stats.pk|0)+1;const vk=+d.k||0;if(vk<=-10)addKarma(3,'побеждён бандит '+name);else addKarma(-10,'убит игрок '+name);const c=Math.max(0,Math.min(1e5,Math.floor(+d.c||0)));if(c){S.caps+=c;log('Трофей: '+c+' крыш.','good')}break}
   }}
 function pvpHit(pe,dmg){dealSend(pe.peer,{t:'hit',dmg:Math.round(Math.min(150,dmg)),m:M.id});floatText(pe.x,pe.y-.9,Math.round(dmg),'#ff9a7a');emit(6,{x:pe.x,y:pe.y-.3,v:3,life:.5,size:2,color:'#7a1a14',type:'blood',g:6,vz:2,z:.4});sfx.hit(pe.x,pe.y)}
 
@@ -2170,11 +2170,43 @@ async function playVoice(data,mime,vol,peer,name){let buf;try{buf=unb64(data).bu
 TABVIEW.admin=adminView;ICO.admin='<svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>';
 {const _sv=TABVIEW.settings;TABVIEW.settings=b=>{_sv(b);adminEntry(b)}}
 
+// ================= РЕЙТИНГ ИГРОКОВ =================
+// Каждый игрок раз в минуту публикует свои показатели (вне Claude — сохранённым сообщением на тех же серверах, в Claude — в общую базу).
+const boardMap=new Map();let boardLast='',boardT=-1e9,rateCat='xp';
+const RCATS=[['xp','Опыт','опыта'],['caps','Крышки','крыш.'],['mk','Мутанты','убито'],['pk','PvP','побед'],['kr','Репутация','очков']];
+function myStats(){let tx=S.xp;for(let l=1;l<S.lvl;l++)tx+=xpFor(l);let mk=0;for(const [k,v] of Object.entries(S.stats.k))if(EN[k]&&!EN[k].human)mk+=v;
+  return {n:S.name.slice(0,16),lv:S.lvl,xp:tx,caps:S.caps,mk,pk:S.stats.pk|0,kr:S.karma|0,at:Date.now()}}
+async function pushRating(force){if(!S)return;if(!S.pid){S.pid=Math.random().toString(36).slice(2,12);dirty=true}const st=myStats();const key=JSON.stringify({...st,at:0});
+  if(!force&&(key===boardLast||now-boardT<60000))return;boardLast=key;boardT=now;
+  if(inClaude()){if(db&&uid)try{await db.doc('board/'+uid).set({...st,k:st.mk,q:S.stats.quests,score:st.xp})}catch(e){}return}
+  try{const cs=await cloud();const s=JSON.stringify(st);for(const c of cs)if(c.connected)c.publish('osadok/v1/board/'+S.pid,s,{retain:true,qos:1})}catch(e){}}
+async function subRating(){if(inClaude())return;try{const cs=await cloud();for(const c of cs){const sub=()=>c.subscribe('osadok/v1/board/+',{qos:0});c.connected?sub():c.once('connect',sub);
+  c.on('message',(tp,buf)=>{if(!tp.startsWith('osadok/v1/board/')||!buf||buf.length>1200)return;try{const d=JSON.parse(new TextDecoder().decode(buf));if(!d||typeof d!=='object')return;const id=tp.slice(16,48);
+    const row={n:(typeof d.n==='string'?cleanText(d.n,16):'')||'Выживший',lv:Math.max(0,+d.lv|0),xp:Math.max(0,+d.xp||0),caps:Math.max(0,+d.caps||0),mk:Math.max(0,+d.mk||0),pk:Math.max(0,+d.pk||0),kr:Math.max(-100,Math.min(100,+d.kr||0)),at:+d.at||0};
+    const old=boardMap.get(id);if(!old||row.at>=old.at)boardMap.set(id,row)}catch(e){}})}}catch(e){}}
+function ratingRows(){const rows=[];
+  if(inClaude()){for(const d of board){if(uid&&d._id===uid)continue;rows.push({n:String(d.n||'Выживший').slice(0,16),lv:d.lv|0,xp:+d.xp||+d.score||0,caps:+d.caps||0,mk:+d.mk||+d.k||0,pk:+d.pk||0,kr:+d.kr||0})}}
+  else for(const [id,r] of boardMap){if(S&&id===S.pid)continue;if(Date.now()-r.at>30*864e5)continue;rows.push(r)}
+  if(S)rows.push({...myStats(),me:true});return rows}
+function ratingView(b){
+  const cb=el('div','cats');for(const [k,n] of RCATS){const x=el('button',null,n);x.setAttribute('aria-pressed',rateCat===k);x.onclick=()=>{rateCat=k;openTab('rating')};cb.append(x)}b.append(cb);
+  const unit=RCATS.find(c=>c[0]===rateCat)[2];const rows=ratingRows().sort((a,b2)=>(b2[rateCat]||0)-(a[rateCat]||0));const myPos=rows.findIndex(r=>r.me);
+  const list=el('div','list');
+  rows.slice(0,25).forEach((r,i)=>{const row=el('div','row'+(r.me?' done':''));const place=el('span','q',i<3?['🥇','🥈','🥉'][i]:String(i+1));place.style.cssText='min-width:2.2em;text-align:center;font-size:'+(i<3?'20px':'14px');
+    const gw=el('div','grow');const nm=el('div','t',(r.me?'Вы — ':'')+r.n);nm.style.color=karmaRank(r.kr|0)[1];gw.append(nm,el('div','s','ур. '+r.lv+' · '+karmaRank(r.kr|0)[0]));
+    row.append(place,gw,el('span','q',Math.round(r[rateCat]||0).toLocaleString('ru-RU')+' '+unit));list.append(row)});
+  if(myPos>=25){const r=rows[myPos];const row=el('div','row done');row.append(el('span','q',String(myPos+1)),Object.assign(el('div','grow'),{}),el('span','q',Math.round(r[rateCat]||0)+' '+unit));row.children[1].append(el('div','t','Вы — '+r.n));list.append(row)}
+  if(rows.length<=1)list.append(el('div','muted small','Пока в рейтинге только вы. Как только другие игроки зайдут в игру, они появятся здесь.'));
+  b.append(list);b.append(el('p','note','Рейтинг обновляется примерно раз в минуту. «Мутанты» — все побеждённые мутанты, «PvP» — победы над игроками в опасных зонах.'))}
+TABVIEW.rating=ratingView;
+ICO.rating='<svg viewBox="0 0 24 24"><path d="M5 20V11M12 20V5M19 20v-7"/><path d="M3 20h18"/></svg>';
+setInterval(()=>{if(S)pushRating()},5000);
+
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
   if(!inClaude()){titleBody.replaceChildren(el('p','muted','Загрузка…'));await restoreSession()}
-  renderTitle();if(ACC.login)cloudCheckNewer()}
+  renderTitle();if(ACC.login)cloudCheckNewer();subRating()}
 try{window.claude?.hot?.snapshot?.(()=>({S}))}catch(e){}
 const hot=window.claude?.hot;hot?.ready?hot.ready(boot):boot(hot?.data??{});
 </script>
