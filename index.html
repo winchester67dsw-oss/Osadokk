@@ -4535,31 +4535,36 @@ TABVIEW.map=b=>{const w=el('div','wmap');b.append(w);const sel=MAPV.sel&&MAPS[MA
 function hideNick(x,y){return !!(M&&M.pvp&&!M.arena&&!(typeof inSafe==='function'&&inSafe(x,y)))}
 
 // ================= НОЧЬ: КРОМЕШНАЯ ТЬМА, ВИДНО ТОЛЬКО С ФОНАРИКОМ =================
+// В помещениях, где живут жители (бар, торговые ряды, мэрия, мастерская, подвал Сени), всегда светло.
+const LITROOM=id=>!!(MAPS[id]&&MAPS[id].interior&&(MAPS[id].safe||NPCS.some(n=>n.map===id)));
 darkLevel=function(cyc){const night=Math.max(0,Math.cos(cyc*Math.PI*2));const em=emState().st==='active'&&!M.interior?.1:0;
+  if(LITROOM(M.id))return .06;
   if(M.interior)return Math.max(M.dark||.5,Math.min(.85,night*.9));
   return Math.min(.97,Math.min(1,night*1.6)*.97+weather.rain*.08+em)};
 
 // ================= ФОНАРИКИ И БАТАРЕЙКИ =================
 Object.assign(ITEMS,{
- fl1:{n:'Фонарик-жучок',k:'res',p:35,r:0,d:'Тусклый, но лучше, чем ничего. Свет — на пару шагов. Включается клавишей L (Д) или кнопкой 🔦. Работает от батареек.'},
- fl2:{n:'Карманный фонарь',k:'res',p:140,r:1,d:'Обычный довоенный фонарь. Луч средней дальности. Работает от батареек.'},
- fl3:{n:'Тактический фонарь',k:'res',p:480,r:2,d:'Яркий узкий луч, бьёт далеко. Работает от батареек.'},
- fl4:{n:'Прожектор «Луч»',k:'res',p:1800,r:3,d:'Переносной прожектор. Заливает светом всё впереди, но быстро ест батарейки.'},
+ fl1:{n:'Фонарик-жучок',k:'light',p:35,r:0,d:'Тусклый, но лучше, чем ничего. Наденьте в слот «Фонарик» и включайте клавишей L (Д) или кнопкой 🔦. Работает от батареек.'},
+ fl2:{n:'Карманный фонарь',k:'light',p:140,r:1,d:'Обычный довоенный фонарь. Луч средней дальности. Работает от батареек.'},
+ fl3:{n:'Тактический фонарь',k:'light',p:480,r:2,d:'Яркий узкий луч, бьёт далеко. Работает от батареек.'},
+ fl4:{n:'Прожектор «Луч»',k:'light',p:1800,r:3,d:'Переносной прожектор. Заливает светом всё впереди, но быстро ест батарейки.'},
  cells:{n:'Батарейки',k:'res',p:14,r:0,d:'Комплект пальчиковых батареек. Полностью заряжает фонарик.'}});
 Object.assign(WT,{fl1:.1,fl2:.25,fl3:.35,fl4:1.6,cells:.1});
 const FLS={fl1:{r:120,a:.28,s:.7,min:7},fl2:{r:200,a:.36,s:.85,min:9},fl3:{r:290,a:.42,s:.95,min:11},fl4:{r:430,a:.62,s:1,min:7}};
 const FLIDS=['fl4','fl3','fl2','fl1'];
-const myFlId=()=>{if(!S||!S.flOn)return '';return FLIDS.find(id=>(S.inv[id]||0)>0)||''};
+// Фонарик носится в отдельном слоте «Фонарик»; надетый, как и прочее снаряжение, не входит в вес.
+SLOTS.light='Фонарик';if(!GEAR.includes('light'))GEAR.push('light');SLOTPOS.push(['light','left']);
+const myFlId=()=>{if(!S||!S.flOn)return '';const id=S.eq.light;return id&&FLS[id]&&(S.inv[id]||0)>0?id:''};
 const myFl=()=>{const id=myFlId();return id?FLS[id]:null};
 const flAmb=()=>{const f=myFl();return f?(f===FLS.fl4?70:48):30};
 function flCharge(id){S.flc=S.flc||{};if(S.flc[id]==null)S.flc[id]=1;return S.flc[id]}
-function toggleFl(force){if(!S)return;const id=FLIDS.find(i=>(S.inv[i]||0)>0);if(!id){S.flOn=false;log('У вас нет фонарика. Его можно купить у Калибра или найти в Пустоши.','bad');updFlBtn();return}
+function toggleFl(force){if(!S)return;if(!(S.eq.light&&S.inv[S.eq.light]>0)){const b=FLIDS.find(i=>(S.inv[i]||0)>0);S.eq.light=b||null;if(b){log('Надето: '+ITEMS[b].n);statCache=null}}const id=S.eq.light;if(!id){S.flOn=false;log('У вас нет фонарика. Его можно купить у Калибра или найти в Пустоши.','bad');updFlBtn();return}
   const on=force!=null?force:!S.flOn;if(on&&flCharge(id)<=0&&!swapCells(id)){log(ITEMS[id].n+' разряжен. Нужны батарейки.','bad');S.flOn=false;updFlBtn();return}
   S.flOn=on;sfx.click&&sfx.click();log(on?'🔦 '+ITEMS[id].n+' включён · заряд '+Math.round(flCharge(id)*100)+'%':'🔦 Фонарик выключен.');sendPresence();updFlBtn();dirty=true}
 function swapCells(id){if((S.inv.cells||0)<=0)return false;take('cells',1);S.flc[id]=1;log('🔋 Вставили новые батарейки: '+ITEMS[id].n+' заряжен.','good');return true}
 setInterval(()=>{if(!S||paused||!S.flOn)return;const id=myFlId();if(!id){S.flOn=false;updFlBtn();sendPresence();return}const f=FLS[id];flCharge(id);S.flc[id]=Math.max(0,S.flc[id]-1/(f.min*60));
   if(S.flc[id]<=0){if(!swapCells(id)){S.flOn=false;log('🔦 '+ITEMS[id].n+' сел. Нужны батарейки.','bad');sendPresence()}}else if(Math.abs(S.flc[id]-.1)<1/(f.min*60))log('🔦 Заряд фонарика: 10%.','bad');updFlBtn()},1000);
-function updFlBtn(){const b=document.getElementById('bLight');if(!b)return;const id=FLIDS.find(i=>S&&(S.inv[i]||0)>0);b.classList.toggle('on',!!(S&&S.flOn));b.textContent=S&&S.flOn&&id?'🔦'+Math.round(flCharge(id)*100):'🔦'}
+function updFlBtn(){const b=document.getElementById('bLight');if(!b)return;const id=S&&S.eq.light;b.classList.toggle('on',!!(S&&S.flOn));b.textContent=S&&S.flOn&&id?'🔦'+Math.round(flCharge(id)*100):'🔦'}
 {const a=document.getElementById('acts');if(a){const b=document.createElement('button');b.id='bLight';b.textContent='🔦';b.setAttribute('aria-label','Фонарик');b.onclick=e=>{e.preventDefault();toggleFl()};a.append(b)}
   const st=document.createElement('style');st.textContent='#acts #bLight{right:252px;bottom:150px;width:52px;height:52px;font-size:13px;padding:0}#acts #bLight.on{border-color:#ffe08a;box-shadow:0 0 14px rgba(255,224,138,.45);color:#ffe08a}';document.head.append(st)}
 addEventListener('keydown',e=>{if(!S||!titleEl.hidden||!ov.hidden||document.activeElement===chatIn||e.repeat)return;const k=keyOf(e);if(k==='l'||k==='д'){e.preventDefault();toggleFl()}});
@@ -4567,13 +4572,16 @@ addEventListener('keydown',e=>{if(!S||!titleEl.hidden||!ov.hidden||document.acti
 peerLights=function(){const out=[];if(!room||!M)return out;for(const p of room.peers()){if(p.isMe||p.sameTab)continue;const pr=p.presence||{};if(pr.m!==M.id||typeof pr.x!=='number')continue;const fl=pr.fl===undefined?'fl2':pr.fl;if(!fl)continue;const pp=peerPos.get(p.peer);out.push({x:pp?pp.x:pr.x,y:pp?pp.y:pr.y,a:typeof pr.a==='number'?pr.a:Math.PI/2,fl})}return out};
 // продажа и лут
 SELL.kalibr.push(['fl1',40],['fl2',160,3],['fl3',520,10],['cells',16]);SELL.seny.push(['cells',18],['fl1',45]);SELL.hmury&&SELL.hmury.push(['cells',20],['fl2',170],['fl3',560,10],['fl4',1900,20]);
-LOOTT.push(['cells',1,2,2.2,0],['fl1',1,1,.5,0],['fl2',1,1,.35,1],['fl3',1,1,.18,2],['fl4',1,1,.05,3]);
-for(const k of ['Z','M','k'])CONT[k]&&CONT[k].push(['cells',k==='Z'?1.2:.6]);
-for(const m of Object.values(MAPS))if(m.loot&&m.loot.pool&&!m.safe){m.loot.pool.push(['cells',4]);if((m.tier|0)>=2)m.loot.pool.push(['fl2',.6]);if((m.tier|0)>=3)m.loot.pool.push(['fl3',.3])}
+// батарейки попадаются очень часто: на земле, в ящиках, в шкафах и в наградах за часть заданий
+LOOTT.push(['cells',1,3,6,0],['fl1',1,1,.5,0],['fl2',1,1,.35,1],['fl3',1,1,.18,2],['fl4',1,1,.05,3]);
+for(const k of ['Z','M','k','u','w'])CONT[k]&&CONT[k].push(['cells',k==='Z'?2.5:1.3]);
+{let i=0;for(const q of Object.values(QUESTS)){if(i++%2)continue;q.rew.items=q.rew.items||{};q.rew.items.cells=(q.rew.items.cells||0)+1+(q.rew.xp>200?1:0)}}
+for(const m of Object.values(MAPS))if(m.loot&&m.loot.pool&&!m.safe){m.loot.pool.push(['cells',12]);if((m.tier|0)>=2)m.loot.pool.push(['fl2',.6]);if((m.tier|0)>=3)m.loot.pool.push(['fl3',.3])}
 // 3D: свет фонарика зависит от модели, без фонарика ночью почти ничего не видно
 if(typeof lights3==='function'){const _l3=lights3;lights3=function(t){_l3(t);const cyc=timeLock==='day'?.5:timeLock==='night'?0:(Date.now()/1000%5760)/5760;const dk=darkLevel(cyc);const out=!M.interior;
   if(out){const n=Math.max(0,Math.min(1,(dk-.35)/.6));L3.hemi.intensity*=1-.93*n;L3.sun.intensity*=1-.97*n;if(n>.5){SC.fog.near=Math.max(4,SC.fog.near*(1-n*.7));SC.fog.far=Math.max(14,SC.fog.far*(1-n*.6))}}
-  const f=myFl();const need=dk>.25||M.interior;L3.flash.intensity=f&&need?1.1+f.s*1.6:0;if(f){L3.flash.distance=f.r/14;L3.flash.angle=f.a+.06}
+  if(LITROOM(M.id)){L3.hemi.intensity=1;L3.hemi.color.set('#fff0dc');L3.hemi.groundColor.set('#6a5a48')}
+  const f=myFl();const need=(dk>.25||M.interior)&&!LITROOM(M.id);L3.flash.intensity=f&&need?1.1+f.s*1.6:0;if(f){L3.flash.distance=f.r/14;L3.flash.angle=f.a+.06}
   const pl=peerLights().sort((a,b)=>Math.hypot(a.x-P.x,a.y-P.y)-Math.hypot(b.x-P.x,b.y-P.y));L3.pflash.forEach((s,i)=>{const q=pl[i];if(q&&need){const fs=FLS[q.fl]||FLS.fl2;s.intensity=1+fs.s;s.distance=fs.r/14;s.angle=fs.a+.06;s.position.set(q.x,1.15,q.y);s.target.position.set(q.x+Math.cos(q.a)*6,.2,q.y+Math.sin(q.a)*6)}else s.intensity=0})}}
 
 // ================= МУТАНТЫ: ЧЕМ ДАЛЬШЕ ОТ ПОСЁЛКА, ТЕМ СИЛЬНЕЕ =================
@@ -4642,7 +4650,8 @@ let LABSAFE=null;
 function notePos(l){const m=MAPS['lab'+l];if(!m)return null;return randFree(m.g,rng(LW*131+l*7),(x,y)=>notExit(m,x,y)&&Math.hypot(x-2,y-2)>8&&(!LABSAFE||l!==3||Math.hypot(x-LABSAFE[0],y-LABSAFE[1])>4),2000)}
 {const _aq=addQuestPickups;addQuestPickups=function(mid,r){_aq(mid,r);const mm=/^lab([123])$/.exec(mid);if(!mm||!S)return;const id='labnote'+mm[1];if((S.inv[id]||0)>0||r.pickups.some(p=>p.item===id))return;const pos=notePos(+mm[1]);if(pos)r.pickups.push({item:id,q:1,x:pos[0]+.5,y:pos[1]+.5,gone:0,quest:1,keep:1})}}
 // записки прошлой недели истлевают
-{const _as=afterStart;afterStart=async function(){if(S){if(S.flags.lw!==LW){let had=0;for(let i=1;i<=3;i++)if(S.inv['labnote'+i]){delete S.inv['labnote'+i];had=1}S.flags.lw=LW;if(had)log('Старые записки из «Х-9» истлели — код сейфа сменился.','sys')}updFlBtn()}return _as()}}
+{const _as=afterStart;afterStart=async function(){if(S){if(S.flags.lw!==LW){let had=0;for(let i=1;i<=3;i++)if(S.inv['labnote'+i]){delete S.inv['labnote'+i];had=1}S.flags.lw=LW;if(had)log('Старые записки из «Х-9» истлели — код сейфа сменился.','sys')}
+    if(!S.eq.light){const b=FLIDS.find(i=>(S.inv[i]||0)>0);if(b)S.eq.light=b}updFlBtn()}return _as()}}
 // люк лаборатории открывается только ключ-картой
 let kcWarn=0;
 {const _ce=checkExit;checkExit=function(){const tx=Math.floor(P.x),ty=Math.floor(P.y);for(const e of M.exits)if(e.to==='lab1'&&M.id==='city'&&tx>=e.x&&tx<e.x+e.w&&ty>=e.y&&ty<e.y+e.h&&!(S.inv.keycard>0)&&!(S.admin&&S.god)){
