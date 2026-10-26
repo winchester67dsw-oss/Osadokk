@@ -1039,7 +1039,7 @@ const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
 const night=document.createElement('canvas'),nctx=night.getContext('2d');
 let VW=0,VH=0,ZOOM=1,DPR=1,camX=0,camY=0;
 function resize(){const r=cv.getBoundingClientRect();DPR=Math.min(QUAL.dpr,window.devicePixelRatio||1);cv.width=Math.max(1,Math.round(r.width*DPR));cv.height=Math.max(1,Math.round(r.height*DPR));
-  IS_COARSE=coarse();if(IS_COARSE)ZOOM=Math.max(1,Math.min(2.4,Math.min(r.width/(13.5*T),r.height/(7.6*T))));else ZOOM=Math.max(1,Math.min(2.2,r.width/(18*T)));VW=r.width/ZOOM;VH=r.height/ZOOM;night.width=Math.ceil(cv.width/2);night.height=Math.ceil(cv.height/2)}
+  IS_COARSE=coarse();if(IS_COARSE)ZOOM=Math.max(.85,Math.min(2.1,Math.min(r.width/(16*T),r.height/(9*T))));else ZOOM=Math.max(1,Math.min(2.2,r.width/(18*T)));VW=r.width/ZOOM;VH=r.height/ZOOM;night.width=Math.ceil(cv.width/2);night.height=Math.ceil(cv.height/2)}
 new ResizeObserver(resize).observe(cv);
 const OL='rgba(16,11,6,.8)';
 function strokeO(c,w=.9){c.strokeStyle=OL;c.lineWidth=w;c.stroke()}
@@ -1675,7 +1675,7 @@ let lastBoard='';
 async function pushBoard(){if(!db||!uid||!S)return;const d={n:S.name.slice(0,16),lv:S.lvl,k:kills(S),q:S.stats.quests,score:S.lvl*10000+S.xp};const js=JSON.stringify(d);if(js===lastBoard)return;lastBoard=js;try{await db.doc('board/'+uid).set(d)}catch(e){}}
 let lastPres='';
 function sendPresence(){if(!room||!S||!M)return;const e={};for(const k of GEAR)if(S.eq[k])e[k]=S.eq[k];
-  const pr={m:M.id,x:Math.round(P.x*100)/100,y:Math.round(P.y*100)/100,a:Math.round(P.a*100)/100,w:curW(),sh:P.shotN%1000,n:S.name.slice(0,16),lv:S.lvl,k:S.karma|0,adm:S.admin?1:0,v:5,sq:(typeof SQ!=='undefined'&&SQ.id)||'',hp:Math.round(S.hp/effMax()*100),ag:Math.round((1+stats().aggroPct/100)*100)/100,lk:{g:S.lk.g,skin:S.lk.skin,hair:S.lk.hair,hc:S.lk.hc,outfit:S.lk.outfit,beard:S.lk.beard||'none',eye:S.lk.eye|0},e};
+  const pr={m:M.id,x:Math.round(P.x*100)/100,y:Math.round(P.y*100)/100,a:Math.round(P.a*100)/100,w:curW(),sh:P.shotN%1000,n:S.name.slice(0,16),lv:S.lvl,k:S.karma|0,adm:S.admin?1:0,v:5,pid:S.pid||'',dv:typeof DEVID!=='undefined'?DEVID:'',sq:(typeof SQ!=='undefined'&&SQ.id)||'',hp:Math.round(S.hp/effMax()*100),ag:Math.round((1+stats().aggroPct/100)*100)/100,lk:{g:S.lk.g,skin:S.lk.skin,hair:S.lk.hair,hc:S.lk.hc,outfit:S.lk.outfit,beard:S.lk.beard||'none',eye:S.lk.eye|0},e};
   const js=JSON.stringify(pr);if(js===lastPres)return;lastPres=js;room.presence(pr).catch(()=>{})}
 // Онлайн без Claude (itch.io и любой сайт): все игроки подключаются к общим публичным серверам-посредникам (MQTT),
 // сразу к двум — если один недоступен, связь идёт через второй. Отдаёт тот же набор вызовов, что и комната Claude.
@@ -1712,7 +1712,7 @@ async function p2pRoom(){
 async function initOnline(){
   if(!window.claude||!window.claude.use){
     try{room=await p2pRoom()}catch(e){room=null;return}
-    room.on('chat',m=>{const d=m.data||{};const t=typeof d.t==='string'?cleanText(d.t,120):'';if(!t)return;const nm=(typeof d.n==='string'?cleanText(d.n,16):'')||'Выживший';if(d.sq){if(typeof SQ!=='undefined'&&SQ.id===d.sq)addChat(nm,t,m.sameTab,'squad');return}if(d.z){zoneIn(t,m.sameTab);return}logChat(nm,t,m.sameTab);bubbles.set(m.sameTab?'me':m.peer,{text:t,until:now+5000})});
+    room.on('chat',m=>{const d=m.data||{};const t=typeof d.t==='string'?cleanText(d.t,120):'';if(!t)return;const nm=(typeof d.n==='string'?cleanText(d.n,16):'')||'Выживший';if(!m.sameTab&&typeof modMuted==='function'&&modMuted(nm,'chat'))return;if(d.sq){if(typeof SQ!=='undefined'&&SQ.id===d.sq)addChat(nm,t,m.sameTab,'squad');return}if(d.z){zoneIn(t,m.sameTab);return}logChat(nm,t,m.sameTab);bubbles.set(m.sameTab?'me':m.peer,{text:t,until:now+5000})});
     room.onPeers(ch=>{for(const p of ch.joined){if(S&&p.presence&&typeof p.presence.n==='string')log(cleanText(p.presence.n,16)+' вошёл(ла) в Пустошь.')}for(const p of ch.left)peerPos.delete(p.peer);updateHud()});
     room.on('deal',onDeal);room.on('voice',onVoice);room.on('mob',onMob);
     lastPres='';sendPresence();updateHud();return}
@@ -1721,7 +1721,7 @@ async function initOnline(){
   if(db){if(uid&&!S){try{const snap=await db.doc('data/users/'+uid+'/save').get();if(snap.exists){const d=snap.data();const loc=loadLocal();if(!loc||(d.at||0)>(loc.at||0)){const rs=migrate(JSON.parse(d.s));if(rs){remoteSave=rs;if(!S)renderTitle()}}}}catch(e){}}
     try{db.collection('board').orderBy('score','desc').limit(60).onSnapshot(s=>{board=s.docs.map(d=>({...d.data(),_id:d.id}))},()=>{})}catch(e){}}
   try{room=await window.claude.use('room')}catch(e){room=null}
-  if(room){room.on('deal',onDeal,()=>{});room.on('chat',m=>{const d=m.data||{};const t=typeof d.t==='string'?cleanText(d.t,120):'';if(!t)return;const nm=(typeof d.n==='string'?cleanText(d.n,16):'')||'Выживший';if(d.sq){if(typeof SQ!=='undefined'&&SQ.id===d.sq)addChat(nm,t,m.sameTab,'squad');return}if(d.z){zoneIn(t,m.sameTab);return}logChat(nm,t,m.sameTab);bubbles.set(m.sameTab?'me':m.peer,{text:t,until:now+5000})},()=>{});
+  if(room){room.on('deal',onDeal,()=>{});room.on('chat',m=>{const d=m.data||{};const t=typeof d.t==='string'?cleanText(d.t,120):'';if(!t)return;const nm=(typeof d.n==='string'?cleanText(d.n,16):'')||'Выживший';if(!m.sameTab&&typeof modMuted==='function'&&modMuted(nm,'chat'))return;if(d.sq){if(typeof SQ!=='undefined'&&SQ.id===d.sq)addChat(nm,t,m.sameTab,'squad');return}if(d.z){zoneIn(t,m.sameTab);return}logChat(nm,t,m.sameTab);bubbles.set(m.sameTab?'me':m.peer,{text:t,until:now+5000})},()=>{});
     room.onPeers(ch=>{for(const p of ch.joined){if(!p.sameTab&&p.kind==='viewer'&&S&&p.presence&&typeof p.presence.n==='string')log(cleanText(p.presence.n,16)+' вошёл(ла) в Пустошь.')}for(const p of ch.left)peerPos.delete(p.peer);updateHud()},()=>{room=null;updateHud()});
     sendPresence();updateHud()}}
 
@@ -2980,7 +2980,7 @@ authScreen=function(mode='login'){
     go.disabled=true;const txt=go.textContent;
     try{
       if(mode==='reg'){if(accs[key]){err.textContent='Такой аккаунт уже есть на этом устройстве. Войдите в него.';go.disabled=false;return}
-        go.textContent='Проверяем логин…';let taken=null;try{taken=await cloudGet(await accTopic(login),3500)}catch(x){}
+        go.textContent='Проверяем логин…';let taken=null;try{taken=await regProbe(login)}catch(x){err.textContent='Не удалось проверить, свободен ли логин. Проверьте интернет и попробуйте ещё раз.';go.disabled=false;go.textContent=txt;return}
         if(taken){err.textContent='Этот логин уже занят. Придумайте другой.';go.disabled=false;go.textContent=txt;return}
         const salt=b64(crypto.getRandomValues(new Uint8Array(16)));const kb=await deriveKey(pass,salt);accs[key]={login,salt,ver:await sha(kb),at:Date.now()};setAccounts(accs);
         await useAccount(login,kb,salt,cb.checked);try{localStorage.setItem('osadok_rules','1')}catch(x){}
@@ -4246,6 +4246,248 @@ const LOGO_SRC='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAUDBAQEA
   function otherHelp(){modal('Установка игры',[el('p',null,'Откройте игру в Chrome или Edge.'),el('p',null,'На компьютере: значок установки справа в адресной строке или меню ⋮ → «Установить приложение».'),el('p',null,'На телефоне: меню ⋮ → «Добавить на главный экран» / «Установить приложение».')])}
   function modal(h,ps){const o=el('div','overlay');o.style.zIndex=200;const c=el('div','tcard');c.style.cssText='max-width:440px;margin:auto;padding:18px 20px;border-radius:14px';c.append(el('h3',null,h),...ps,btn('Понятно',()=>o.remove(),'btn primary'));o.append(c);o.addEventListener('click',e=>{if(e.target===o)o.remove()});document.body.append(o)}
 })();
+
+// ================= НОВОСТИ ИГРЫ =================
+// Лента хранится в облаке одним retained-сообщением и подписана ключом ECDSA.
+// Закрытый ключ лежит в облаке зашифрованным кодом администратора, поэтому публиковать может только тот, кто знает код.
+// Если в PINNED_PUB вписан открытый ключ, игроки доверяют только ему (защита от подмены ключа).
+const NEWS_T='osadok/'+(TESTROOM?'t_'+TESTROOM:'v1')+'/news',NEWSK_T=NEWS_T+'key';
+const PINNED_PUB=null;
+const NEWS={items:[],at:0,loaded:false,bad:false,priv:null,code:null};
+const NTAG={new:['Новое','#7ee07a'],fix:['Исправлено','#5ad8ff'],event:['Ивент','#f2a64a'],info:['Объявление','#d8c8a8']};
+const ECP={name:'ECDSA',namedCurve:'P-256'},ECS={name:'ECDSA',hash:'SHA-256'};
+const newsSeen=()=>{try{return +localStorage.getItem('osadok_news_seen')||0}catch(e){return 0}};
+const newsUnread=()=>NEWS.items.filter(n=>n.at>newsSeen()).length;
+function markNewsSeen(){const m=NEWS.items.reduce((a,n)=>Math.max(a,n.at),0);try{localStorage.setItem('osadok_news_seen',String(m))}catch(e){}updNewsBadges()}
+function updNewsBadges(){const n=newsUnread();for(const b of document.querySelectorAll('.newsBadge')){b.hidden=!n;b.textContent=n>9?'9+':String(n)}}
+async function newsPub(){if(PINNED_PUB)return PINNED_PUB;const k=await cloudGet(NEWSK_T,4000);return k&&k.pub}
+async function loadNews(){try{const p=await cloudGet(NEWS_T,5000);NEWS.loaded=true;if(!p){NEWS.items=[];NEWS.bad=false;updNewsBadges();return}
+  const pub=await newsPub();let ok=false;if(pub&&p.sig){try{const key=await crypto.subtle.importKey('jwk',pub,ECP,false,['verify']);ok=await crypto.subtle.verify(ECS,key,unb64(p.sig),enc.encode(p.ct))}catch(e){}}
+  NEWS.bad=!ok;NEWS.items=ok?JSON.parse(p.ct):[];NEWS.at=p.at||0;updNewsBadges()}catch(e){NEWS.loaded=true}}
+// Ключ администратора: расшифровываем из облака, а при первом использовании (или если ключ подменили) создаём новый.
+async function newsKey(code){code=code.trim().toUpperCase();if(await shaHex(code)!==ADMIN_HASH)throw new Error('code');
+  const k=await cloudGet(NEWSK_T,4000);if(k&&k.salt){try{const jwk=await decryptSave(k,await deriveKey('news:'+code,k.salt));NEWS.priv=await crypto.subtle.importKey('jwk',jwk,ECP,false,['sign']);NEWS.code=code;return}catch(e){}}
+  const kp=await crypto.subtle.generateKey(ECP,true,['sign','verify']);const jwk=await crypto.subtle.exportKey('jwk',kp.privateKey);const pub=await crypto.subtle.exportKey('jwk',kp.publicKey);
+  const salt=b64(crypto.getRandomValues(new Uint8Array(16)));const raw=await deriveKey('news:'+code,salt);const iv=crypto.getRandomValues(new Uint8Array(12));
+  const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},await aesKey(raw),enc.encode(JSON.stringify(jwk)));
+  await cloudPut(NEWSK_T,{v:1,at:Date.now(),salt,iv:b64(iv),ct:b64(ct),pub:{kty:pub.kty,crv:pub.crv,x:pub.x,y:pub.y}});NEWS.priv=kp.privateKey;NEWS.code=code}
+async function saveNews(items){items=items.slice().sort((a,b)=>b.at-a.at).slice(0,40);const ct=JSON.stringify(items);const sig=b64(await crypto.subtle.sign(ECS,NEWS.priv,enc.encode(ct)));
+  await cloudPut(NEWS_T,{v:1,at:Date.now(),ct,sig});NEWS.items=items;NEWS.bad=false;markNewsSeen()}
+
+{const st=document.createElement('style');st.textContent=`
+.newsBadge{position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#e0432a;color:#fff;font:700 10.5px/17px var(--mono,monospace);text-align:center;box-shadow:0 0 0 2px #0c0a08}
+#newsTitleBtn{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));z-index:5;display:flex;align-items:center;gap:7px;padding:9px 14px;border-radius:12px;background:rgba(28,22,15,.88);border:1px solid #5a4430;color:#f0dcb8;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+#newsTitleBtn:hover{border-color:#e08a30}#newsTitleBtn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8}
+.newsList{display:flex;flex-direction:column;gap:10px}
+.newsItem{padding:12px 14px;border-radius:12px;background:rgba(255,240,210,.035);border:1px solid rgba(255,220,160,.1);position:relative}
+.newsItem.unread{border-color:rgba(240,166,74,.55);box-shadow:inset 3px 0 0 #f2a64a}
+.newsItem .nh{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:6px}.newsItem .nt{font-size:15.5px;font-weight:700;color:#f6e6c8;flex:1 1 200px}
+.newsItem .ntag{font:700 10.5px var(--mono,monospace);text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:6px;border:1px solid currentColor}
+.newsItem .nd{color:#9c8b70;font-size:12px}.newsItem .nb{white-space:pre-wrap;line-height:1.5;color:#d8ccb4;overflow-wrap:anywhere}
+.newsItem .nadm{display:flex;gap:6px;margin-top:8px}
+.newsEd{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:12px;border:1px dashed #6a5034;margin-bottom:14px}
+.newsEd input,.newsEd textarea,.newsEd select{width:100%;background:rgba(12,10,8,.75);border:1px solid #4a3a28;border-radius:9px;color:inherit;padding:8px 10px;font:inherit}
+.newsEd textarea{min-height:110px;resize:vertical}.newsEd .r{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.newsEd .r>*{flex:1 1 140px}`;document.head.append(st)}
+const NEWS_ICO='<svg viewBox="0 0 24 24"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v8a2 2 0 0 1-2 2"/><path d="M7 9h7M7 12h7M7 15h5"/></svg>';
+const fmtNewsDate=t=>{try{return new Date(t).toLocaleString('ru-RU',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}};
+
+function openNews(){const seen=newsSeen();openWin('Новости игры',body=>{const box=el('div');body.append(box);render();
+    if(!NEWS.loaded||Date.now()-NEWS.lastPull>30000){NEWS.lastPull=Date.now();loadNews().then(()=>{if(box.isConnected)render()})}
+    function render(){box.replaceChildren();if(S&&S.admin)box.append(editor());
+      if(!NEWS.loaded){box.append(el('p','muted','Загружаем новости…'));return}
+      if(NEWS.bad)box.append(el('p','muted small','Лента новостей не прошла проверку подлинности и скрыта.'));
+      if(!NEWS.items.length){box.append(el('p','muted','Пока новостей нет. Загляните позже!'));return}
+      const list=el('div','newsList');for(const n of NEWS.items){const it=el('div','newsItem'+(n.at>seen?' unread':''));const h=el('div','nh');const tg=NTAG[n.tag]||NTAG.info;const tagEl=el('span','ntag',tg[0]);tagEl.style.color=tg[1];
+        h.append(tagEl,el('span','nt',n.title||'Без заголовка'),el('span','nd',fmtNewsDate(n.at)));it.append(h,el('div','nb',n.body||''));
+        if(S&&S.admin){const a=el('div','nadm');a.append(btn('Изменить',()=>{edit=n;render();box.scrollIntoView&&box.parentElement.scrollTo({top:0,behavior:'smooth'})}),btn('Удалить',()=>act(async()=>{if(!confirm('Удалить новость «'+(n.title||'')+'»?'))return;await saveNews(NEWS.items.filter(x=>x.id!==n.id))},'Новость удалена.')));it.append(a)}
+        list.append(it)}box.append(list)}
+    let edit=null,busy=false,msg=null;
+    async function act(fn,okText){if(busy)return;busy=true;msg=['muted','Сохраняем…'];render();try{if(!NEWS.priv)throw new Error('nokey');await fn();msg=['good',okText];edit=null}catch(e){msg=['bad',e.message==='nokey'?'Сначала введите код администратора.':e.message==='code'?'Неверный код администратора.':'Не удалось сохранить: нет связи с облаком.']}busy=false;render()}
+    function editor(){const ed=el('div','newsEd');ed.append(el('div','sec',edit?'Изменить новость':'Новая новость'));
+      if(!NEWS.priv){const r=el('div','r');const ci=el('input');ci.type='password';ci.placeholder='Код администратора';ci.autocomplete='off';
+        r.append(ci,btn('Подтвердить',async()=>{if(busy)return;busy=true;msg=['muted','Проверяем код…'];render();try{await newsKey(ci.value);msg=['good','Код принят. Можно публиковать.']}catch(e){msg=['bad',e.message==='code'?'Неверный код администратора.':'Нет связи с облаком, попробуйте ещё раз.']}busy=false;render()},'btn primary'));
+        ed.append(el('p','muted small','Чтобы публиковать, один раз за сессию подтвердите код администратора. Новости подписываются, подделать их нельзя.'),r)}
+      else{const ti=el('input');ti.placeholder='Заголовок, например «Осенний ивент начался!»';ti.maxLength=90;ti.value=edit?edit.title:'';
+        const sel=el('select');for(const [k,[n]] of Object.entries(NTAG)){const o=el('option',null,n);o.value=k;sel.append(o)}sel.value=edit?edit.tag||'info':'new';
+        const ta=el('textarea');ta.placeholder='Что изменилось в игре: новые функции, исправления, события…';ta.maxLength=3000;ta.value=edit?edit.body:'';
+        const r=el('div','r');r.append(sel,btn(edit?'Сохранить изменения':'Опубликовать',()=>{const title=ti.value.trim(),bodyT=ta.value.trim();if(!title&&!bodyT){msg=['bad','Напишите заголовок или текст.'];render();return}
+          act(async()=>{const items=NEWS.items.filter(x=>!edit||x.id!==edit.id);items.unshift({id:edit?edit.id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),at:edit?edit.at:Date.now(),title,body:bodyT,tag:sel.value,by:S.name});await saveNews(items)},edit?'Новость обновлена.':'Новость опубликована — её увидят все игроки.')},'btn primary'));
+        if(edit)r.append(btn('Отмена',()=>{edit=null;render()}));ed.append(ti,ta,r)}
+      if(msg){const p=el('p','small',msg[1]);p.style.color=msg[0]==='bad'?'#ff7a5a':msg[0]==='good'?'#7ee07a':'#a8977c';ed.append(p)}return ed}
+  });ov.style.zIndex=titleEl.hidden?'':'40';markNewsSeen()}
+NEWS.lastPull=0;
+
+// Кнопка на экране входа (сверху справа) и в игре — на верхней панели рядом с чатом.
+(function(){const t=document.getElementById('title');if(t){const b=document.createElement('button');b.id='newsTitleBtn';b.innerHTML=NEWS_ICO+'<span>Новости</span><span class="newsBadge" hidden>0</span>';b.onclick=openNews;t.append(b)}
+  const tb=document.getElementById('topbar');if(tb){const b=document.createElement('button');b.id='newsBtn';b.title='Новости игры (N)';b.setAttribute('aria-label','Новости игры');b.innerHTML=NEWS_ICO+'<span class="badge newsBadge" hidden>0</span>';b.onclick=()=>{openNews();b.blur()};tb.insertBefore(b,document.getElementById('chatBtn'))}
+  addEventListener('keydown',e=>{if(!S||!titleEl.hidden||!ov.hidden||document.activeElement===chatIn||e.repeat)return;const k=keyOf(e);if(k==='n'||k==='т'){e.preventDefault();openNews()}});
+  NEWS.lastPull=Date.now();loadNews();setInterval(()=>{if(!document.hidden){NEWS.lastPull=Date.now();loadNews()}},5*60000)})();
+
+// ================= ОДИН ПЕРСОНАЖ НА АККАУНТ =================
+// Проверка облака с подтверждением от брокера: после SUBACK retained-сообщение приходит сразу,
+// поэтому «подписка подтверждена, а сохранения нет» значит, что персонажа действительно нет.
+async function cloudProbe(topic,wait=7000){const cs=await cloud();return new Promise(res=>{let best=null,done=false,acked=false;const hs=[];
+  const finish=sure=>{if(done)return;done=true;clearTimeout(tm);for(const [c,h] of hs){c.removeListener('message',h);try{c.unsubscribe(topic)}catch(e){}}res({pkt:best,sure:!!best||sure})};
+  const tm=setTimeout(()=>finish(acked),wait);
+  for(const c of cs){const h=(tp,buf)=>{if(tp!==topic)return;try{const d=JSON.parse(dec.decode(buf));if(d&&d.ct&&(!best||(d.at||0)>(best.at||0)))best=d}catch(e){}};hs.push([c,h]);c.on('message',h);
+    const sub=()=>c.subscribe(topic,{qos:1},err=>{if(err)return;acked=true;setTimeout(()=>finish(true),1500)});c.connected?sub():c.once('connect',sub)}})}
+const ONE={state:null};// null — не проверяли, 'busy', 'empty', 'fail'
+async function accPid(){return (await sha('osadok-pid:'+ACC.login.toLowerCase())).replace(/[^A-Za-z0-9]/g,'').slice(0,10)}
+async function probeChar(){ONE.state='busy';try{const r=await cloudProbe(ACC.topic);if(r.pkt){const s=migrate(await decryptSave(r.pkt,ACC.keyB64));if(s){remoteSave=s;ONE.state=null;return 'found'}}ONE.state=r.sure?'empty':'fail'}catch(e){ONE.state='fail'}return ONE.state}
+{const _rt=renderTitle;renderTitle=function(){
+  if(banScreen())return;
+  if(!inClaude()&&ACC.login&&!remoteSave&&!loadLocal()&&ONE.state!=='empty'){titleBody.replaceChildren();const box=el('div','auth');box.append(el('div','sec','Аккаунт: '+ACC.login));
+    if(ONE.state==='fail'){box.append(el('p',null,'Не удалось проверить облако — без этого нельзя понять, есть ли у вас персонаж.'),el('p','muted small','Чтобы не появилось двух персонажей, создать нового можно только после проверки.'));const r=el('div','startrow');r.append(btn('Повторить',()=>{ONE.state=null;renderTitle()},'btn primary'),btn('Выйти из аккаунта',logout));box.append(r)}
+    else{box.append(el('p',null,'Ищем вашего персонажа в облаке…'),el('p','muted small','Обычно это занимает пару секунд.'));if(ONE.state!=='busy')probeChar().then(()=>{if(!S)renderTitle()})}
+    titleBody.append(box);titleSide&&titleSide();return}
+  _rt();
+  // У аккаунта один персонаж: кнопку «Новый персонаж» убираем, если персонаж уже есть.
+  if(ACC.login&&(remoteSave||loadLocal()))for(const b of titleBody.querySelectorAll('button'))if(b.textContent==='Новый персонаж')b.remove()}}
+{const _sg=startGame;startGame=function(save,fresh){
+  if(banScreen())return;
+  if(fresh&&ACC.login&&!inClaude()&&!save.__checked){const t=titleBody.querySelector('.startrow .btn.primary');if(t){t.disabled=true;t.textContent='Проверяем аккаунт…'}
+    cloudProbe(ACC.topic).then(async r=>{if(r.pkt){try{const s=migrate(await decryptSave(r.pkt,ACC.keyB64));if(s){remoteSave=s;log('На этом аккаунте уже есть персонаж «'+s.name+'» — загружаем его.','good');_sg(s);afterStart();return}}catch(e){}}
+      if(!r.sure){if(t){t.disabled=false;t.textContent='В Пустошь'}alert('Нет связи с облаком. Попробуйте ещё раз через несколько секунд.');return}
+      save.__checked=1;startGame(save,true)});return}
+  delete save.__checked;_sg(save,fresh);afterStart()}}
+async function afterStart(){if(!S||!ACC.login||inClaude())return;try{const pid=await accPid();if(S.pid!==pid){const old=S.pid;S.pid=pid;dirty=true;
+    // убираем из рейтинга запись старого персонажа этого аккаунта, чтобы не было дублей
+    if(old){const cs=await cloud();for(const c of cs){const go=()=>c.publish('osadok/v1/board/'+old,'',{retain:true,qos:1});c.connected?go():c.once('connect',go)}}
+    saveLocal();pushCloud(true);pushRating&&pushRating(true)}}catch(e){}
+  checkMod()}
+// при регистрации логин считается свободным, только если облако точно ответило
+async function regProbe(login){const r=await cloudProbe(await accTopic(login),6000);if(!r.sure)throw new Error('cloud');return r.pkt}
+
+// ================= МОДЕРАЦИЯ: БЛОКИРОВКИ И ЗАПРЕТЫ ЧАТА / РАЦИИ =================
+// Список наказаний — одно подписанное retained-сообщение (тот же ключ, что у новостей).
+const MOD_T='osadok/'+(TESTROOM?'t_'+TESTROOM:'v1')+'/mod';
+const MOD={list:[],loaded:false};
+const FOREVER=9e15;
+const DEVID=(()=>{let d=null;try{d=localStorage.getItem('osadok_dev')}catch(e){}if(!d){d=Math.random().toString(36).slice(2,12);try{localStorage.setItem('osadok_dev',d)}catch(e){}}return d})();
+const lc=s=>String(s||'').toLowerCase();
+async function verifySigned(p){const pub=await newsPub();if(!pub||!p||!p.sig)return false;try{const key=await crypto.subtle.importKey('jwk',pub,ECP,false,['verify']);return await crypto.subtle.verify(ECS,key,unb64(p.sig),enc.encode(p.ct))}catch(e){return false}}
+async function loadMod(){try{const p=await cloudGet(MOD_T,5000);MOD.loaded=true;if(!p){MOD.list=[];return}if(await verifySigned(p))MOD.list=JSON.parse(p.ct)}catch(e){}}
+async function saveMod(list){const t=Date.now();list=list.filter(e=>Math.max(e.ban||0,e.chat||0,e.voice||0)>t);const ct=JSON.stringify(list);const sig=b64(await crypto.subtle.sign(ECS,NEWS.priv,enc.encode(ct)));await cloudPut(MOD_T,{v:1,at:t,ct,sig});MOD.list=list}
+// Активные наказания для игрока: по номеру персонажа, имени или устройству.
+function modFor(o){const t=Date.now(),r={ban:0,chat:0,voice:0,why:''};for(const e of MOD.list){const hit=(o.pid&&e.pid&&o.pid===e.pid)||(o.name&&e.name&&lc(o.name)===lc(e.name))||(o.dv&&e.dv&&o.dv===e.dv&&e.ban>t);if(!hit)continue;for(const k of ['ban','chat','voice'])if((e[k]||0)>t&&e[k]>r[k]){r[k]=e[k];if(e.why)r.why=e.why}}return r}
+const myMod=()=>S?modFor({pid:S.pid,name:S.name,dv:DEVID}):{ban:0,chat:0,voice:0};
+function modMuted(name,kind){if(!MOD.list.length)return false;return (modFor({name})[kind]||0)>Date.now()}
+const untilText=t=>t>=FOREVER?'навсегда':'до '+new Date(t).toLocaleString('ru-RU',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+const devBan=()=>{try{const b=JSON.parse(localStorage.getItem('osadok_ban')||'null');if(b&&b.until>Date.now())return b}catch(e){}return null};
+function banScreen(){const b=devBan();if(!b)return false;titleBody.replaceChildren();const box=el('div','auth');box.append(el('div','sec','Доступ закрыт'),el('h2',null,'Персонаж заблокирован'));
+  box.append(el('p',null,'Блокировка действует '+untilText(b.until)+'.'));if(b.why)box.append(el('p',null,'Причина: '+b.why));box.append(el('p','muted small','Блокировка распространяется на это устройство. Если вы считаете её ошибкой — напишите администратору.'));
+  if(!inClaude()&&ACC.login)box.append(btn('Выйти из аккаунта',logout));titleBody.append(box);
+  // если админ снял наказание — снимаем блокировку устройства
+  if(!banScreen.checking){banScreen.checking=true;loadMod().then(()=>{banScreen.checking=false;const t=Date.now();if(MOD.loaded&&modFor({pid:b.pid,name:b.name,dv:DEVID}).ban<=t){try{localStorage.removeItem('osadok_ban')}catch(e){}if(!S)renderTitle()}})}
+  return true}
+async function checkMod(){await loadMod();if(!S)return;const m=myMod();
+  if(m.ban>Date.now()){try{localStorage.setItem('osadok_ban',JSON.stringify({until:m.ban,why:m.why||'',pid:S.pid,name:S.name}))}catch(e){}saveLocal();try{await pushCloud(true)}catch(e){}location.reload();return}
+  try{const b=devBan();if(b&&!m.ban)localStorage.removeItem('osadok_ban')}catch(e){}}
+setInterval(()=>{if(S&&!document.hidden)checkMod()},60000);
+// запрет на отправку в печатный чат
+document.addEventListener('submit',e=>{if(e.target!==chatForm||!S)return;const m=myMod();if(m.chat>Date.now()){e.preventDefault();e.stopPropagation();chatIn.value='';log('Вам запрещено писать в чат '+untilText(m.chat)+(m.why?'. Причина: '+m.why:'.'),'bad')}},true);
+// запрет на рацию: своё не отправляем, чужое от наказанных не проигрываем
+{const _ps=pttSend;pttSend=function(mime){const m=myMod();if(m.voice>Date.now()){VOICE.chunks=[];log('Вам запрещено пользоваться рацией '+untilText(m.voice)+(m.why?'. Причина: '+m.why:'.'),'bad');return}return _ps(mime)}}
+{const _pv=playVoice;playVoice=function(data,mime,vol,peer,name){if(modMuted(name,'voice'))return;return _pv(data,mime,vol,peer,name)}}
+
+// ================= АДМИН: ТЕЛЕПОРТ И НАКАЗАНИЯ =================
+function onlinePlayers(){if(!room)return [];const out=[];for(const p of room.peers()){if(p.isMe||p.sameTab)continue;const pr=p.presence||{};if(typeof pr.n!=='string'||typeof pr.x!=='number')continue;
+  out.push({peer:p.peer,name:cleanText(pr.n,16)||'Выживший',lv:pr.lv|0,m:pr.m,x:pr.x,y:pr.y,pid:typeof pr.pid==='string'?pr.pid.slice(0,12):'',dv:typeof pr.dv==='string'?pr.dv.slice(0,12):'',adm:!!pr.adm})}return out}
+const presOf=peer=>onlinePlayers().find(p=>p.peer===peer);
+function tpTo(p){if(!MAPS[p.m]){log('Игрок на неизвестной карте.','bad');return}closeWin();enterMap(p.m,p.x+.6,p.y+.4);log('Телепорт к игроку '+p.name+'.','good')}
+async function tpHere(p){if(!NEWS.priv){adminCodeWin(()=>tpHere(p));return}const ts=Date.now(),x=Math.round((P.x+.7)*10)/10,y=Math.round((P.y+.3)*10)/10;
+  const msg='atp|'+p.peer+'|'+M.id+'|'+x+'|'+y+'|'+ts;const sig=b64(await crypto.subtle.sign(ECS,NEWS.priv,enc.encode(msg)));dealSend(p.peer,{t:'atp',m:M.id,x,y,ts,sig});log('Игрок '+p.name+' перемещается к вам.','good')}
+{const _od=onDeal;onDeal=async function(msg){const d=msg.data;if(d&&d.t==='atp'&&S&&d.to===myPeerId()){
+    if(typeof d.sig!=='string'||Math.abs(Date.now()-(+d.ts||0))>120000||!MAPS[d.m])return;const pub=await newsPub();if(!pub)return;
+    try{const key=await crypto.subtle.importKey('jwk',pub,ECP,false,['verify']);const ok=await crypto.subtle.verify(ECS,key,unb64(d.sig),enc.encode('atp|'+d.to+'|'+d.m+'|'+(+d.x)+'|'+(+d.y)+'|'+(+d.ts)));if(!ok)return}catch(e){return}
+    if(!ov.hidden)closeWin();enterMap(d.m,+d.x,+d.y);log('Администратор переместил вас к себе.','sys');return}
+  return _od(msg)}}
+// Окно ввода кода администратора (нужен один раз за сессию для подписи команд).
+function adminCodeWin(then){openWin('Код администратора',b=>{b.append(el('p','muted small','Команды модерации подписываются вашим ключом. Подтвердите код один раз за сессию.'));const i=el('input');i.type='password';i.placeholder='Код администратора';i.autocomplete='off';i.style.cssText='width:100%;max-width:320px;background:var(--panel2);border:1px solid var(--line);border-radius:7px;padding:9px 11px;color:var(--fg);font:inherit';
+  const err=el('div','err','');const go=btn('Подтвердить',async()=>{go.disabled=true;err.textContent='Проверяем…';try{await newsKey(i.value);closeWin();then&&then()}catch(e){err.textContent=e.message==='code'?'Неверный код.':'Нет связи с облаком.';go.disabled=false}},'btn primary');
+  b.append(i,err,go);setTimeout(()=>i.focus(),50)})}
+const DUR=[['15 мин',15*60e3],['1 час',3600e3],['1 день',864e5],['7 дней',7*864e5],['30 дней',30*864e5],['Навсегда',FOREVER]];
+function punishWin(p){if(!NEWS.priv){adminCodeWin(()=>punishWin(p));return}
+  const sel={ban:false,chat:true,voice:false};let dur=3600e3;
+  openWin('Наказать: '+p.name,b=>{const cur=modFor(p);const act=[];for(const [k,n] of [['ban','блокировка'],['chat','запрет чата'],['voice','запрет рации']])if(cur[k]>Date.now())act.push(n+' '+untilText(cur[k]));
+    if(act.length)b.append(el('p','small','Сейчас действует: '+act.join(', ')+'.'));
+    b.append(el('div','sec','Что запретить'));const r1=el('div','startrow');const tg=(k,n)=>{const x=btn(n,()=>{sel[k]=!sel[k];x.className=sel[k]?'btn primary':'btn'},sel[k]?'btn primary':'btn');return x};
+    r1.append(tg('ban','⛔ Блокировка персонажа'),tg('chat','💬 Печатный чат'),tg('voice','🎙 Рация'));b.append(r1);
+    b.append(el('div','sec','На сколько'));const r2=el('div','startrow');const ds=[];for(const [n,ms] of DUR){const x=btn(n,()=>{dur=ms;for(const y of ds)y.className=y===x?'btn primary':'btn'},dur===ms?'btn primary':'btn');ds.push(x);r2.append(x)}b.append(r2);
+    b.append(el('div','sec','Причина'));const why=el('input');why.maxLength=120;why.placeholder='Например: мультиаккаунт, оскорбления в чате';why.style.cssText='width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:7px;padding:9px 11px;color:var(--fg);font:inherit';b.append(why);
+    b.append(el('p','muted small','Блокировка закрывает доступ этому персонажу и устройству, с которого он играет (против мультиаккаунтов).'));
+    const err=el('div','err','');const r3=el('div','startrow');r3.style.marginTop='10px';
+    r3.append(btn('Применить',async()=>{if(!sel.ban&&!sel.chat&&!sel.voice){err.textContent='Выберите, что запретить.';return}err.textContent='Сохраняем…';
+      try{await loadMod();const until=dur>=FOREVER?FOREVER:Date.now()+dur;const list=MOD.list.filter(e=>!(e.pid&&e.pid===p.pid)&&lc(e.name)!==lc(p.name));const old=MOD.list.find(e=>(e.pid&&e.pid===p.pid)||lc(e.name)===lc(p.name))||{};
+        const e={id:old.id||Date.now().toString(36),pid:p.pid||old.pid||'',name:p.name,dv:p.dv||old.dv||'',ban:sel.ban?until:old.ban||0,chat:sel.chat?until:old.chat||0,voice:sel.voice?until:old.voice||0,why:why.value.trim().slice(0,120),at:Date.now(),by:S.name};
+        list.push(e);await saveMod(list);if(p.peer&&sel.ban)dealSend(p.peer,{t:'modping'});log('Наказание для '+p.name+' сохранено.','good');closeWin()}catch(x){err.textContent='Не удалось сохранить: нет связи с облаком.'}},'btn primary'),
+      btn('Снять все наказания',async()=>{err.textContent='Сохраняем…';try{await loadMod();await saveMod(MOD.list.filter(e=>!(e.pid&&e.pid===p.pid)&&lc(e.name)!==lc(p.name)));log('Наказания для '+p.name+' сняты.','good');closeWin()}catch(x){err.textContent='Нет связи с облаком.'}}),btn('Отмена',closeWin));
+    b.append(err,r3)})}
+// по сигналу от админа игрок сразу перепроверяет список наказаний
+{const _od=onDeal;onDeal=function(msg){const d=msg.data;if(d&&d.t==='modping'&&S&&d.to===myPeerId()){checkMod();return}return _od(msg)}}
+// кнопки админа в меню игрока
+{const _pm=peerMenu;peerMenu=function(np){_pm(np);if(!S||!S.admin)return;const o=ov.querySelector('.opts');if(!o)return;const p=presOf(np.peer)||{...np,m:M.id};
+  const box=el('div');box.append(el('div','sec','Админ'));const r=el('div','startrow');r.append(btn('Телепорт к нему',()=>tpTo(p)),btn('Переместить ко мне',()=>{tpHere(p);closeWin()}),btn('Наказать…',()=>punishWin(p),'btn primary'));box.append(r);o.parentElement.insertBefore(box,o)}}
+// раздел модерации во вкладке «Админ»
+{const _av=TABVIEW.admin;TABVIEW.admin=b=>{if(!S.admin){_av(b);return}const top=el('div');b.append(top);
+  top.append(el('div','sec','Новости и модерация'));const r0=el('div','startrow');r0.append(btn('📰 Написать новость',()=>openNews(),'btn primary'));if(!NEWS.priv)r0.append(btn('Подтвердить код админа',()=>adminCodeWin(()=>openTab('admin'))));top.append(r0);
+  const pl=onlinePlayers();const byDv={};for(const p of pl)if(p.dv)(byDv[p.dv]=byDv[p.dv]||[]).push(p.name);
+  top.append(el('div','sec','Игроки онлайн ('+pl.length+')'));const list=el('div','list');if(!pl.length)list.append(el('div','muted small','Сейчас в сети никого нет.'));
+  for(const p of pl){const row=el('div','row');const gw=el('div','grow');gw.append(el('div','t',p.name+(p.adm?' ★':'')+' · ур. '+p.lv),el('div','s',(MAPS[p.m]?.name||p.m)+(byDv[p.dv]&&byDv[p.dv].length>1?' · ⚠ одно устройство с: '+byDv[p.dv].filter(n=>n!==p.name).join(', '):'')));
+    const mm=modFor(p);if(mm.ban||mm.chat||mm.voice)gw.append(el('div','s','Наказан: '+[mm.ban&&'блок',mm.chat&&'чат',mm.voice&&'рация'].filter(Boolean).join(', ')));
+    row.append(gw,btn('К нему',()=>tpTo(p)),btn('Ко мне',()=>tpHere(p)),btn('Наказать',()=>punishWin(p)));list.append(row)}top.append(list);
+  const t=Date.now(),act=MOD.list.filter(e=>Math.max(e.ban||0,e.chat||0,e.voice||0)>t);top.append(el('div','sec','Действующие наказания ('+act.length+')'));const ml=el('div','list');if(!act.length)ml.append(el('div','muted small','Нет.'));
+  for(const e of act){const row=el('div','row');const gw=el('div','grow');gw.append(el('div','t',e.name),el('div','s',[e.ban>t&&'блок '+untilText(e.ban),e.chat>t&&'чат '+untilText(e.chat),e.voice>t&&'рация '+untilText(e.voice)].filter(Boolean).join(' · ')+(e.why?' — '+e.why:'')));
+    row.append(gw,btn('Снять',async()=>{if(!NEWS.priv){adminCodeWin(()=>openTab('admin'));return}try{await loadMod();await saveMod(MOD.list.filter(x=>x.id!==e.id));log('Наказание снято.','good');openTab('admin')}catch(x){log('Нет связи с облаком.','bad')}}));ml.append(row)}top.append(ml);
+  if(!MOD.loaded)loadMod().then(()=>{if(top.isConnected)openTab('admin')});
+  _av(b)}}
+loadMod();
+
+// ================= ТЕЛЕФОН: ЭЛЕМЕНТЫ ИНТЕРФЕЙСА НА 15% МЕНЬШЕ =================
+{const st=document.createElement('style');st.textContent=`@media (pointer:coarse){
+#hud{transform:scale(.85);transform-origin:top left}
+#mini{transform:scale(.85);transform-origin:top left}
+#topbar{transform:scale(.85);transform-origin:top right}
+#wpn{transform:scale(.85);transform-origin:top right}
+#acts{transform:scale(.85);transform-origin:bottom right}
+#joy{transform:scale(.85);transform-origin:bottom left}
+#log{transform:scale(.9);transform-origin:bottom center}}`;document.head.append(st)}
+
+// ================= ТЕЛЕФОН: ВЫДВИЖНАЯ ПАНЕЛЬ КНОПОК И КОМПАКТНЫЙ HUD =================
+// Справа видны только «Чат» и «⋯»; остальные кнопки выезжают по нажатию «⋯».
+// Слева — мини-карта и пять цветных полосок со значками; стрелка разворачивает полную панель.
+{const st=document.createElement('style');st.textContent=`
+#moreBtn,#hudTog{display:none}
+@media (pointer:coarse){
+#moreBtn{display:grid}#moreBtn .dot{position:absolute;top:5px;right:5px;width:9px;height:9px;border-radius:50%;background:#e0432a;box-shadow:0 0 0 2px #0c0a08}
+#topbar.shut>button:not(#chatBtn):not(#moreBtn){display:none}
+#topbar.opened>button:not(#chatBtn):not(#moreBtn){animation:tbIn .2s ease-out both}
+#topbar.opened #moreBtn{border-color:var(--accent);background:rgba(217,139,43,.18)}
+@keyframes tbIn{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+#hudTog{display:grid;place-items:center;position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:7px;border:1px solid var(--glassline);background:rgba(0,0,0,.35);color:var(--fg);font-size:12px;padding:0;z-index:2;pointer-events:auto;touch-action:manipulation}
+#hud{padding-right:32px}
+body.hudc #hud{transform:none;left:calc(140px + var(--sal));top:calc(8px + var(--sat));padding:6px 34px 6px 8px!important;width:auto!important;min-width:0}
+body.hudc #hud .who,body.hudc #hud .chips{display:none!important}
+body.hudc #hud .bars{display:flex!important;flex-direction:column;gap:4px;width:112px;margin:0}
+body.hudc #hud .bar{font-size:0!important;display:flex;flex-direction:row!important;align-items:center;gap:5px;letter-spacing:0}
+body.hudc #hud .bar i{flex:1 1 auto;width:auto;height:7px!important;margin:0}
+body.hudc #hud .bar::before{font-size:10.5px;line-height:1;width:13px;text-align:center;flex:none}
+body.hudc #hud .bar[title="Здоровье"]::before{content:'♥';color:var(--hp);font-size:12px}
+body.hudc #hud .bar[title="Сытость"]::before{content:'🍖'}
+body.hudc #hud .bar[title="Вода"]::before{content:'💧'}
+body.hudc #hud .bar[title="Радиация"]::before{content:'☢';color:var(--rad)}
+body.hudc #hud .bar[title="Опыт"]::before{content:'★';color:var(--xp)}
+body.hudc #mini:not(.big){transform:none;margin:0;left:calc(8px + var(--sal));top:calc(8px + var(--sat))!important;width:124px;height:86px}
+body.hudc #mini.big{transform:none;margin:0;left:calc(8px + var(--sal));top:calc(8px + var(--sat))!important}}`;document.head.append(st);
+  const ls=(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:v}catch(e){return d}},ss=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+  const tb=document.getElementById('topbar');if(tb){const mb=document.createElement('button');mb.id='moreBtn';mb.title='Ещё';mb.setAttribute('aria-label','Показать все кнопки');mb.innerHTML='<svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span class="dot" hidden></span>';tb.append(mb);
+    const setTb=open=>{tb.classList.toggle('shut',!open);tb.classList.toggle('opened',open);mb.setAttribute('aria-expanded',open);ss('osadok_tb',open?'1':'0');updDot()};
+    const updDot=()=>{const d=mb.querySelector('.dot');d.hidden=!(tb.classList.contains('shut')&&typeof newsUnread==='function'&&newsUnread()>0)};
+    mb.onclick=e=>{e.stopPropagation();setTb(tb.classList.contains('shut'));mb.blur()};setTb(ls('osadok_tb','0')==='1');
+    const _ub=updNewsBadges;updNewsBadges=function(){_ub();updDot()}}
+  const hud=document.getElementById('hud');if(hud){const tg=document.createElement('button');tg.id='hudTog';tg.setAttribute('aria-label','Свернуть или развернуть панель');hud.append(tg);
+    const setH=c=>{document.body.classList.toggle('hudc',c);tg.textContent=c?'▸':'▾';tg.title=c?'Показать всё':'Свернуть';ss('osadok_hudc',c?'1':'0')};
+    tg.onclick=e=>{e.stopPropagation();setH(!document.body.classList.contains('hudc'));tg.blur()};setH(ls('osadok_hudc','1')==='1')}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
