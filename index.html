@@ -1038,7 +1038,7 @@ function lockpick(done){let tries=3,pos=0,v=1.2,raf=0,ended=false;const zone=Mat
 const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
 const night=document.createElement('canvas'),nctx=night.getContext('2d');
 let VW=0,VH=0,ZOOM=1,DPR=1,camX=0,camY=0;
-function resize(){const r=cv.getBoundingClientRect();DPR=Math.min(QUAL.dpr,window.devicePixelRatio||1);cv.width=Math.max(1,Math.round(r.width*DPR));cv.height=Math.max(1,Math.round(r.height*DPR));
+function resize(){const r={width:cv.clientWidth,height:cv.clientHeight};DPR=Math.min(QUAL.dpr,window.devicePixelRatio||1);cv.width=Math.max(1,Math.round(r.width*DPR));cv.height=Math.max(1,Math.round(r.height*DPR));
   IS_COARSE=coarse();if(IS_COARSE)ZOOM=Math.max(.85,Math.min(2.1,Math.min(r.width/(16*T),r.height/(9*T))));else ZOOM=Math.max(1,Math.min(2.2,r.width/(18*T)));VW=r.width/ZOOM;VH=r.height/ZOOM;night.width=Math.ceil(cv.width/2);night.height=Math.ceil(cv.height/2)}
 new ResizeObserver(resize).observe(cv);
 const OL='rgba(16,11,6,.8)';
@@ -1658,7 +1658,7 @@ const joyEl=document.getElementById('joy'),knob=joyEl.querySelector('i');let joy
 joyEl.addEventListener('pointerdown',e=>{e.preventDefault();joyId=e.pointerId;try{joyEl.setPointerCapture(e.pointerId)}catch(x){}joyMove(e)});
 joyEl.addEventListener('pointermove',e=>{if(e.pointerId===joyId)joyMove(e)});
 const joyEnd=e=>{if(e.pointerId!==joyId)return;joyId=null;joy.on=false;joy.x=joy.y=0;knob.style.transform='translate(0,0)'};joyEl.addEventListener('pointerup',joyEnd);joyEl.addEventListener('pointercancel',joyEnd);
-function joyMove(e){const r=joyEl.getBoundingClientRect();let dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);const R=r.width/2-14;const l=Math.hypot(dx,dy);if(l>R){dx*=R/l;dy*=R/l}joy.x=dx/R;joy.y=dy/R;joy.on=true;knob.style.transform=`translate(${dx}px,${dy}px)`}
+function joyMove(e){const r=joyEl.getBoundingClientRect();let dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);if(document.documentElement.classList.contains('rotl')){const t0=dx;dx=dy;dy=-t0}const R=r.width/2-14;const l=Math.hypot(dx,dy);if(l>R){dx*=R/l;dy*=R/l}joy.x=dx/R;joy.y=dy/R;joy.on=true;knob.style.transform=`translate(${dx}px,${dy}px)`}
 const hold=(id,on,off)=>{const b=document.getElementById(id);b.addEventListener('pointerdown',e=>{e.preventDefault();b.classList.add('on');on()});const up=()=>{b.classList.remove('on');off&&off()};b.addEventListener('pointerup',up);b.addEventListener('pointercancel',up);b.addEventListener('pointerleave',up)};
 hold('bFire',()=>{firing=true;mouse.on=false},()=>{firing=false});hold('bUse',interact);hold('bRel',startReload);hold('bSwap',swapWeapon);hold('bHeal',quickHeal);
 function cleanText(s,n){return [...String(s)].filter(ch=>{const k=ch.codePointAt(0);return k>=32&&k!==127&&!(k>=0x200b&&k<=0x200f)&&!(k>=0x2028&&k<=0x202e)&&!(k>=0x2060&&k<=0x206f)&&!(k>=0xe000&&k<=0xf8ff)}).join('').trim().slice(0,n)}
@@ -4702,6 +4702,42 @@ function openNotif(){NOTIF.unread=0;NOTIF.bad=0;updNotif();openWin('Уведом
 @media (pointer:coarse){#log{display:none!important}#topbar.shut>button#notifBtn{display:grid!important}}`;document.head.append(st)}
 (function(){const tb=document.getElementById('topbar');if(!tb)return;const b=document.createElement('button');b.id='notifBtn';b.title='Уведомления';b.setAttribute('aria-label','Уведомления');
   b.innerHTML='<svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15z"/><path d="M10 21h4"/></svg><span class="badge" hidden>0</span>';b.onclick=()=>{openNotif();b.blur()};tb.insertBefore(b,document.getElementById('chatBtn'))})();
+
+// ================= iPhone: АЛЬБОМНЫЙ ВИД И «ВО ВЕСЬ ЭКРАН» =================
+// Safari на iPhone не даёт сайтам ни полный экран, ни поворот. Поэтому, если телефон держат вертикально,
+// игра сама поворачивается на 90° и занимает весь экран. Режим: авто (на iPhone вкл.), всегда, выкл.
+const IOS=/iphone|ipod/i.test(navigator.userAgent);
+const IOS_ANY=IOS||/ipad/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const ROTL={mode:'auto',on:false};
+try{const v=localStorage.getItem('osadok_rotl');if(v==='on'||v==='off'||v==='auto')ROTL.mode=v}catch(e){}
+const rotlWanted=()=>ROTL.mode==='on'||(ROTL.mode==='auto'&&IOS);
+{const st=document.createElement('style');st.textContent=`
+html.rotl,html.rotl body{overflow:hidden;overscroll-behavior:none}
+html.rotl body{position:fixed;top:0;left:0;margin:0;width:var(--rw);height:var(--rh);transform-origin:top left;transform:rotate(90deg) translateY(-100%)}
+html.rotl #app{width:100%;height:100%}
+html.rotl #topbar{flex-wrap:nowrap!important;width:auto!important;justify-content:flex-end}
+html.rotl #wpn{top:calc(66px + var(--sat))!important}
+html.rotl #hud{width:min(310px,41vw)}
+html.rotl #rotate{display:none!important}`;document.head.append(st)}
+function applyRotl(){const portrait=innerHeight>innerWidth;const on=!!(rotlWanted()&&coarse()&&portrait&&S&&titleEl.hidden);
+  if(on){document.documentElement.style.setProperty('--rw',innerHeight+'px');document.documentElement.style.setProperty('--rh',innerWidth+'px')}
+  if(on!==ROTL.on){ROTL.on=on;document.documentElement.classList.toggle('rotl',on);setTimeout(()=>{try{resize()}catch(e){}},30)}
+  const r=document.getElementById('rotate');if(r&&on)r.hidden=true}
+addEventListener('resize',()=>setTimeout(applyRotl,60));addEventListener('orientationchange',()=>setTimeout(applyRotl,250));setInterval(applyRotl,1500);
+{const _cr=checkRotate;checkRotate=function(){_cr();if(ROTL.on||rotlWanted()){const r=document.getElementById('rotate');if(r)r.hidden=true}}}
+{const _sg=startGame;startGame=function(save,fresh){const r=_sg(save,fresh);setTimeout(applyRotl,80);return r}}
+// «Во весь экран» на iPhone: объясняем, как получить полноэкранную игру через «На экран „Домой“»
+{const _fs=goFullscreen;goFullscreen=function(){const d=document.documentElement;if(!IOS_ANY||d.requestFullscreen&&!IOS){return _fs()}
+  const standalone=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches;
+  openWin('Полный экран на iPhone',b=>{if(standalone){b.append(el('p',null,'Игра уже открыта как приложение — без адресной строки. Поверните телефон боком; если экран не поворачивается, включите «Альбомный вид» ниже или отключите блокировку поворота в Пункте управления.'))}
+    else{b.append(el('p',null,'Safari на iPhone не умеет открывать сайты во весь экран. Но игру можно установить — тогда она будет запускаться без адресной строки, на весь экран:'),
+      el('p',null,'1. Откройте игру в Safari.'),el('p',null,'2. Нажмите «Поделиться» (квадрат со стрелкой вверх).'),el('p',null,'3. Выберите «На экран „Домой“» → «Добавить».'),el('p',null,'4. Запускайте игру с иконки «Осадок» на рабочем столе.'))}
+    b.append(el('div','sec','Поворот экрана'),el('p','muted small','Если телефон держат вертикально, игра сама развернётся боком. Можно включить или выключить:'));const r=el('div','startrow');
+    for(const [k,n] of [['auto','Авто'],['on','Всегда'],['off','Выкл.']])r.append(btn(n,()=>{ROTL.mode=k;try{localStorage.setItem('osadok_rotl',k)}catch(e){}applyRotl();goFullscreen()},ROTL.mode===k?'btn primary':'btn'));
+    b.append(r,btn('Понятно',closeWin,'btn'))})}}
+// переключатель и в «Настройках» — для любых телефонов, у которых не поворачивается экран
+{const _sv=TABVIEW.settings;TABVIEW.settings=b=>{if(coarse()){const box=el('div');box.append(el('div','sec','Альбомный вид'),el('p','muted small','Если телефон не поворачивает экран, игра может сама развернуться боком, когда вы держите его вертикально.'));
+  const r=el('div','startrow');for(const [k,n] of [['auto',IOS?'Авто (вкл. на iPhone)':'Авто (только iPhone)'],['on','Всегда'],['off','Выкл.']])r.append(btn(n,()=>{ROTL.mode=k;try{localStorage.setItem('osadok_rotl',k)}catch(e){}applyRotl();openTab('settings')},ROTL.mode===k?'btn primary':'btn'));box.append(r);b.append(box)}_sv(b)}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
