@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793058785";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793059064";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -2602,9 +2602,9 @@ const MOB={heard:{},am:{},hits:[],ev:[],lastSnap:0,lastFlush:0,snapN:0,adoptUnti
 const rid=()=>Math.random().toString(36).slice(2,8);
 const r2=v=>Math.round(v*100)/100;
 function myNetId(){return room&&room.p2p?room.self:'me'}
-function mapPlayers(mid){if(MOB.plT===now&&MOB.plM===mid)return MOB.pl;const out=[{id:myNetId(),x:P.x,y:P.y,me:true,ag:1+stats().aggroPct/100}];
+function mapPlayers(mid){if(MOB.plT===now&&MOB.plM===mid)return MOB.pl;const out=[{id:myNetId(),x:P.x,y:P.y,me:true,ag:1+stats().aggroPct/100,fc:typeof myFac==='function'?myFac():null}];
   if(room&&room.p2p){const t=Date.now();for(const p of room.peers()){if(p.isMe)continue;const pr=p.presence||{};if(pr.m!==mid||typeof pr.x!=='number'||!(pr.v>=5)||t-(p.updatedAt||0)>5000)continue;const pp=peerPos.get(p.peer);
-    out.push({id:p.peer,x:pp?pp.x:pr.x,y:pp?pp.y:pr.y,ag:typeof pr.ag==='number'?Math.max(.3,Math.min(2,pr.ag)):1})}}
+    out.push({id:p.peer,x:pp?pp.x:pr.x,y:pp?pp.y:pr.y,ag:typeof pr.ag==='number'?Math.max(.3,Math.min(2,pr.ag)):1,fc:pr.fc||null})}}
   MOB.plT=now;MOB.plM=mid;MOB.pl=out;return out}
 function hostId(mid){const me=myNetId();if(!room||!room.p2p)return me;const t=Date.now();const on=new Set(mapPlayers(mid).map(p=>p.id));
   let h=null;for(const [id,ts] of Object.entries(MOB.heard[mid]||{}))if(id!==me&&t-ts<1600&&on.has(id)&&(!h||id<h))h=id;
@@ -2665,7 +2665,7 @@ function aiUpdate(dt){const r=rtFor(M.id);if(!r.pop)populate(M,r);const pl=mapPl
   for(const e of r.enemies){const d=EN[e.type];if(!e.alive)continue;if(e.dying){e.dying-=dt;if(e.dying<=0)e.alive=false;continue}if(e.hp<=0)continue;if(!pl.some(p=>Math.abs(p.x-e.x)<30&&Math.abs(p.y-e.y)<22)){e.moving=false;continue}
     e.cd-=dt;e.rcd-=dt;e.scd-=dt;e.lcd-=dt;e.pcd=(e.pcd??1.5)-dt;e.slcd=(e.slcd??1)-dt;
     if(e.kx||e.ky){moveBody(e,e.kx*dt*8,e.ky*dt*8,d.r);e.kx*=Math.max(0,1-dt*10);e.ky*=Math.max(0,1-dt*10);if(Math.abs(e.kx)+Math.abs(e.ky)<.01)e.kx=e.ky=0}
-    let tg=null,td=1e9;if(!M.safe)for(const p of pl){if(typeof inSafe==='function'&&inSafe(p.x,p.y))continue;const dd=Math.hypot(p.x-e.x,p.y-e.y);const lim=(e.seen&&e.tg===p.id)?d.aggro*2.2:d.aggro*(p.ag||1);if(dd<lim&&dd<td){td=dd;tg=p}}
+    let tg=null,td=1e9;if(!M.safe)for(const p of pl){if(typeof inSafe==='function'&&inSafe(p.x,p.y))continue;if(d.fac&&p.fc===d.fac)continue;const dd=Math.hypot(p.x-e.x,p.y-e.y);const lim=(e.seen&&e.tg===p.id)?d.aggro*2.2:d.aggro*(p.ag||1);if(dd<lim&&dd<td){td=dd;tg=p}}
     if(tg){if(!e.seen)sfx.voice(e.type,e.x,e.y,'aggro');e.seen=true;e.tg=tg.id}else{e.seen=false;e.tg=''}
     const dx=tg?tg.x-e.x:0,dy=tg?tg.y-e.y:0,dist=tg?Math.hypot(dx,dy):1e9,toP=Math.atan2(dy,dx),tMe=!!(tg&&tg.me);
     let vx=0,vy=0,spd=d.spd;
@@ -5053,6 +5053,71 @@ async function chatDelete(h){if(!S||!S.admin)return;const slot=String(h).split('
   let cl=document.getElementById('chatClear');if(!cl){cl=el('button','btn','🗑 Очистить чат');cl.id='chatClear';cl.style.cssText='margin:4px 8px;font-size:12px;padding:4px 10px';cl.onclick=()=>{if(confirm('Удалить всю историю чата и «Зоны» у всех игроков?'))chatDelete('*')};chatEl.insertBefore(cl,chatList)}}}
 {const st=document.createElement('style');st.textContent='#chatList .m .chdel{float:right;margin-left:6px;background:none;border:0;color:#e0442a;cursor:pointer;font-size:13px;padding:0 4px}#chatList .m.old{opacity:.8}';document.head.append(st)}
 {const _as=afterStart;afterStart=async function(){const r=await _as();chatHistory();return r}}
+
+// ================= ЗАХВАТ СЕКТОРОВ =================
+// 20 точек в PvP-зонах: 14 в Городе Заречном и 6 на Гнилом болоте (болото теперь тоже PvP — рядом база Ренегатов).
+// Захват: член группировки стоит в круге сектора 5 минут. Вышел из круга или погиб — захват сбрасывается.
+// После захвата появляются 3–5 охранников группировки, а сектор нельзя перехватить 3 часа.
+// Чтобы взять чужой сектор, сначала нужно перебить его охрану. Сектора добавляют рейтинг группировке.
+if(MAPS.swamp)MAPS.swamp.pvp=true;
+const SECT_T='osadok/'+(TESTROOM?'t_'+TESTROOM:'v1')+'/sectors';
+const CAP_MS=5*60e3,LOCK_MS=3*3600e3,CAP_R=3;
+const SECT={doc:{pts:{}},pts:[],owned(f){return Object.values(this.doc.pts||{}).filter(p=>p.o===f).length}};
+{const defs={city:[[4,4],[10,3],[16,4],[22,3],[27,5],[5,10],[12,11],[19,9],[25,12],[6,17],[13,19],[20,17],[26,20],[15,14]],swamp:[[3,3],[8,2],[13,4],[4,8],[9,7],[12,9]]};
+  for(const [mid,cells] of Object.entries(defs)){const m=MAPS[mid];if(!m)continue;const [cX,cY]=secGrid(m),sw=m.w/cX,sh=m.h/cY;
+    for(const [c,r] of cells){let cx=Math.floor((c-.5)*sw),cy=Math.floor((r-.5)*sh),best=null,bd=1e9;
+      for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){const x=cx+dx,y=cy+dy,ch=m.g[y]?.[x];if(!ch||!walkable(ch)||ch==='~'||ch==='W'||!notExit(m,x,y))continue;if(typeof inSafe==='function'&&mid==='city'&&inSafe(x+.5,y+.5))continue;const d=dx*dx+dy*dy;if(d<bd){bd=d;best=[x,y]}}
+      if(best)SECT.pts.push({i:SECT.pts.length,m:mid,x:best[0]+.5,y:best[1]+.5,n:'Сектор '+c+'.'+r})}}}
+const ptState=pt=>SECT.doc.pts[pt.i]||{o:'',at:0,lock:0,g:0};
+async function sectLoad(){try{const p=await cloudGet(SECT_T,4000);if(p&&p.ct)SECT.doc=Object.assign({pts:{}},JSON.parse(p.ct))}catch(e){}return SECT.doc}
+async function sectMut(fn){const d=await sectLoad();if(fn(d)===false)return false;d.at=Date.now();await cloudPut(SECT_T,{v:1,at:d.at,ct:JSON.stringify(d)});SECT.doc=d;return true}
+setInterval(()=>{if(S&&!document.hidden&&M&&(M.pvp||M.fac))sectLoad()},45000);
+{const _as=afterStart;afterStart=async function(){const r=await _as();sectLoad();return r}}
+// охрана: бойцы группировки (своих не трогают, свои не могут их ранить)
+EN.fg_ren=Object.assign({},EN.gunner,{n:'Ренегат-охранник',fac:'ren',xp:45,boss:0,lair:0});EN.fg_mil=Object.assign({},EN.gunner,{n:'Военный-охранник',fac:'mil',xp:45,boss:0,lair:0});
+if(typeof damageEnemy==='function'){const _de=damageEnemy;damageEnemy=function(e,...a){if(e&&EN[e.type]&&EN[e.type].fac&&EN[e.type].fac===myFac())return;return _de(e,...a)}}
+const guardsOf=pt=>pt.m===M.id?rtFor(M.id).enemies.filter(e=>e.alive&&!e.dying&&typeof e.id==='string'&&e.id.startsWith('g'+pt.i+'_')):[];
+// хозяин локации расставляет охрану и следит за потерями
+const GSEEN={};
+setInterval(()=>{if(!S||!M||paused)return;try{if(typeof hostId==='function'&&hostId(M.id)!==myNetId())return}catch(e){return}if(emState().st==='active')return;
+  for(const pt of SECT.pts){if(pt.m!==M.id)continue;const st=ptState(pt);if(!st.o||!(st.g>0))continue;const alive=guardsOf(pt);const ids=new Set(alive.map(e=>e.id));
+    const seen=GSEEN[pt.i]||(GSEEN[pt.i]=new Set());const lost=[...seen].filter(id=>!ids.has(id)).length;if(lost>0){seen.clear();for(const id of ids)seen.add(id);sectMut(d=>{const p=d.pts[pt.i];if(!p||p.o!==st.o)return false;p.g=Math.max(0,(p.g|0)-lost)});continue}
+    for(let k=0;k<st.g&&ids.size<st.g;k++){const id='g'+pt.i+'_'+k;if(ids.has(id))continue;const a=Math.random()*Math.PI*2,r=Math.random()*(CAP_R-.5);let x=pt.x+Math.cos(a)*r,y=pt.y+Math.sin(a)*r;if(!walkable(M.g[Math.floor(y)]?.[Math.floor(x)])){x=pt.x;y=pt.y}
+      const e=mkEnemy('fg_'+st.o,Math.floor(x),Math.floor(y));e.x=x;e.y=y;e.id=id;e.summoned=true;rtFor(M.id).enemies.push(e);ids.add(id);seen.add(id)}}},3000);
+// захват
+const CAP={pt:null,start:0,announced:false};
+function capUI(){let b=document.getElementById('capBar');if(!b){b=el('div');b.id='capBar';b.innerHTML='<span class="t"></span><i><u></u></i>';document.getElementById('stage').append(b)}return b}
+{const st=document.createElement('style');st.textContent='#capBar{position:absolute;z-index:4;left:50%;transform:translateX(-50%);top:calc(60px + var(--sat));min-width:240px;max-width:80%;background:rgba(20,16,10,.88);border:1px solid #c8a048;border-radius:10px;padding:6px 12px;font:600 12.5px var(--mono);color:#f2e2b8;text-align:center;pointer-events:none}#capBar i{display:block;height:6px;background:#0c0b08;border-radius:3px;margin-top:5px;overflow:hidden}#capBar u{display:block;height:100%;width:0;background:#e8c040;transition:width .4s}#capBar.hide{display:none}';document.head.append(st)}
+function fmtHM(ms){const m=Math.ceil(ms/60000);return m>=60?Math.floor(m/60)+' ч '+(m%60)+' мин':m+' мин'}
+function fmtMs(ms){const s=Math.max(0,Math.ceil(ms/1000));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+setInterval(()=>{const bar=capUI();if(!S||!M||!titleEl.hidden){bar.classList.add('hide');return}const f=myFac();const pt=SECT.pts.find(p=>p.m===M.id&&Math.hypot(P.x-p.x,P.y-p.y)<=CAP_R);
+  if(!pt){if(CAP.pt){log('Вы покинули '+CAP.pt.n+' — захват сброшен.','bad');CAP.pt=null}bar.classList.add('hide');return}
+  const st=ptState(pt),t=Date.now();bar.classList.remove('hide');const fill=bar.querySelector('u'),txt=bar.querySelector('.t');const own=st.o?FAC[st.o].n:'ничей';
+  const stop=msg=>{if(CAP.pt===pt&&msg)log(msg,'bad');CAP.pt=null;fill.style.width='0';fill.style.background='#8a7a5a'};
+  if(!f){txt.textContent='⚑ '+pt.n+' · '+own+' — захватывать могут только члены группировок';stop();return}
+  if(st.o===f){txt.textContent='⚑ '+pt.n+' · под контролем «'+FAC[f].n+'»'+(st.g>0?' · охрана: '+st.g:'');stop();fill.style.width='100%';fill.style.background=FAC[f].col;return}
+  if(st.lock>t){txt.textContent='⚑ '+pt.n+' · '+own+' · перезахват через '+fmtHM(st.lock-t);stop();return}
+  const gs=guardsOf(pt).length;if(gs>0||(st.o&&st.g>0&&pt.m===M.id&&gs===0&&(t-(CAP.seenG||0)<4000))){if(gs>0)CAP.seenG=t;txt.textContent='⚑ '+pt.n+' · охрана «'+own+'»: '+Math.max(gs,0)+' — сначала перебейте охрану';stop();return}
+  if(S.hp<=0){stop();return}
+  if(CAP.pt!==pt){CAP.pt=pt;CAP.start=t;CAP.announced=false}const prog=(t-CAP.start)/CAP_MS;
+  if(!CAP.announced){CAP.announced=true;zoneMsg('⚑ «'+FAC[f].n+'» начали захват: '+pt.n+' ('+MAPS[pt.m].name+')',true)}
+  txt.textContent='⚑ Захват: '+pt.n+' · '+fmtMs(CAP_MS-(t-CAP.start))+' — не выходите из круга';fill.style.background=FAC[f].col;fill.style.width=Math.min(100,prog*100)+'%';
+  if(prog>=1){const p0=pt;CAP.pt=null;sectMut(d=>{const p=d.pts[p0.i]||{};if((p.lock||0)>Date.now()&&p.o!==f)return false;d.pts[p0.i]={o:f,at:Date.now(),lock:Date.now()+LOCK_MS,g:3+Math.floor(Math.random()*3),by:S.name}}).then(ok=>{if(ok!==false){zoneMsg('⚑ «'+FAC[f].n+'» захватили '+p0.n+' ('+MAPS[p0.m].name+')! Следующий захват — через 3 часа.',true);GSEEN[p0.i]=new Set();facMut(f,d=>{facLog(d,'sector',{c:0,who:p0.n})}).catch(()=>{})}else log('Сектор уже перехватили.','bad')})}},500);
+{const _die=die;die=function(src){if(CAP.pt){log('Вы погибли — захват сброшен.','bad');CAP.pt=null}return _die(src)}}
+// отображение: круги на земле (2D), на плане карты и на мини-карте
+function ptCol(st){return st.o?FAC[st.o].col:'#c8c0a8'}
+{const _dt=drawTilesCached;drawTilesCached=function(c,x0,y0,x1,y1,t){_dt(c,x0,y0,x1,y1,t);const pts=SECT.pts.filter(p=>p.m===M.id);if(!pts.length)return;c.save();
+  for(const pt of pts){const st=ptState(pt),col=ptCol(st);c.strokeStyle=col;c.globalAlpha=.8;c.lineWidth=2;c.setLineDash([8,6]);c.lineDashOffset=-t*20;c.beginPath();c.arc(pt.x*T,pt.y*T,CAP_R*T,0,7);c.stroke();c.setLineDash([]);c.globalAlpha=.12;c.fillStyle=col;c.fill();c.globalAlpha=1;
+    c.fillStyle='#3a2c18';c.fillRect(pt.x*T-1,pt.y*T-26,2.5,26);c.fillStyle=col;c.beginPath();c.moveTo(pt.x*T+1.5,pt.y*T-26);c.lineTo(pt.x*T+16,pt.y*T-21+Math.sin(t*4)*1.5);c.lineTo(pt.x*T+1.5,pt.y*T-15);c.fill();
+    c.font='700 11px "IBM Plex Mono",monospace';c.textAlign='center';c.lineWidth=3;c.strokeStyle='rgba(0,0,0,.8)';const lab=pt.n+' · '+(st.o?FAC[st.o].n:'ничей');c.strokeText(lab,pt.x*T,pt.y*T-30);c.fillStyle=col;c.fillText(lab,pt.x*T,pt.y*T-30)}c.restore()}}
+if(typeof drawPlan==='function'){const _dp=drawPlan;drawPlan=function(m,maxW){const cnv=_dp(m,maxW);const s=parseFloat(cnv.style.width)/m.w;const c=cnv.getContext('2d');for(const pt of SECT.pts){if(pt.m!==m.id)continue;const st=ptState(pt);c.strokeStyle=ptCol(st);c.lineWidth=2;c.beginPath();c.arc(pt.x*s,pt.y*s,CAP_R*s,0,7);c.stroke();c.fillStyle=ptCol(st);c.font='700 10px sans-serif';c.fillText('⚑',pt.x*s-4,pt.y*s+4)}return cnv}}
+// рейтинг группировок — во вкладке «Рейтинг»
+{const _rv=TABVIEW.rating;TABVIEW.rating=b=>{const box=el('div');box.append(el('div','sec','Рейтинг группировок'));const l=el('div','list');box.append(l,el('p','muted small','Рейтинг = уровни бойцов ×10 + захваченные сектора ×100 + общак/100. Секторов в игре: '+SECT.pts.length+'.'));b.append(box);
+  Promise.all([facLoad('ren'),facLoad('mil'),sectLoad()]).then(()=>{if(!box.isConnected)return;const rows=Object.keys(FAC).map(f=>[f,facRating(f),SECT.owned(f),Object.keys(FACD[f].members||{}).length]).sort((a,b)=>b[1]-a[1]);
+    for(const [f,r,sc,mem] of rows){const row=el('div','row');row.append(facBadge(f,32));const gw=el('div','grow');gw.append(el('div','t',FAC[f].n+' · рейтинг '+r),el('div','s','секторов: '+sc+' · бойцов: '+mem));row.append(gw);l.append(row)}});if(_rv)_rv(b)}}
+// во вкладке «Карта» — список секторов и владельцев
+{const _mv=TABVIEW.map;TABVIEW.map=b=>{_mv(b);const sel=MAPV.sel&&MAPS[MAPV.sel]?MAPV.sel:M.id;const pts=SECT.pts.filter(p=>p.m===sel);if(!pts.length)return;const w=b.querySelector('.wmap');const box=el('div');box.append(el('div','sec','Сектора для захвата'));const l=el('div','list');const t=Date.now();
+  for(const pt of pts){const st=ptState(pt);const r=el('div','row');const gw=el('div','grow');gw.append(el('div','t','⚑ '+pt.n+' · '+(st.o?FAC[st.o].n:'ничей')),el('div','s',(st.o?'охрана: '+(st.g|0)+' · ':'')+(st.lock>t?'перезахват через '+Math.ceil((st.lock-t)/60000)+' мин':'можно захватить')));r.append(gw);l.append(r)}box.append(l);(w||b).append(box)}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
