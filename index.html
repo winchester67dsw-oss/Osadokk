@@ -4293,7 +4293,7 @@ async function saveNews(items){items=items.slice().sort((a,b)=>b.at-a.at).slice(
 const NEWS_ICO='<svg viewBox="0 0 24 24"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v8a2 2 0 0 1-2 2"/><path d="M7 9h7M7 12h7M7 15h5"/></svg>';
 const fmtNewsDate=t=>{try{return new Date(t).toLocaleString('ru-RU',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}};
 
-function openNews(){const seen=newsSeen();openWin('Новости игры',body=>{const box=el('div');body.append(box);render();
+function openNews(){const seen=newsSeen();let edit=null,busy=false,msg=null;openWin('Новости игры',body=>{const box=el('div');body.append(box);render();
     if(!NEWS.loaded||Date.now()-NEWS.lastPull>30000){NEWS.lastPull=Date.now();loadNews().then(()=>{if(box.isConnected)render()})}
     function render(){box.replaceChildren();if(S&&S.admin)box.append(editor());
       if(!NEWS.loaded){box.append(el('p','muted','Загружаем новости…'));return}
@@ -4303,7 +4303,6 @@ function openNews(){const seen=newsSeen();openWin('Новости игры',body
         h.append(tagEl,el('span','nt',n.title||'Без заголовка'),el('span','nd',fmtNewsDate(n.at)));it.append(h,el('div','nb',n.body||''));
         if(S&&S.admin){const a=el('div','nadm');a.append(btn('Изменить',()=>{edit=n;render();box.scrollIntoView&&box.parentElement.scrollTo({top:0,behavior:'smooth'})}),btn('Удалить',()=>act(async()=>{if(!confirm('Удалить новость «'+(n.title||'')+'»?'))return;await saveNews(NEWS.items.filter(x=>x.id!==n.id))},'Новость удалена.')));it.append(a)}
         list.append(it)}box.append(list)}
-    let edit=null,busy=false,msg=null;
     async function act(fn,okText){if(busy)return;busy=true;msg=['muted','Сохраняем…'];render();try{if(!NEWS.priv)throw new Error('nokey');await fn();msg=['good',okText];edit=null}catch(e){msg=['bad',e.message==='nokey'?'Сначала введите код администратора.':e.message==='code'?'Неверный код администратора.':'Не удалось сохранить: нет связи с облаком.']}busy=false;render()}
     function editor(){const ed=el('div','newsEd');ed.append(el('div','sec',edit?'Изменить новость':'Новая новость'));
       if(!NEWS.priv){const r=el('div','r');const ci=el('input');ci.type='password';ci.placeholder='Код администратора';ci.autocomplete='off';
