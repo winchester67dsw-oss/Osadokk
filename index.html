@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793075273";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793076023";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -1675,7 +1675,7 @@ let lastBoard='';
 async function pushBoard(){if(!db||!uid||!S)return;const d={n:S.name.slice(0,16),lv:S.lvl,k:kills(S),q:S.stats.quests,score:S.lvl*10000+S.xp};const js=JSON.stringify(d);if(js===lastBoard)return;lastBoard=js;try{await db.doc('board/'+uid).set(d)}catch(e){}}
 let lastPres='';
 function sendPresence(){if(!room||!S||!M)return;const e={};for(const k of GEAR)if(S.eq[k])e[k]=S.eq[k];
-  const pr={m:M.id,x:Math.round(P.x*100)/100,y:Math.round(P.y*100)/100,a:Math.round(P.a*100)/100,w:curW(),gm:typeof myGm==='function'?myGm(curW()):'',sh:P.shotN%1000,n:S.name.slice(0,16),lv:S.lvl,k:S.karma|0,adm:S.admin?1:0,v:5,fl:typeof myFlId==='function'?myFlId():'',fc:typeof myFac==='function'?(myFac()||''):'',pid:S.pid||'',dv:typeof DEVID!=='undefined'?DEVID:'',sq:(typeof SQ!=='undefined'&&SQ.id)||'',hp:Math.round(S.hp/effMax()*100),ag:Math.round((1+stats().aggroPct/100)*100)/100,lk:{g:S.lk.g,skin:S.lk.skin,hair:S.lk.hair,hc:S.lk.hc,outfit:S.lk.outfit,beard:S.lk.beard||'none',eye:S.lk.eye|0},e};
+  const pr={m:M.id,x:Math.round(P.x*100)/100,y:Math.round(P.y*100)/100,a:Math.round(P.a*100)/100,w:curW(),gm:typeof myGm==='function'?myGm(curW()):'',pt:typeof petCode==='function'?petCode():'',inv:typeof adminInv==='function'&&adminInv()?1:0,sh:P.shotN%1000,n:S.name.slice(0,16),lv:S.lvl,k:S.karma|0,adm:S.admin?1:0,v:5,fl:typeof myFlId==='function'?myFlId():'',fc:typeof myFac==='function'?(myFac()||''):'',pid:S.pid||'',dv:typeof DEVID!=='undefined'?DEVID:'',sq:(typeof SQ!=='undefined'&&SQ.id)||'',hp:Math.round(S.hp/effMax()*100),ag:Math.round((1+stats().aggroPct/100)*100)/100,lk:{g:S.lk.g,skin:S.lk.skin,hair:S.lk.hair,hc:S.lk.hc,outfit:S.lk.outfit,beard:S.lk.beard||'none',eye:S.lk.eye|0},e};
   const js=JSON.stringify(pr);if(js===lastPres)return;lastPres=js;room.presence(pr).catch(()=>{})}
 // Онлайн без Claude (itch.io и любой сайт): все игроки подключаются к общим публичным серверам-посредникам (MQTT),
 // сразу к двум — если один недоступен, связь идёт через второй. Отдаёт тот же набор вызовов, что и комната Claude.
@@ -2602,9 +2602,9 @@ const MOB={heard:{},am:{},hits:[],ev:[],lastSnap:0,lastFlush:0,snapN:0,adoptUnti
 const rid=()=>Math.random().toString(36).slice(2,8);
 const r2=v=>Math.round(v*100)/100;
 function myNetId(){return room&&room.p2p?room.self:'me'}
-function mapPlayers(mid){if(MOB.plT===now&&MOB.plM===mid)return MOB.pl;const out=[{id:myNetId(),x:P.x,y:P.y,me:true,ag:1+stats().aggroPct/100,fc:typeof myFac==='function'?myFac():null}];
+function mapPlayers(mid){if(MOB.plT===now&&MOB.plM===mid)return MOB.pl;const out=[{id:myNetId(),x:P.x,y:P.y,me:true,ag:1+stats().aggroPct/100,fc:typeof myFac==='function'?myFac():null,inv:typeof adminInv==='function'&&adminInv()}];
   if(room&&room.p2p){const t=Date.now();for(const p of room.peers()){if(p.isMe)continue;const pr=p.presence||{};if(pr.m!==mid||typeof pr.x!=='number'||!(pr.v>=5)||t-(p.updatedAt||0)>5000)continue;const pp=peerPos.get(p.peer);
-    out.push({id:p.peer,x:pp?pp.x:pr.x,y:pp?pp.y:pr.y,ag:typeof pr.ag==='number'?Math.max(.3,Math.min(2,pr.ag)):1,fc:pr.fc||null})}}
+    out.push({id:p.peer,x:pp?pp.x:pr.x,y:pp?pp.y:pr.y,ag:typeof pr.ag==='number'?Math.max(.3,Math.min(2,pr.ag)):1,fc:pr.fc||null,inv:pr.inv===1&&pr.adm===1})}}
   MOB.plT=now;MOB.plM=mid;MOB.pl=out;return out}
 function hostId(mid){const me=myNetId();if(!room||!room.p2p)return me;const t=Date.now();const on=new Set(mapPlayers(mid).map(p=>p.id));
   let h=null;for(const [id,ts] of Object.entries(MOB.heard[mid]||{}))if(id!==me&&t-ts<1600&&on.has(id)&&(!h||id<h))h=id;
@@ -2665,7 +2665,7 @@ function aiUpdate(dt){const r=rtFor(M.id);if(!r.pop)populate(M,r);const pl=mapPl
   for(const e of r.enemies){const d=EN[e.type];if(!e.alive)continue;if(e.dying){e.dying-=dt;if(e.dying<=0)e.alive=false;continue}if(e.hp<=0)continue;if(!pl.some(p=>Math.abs(p.x-e.x)<30&&Math.abs(p.y-e.y)<22)){e.moving=false;continue}
     e.cd-=dt;e.rcd-=dt;e.scd-=dt;e.lcd-=dt;e.pcd=(e.pcd??1.5)-dt;e.slcd=(e.slcd??1)-dt;
     if(e.kx||e.ky){moveBody(e,e.kx*dt*8,e.ky*dt*8,d.r);e.kx*=Math.max(0,1-dt*10);e.ky*=Math.max(0,1-dt*10);if(Math.abs(e.kx)+Math.abs(e.ky)<.01)e.kx=e.ky=0}
-    let tg=null,td=1e9;if(!M.safe)for(const p of pl){if(typeof inSafe==='function'&&inSafe(p.x,p.y))continue;if(d.fac&&p.fc===d.fac)continue;const dd=Math.hypot(p.x-e.x,p.y-e.y);const lim=(e.seen&&e.tg===p.id)?d.aggro*2.2:d.aggro*(p.ag||1);if(dd<lim&&dd<td){td=dd;tg=p}}
+    let tg=null,td=1e9;if(!M.safe)for(const p of pl){if(typeof inSafe==='function'&&inSafe(p.x,p.y))continue;if(d.fac&&p.fc===d.fac)continue;if(p.inv)continue;const dd=Math.hypot(p.x-e.x,p.y-e.y);const lim=(e.seen&&e.tg===p.id)?d.aggro*2.2:d.aggro*(p.ag||1);if(dd<lim&&dd<td){td=dd;tg=p}}
     if(tg){if(!e.seen)sfx.voice(e.type,e.x,e.y,'aggro');e.seen=true;e.tg=tg.id}else{e.seen=false;e.tg=''}
     const dx=tg?tg.x-e.x:0,dy=tg?tg.y-e.y:0,dist=tg?Math.hypot(dx,dy):1e9,toP=Math.atan2(dy,dx),tMe=!!(tg&&tg.me);
     let vx=0,vy=0,spd=d.spd;
@@ -5538,31 +5538,33 @@ setInterval(()=>{if(S&&!document.hidden)refFetch().catch(()=>{})},180000);
   const L=b.querySelector('.grid2>div')||b;L.append(box)}catch(e){}}}
 
 // ================= ЭТАП 3: ОБВЕС ОРУЖИЯ, ПОДСТВОЛЬНИК, ГРАНАТОМЁТ =================
-// Коллиматор, оптика и подствольник ставятся на конкретный ствол и видны на модели (у себя и у других игроков).
+// Коллиматор, лазер, оптика и подствольник ставятся на верстаке (нужен навык «Мастер») и видны на модели (у себя и у других игроков).
 // Подствольник ГП-25 — только на АК-74; стреляет ВОГ-25 (клавиша B / И или кнопка 💥).
 // РПГ-7 — отдельный гранатомёт для опытных сталкеров (с 30 уровня), стреляет ракетами ПГ-7.
 Object.assign(ITEMS,{
- mod_red:{n:'Коллиматор',k:'use',use:{},mod:'sight',p:480,r:2,d:'Красная точка: кучнее стрельба (−20% разброса). Ставится на автоматы, ПП и дробовики. Нажмите «Использовать», чтобы установить на оружие.'},
- mod_scope:{n:'Оптика ПСО 4×',k:'use',use:{},mod:'sight',p:1450,r:3,d:'Прицел 4×: −40% разброса и дальность выстрела +30%. Ставится на автоматы и винтовки. Нажмите «Использовать», чтобы установить.'},
- mod_ugl:{n:'Подствольник ГП-25',k:'use',use:{},mod:'ugl',p:2300,r:3,d:'Подствольный гранатомёт для АК-74. Стреляет ВОГ-25: клавиша B (И) или кнопка 💥. Нажмите «Использовать», чтобы установить.'},
+ mod_red:{n:'Коллиматор',k:'mod',mod:'sight',p:480,r:2,d:'Красная точка: −20% разброса. Для автоматов, ПП и дробовиков. Ставится на верстаке, нужен навык «Мастер» 1.'},
+ mod_laser:{n:'Лазерный целеуказатель',k:'mod',mod:'side',p:700,r:2,d:'Красный луч: −15% разброса. Для пистолетов, ПП, автоматов и дробовиков. Ставится на верстаке, нужен навык «Мастер» 2.'},
+ mod_scope:{n:'Оптика ПСО 4×',k:'mod',mod:'sight',p:1450,r:3,d:'Прицел 4×: −40% разброса и +30% дальности. Для автоматов и винтовок. Ставится на верстаке, нужен навык «Мастер» 3.'},
+ mod_ugl:{n:'Подствольник ГП-25',k:'mod',mod:'ugl',p:2300,r:3,d:'Подствольный гранатомёт для АК-74. Стреляет ВОГ-25: клавиша B (И) или кнопка 💥. Ставится на верстаке, нужен навык «Мастер» 4.'},
  vog25:{n:'Граната ВОГ-25',k:'ammo',p:130,r:2,d:'Подствольная граната. Летит дугой и рвётся при ударе. Нужен подствольник ГП-25 на АК-74.'},
  pg7:{n:'Ракета ПГ-7',k:'ammo',p:480,r:3,d:'Выстрел для РПГ-7. Мощный взрыв, широкий радиус.'},
  rpg7:{n:'РПГ-7',k:'weapon',cls:'launcher',dmg:0,rate:.8,mag:1,ammo:'pg7',spread:.02,range:16,reload:3.4,spd:14,p:9500,r:4,d:'Ручной противотанковый гранатомёт. Ракета взрывается при попадании: урон до 230 по площади. Доступен с 30 уровня (ранг «Охотник» и выше).'}});
-Object.assign(WT,{mod_red:.2,mod_scope:.5,mod_ugl:1.2,vog25:.25,pg7:2.2,rpg7:6.3});
+Object.assign(WT,{mod_laser:.15,mod_red:.2,mod_scope:.5,mod_ugl:1.2,vog25:.25,pg7:2.2,rpg7:6.3});
 if(typeof CLS==='object')CLS.launcher='Гранатомёт';
 PX.rpg7={mz:24,g:[4,2.5],s:[12,2.2]};
 const RPG_LVL=30;
 const uglOk=id=>!!(ITEMS[id]&&ITEMS[id].k==='weapon'&&ITEMS[id].cls==='rifle'&&id!=='aks'&&/^АК/.test(ITEMS[id].n));
-const modOk=(mod,id)=>{const it=ITEMS[id];if(!it||it.k!=='weapon'||it.cls==='melee'||it.cls==='launcher')return false;if(mod==='mod_red')return ['rifle','smg','shotgun'].includes(it.cls);if(mod==='mod_scope')return ['rifle','sniper'].includes(it.cls);if(mod==='mod_ugl')return uglOk(id);return false};
+const modOk=(mod,id)=>{const it=ITEMS[id];if(!it||it.k!=='weapon'||it.cls==='melee'||it.cls==='launcher')return false;if(mod==='mod_red')return ['rifle','smg','shotgun'].includes(it.cls);if(mod==='mod_laser')return ['pistol','smg','rifle','shotgun'].includes(it.cls);if(mod==='mod_scope')return ['rifle','sniper'].includes(it.cls);if(mod==='mod_ugl')return uglOk(id);return false};
 const myMods=id=>(S&&S.mods&&S.mods[id])||{};
 // код обвеса для присутствия и отрисовки: r — коллиматор, s — оптика, u — подствольник
-const myGm=id=>{const m=myMods(id);return (m.sight==='mod_red'?'r':m.sight==='mod_scope'?'s':'')+(m.ugl?'u':'')};
-SELL.kalibr.push(['mod_red',520,5],['vog25',140,15]);SELL.hmury&&SELL.hmury.push(['mod_red',540,5],['mod_scope',1550,12],['mod_ugl',2450,15],['vog25',150,15]);
+const myGm=id=>{const m=myMods(id);return (m.sight==='mod_red'?'r':m.sight==='mod_scope'?'s':'')+(m.ugl?'u':'')+(m.side?'l':'')};
+const MOD_CRAFT={mod_red:1,mod_laser:2,mod_scope:3,mod_ugl:4};const MODS=['mod_red','mod_laser','mod_scope','mod_ugl'];
+SELL.kalibr.push(['mod_red',520,5],['mod_laser',740,6],['vog25',140,15]);SELL.hmury&&SELL.hmury.push(['mod_red',540,5],['mod_laser',760,6],['mod_scope',1550,12],['mod_ugl',2450,15],['vog25',150,15]);
 SELL.gosha&&SELL.gosha.push(['mod_scope',1500,12],['mod_ugl',2400,15],['rpg7',9800,RPG_LVL],['pg7',500,RPG_LVL]);
 LOOTT.push(['vog25',1,2,.4,3],['mod_red',1,1,.12,2],['mod_scope',1,1,.05,3],['pg7',1,1,.06,4]);
 
 // ---------- Эффект обвеса ----------
-{const _ws=wStats;wStats=function(id){const s=_ws(id);const m=myMods(id);if(s&&s.spread!=null){if(m.sight==='mod_red')s.spread*=.8;else if(m.sight==='mod_scope')s.spread*=.6}return s}}
+{const _ws=wStats;wStats=function(id){const s=_ws(id);const m=myMods(id);if(s&&s.spread!=null){if(m.sight==='mod_red')s.spread*=.8;else if(m.sight==='mod_scope')s.spread*=.6;if(m.side==='mod_laser')s.spread*=.85}return s}}
 
 // ---------- Отрисовка обвеса на модели ----------
 let GM_DRAW=null;
@@ -5575,20 +5577,23 @@ function drawMods(c,w,gm){if(!gm)return;const px=PX[w]||{mz:14,s:[7,2]};const mz
   if(gm.includes('s')){const x0=mz*.24,x1=mz*.6;c.fillStyle='#2a2c2e';c.fillRect(x0+1.5,-3.4,1.2,1.2);c.fillRect(x1-2.5,-3.4,1.2,1.2);c.fillStyle=lg(c,0,-5.6,0,-3.4,'#4a4e52','#141618');rrp(c,x0,-5.7,x1-x0,2.4,1.1);c.fill();strokeO(c,.5);
     c.fillStyle='#0a0c10';c.fillRect(x1-.6,-5.4,1,1.8);c.fillStyle='rgba(120,200,255,.55)';c.fillRect(x1-.3,-5.2,.5,1.4)}
   else if(gm.includes('r')){const x0=mz*.38;c.fillStyle='#1c1e20';rrp(c,x0,-4.6,3.4,2.2,.5);c.fill();strokeO(c,.5);c.fillStyle='rgba(150,220,255,.35)';c.fillRect(x0+.5,-4.2,2.4,1.2);c.fillStyle='#ff3a2a';c.beginPath();c.arc(x0+1.7,-3.6,.45,0,7);c.fill()}
+  if(gm.includes('l')){const lx=mz*.6,ly=gm.includes('u')?-2.6:.7;c.fillStyle='#1a1c1e';rrp(c,lx,ly,2.8,1.4,.4);c.fill();strokeO(c,.4);c.fillStyle='#ff2a1a';c.fillRect(lx+2.6,ly+.45,.5,.5);if(GM_DRAW!=null){c.strokeStyle='rgba(255,40,30,.4)';c.lineWidth=.35;c.beginPath();c.moveTo(lx+3,ly+.7);c.lineTo(lx+70,ly+.7);c.stroke()}}
   if(gm.includes('u')){const sx=(px.s?px.s[0]:mz*.5)-1;c.fillStyle=lg(c,0,1,0,3.4,'#4a4c50','#1a1c1e');rrp(c,sx,1.1,7.5,2.1,.8);c.fill();strokeO(c,.5);c.fillStyle='#111';c.fillRect(sx+7.2,1.4,.6,1.5);c.fillStyle='#2a2a2a';c.fillRect(sx+1.2,3,1.1,1.8)}}
 {const _dg=drawGun;drawGun=function(c,w){if(w==='rpg7'){drawRpg(c);return}_dg(c,w);try{drawMods(c,w,GM_DRAW!=null?GM_DRAW:(ITEMS[w]&&ITEMS[w].k==='weapon'?myGm(w):''))}catch(e){}}}
 
 // ---------- Установка обвеса ----------
 function modWin(sel){openWin('Обвес оружия',b=>{const wps=Object.keys(S.inv).filter(id=>ITEMS[id]&&ITEMS[id].k==='weapon'&&ITEMS[id].cls!=='melee'&&ITEMS[id].cls!=='launcher');
-  b.append(el('p','muted small','Коллиматор или оптика ставятся в прицельное место (одно на ствол), подствольник ГП-25 — только на АК-74. Снятый обвес возвращается в рюкзак.'));
+  const cr=sk('craft');b.append(el('p','muted small','Коллиматор или оптика ставятся в прицельное место (одно на ствол), лазер — на боковую планку, подствольник ГП-25 — только на АК-74. Нужен навык «Мастер»: коллиматор — 1, лазер — 2, оптика — 3, подствольник — 4 (у вас '+cr+'). Снятый обвес возвращается в рюкзак.'));
   if(!wps.length){b.append(el('p','muted','В рюкзаке нет огнестрельного оружия.'));return}const l=el('div','list');
-  for(const id of wps){const m=myMods(id);const row=el('div','row');row.append(iconCanvas(id,40));const gw=el('div','grow');const cur=[m.sight?ITEMS[m.sight].n:null,m.ugl?ITEMS[m.ugl].n:null].filter(Boolean);
+  for(const id of wps){const m=myMods(id);const row=el('div','row');row.append(iconCanvas(id,40));const gw=el('div','grow');const cur=[m.sight?ITEMS[m.sight].n:null,m.side?ITEMS[m.side].n:null,m.ugl?ITEMS[m.ugl].n:null].filter(Boolean);
     gw.append(el('div','t',ITEMS[id].n),el('div','s',cur.length?'Стоит: '+cur.join(', '):'Без обвеса'));row.append(gw);const acts=el('div');
-    for(const mod of ['mod_red','mod_scope','mod_ugl']){if(!modOk(mod,id))continue;const slot=ITEMS[mod].mod;
+    for(const mod of MODS){if(!modOk(mod,id))continue;const slot=ITEMS[mod].mod;
       if(m[slot]===mod)acts.append(btn('Снять: '+ITEMS[mod].n,()=>{S.mods[id][slot]=null;add(mod);log('Снято: '+ITEMS[mod].n+' с '+ITEMS[id].n);dirty=true;sendPresence();modWin()},'btn'));
+      else if(has(mod)&&cr<MOD_CRAFT[mod])acts.append(btn(ITEMS[mod].n+': нужен «Мастер» '+MOD_CRAFT[mod],()=>{},'btn',true));
       else if(has(mod))acts.append(btn('Поставить: '+ITEMS[mod].n,()=>{S.mods=S.mods||{};S.mods[id]=S.mods[id]||{};const old=S.mods[id][slot];if(old)add(old);take(mod);S.mods[id][slot]=mod;log('🔧 Установлено: '+ITEMS[mod].n+' на '+ITEMS[id].n,'good');sfx.reload&&sfx.reload();dirty=true;sendPresence();updUglBtn();modWin()},sel===mod?'btn primary':'btn'))}
     row.append(acts);l.append(row)}b.append(l)})}
-{const _ui=useItem;useItem=function(id){if(ITEMS[id]&&ITEMS[id].mod){modWin(id);return}return _ui(id)}}
+// установка — на верстаке (клетка-верстак или Люда): в окне верстака появляется кнопка «Обвес оружия»
+{const _wb=workbench;workbench=function(n){_wb(n);try{const lists=ov.querySelectorAll('.list');const host=lists[lists.length-1];if(!host)return;const box=el('div');box.append(el('div','sec','Обвес оружия'),el('p','muted small','Коллиматор, лазер, оптика и подствольник. Нужен навык «Мастер» (у вас '+sk('craft')+').'),btn('🔧 Обвес оружия',()=>modWin(),'btn primary'));host.after(box)}catch(e){}}}
 
 // ---------- Ракеты и ВОГи ----------
 const RKT=[];
@@ -5683,6 +5688,168 @@ if(typeof LOGTXT==='object')LOGTXT.boost='прокачал(а) бойцов';
 {const _es=enemyShoot;enemyShoot=function(e,r,a){const n=projs.length;_es(e,r,a);const f=EN[e.type]&&EN[e.type].fac;if(f)for(let i=n;i<projs.length;i++)projs[i].fac=f}}
 function sameFacPeer(peer){const f=myFac();if(!f||!room)return false;const p=room.peers().find(x=>x.peer===peer);return !!(p&&p.presence&&p.presence.fc===f)}
 {const _ph=pvpHit;pvpHit=function(pe,dmg){if(pe&&sameFacPeer(pe.peer)){floatText(pe.x,pe.y-.9,'свой','#9ad87a');return}return _ph(pe,dmg)}}
+// ================= ЭТАП 4: ПИТОМЦЫ =================
+// Кошка отвлекает врагов, собака атакует, птица разведывает и приносит находки.
+// Прокачка (ловкость, скорость, сила), здоровье и голод, корм, снаряжение, маяк на точке и призыв.
+// Раненый питомец убегает в приют к ветеринару Тоне (Ржавый Колокол), там его лечат.
+const PETK={cat:{n:'Кошка',hp:60,role:'отвлекает врагов на себя'},dog:{n:'Собака',hp:100,role:'бросается на врагов и кусает'},bird:{n:'Птица',hp:40,role:'разведка: сообщает о врагах и приносит находки'}};
+const BREEDS={
+ sphynx:{k:'cat',n:'Сфинкс',p:700,c:'#e8b8a0',c2:'#d89a88',s:.9,hp:.9,d:'Лысый и хитрый: отвлекает дольше.'},
+ mainecoon:{k:'cat',n:'Мейн-кун',p:950,c:'#7a5634',c2:'#4a3018',s:1.15,hp:1.3,d:'Крупный и живучий.'},
+ siamese:{k:'cat',n:'Сиамская',p:800,c:'#efe2c8',c2:'#4a3424',s:.95,hp:1,d:'Быстрая: отвлекает чаще.'},
+ shepherd:{k:'dog',n:'Овчарка',p:1300,c:'#8a5a2a',c2:'#2a1a0c',s:1.05,hp:1.2,dmg:14,d:'Сильный укус, надёжный защитник.'},
+ labrador:{k:'dog',n:'Лабрадор',p:1000,c:'#d8b070',c2:'#b08848',s:1,hp:1.4,dmg:10,d:'Добродушный, но выносливый.'},
+ chihuahua:{k:'dog',n:'Чихуахуа',p:500,c:'#c89058',c2:'#a06a38',s:.6,hp:.6,dmg:6,d:'Маленькая, быстрая и злая.'},
+ raven:{k:'bird',n:'Ворон',p:850,c:'#1e1e26',c2:'#3a3a48',s:1,hp:1,d:'Умный разведчик: видит дальше.'},
+ eagle:{k:'bird',n:'Орёл',p:1500,c:'#6a4a2a',c2:'#f0eee0',s:1.25,hp:1.4,d:'Разведчик, который ещё и клюёт врагов.'},
+ pigeon:{k:'bird',n:'Голубь',p:500,c:'#8a8e98',c2:'#3a8a6a',s:.85,hp:.8,d:'Чаще приносит находки.'}};
+const PETNAMES={cat:['Мурка','Барсик','Пепел','Ржавка','Тень'],dog:['Рекс','Шарик','Гром','Дозор','Бурый'],bird:['Карл','Крыло','Сокол','Уголёк','Вестник']};
+Object.assign(ITEMS,{
+ petfood:{n:'Корм для питомца',k:'use',use:{},p:25,r:0,d:'Сытный корм: +50 сытости и +20 здоровья активному питомцу. Продают ветеринар Тоня (Ржавый Колокол) и медсестра Оля (Заречный).'},
+ pet_collar:{n:'Ошейник с шипами',k:'use',use:{},pacc:'neck',p:220,r:1,d:'Для питомца: +15% к урону. Нажмите «Использовать», чтобы надеть на активного питомца.'},
+ pet_bandana:{n:'Бандана для питомца',k:'use',use:{},pacc:'neck',p:90,r:1,d:'Для питомца: стильно и +5 здоровья.'},
+ pet_vest:{n:'Жилетка для питомца',k:'use',use:{},pacc:'body',p:380,r:2,d:'Для питомца: +25 здоровья.'},
+ pet_camo:{n:'Маскировочная накидка',k:'use',use:{},pacc:'body',p:600,r:2,d:'Для питомца: враги его не замечают и не ранят, а маяк из него незаметнее.'}});
+Object.assign(WT,{petfood:.3,pet_collar:.1,pet_bandana:.05,pet_vest:.3,pet_camo:.3});
+// ветеринар в Ржавом Колоколе
+{const g=MAPS.hub.g;let pos=null;for(let y=13;y<=17&&!pos;y++)for(let x=12;x<=28&&!pos;x++)if(walkable(g[y]?.[x])&&g[y][x]!=='='&&!NPCS.some(n=>n.map==='hub'&&Math.abs(n.x-x)<2&&Math.abs(n.y-y)<2))pos=[x,y];
+  pos=pos||[16,14];NPCS.push({id:'vet',map:'hub',x:pos[0],y:pos[1],a:Math.PI/2,n:'Ветеринар Тоня',role:'Приют для питомцев: продажа, лечение, корм',lines:['Хвостатые в Пустоши живут дольше людей. Если их кормить.','Собака не предаст, кошка не бросит, ворон не соврёт.','Раненого зверя тащи ко мне — подлатаю.','Корм не забывай, а то обидится.'],lk:{g:'f',skin:1,hair:'ponytail',hc:'rust',outfit:1,beard:'none',eye:2},eq:{body:'jacket',hands:'tgloves'}})}
+SELL.vet=[['petfood',25],['pet_bandana',100],['pet_collar',240,3],['pet_vest',400,5],['pet_camo',650,8]];
+SELL.olya=SELL.olya||[];SELL.olya.push(['petfood',30]);
+
+// ---------- Данные питомца ----------
+const petList=()=>(S.pets=S.pets||[]);
+const actPet=()=>{const l=petList();const p=l[S.petAct|0];return S.petAct!=null&&S.petAct>=0&&p&&!p.dead?p:null};
+const petMax=p=>{const b=BREEDS[p.b];return Math.round(PETK[b.k].hp*b.hp+p.lv*5+(p.acc.body==='pet_vest'?25:0)+(p.acc.neck==='pet_bandana'?5:0))};
+function newPet(b){const k=BREEDS[b].k;const nm=PETNAMES[k][Math.floor(Math.random()*5)];const p={b,name:nm,lv:1,xp:0,sp:1,st:{agi:0,spd:0,str:0},hunger:100,acc:{},dead:false};p.hp=petMax(p);return p}
+function petXp(p,n){p.xp+=n;while(p.lv<10&&p.xp>=p.lv*50){p.xp-=p.lv*50;p.lv++;p.sp++;p.hp=petMax(p);log('🐾 '+p.name+' вырос(ла) до '+p.lv+' уровня! Есть очко прокачки (вкладка «Питомцы»).','good')}dirty=true}
+function petHurt(p,n){if(p.acc.body==='pet_camo')return;if(Math.random()<p.st.agi*.08)return;p.hp-=n;if(PET)PET.hurt=now+150;if(p.hp<=0){p.hp=0;p.dead=true;S.petAct=-1;S.petBeacon=null;log('🐾 '+p.name+' ранен(а) и убежал(а) в приют. Ветеринар Тоня в Ржавом Колоколе вылечит.','bad');sendPresence()}dirty=true}
+// живое положение активного питомца на карте
+let PET=null;
+function petSpawn(){const p=actPet();if(!p){PET=null;return}PET={x:P.x-.8,y:P.y+.6,ph:0,a:0,cd:2,tg:null,bk:0,fly:0}}
+
+// ---------- Рисунок ----------
+function drawPet(c,x,y,b,a,ph,acc,alpha){const B=BREEDS[b];if(!B)return;const k=B.k,s=B.s,dir=Math.cos(a)<0?-1:1;c.save();c.translate(x,y);c.scale(dir*s,s);if(alpha!=null)c.globalAlpha=alpha;else if(acc&&acc.body==='pet_camo')c.globalAlpha=.55;
+  const L=Math.sin(ph)*1.4;c.lineCap='round';
+  if(k==='bird'){const up=Math.sin(ph*1.6)*3;c.fillStyle='rgba(0,0,0,.18)';c.beginPath();c.ellipse(0,9,4,1.3,0,0,7);c.fill();c.translate(0,-8);
+    c.fillStyle=B.c;c.beginPath();c.ellipse(0,0,4.2,2.6,0,0,7);c.fill();strokeO(c,.5);c.beginPath();c.moveTo(-1,-1);c.lineTo(-5,-3-up);c.lineTo(2,-1.2);c.closePath();c.fill();strokeO(c,.5);
+    c.fillStyle=b==='eagle'?B.c2:B.c;c.beginPath();c.arc(3.6,-1.6,2,0,7);c.fill();strokeO(c,.5);if(b==='pigeon'){c.fillStyle=B.c2;c.fillRect(2.2,-.4,2.4,1.1)}
+    c.fillStyle='#f0c040';c.beginPath();c.moveTo(5.4,-1.8);c.lineTo(7.4,-1.2);c.lineTo(5.4,-.8);c.closePath();c.fill();c.fillStyle='#111';c.beginPath();c.arc(4.2,-2,.5,0,7);c.fill();
+    c.fillStyle=B.c;c.beginPath();c.moveTo(-3.8,0);c.lineTo(-6.6,1.6);c.lineTo(-6.2,-.6);c.closePath();c.fill()}
+  else{const dog=k==='dog';c.fillStyle='rgba(0,0,0,.25)';c.beginPath();c.ellipse(0,6.5,7,2,0,0,7);c.fill();
+    c.strokeStyle=B.c2;c.lineWidth=1.8;for(const [lx,o] of [[-4.5,L],[-2.5,-L],[2.5,L],[4.5,-L]]){c.beginPath();c.moveTo(lx,1.5);c.lineTo(lx+o*.4,6);c.stroke()}
+    c.strokeStyle=k==='cat'&&b==='siamese'?B.c2:B.c;c.lineWidth=dog?1.8:1.4;c.beginPath();c.moveTo(-5.5,-.5);c.quadraticCurveTo(-8.5,dog?-3:-6,dog?-8+Math.sin(now/110)*1.5:-7.5,dog?-5:-8);c.stroke();
+    c.fillStyle=B.c;c.beginPath();c.ellipse(0,0,dog?6.2:5.4,dog?3.2:2.8,0,0,7);c.fill();strokeO(c,.5);if(dog&&b==='shepherd'){c.fillStyle=B.c2;c.beginPath();c.ellipse(-.5,-1.2,4.4,1.8,0,0,7);c.fill()}
+    if(b==='mainecoon'){c.strokeStyle=B.c2;c.lineWidth=.8;for(let i=-3;i<=2;i+=2.5){c.beginPath();c.moveTo(i,-2.6);c.lineTo(i+.8,0);c.stroke()}}
+    const hx=dog?6.2:5.2,hy=dog?-2.2:-2.6;c.fillStyle=B.c;c.beginPath();c.arc(hx,hy,dog?2.7:2.4,0,7);c.fill();strokeO(c,.5);
+    if(dog){c.beginPath();c.ellipse(hx+2.4,hy+.8,1.8,1.2,0,0,7);c.fill();strokeO(c,.4);c.fillStyle=B.c2;c.beginPath();c.ellipse(hx-1,hy-1.8,1,b==='chihuahua'?2.4:1.6,-.4,0,7);c.fill();c.fillStyle='#111';c.beginPath();c.arc(hx+3.9,hy+.5,.6,0,7);c.fill()}
+    else{c.fillStyle=b==='siamese'?B.c2:B.c;for(const ex of [-1.4,1]){c.beginPath();c.moveTo(hx+ex-.8,hy-1.6);c.lineTo(hx+ex,hy-4);c.lineTo(hx+ex+.9,hy-1.6);c.closePath();c.fill()}if(b==='siamese'){c.beginPath();c.arc(hx+.8,hy+.3,1.3,0,7);c.fill()}}
+    c.fillStyle=k==='cat'?'#6ad040':'#111';c.beginPath();c.arc(hx+1,hy-.5,.55,0,7);c.fill();
+    if(acc&&acc.body==='pet_vest'){c.fillStyle='#4a5a3a';c.fillRect(-3.5,-2.6,6,4.2);c.strokeStyle='#222';c.lineWidth=.4;c.strokeRect(-3.5,-2.6,6,4.2)}
+    if(acc&&acc.neck==='pet_collar'){c.strokeStyle='#2a2a2a';c.lineWidth=1.2;c.beginPath();c.moveTo(hx-1.8,hy+1);c.lineTo(hx-.6,hy+2.4);c.stroke();c.fillStyle='#c8c8c8';c.beginPath();c.arc(hx-1.2,hy+1.6,.45,0,7);c.fill()}
+    if(acc&&acc.neck==='pet_bandana'){c.fillStyle='#b02a22';c.beginPath();c.moveTo(hx-2,hy+.8);c.lineTo(hx+.4,hy+1.4);c.lineTo(hx-1,hy+3.4);c.closePath();c.fill()}}
+  c.restore()}
+function petIcon(b,acc,size=48){const cv=document.createElement('canvas');const d=Math.min(2,window.devicePixelRatio||1);cv.width=size*d;cv.height=size*d;cv.style.width=cv.style.height=size+'px';const x=cv.getContext('2d');x.scale(d*size/24,d*size/24);drawPet(x,12,BREEDS[b].k==='bird'?17:13,b,0,0,acc,1);return cv}
+{const _dt=drawTilesCached;drawTilesCached=function(c,x0,y0,x1,y1,t){_dt(c,x0,y0,x1,y1,t);if(!S||!M)return;
+  const p=actPet();if(p&&PET){const bm=S.petBeacon;if(!bm||bm.m===M.id){drawPet(c,PET.x*T,PET.y*T,p.b,PET.a,PET.ph,p.acc,PET.hurt>now?.5:null);if(bm){c.save();c.font='700 10px "IBM Plex Mono",monospace';c.textAlign='center';c.fillStyle='#9ad87a';c.fillText('📍 '+p.name,PET.x*T,PET.y*T-16);c.restore()}}}
+  if(room)for(const q of room.peers()){if(q.isMe||q.sameTab)continue;const pr=q.presence||{};if(pr.m!==M.id||typeof pr.pt!=='string'||!pr.pt)continue;const [b,ac]=pr.pt.split('.');if(!BREEDS[b])continue;const pp=peerPos.get(q.peer);if(!pp)continue;const a=typeof pr.a==='number'?pr.a:0;
+    const acc={neck:ac&&ac.includes('c')?'pet_collar':ac&&ac.includes('b')?'pet_bandana':null,body:ac&&ac.includes('v')?'pet_vest':ac&&ac.includes('m')?'pet_camo':null};drawPet(c,(pp.x-Math.cos(a)*1)*T,(pp.y-Math.sin(a)*1+.5)*T,b,a,now/90,acc)}}}
+const petCode=()=>{const p=actPet();if(!p||S.petBeacon)return '';return p.b+'.'+(p.acc.neck==='pet_collar'?'c':p.acc.neck==='pet_bandana'?'b':'')+(p.acc.body==='pet_vest'?'v':p.acc.body==='pet_camo'?'m':'')};
+
+// ---------- Поведение ----------
+const foeOk=e=>e.alive&&!e.dying&&e.hp>0&&EN[e.type]&&!(EN[e.type].fac&&EN[e.type].fac===myFac());
+let petT={scan:0,loot:0,hungry:0,beacon:0,seen:{}};
+function petTick(dt){const p=actPet();if(!p||!M){PET=null;return}if(!PET)petSpawn();const B=BREEDS[p.b],k=B.k,st=p.st;const sp=3.6+st.spd*.5;
+  const bm=S.petBeacon;let tx,ty;if(bm){if(bm.m!==M.id)return;tx=bm.x;ty=bm.y}else{tx=P.x-Math.cos(P.a)*1.1;ty=P.y-Math.sin(P.a)*1.1+.4}
+  if(!bm&&Math.hypot(PET.x-P.x,PET.y-P.y)>12){PET.x=P.x;PET.y=P.y}
+  const hungry=p.hunger<20;const safe=M.safe||M.interior;
+  // собака: бросается на ближайшего врага рядом с хозяином
+  if(k==='dog'&&!hungry&&!safe&&!bm){if(!PET.tg||!foeOk(PET.tg)||Math.hypot(PET.tg.x-P.x,PET.tg.y-P.y)>9){PET.tg=null;let best=7;for(const e of rtFor(M.id).enemies){if(!foeOk(e))continue;const d=Math.hypot(e.x-P.x,e.y-P.y);if(d<best){best=d;PET.tg=e}}}
+    if(PET.tg){tx=PET.tg.x;ty=PET.tg.y;PET.cd-=dt;if(Math.hypot(PET.tg.x-PET.x,PET.tg.y-PET.y)<1&&PET.cd<=0){PET.cd=1/(1+st.agi*.1);const e=PET.tg;const dmg=B.dmg*(1+.2*st.str)*(p.acc.neck==='pet_collar'?1.15:1)*(.85+Math.random()*.3);
+      damageEnemy(e,dmg,Math.atan2(e.y-PET.y,e.x-PET.x),false,1.5);sfx.hit&&sfx.hit(e.x,e.y);if(e.hp<=0){petXp(p,8+Math.round((EN[e.type].xp||10)/3));PET.tg=null}else petXp(p,1);if(Math.random()<.35)petHurt(p,(EN[e.type].dmg||8)*.5)}}}
+  // кошка: отвлекает врага, который идёт на хозяина
+  if(k==='cat'&&!hungry&&!safe){PET.cd-=dt;if(PET.cd<=0){PET.cd=Math.max(4,(p.b==='siamese'?9:12)-st.agi);let best=8,tg=null;for(const e of rtFor(M.id).enemies){if(!foeOk(e)||EN[e.type].boss)continue;const d=Math.hypot(e.x-P.x,e.y-P.y);if(d<best&&!(e.distT>now)){best=d;tg=e}}
+      if(tg){tg.distT=now+(p.b==='sphynx'?3600:2600)+st.str*400;tg.distBy=PET;floatText(PET.x,PET.y-1,'мяу!','#ffd27a');petXp(p,3)}}
+    for(const e of rtFor(M.id).enemies){if(!(e.distT>now)||!e.alive||e.dying)continue;e.cd=Math.max(e.cd||0,.35);e.rcd=Math.max(e.rcd||0,.35);const d=Math.hypot(PET.x-e.x,PET.y-e.y);if(d>.8){const a=Math.atan2(PET.y-e.y,PET.x-e.x);moveBody(e,Math.cos(a)*(EN[e.type].spd||2)*.8*dt,Math.sin(a)*(EN[e.type].spd||2)*.8*dt,EN[e.type].r||.3);e.moving=true;e.a=a}else if(Math.random()<dt*.8)petHurt(p,(EN[e.type].dmg||6)*.4)}}
+  // птица: разведка и находки, орёл ещё и клюёт
+  if(k==='bird'&&!hungry){PET.fly+=dt;if(!bm){tx=P.x+Math.cos(PET.fly*1.3)*1.6;ty=P.y-.6+Math.sin(PET.fly*1.3)*1.1}
+    if(!safe&&now>petT.scan){petT.scan=now+Math.max(15000,30000-st.spd*2500);const R=(p.b==='raven'?14:11)+st.spd*2;const fs=rtFor(M.id).enemies.filter(e=>foeOk(e)&&Math.hypot(e.x-P.x,e.y-P.y)<R);
+      if(fs.length){const n=fs.reduce((a,b)=>Math.hypot(a.x-P.x,a.y-P.y)<Math.hypot(b.x-P.x,b.y-P.y)?a:b);const ARR8=['→','↘','↓','↙','←','↖','↑','↗'];const dir=ARR8[(Math.round(Math.atan2(n.y-P.y,n.x-P.x)/(Math.PI/4))+8)%8];log('🐦 '+p.name+': рядом врагов — '+fs.length+', ближайший «'+EN[n.type].n+'» '+dir+' '+Math.round(Math.hypot(n.x-P.x,n.y-P.y))+' м.','sys');petXp(p,2)}}
+    if(!safe&&now>petT.loot){petT.loot=now+Math.max(40000,(p.b==='pigeon'?60000:90000)-st.agi*6000);if(petT.loot0){const pool=['cells','bandage','scrap','wire','a545','a9','water','rag'].filter(i=>ITEMS[i]);const id=pool[Math.floor(Math.random()*pool.length)];add(id,1);log('🐦 '+p.name+' принёс(ла) находку: '+ITEMS[id].n+'.','good');petXp(p,5)}petT.loot0=1}
+    if(p.b==='eagle'&&!safe){PET.cd-=dt;if(PET.cd<=0){PET.cd=Math.max(1.5,3-st.agi*.25);let best=6,tg=null;for(const e of rtFor(M.id).enemies){if(!foeOk(e))continue;const d=Math.hypot(e.x-P.x,e.y-P.y);if(d<best){best=d;tg=e}}if(tg){damageEnemy(tg,(5+st.str*2)*(p.acc.neck==='pet_collar'?1.15:1),0,false,.5);if(tg.hp<=0)petXp(p,6)}}}}
+  // движение к цели
+  const dx=tx-PET.x,dy=ty-PET.y,dd=Math.hypot(dx,dy);if(dd>.15){const v=Math.min(dd,sp*(dd>3?1.6:1)*dt);if(k==='bird'){PET.x+=dx/dd*v;PET.y+=dy/dd*v}else moveBody(PET,dx/dd*v,dy/dd*v,.25);PET.a=Math.atan2(dy,dx);PET.ph+=v*5}
+  // голод
+  if(now>petT.hungry){petT.hungry=now+90000;p.hunger=Math.max(0,p.hunger-1);if(p.hunger===19)log('🐾 '+p.name+' проголодался(ась) и перестал(а) помогать. Покормите кормом для питомца.','bad');if(p.hunger===0)petHurt(p,2)}
+  // маяк: сообщает о врагах и чужих игроках возле точки
+  if(bm&&now>petT.beacon){petT.beacon=now+6000;beaconScan(p)}}
+function beaconScan(p){const bm=S.petBeacon;if(!bm)return;const t=Date.now();
+  if(room)for(const q of room.peers()){if(q.isMe||q.sameTab)continue;const pr=q.presence||{};if(pr.m!==bm.m||typeof pr.x!=='number')continue;if(pr.fc&&pr.fc===myFac())continue;const d=Math.hypot(pr.x-bm.x,pr.y-bm.y);if(d>12)continue;const key='p'+q.peer;if(t-(petT.seen[key]||0)<60000)continue;petT.seen[key]=t;
+    const nm=(typeof pr.n==='string'?cleanText(pr.n,16):'')||'Выживший';notifyBeacon('📍 '+p.name+' у маяка ('+MAPS[bm.m].name+'): чужой сталкер «'+nm+'» в '+Math.round(d)+' м!')}
+  if(M.id===bm.m){const fs=rtFor(M.id).enemies.filter(e=>foeOk(e)&&Math.hypot(e.x-bm.x,e.y-bm.y)<10);if(fs.length&&t-(petT.seen.mobs||0)>45000){petT.seen.mobs=t;notifyBeacon('📍 '+p.name+' у маяка: рядом враги — '+fs.length)}}}
+function notifyBeacon(msg){log(msg,'bad');try{if(typeof notify==='function')notify(msg)}catch(e){}try{sfx.click&&sfx.click()}catch(e){}}
+// маяк работает, даже когда вы на другой локации (чужие игроки видны по связи)
+setInterval(()=>{if(!S||!S.petBeacon||!actPet())return;if(M&&M.id===S.petBeacon.m)return;beaconScan(actPet())},8000);
+{const _ue=updateEnemies;updateEnemies=function(dt){_ue(dt);try{petTick(dt)}catch(e){}}}
+{const _em=enterMap;enterMap=function(id,x,y){const r=_em(id,x,y);try{if(PET&&!S.petBeacon){PET.x=P.x-.6;PET.y=P.y+.6}}catch(e){}return r}}
+
+// ---------- Корм и снаряжение ----------
+{const _ui=useItem;useItem=function(id){const it=ITEMS[id];if(id==='petfood'){const p=actPet();if(!p){log('Нет активного питомца. Выберите его во вкладке «Питомцы».','bad');return}take('petfood');p.hunger=Math.min(100,p.hunger+50);p.hp=Math.min(petMax(p),p.hp+20);log('🐾 '+p.name+' с удовольствием поел(а).','good');dirty=true;return}
+  if(it&&it.pacc){const p=actPet();if(!p){log('Нет активного питомца.','bad');return}const old=p.acc[it.pacc];take(id);if(old)add(old);p.acc[it.pacc]=id;p.hp=Math.min(p.hp,petMax(p));log('🐾 На '+p.name+' надето: '+it.n+(old?' (снято: '+ITEMS[old].n+')':''),'good');sendPresence();dirty=true;return}return _ui(id)}}
+
+// ---------- Вкладка «Питомцы» ----------
+TABS.splice(Math.max(0,TABS.findIndex(t=>t[0]==='skills')+1),0,['pets','Питомцы']);
+TABVIEW.pets=b=>{const l=petList();b.append(el('div','sec','Ваши питомцы ('+l.length+'/3)'));
+  if(!l.length){b.append(el('p','muted','У вас пока нет питомца. Загляните к ветеринару Тоне в Ржавом Колоколе: кошка отвлекает врагов, собака кусает, птица разведывает и приносит находки.'));return}
+  const list=el('div','list');l.forEach((p,i)=>{const B=BREEDS[p.b],K=PETK[B.k];const act=i===(S.petAct|0)&&S.petAct>=0&&!p.dead;const r=el('div','row'+(act?' done':''));r.append(petIcon(p.b,p.acc,56));const gw=el('div','grow');
+    gw.append(el('div','t',p.name+' · '+B.n+' · ур. '+p.lv+(act?' · с вами':'')+(p.dead?' · в приюте':'')),el('div','s',K.role+' · здоровье '+Math.round(p.hp)+'/'+petMax(p)+' · сытость '+Math.round(p.hunger)+'% · опыт '+p.xp+'/'+(p.lv*50)),
+      el('div','s','Снаряжение: '+([p.acc.neck,p.acc.body].filter(Boolean).map(x=>ITEMS[x].n).join(', ')||'нет')+(S.petBeacon&&act?' · 📍 оставлен маяком: '+MAPS[S.petBeacon.m].name:'')));
+    const stl=el('div','s');for(const [k,n,ds] of [['agi','Ловкость','уворот, частота умений'],['spd','Скорость','бег, дальность разведки'],['str','Сила','урон и время отвлечения']]){const s=el('span');s.append(document.createTextNode(n+' '+p.st[k]+'/5 '));if(p.sp>0&&p.st[k]<5)s.append(btn('+',()=>{p.st[k]++;p.sp--;dirty=true;openTab('pets')},'btn'));s.title=ds;s.style.marginRight='10px';stl.append(s)}
+    if(p.sp>0)stl.append(el('b',null,' очков: '+p.sp));gw.append(stl);r.append(gw);const acts=el('div');
+    if(!p.dead){if(act){acts.append(btn('Отпустить домой',()=>{S.petAct=-1;S.petBeacon=null;PET=null;sendPresence();dirty=true;openTab('pets')},'btn'));
+        acts.append(S.petBeacon?btn('📣 Позвать к себе',()=>petCall(),'btn primary'):btn('📍 Оставить маяком',()=>petBeacon(),'btn',M.safe||M.interior));
+        acts.append(btn('Покормить',()=>{useItem('petfood');openTab('pets')},'btn',!has('petfood')));
+        for(const sl of ['neck','body'])if(p.acc[sl])acts.append(btn('Снять: '+ITEMS[p.acc[sl]].n,()=>{add(p.acc[sl]);p.acc[sl]=null;p.hp=Math.min(p.hp,petMax(p));sendPresence();dirty=true;openTab('pets')},'btn'))}
+      else acts.append(btn('Взять с собой',()=>{S.petAct=i;S.petBeacon=null;petSpawn();sendPresence();dirty=true;openTab('pets')},'btn primary'))}
+    const nmIn=document.createElement('input');nmIn.value=p.name;nmIn.maxLength=14;nmIn.style.cssText='width:110px;font:12px var(--mono);background:#14110c;color:#f2e2b8;border:1px solid #5a4a30;border-radius:6px;padding:4px';acts.append(nmIn,btn('Имя',()=>{const v=cleanText(nmIn.value,14).trim();if(v){p.name=v;dirty=true;openTab('pets')}},'btn'));
+    r.append(acts);list.append(r)});b.append(list);
+  b.append(el('p','muted small','Корм продают Тоня и медсестра Оля. Голодный питомец (сытость ниже 20%) не помогает. Раненый питомец убегает в приют, там его лечат. Маяк сообщает о врагах и чужих сталкерах у точки, даже когда вы на другой локации.'))};
+function petBeacon(){const p=actPet();if(!p||!PET)return;S.petBeacon={m:M.id,x:PET.x,y:PET.y};log('📍 '+p.name+' остаётся здесь и будет сообщать о врагах и чужих сталкерах.','good');sendPresence();dirty=true;openTab('pets')}
+let petCallT=0;function petCall(){const p=actPet();if(!p)return;if(now<petCallT){log('Питомец ещё бежит к вам…','sys');return}petCallT=now+20000;S.petBeacon=null;petSpawn();log('📣 '+p.name+' прибежал(а) к вам!','good');sendPresence();dirty=true;openTab('pets')}
+
+// ---------- Ветеринар: продажа и лечение ----------
+{const _nd=npcDialog;npcDialog=function(n){_nd(n);if(n.id!=='vet')return;const o=ov.querySelector('.opts');if(!o)return;const leave=o.lastElementChild;
+  o.insertBefore(el('p','small','Здесь можно взять питомца, вылечить раненого и купить корм и снаряжение. Питомцев может быть до трёх, с собой — один.'),leave);
+  o.insertBefore(btn('🐾 Взять питомца',()=>vetBuy(),'btn primary'),leave);
+  const sick=petList().map((p,i)=>[p,i]).filter(([p])=>p.dead||p.hp<petMax(p));for(const [p] of sick){const cost=p.dead?150+p.lv*100:Math.ceil((petMax(p)-p.hp)*2);o.insertBefore(btn((p.dead?'💉 Вылечить и забрать ':'💉 Подлечить ')+p.name+' ('+cost+' крыш.)',()=>{if(S.caps<cost){log('Не хватает крышек.','bad');return}S.caps-=cost;p.dead=false;p.hp=petMax(p);p.hunger=Math.max(p.hunger,60);log('🐾 '+p.name+' здоров(а)!','good');dirty=true;updateHud();npcDialog(n)},'btn',S.caps<cost),leave)}}}
+function vetBuy(){openWin('Приют «Хвосты»',b=>{b.append(el('p','muted small','Кошка отвлекает врагов на себя, собака бросается и кусает, птица разведывает местность и приносит находки. У каждой породы свой характер. Питомцы растут до 10 уровня.'));const l=el('div','list');
+  for(const [id,B] of Object.entries(BREEDS)){const r=el('div','row');r.append(petIcon(id,{},52));const gw=el('div','grow');gw.append(el('div','t',PETK[B.k].n+': '+B.n+' · '+B.p+' крышек'),el('div','s',PETK[B.k].role+'. '+B.d));r.append(gw);
+    r.append(btn('Взять',()=>{if(petList().length>=3){log('Больше трёх питомцев не прокормить.','bad');return}if(S.caps<B.p){log('Не хватает крышек.','bad');return}S.caps-=B.p;const p=newPet(id);petList().push(p);if(!actPet()){S.petAct=petList().length-1;petSpawn()}add('petfood',2);log('🐾 У вас новый питомец: '+B.n+' по кличке '+p.name+'! В подарок 2 корма. Управление — вкладка «Питомцы».','good');sendPresence();dirty=true;updateHud();vetBuy()},'btn primary',S.caps<B.p));l.append(r)}b.append(l)})}
+{const _as=afterStart;afterStart=async function(){const r=await _as();try{petList();if(actPet())petSpawn()}catch(e){}return r}}
+
+// ================= НЕВИДИМОСТЬ АДМИНИСТРАТОРА ДЛЯ МОБОВ =================
+// Кнопка во вкладке «Админ»: боты и мутанты не замечают администратора, не злятся и не атакуют. Игроки видят его как обычно.
+const adminInv=()=>!!(S&&S.admin&&S.ainv);
+function setAdminInv(on){if(!S||!S.admin)return;S.ainv=!!on;MOB.plT=-1;
+  if(on)for(const r of Object.values(RT))for(const e of r.enemies||[]){if(e.tg===myNetId()){e.tg=null;e.seen=false}}
+  log(on?'👻 Невидимость включена: боты и мутанты вас не замечают. Игроки видят как обычно.':'👁 Невидимость выключена: мобы снова вас замечают.',on?'good':'sys');sendPresence();updInvChip();dirty=true}
+{const st=document.createElement('style');st.textContent='#invChip{position:absolute;z-index:4;left:50%;transform:translateX(-50%);bottom:calc(14px + var(--sab,0px));background:rgba(20,30,40,.85);border:1px solid #6ab0e0;border-radius:9px;padding:4px 10px;font:600 12px var(--mono);color:#cfe8ff;cursor:pointer}#invChip[hidden]{display:none}';document.head.append(st)}
+function updInvChip(){let c=document.getElementById('invChip');if(!c){c=el('div');c.id='invChip';c.textContent='👻 Невидим для мобов · выключить';c.onclick=()=>setAdminInv(false);document.getElementById('stage').append(c)}c.hidden=!adminInv()}
+if(typeof TABVIEW.admin==='function'){const _av=TABVIEW.admin;TABVIEW.admin=b=>{const box=el('div');box.append(el('div','sec','Невидимость для мобов'),el('p','muted small','Боты, охрана и мутанты не замечают вас и не атакуют. Игроки видят вас как обычно.'),
+  btn(adminInv()?'👁 Выключить невидимость':'👻 Включить невидимость',()=>{setAdminInv(!adminInv());openTab('admin')},adminInv()?'btn':'btn primary'));b.append(box);_av(b)}}
+{const _as=afterStart;afterStart=async function(){const r=await _as();try{if(S&&!S.admin)S.ainv=false;updInvChip()}catch(e){}return r}}
+
+// ================= РЕЙТИНГ: ОБЩЕЕ ОБНОВЛЕНИЕ РАЗ В ПОЛЧАСА =================
+// В :00 и :30 каждый игрок отправляет свежие данные, а таблица фиксируется до следующего обновления — всем видно одно и то же.
+const RSLOT=30*60e3;const RSNAP={slot:-1,at:0,rows:null,me:null};
+function rsnapTake(){const rows=[];for(const [id,r] of boardMap){if(S&&id===S.pid)continue;if(Date.now()-r.at>30*864e5)continue;rows.push({...r})}RSNAP.rows=rows;RSNAP.me=S?{...myStats(),me:true}:null;RSNAP.at=Date.now()}
+{const _rr=ratingRows;ratingRows=function(){if(inClaude()||!RSNAP.rows)return _rr();return [...RSNAP.rows.map(r=>({...r})),...(RSNAP.me?[{...RSNAP.me}]:[])]}}
+let rsnapBusy=false;
+setInterval(async()=>{if(!S||rsnapBusy)return;const slot=Math.floor(Date.now()/RSLOT);if(slot===RSNAP.slot)return;rsnapBusy=true;const first=RSNAP.slot<0;RSNAP.slot=slot;
+  try{await pushRating(true)}catch(e){}await new Promise(r=>setTimeout(r,first?12000:8000));rsnapTake();try{await Promise.all([facLoad('ren'),facLoad('mil')])}catch(e){}rsnapBusy=false;
+  if(!first){const rows=ratingRows().sort((a,b)=>(b.xp||0)-(a.xp||0));const pos=rows.findIndex(r=>r.me)+1;log('🏆 Рейтинг обновлён! Ваше место по опыту: '+pos+' из '+rows.length+'.','good')}},15000);
+{const _rv=TABVIEW.rating;TABVIEW.rating=b=>{const t=Date.now(),next=(Math.floor(t/RSLOT)+1)*RSLOT;const hm=x=>new Date(x).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+  b.append(el('p','muted small','🏆 Рейтинг обновляется раз в полчаса. Обновлён в '+(RSNAP.at?hm(RSNAP.at):'—')+', следующее обновление в '+hm(next)+' (через '+Math.max(1,Math.ceil((next-t)/60000))+' мин).'));_rv(b)}}
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
