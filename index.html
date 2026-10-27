@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793096490";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793097640";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -5429,17 +5429,23 @@ function drawArt(c,id,x,y,t){const a=ARTV[id];const pul=1+Math.sin((t||0)*3+x)*.
 const ARTSL=['art1','art2','art3','art4','art5','art6'];
 ARTSL.forEach((s,i)=>{SLOTS[s]='Артефакт '+(i+1);if(!GEAR.includes(s))GEAR.push(s)});
 const artSlots=()=>S?Math.min(ARTSL.length,rankOf(S.lvl)):1;
-const artOn=id=>ARTSL.some(s=>S.eq[s]===id);
-{const _eq=equip;equip=function(id,h){const it=ITEMS[id];if(!it||it.k!=='art')return _eq(id,h);
-  const on=ARTSL.find(s=>S.eq[s]===id);if(on){S.eq[on]=null;log('Снято: '+it.n)}
-  else{const n=artSlots();const free=ARTSL.slice(0,n).find(s=>!S.eq[s]);if(!free){log('Все слоты артефактов заняты: ваш ранг «'+rankName(S.lvl)+'» даёт '+n+' сл. Снимите один артефакт или поднимите ранг (каждые 10 уровней).','bad');return}S.eq[free]=id;log('Надето: '+it.n)}
+// одинаковые артефакты можно надеть несколько раз (сколько копий в рюкзаке и свободных слотов) — бонусы складываются
+const artWorn=id=>ARTSL.filter(s=>S.eq[s]===id).length;
+const artFree=()=>ARTSL.slice(0,artSlots()).find(s=>!S.eq[s]);
+const artCanAdd=id=>(S.inv[id]|0)>artWorn(id)&&!!artFree();
+// для кнопки в рюкзаке: «Снять», если надеть ещё одну копию нельзя, а хотя бы одна надета
+const artOn=id=>artWorn(id)>0&&!artCanAdd(id);
+{const _eq=equip;equip=function(id,h){const it=ITEMS[id];if(!it||it.k!=='art')return _eq(id,h);const worn=artWorn(id),free=artFree();
+  if((S.inv[id]|0)>worn&&free){S.eq[free]=id;log('Надето: '+it.n+(worn?' (ещё один — всего '+(worn+1)+')':''))}
+  else if(worn){const s=ARTSL.slice().reverse().find(s=>S.eq[s]===id);S.eq[s]=null;log('Снято: '+it.n+(worn>1?' (осталось '+(worn-1)+')':''))}
+  else{const n=artSlots();log('Все слоты артефактов заняты: ваш ранг «'+rankName(S.lvl)+'» даёт '+n+' сл. Снимите один артефакт или поднимите ранг (каждые 10 уровней).','bad');return}
   statCache=null;sendPresence();dirty=true;updateHud()}}
 {const _as=afterStart;afterStart=async function(){const r=await _as();try{if(S.eq.amulet&&ITEMS[S.eq.amulet]&&ITEMS[S.eq.amulet].art){if(!S.eq.art1)S.eq.art1=S.eq.amulet;S.eq.amulet=null;statCache=null}
   for(const s of ARTSL.slice(artSlots()))if(S.eq[s]){S.eq[s]=null;statCache=null}}catch(e){}return r}}
 // ряд слотов артефактов под куклой персонажа
 {const st=document.createElement('style');st.textContent='.artrow{margin:8px 0 4px}.artrow .ah{font:600 12px var(--mono);color:#c8b890;margin-bottom:5px}.artrow .ag{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}.artrow button{aspect-ratio:1;min-height:44px;border-radius:8px;border:1px solid #5a4a30;background:rgba(30,24,16,.8);display:flex;align-items:center;justify-content:center;padding:0;font-size:10px;color:#7a6a50;line-height:1.1}.artrow button.on{border-color:#e8c060;box-shadow:0 0 10px rgba(232,192,96,.3)}.artrow button.lock{opacity:.45}';document.head.append(st)}
 {const _iv=TABVIEW.inv;invView=TABVIEW.inv=function(b){_iv(b);try{const doll=b.querySelector('.doll');if(!doll)return;const n=artSlots();const box=el('div','artrow');box.append(el('div','ah','✦ Артефакты · ранг «'+rankName(S.lvl)+'»: открыто слотов '+n+' из '+ARTSL.length));const g=el('div','ag');
-  ARTSL.forEach((s,i)=>{const v=S.eq[s];const lock=i>=n;const bt=el('button',(v?'on':'')+(lock?' lock':''));if(v){bt.append(iconCanvas(v,34));bt.title=ITEMS[v].n;bt.onclick=()=>{invSel=v;openTab('inv')}}else bt.textContent=lock?'🔒 ранг '+(i+1):'пусто';g.append(bt)});box.append(g);doll.after(box)}catch(e){}}}
+  ARTSL.forEach((s,i)=>{const v=S.eq[s];const lock=i>=n;const bt=el('button',(v?'on':'')+(lock?' lock':''));if(v){bt.append(iconCanvas(v,34));bt.title=ITEMS[v].n+' — нажмите, чтобы снять';bt.onclick=()=>{S.eq[s]=null;statCache=null;log('Снято: '+ITEMS[v].n);sendPresence();dirty=true;updateHud();openTab('inv')}}else bt.textContent=lock?'🔒 ранг '+(i+1):'пусто';g.append(bt)});box.append(g);doll.after(box)}catch(e){}}}
 
 // ---------- Аномалии ----------
 const ANOT={
@@ -5514,7 +5520,6 @@ const TILE_PX=()=>T;
   if(det&&det.lvl>=2)for(const r of A.arts){if(S.artGot&&S.artGot[r.k])continue;const p=artPos(r);if(Math.hypot(P.x-p.x,P.y-p.y)>det.r*(det.lvl>=3?1:.8))continue;drawArt(c,r.id,p.x*T,p.y*T+Math.sin(t*3+p.x)*1.5,t)}}}
 // подсказка при входе в опасную локацию
 {const _em=enterMap;enterMap=function(id,x,y){const r=_em(id,x,y);try{if(S&&anoMapOk(MAPS[id])&&!S.anoTip){S.anoTip=1;log('📡 В Пустоши есть невидимые аномалии: ток, химожог, радиация, гравиволны и телепорты. Увидеть их и артефакты возле них помогает детектор (слот «Детектор», продаёт Калибр).','sys')}}catch(e){}return r}}
-
 // ================= РЕФЕРАЛЬНЫЕ ССЫЛКИ =================
 // У каждого игрока в профиле есть ID и ссылка-приглашение (…/?ref=ID). Новичок, пришедший по ссылке, привязывается
 // к пригласившему автоматически. За каждые 1000 крышек, заработанных приглашённым, пригласивший получает 100 крышек.
