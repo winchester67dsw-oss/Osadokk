@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793061153";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793072639";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -1549,9 +1549,9 @@ function render(t){
     const lk=pr.lk&&typeof pr.lk==='object'?{g:pr.lk.g==='f'?'f':'m',skin:pr.lk.skin|0,hair:HAIRS[pr.lk.hair]?pr.lk.hair:'short',hc:HCOL[pr.lk.hc]?pr.lk.hc:'black',outfit:pr.lk.outfit|0,beard:BEARDS[pr.lk.beard]?pr.lk.beard:'none',eye:pr.lk.eye|0}:{};
     const eq={};if(pr.e&&typeof pr.e==='object')for(const k of GEAR)if(ITEMS[pr.e[k]]&&ITEMS[pr.e[k]].k===k)eq[k]=pr.e[k];
     const wpn=ITEMS[pr.w]&&ITEMS[pr.w].k==='weapon'?pr.w:null;const nm=(typeof pr.n==='string'?cleanText(pr.n,16):'')||'Выживший';const a=typeof pr.a==='number'?pr.a:Math.PI/2;const x=pp.x*T,y=pp.y*T;
-    ents.push({y:pp.y,f:()=>drawHuman(ctx,x,y-4,{lk,eq,view:viewOf(a),aim:a,weapon:wpn,moving:mvd>.005,phase:pp.ph,flashT:pp.ft}),lab:()=>{if(!hideNick(x/T,y/T))label(ctx,x,y-36,tagPre(nm)+(pr.adm?'★ ':'')+nm+' · '+(pr.lv|0),tagCol(nm)||karmaRank(pr.k|0)[1]);const bb=bubbles.get(p.peer);if(bb&&bb.until>now)bubble(ctx,x,y-42,bb.text)}})}}
+    ents.push({y:pp.y,f:()=>drawHuman(ctx,x,y-4,{lk,eq,view:viewOf(a),aim:a,weapon:wpn,moving:mvd>.005,phase:pp.ph,flashT:pp.ft}),lab:()=>{if(!hideNick(x/T,y/T))label(ctx,x,y-36,(typeof facMark==='function'?facMark(pr.fc):'')+tagPre(nm)+(pr.adm?'★ ':'')+nm+' · '+(pr.lv|0),tagCol(nm)||karmaRank(pr.k|0)[1]);const bb=bubbles.get(p.peer);if(bb&&bb.until>now)bubble(ctx,x,y-42,bb.text)}})}}
   ents.push({y:P.y,f:()=>drawHuman(ctx,ppx,ppy-4,{lk:S.lk,eq:S.eq,view:viewOf(P.a),aim:P.a,weapon:curW(),moving:P.moving,phase:P.phase,swing:P.swing,recoil:P.recoil,flash:P.hurt>now,flashT:P.lastShot,reload:P.reloadT>0?1-P.reloadT/P.reloadDur:0}),
-    lab:()=>{label(ctx,ppx,ppy-36,(S.admin?'★ ':'')+S.name,karmaRank(S.karma|0)[1]);const bb=bubbles.get('me');if(bb&&bb.until>now)bubble(ctx,ppx,ppy-42,bb.text)}});
+    lab:()=>{label(ctx,ppx,ppy-36,(typeof facMark==='function'?facMark(myFac()):'')+(S.admin?'★ ':'')+S.name,karmaRank(S.karma|0)[1]);const bb=bubbles.get('me');if(bb&&bb.until>now)bubble(ctx,ppx,ppy-42,bb.text)}});
   ents.sort((a,b)=>a.y-b.y);for(const en of ents)en.f();
   for(const p of projs){if(p.kind==='rock'){ctx.fillStyle='rgba(0,0,0,.3)';ellp(ctx,p.x*T,p.y*T+4,3,1.2);ctx.fill();ctx.fillStyle='#7a746a';circ(ctx,p.x*T,p.y*T-6,3.2);ctx.strokeStyle='rgba(150,200,255,.7)';ctx.lineWidth=1;ctx.stroke()}else if(p.kind==='acid'){ctx.fillStyle='rgba(180,240,80,.3)';circ(ctx,p.x*T,p.y*T,5);ctx.fillStyle='#b8f04a';circ(ctx,p.x*T,p.y*T,2.6);ctx.fillStyle='#eaffb0';circ(ctx,p.x*T-.8,p.y*T-.8,1)}
     else{const ang=Math.atan2(p.vy,p.vx);const tx=p.x*T,ty=p.y*T-8;ctx.strokeStyle=p.from==='p'?'rgba(255,230,150,.95)':'rgba(255,170,120,.95)';ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(tx-Math.cos(ang)*12,ty-Math.sin(ang)*12);ctx.lineTo(tx,ty);ctx.stroke()}}
@@ -2772,7 +2772,7 @@ const TERM=['Журнал: «День 14. Объект Х-9 вышел из-по
 function playJuke(){audioInit();const c=SND.ctx;if(c&&!SND.muted){const o=sndOut(null,null,.18);if(o){const t=c.currentTime;const notes=[220,262,330,294,262,220,196,220,262,247,220];notes.forEach((f,i)=>tone(o,t+i*.22,.2,{type:'triangle',f,v:.35,lp:2400}))}}
   log('Музыкальный автомат: '+JUKE[Math.floor(Math.random()*JUKE.length)])}
 interact=function(){if(paused||!S)return;
-  const n=nearest(npcsHere().map(n=>({x:n.x+.5,y:n.y+.5,ref:n})),2.1);if(n){P.sit=false;n.ref.dog?dogTalk():npcDialog(n.ref);return}
+  const n=nearest(npcsHere().map(n=>({x:n.x+.5,y:n.y+.5,ref:n})),M.interior?3.4:2.1);if(n){P.sit=false;n.ref.dog?dogTalk():npcDialog(n.ref);return}
   const np=nearPeer(1.8);if(np){peerMenu(np);return}
   if(P.sit){P.sit=false;log('Вы встали.');return}
   const objs=[];for(let y=Math.floor(P.y)-2;y<=Math.floor(P.y)+2;y++)for(let x=Math.floor(P.x)-2;x<=Math.floor(P.x)+2;x++){const c=M.g[y]?.[x];if(c&&('LfKNjhIY'.includes(c)||CONTAINERS[c]))objs.push({x:x+.5,y:y+.5,c,tx:x,ty:y})}
@@ -2849,7 +2849,7 @@ function genRQ(giver){const rq=rqInit(),L=S.lvl;let types=['kill','kill','bring'
     const [item,a,b]=pickR(C.slice(-9));const n=a+Math.floor(Math.random()*(b-a+1));Object.assign(q,{item,n,t:'Нужно: '+ITEMS[item].n,d:'Принесите '+ITEMS[item].n.toLowerCase()+' — '+n+' шт. '+pickR(['Для дела.','Не спрашивайте зачем.','Заплачу честно.','Срочно, пока цены не выросли.'])});base=ITEMS[item].p*n*1.8+15}
   else if(type==='fetch'){let map=pickR(mapsForLvl(L)),where='';if(map==='city'&&CITYB.length&&Math.random()<.6){const b=pickR(CITYB);const k=1+Math.floor(Math.random()*b.floors);map='cb'+b.n+'_'+k;where=' Тайник на '+k+' этаже дома №'+b.n+' в Городе.'}
     const m=MAPS[map];const pos=randFree(m.g,Math.random,(x,y)=>notExit(m,x,y)&&m.g[y][x]!=='A',2000)||[2,4];Object.assign(q,{map,x:pos[0]+.5,y:pos[1]+.5,t:'Тайник: '+(m.interior?m.name:m.name),d:'В локации «'+m.name+'» — '+pickR(STASHW)+'.'+where+' Место отмечено на карте и мини-карте.'});base=60+L*8}
-  else if(type==='deliver'){const C=NPCS.filter(n=>n.id!==giver&&!n.dog&&MAPS[n.map]&&(n.map!=='city'||L>=7));const tg=pickR(C);Object.assign(q,{to:tg.id,map:tg.map,t:'Посылка: '+tg.n,d:'Отнесите свёрток — '+tg.n+' ('+MAPS[tg.map].name+'). '+pickR(['Не вскрывать!','Внутри ничего не тикает. Наверное.','Если спросят — вы ничего не несли.','Быстрее, пока не протухло.'])});base=45+L*5}
+  else if(type==='deliver'){const C=NPCS.filter(n=>n.id!==giver&&!n.dog&&MAPS[n.map]&&!(typeof facNpc==='function'&&facNpc(n))&&(n.map!=='city'||L>=7));const tg=pickR(C);Object.assign(q,{to:tg.id,map:tg.map,t:'Посылка: '+tg.n,d:'Отнесите свёрток — '+tg.n+' ('+MAPS[tg.map].name+'). '+pickR(['Не вскрывать!','Внутри ничего не тикает. Наверное.','Если спросят — вы ничего не несли.','Быстрее, пока не протухло.'])});base=45+L*5}
   else{const C=[];if(CITYB.length&&L>=5)for(const b of CITYB)for(let k=2;k<=b.floors;k++)C.push('cb'+b.n+'_'+k);for(const id of ['ruins_b1','ruins_b2'])if(MAPS[id])C.push(id);if(L>=15&&MAPS.lab2)C.push('lab2');if(L>=22&&MAPS.lab3)C.push('lab3');
     const map=pickR(C.length?C:['swamp']);Object.assign(q,{map,t:'Разведка: '+MAPS[map].name,d:'Сходите в «'+MAPS[map].name+'» и осмотритесь. '+pickR(['Там давно никого не видели.','Говорят, там шумит по ночам.','Надо знать, кто там засел.','Просто проверь и вернись живым.'])});base=50+L*7}
   q.rew={caps:Math.round((20+base*.6)*mul),xp:Math.round((30+base*.5)*mul)};if(Math.random()<.35){const it=pickR(LOOTT.filter(e=>e[4]<=Math.min(3,Math.floor(L/6))));q.rew.items={[it[0]]:it[1]}}
@@ -3806,7 +3806,7 @@ function sync3(dt,t){V3.frame=(V3.frame||0)+1;LBL.length=0;const near=(x,y)=>Mat
   // я
   const w=curW();const me=ent3('me',()=>buildHuman({lk:S.lk,eq:S.eq,weapon:w}),lookKey(S.lk,S.eq,w));place3(me,P.x,P.y,P.a,V3.jz);
   animHuman(me.m,{moving:P.moving,phase:P.phase,swing:P.swing,recoil:P.recoil,relax:!firing&&now-P.lastShot>1500},dt);me.m.root.visible=true;
-  LBL.push({x:P.x,y:P.y,h:1.35,text:(S.admin?'★ ':'')+S.name,col:karmaRank(S.karma|0)[1],bb:'me'});
+  LBL.push({x:P.x,y:P.y,h:1.35,text:(typeof facMark==='function'?facMark(myFac()):'')+(S.admin?'★ ':'')+S.name,col:karmaRank(S.karma|0)[1],bb:'me'});
   // жители
   for(const n of npcsHere()){if(!near(n.x,n.y))continue;const k='n:'+n.id;const r=n.dog?ent3(k,()=>buildQuad(LOOK3.bublik)):ent3(k,()=>buildHuman({lk:n.lk,eq:n.eq,weapon:n.eq.w1}));const d=Math.hypot(P.x-n.x-.5,P.y-n.y-.5);const la=d<3.5?Math.atan2(P.y-n.y-.5,P.x-n.x-.5):n.a;
     place3(r,n.x+.5,n.y+.5,la);if(n.dog)animQuad(r.m,{happy:1,seed:1},dt);else animHuman(r.m,{relax:1,seed:n.x},dt);LBL.push({x:n.x+.5,y:n.y+.5,h:n.dog?.8:1.35,text:n.n,col:n.dog?'#ebe1cc':'#f2b65c',npc:1})}
@@ -3817,7 +3817,7 @@ function sync3(dt,t){V3.frame=(V3.frame||0)+1;LBL.length=0;const near=(x,y)=>Mat
     const lk=pr.lk&&typeof pr.lk==='object'?{g:pr.lk.g==='f'?'f':'m',skin:pr.lk.skin|0,hair:HAIRS[pr.lk.hair]?pr.lk.hair:'short',hc:HCOL[pr.lk.hc]?pr.lk.hc:'black',outfit:pr.lk.outfit|0,beard:BEARDS[pr.lk.beard]?pr.lk.beard:'none',eye:pr.lk.eye|0}:{};
     const eq={};if(pr.e&&typeof pr.e==='object')for(const k of GEAR)if(ITEMS[pr.e[k]]&&ITEMS[pr.e[k]].k===k)eq[k]=pr.e[k];const wp=ITEMS[pr.w]&&ITEMS[pr.w].k==='weapon'?pr.w:null;const a=typeof pr.a==='number'?pr.a:Math.PI/2;
     const r=ent3('p:'+p.peer,()=>buildHuman({lk,eq,weapon:wp}),lookKey(lk,eq,wp));place3(r,pp.x,pp.y,a);animHuman(r.m,{moving:mvd>.004,phase:pp.ph,recoil:now-pp.ft<100?1:0},dt);
-    const nm=(typeof pr.n==='string'?cleanText(pr.n,16):'')||'Выживший';if(!(typeof hideNick==='function'&&hideNick(pp.x,pp.y)))LBL.push({x:pp.x,y:pp.y,h:1.35,text:tagPre(nm)+(pr.adm?'★ ':'')+nm+' · '+(pr.lv|0),col:tagCol(nm)||karmaRank(pr.k|0)[1],bb:p.peer})}
+    const nm=(typeof pr.n==='string'?cleanText(pr.n,16):'')||'Выживший';if(!(typeof hideNick==='function'&&hideNick(pp.x,pp.y)))LBL.push({x:pp.x,y:pp.y,h:1.35,text:(typeof facMark==='function'?facMark(pr.fc):'')+tagPre(nm)+(pr.adm?'★ ':'')+nm+' · '+(pr.lv|0),col:tagCol(nm)||karmaRank(pr.k|0)[1],bb:p.peer})}
   // мутанты
   const rt=rtFor(M.id);const live=new Set();
   for(const e of rt.enemies){if(!e.alive||!near(e.x,e.y))continue;const k='e:'+e.id;live.add(k);const r=ent3(k,()=>buildEnemy3(e));r.e=e;place3(r,e.x,e.y,e.a);const d=EN[e.type];
@@ -5058,7 +5058,8 @@ async function chatDelete(h){if(!S||!S.admin)return;const slot=String(h).split('
 
 // ================= ЗАХВАТ СЕКТОРОВ =================
 // 20 точек в PvP-зонах: 14 в Городе Заречном и 6 на Гнилом болоте (болото теперь тоже PvP — рядом база Ренегатов).
-// Захват: член группировки стоит в круге сектора 5 минут. Вышел из круга или погиб — захват сбрасывается.
+// Захват: член группировки стоит в круге сектора 5 минут. Вышел из круга — захват замораживается на минуту
+// (вернулся — продолжается, не успел — сбрасывается). Погиб или ушёл с локации — сбрасывается сразу.
 // После захвата появляются 3–5 охранников группировки, а сектор нельзя перехватить 3 часа.
 // Чтобы взять чужой сектор, сначала нужно перебить его охрану. Сектора добавляют рейтинг группировке.
 if(MAPS.swamp)MAPS.swamp.pvp=true;
@@ -5087,21 +5088,25 @@ setInterval(()=>{if(!S||!M||paused)return;try{if(typeof hostId==='function'&&hos
     for(let k=0;k<st.g&&ids.size<st.g;k++){const id='g'+pt.i+'_'+k;if(ids.has(id))continue;const a=Math.random()*Math.PI*2,r=Math.random()*(CAP_R-.5);let x=pt.x+Math.cos(a)*r,y=pt.y+Math.sin(a)*r;if(!walkable(M.g[Math.floor(y)]?.[Math.floor(x)])){x=pt.x;y=pt.y}
       const e=mkEnemy('fg_'+st.o,Math.floor(x),Math.floor(y));e.x=x;e.y=y;e.id=id;e.summoned=true;rtFor(M.id).enemies.push(e);ids.add(id);seen.add(id)}}},3000);
 // захват
-const CAP={pt:null,start:0,announced:false};
+const CAP={pt:null,start:0,announced:false,out:0},CAP_OUT_MS=60e3;
 function capUI(){let b=document.getElementById('capBar');if(!b){b=el('div');b.id='capBar';b.innerHTML='<span class="t"></span><i><u></u></i>';document.getElementById('stage').append(b)}return b}
 {const st=document.createElement('style');st.textContent='#capBar{position:absolute;z-index:4;left:50%;transform:translateX(-50%);top:calc(60px + var(--sat));min-width:240px;max-width:80%;background:rgba(20,16,10,.88);border:1px solid #c8a048;border-radius:10px;padding:6px 12px;font:600 12.5px var(--mono);color:#f2e2b8;text-align:center;pointer-events:none}#capBar i{display:block;height:6px;background:#0c0b08;border-radius:3px;margin-top:5px;overflow:hidden}#capBar u{display:block;height:100%;width:0;background:#e8c040;transition:width .4s}#capBar.hide{display:none}';document.head.append(st)}
 function fmtHM(ms){const m=Math.ceil(ms/60000);return m>=60?Math.floor(m/60)+' ч '+(m%60)+' мин':m+' мин'}
 function fmtMs(ms){const s=Math.max(0,Math.ceil(ms/1000));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
 setInterval(()=>{const bar=capUI();if(!S||!M||!titleEl.hidden){bar.classList.add('hide');return}const f=myFac();const pt=SECT.pts.find(p=>p.m===M.id&&Math.hypot(P.x-p.x,P.y-p.y)<=CAP_R);
-  if(!pt){if(CAP.pt){log('Вы покинули '+CAP.pt.n+' — захват сброшен.','bad');CAP.pt=null}bar.classList.add('hide');return}
+  // вышли из круга — захват замораживается на 1 минуту: вернулись — продолжается, нет — сбрасывается
+  if(!pt){if(CAP.pt){const t0=Date.now();if(CAP.pt.m!==M.id){log('Вы ушли с локации — захват '+CAP.pt.n+' сброшен.','bad');CAP.pt=null;CAP.out=0}
+      else{if(!CAP.out){CAP.out=t0;log('Вы вышли из круга — захват заморожен. Вернитесь в течение минуты, иначе он сбросится.','bad')}const left=CAP_OUT_MS-(t0-CAP.out);
+        if(left<=0){log('Вы не вернулись в круг — захват '+CAP.pt.n+' сброшен.','bad');CAP.pt=null;CAP.out=0}
+        else{bar.classList.remove('hide');bar.querySelector('.t').textContent='❄ Захват заморожен: '+CAP.pt.n+' · вернитесь в круг за '+fmtMs(left);const u=bar.querySelector('u');u.style.background='#6aa8d8';u.style.width=Math.min(100,(CAP.out-CAP.start)/CAP_MS*100)+'%';return}}}bar.classList.add('hide');return}
   const st=ptState(pt),t=Date.now();bar.classList.remove('hide');const fill=bar.querySelector('u'),txt=bar.querySelector('.t');const own=st.o?FAC[st.o].n:'ничей';
-  const stop=msg=>{if(CAP.pt===pt&&msg)log(msg,'bad');CAP.pt=null;fill.style.width='0';fill.style.background='#8a7a5a'};
+  const stop=msg=>{if(CAP.pt===pt&&msg)log(msg,'bad');CAP.pt=null;CAP.out=0;fill.style.width='0';fill.style.background='#8a7a5a'};
   if(!f){txt.textContent='⚑ '+pt.n+' · '+own+' — захватывать могут только члены группировок';stop();return}
   if(st.o===f){txt.textContent='⚑ '+pt.n+' · под контролем «'+FAC[f].n+'»'+(st.g>0?' · охрана: '+st.g:'');stop();fill.style.width='100%';fill.style.background=FAC[f].col;return}
   if(st.lock>t){txt.textContent='⚑ '+pt.n+' · '+own+' · перезахват через '+fmtHM(st.lock-t);stop();return}
   const gs=guardsOf(pt).length;if(gs>0||(st.o&&st.g>0&&pt.m===M.id&&gs===0&&(t-(CAP.seenG||0)<4000))){if(gs>0)CAP.seenG=t;txt.textContent='⚑ '+pt.n+' · охрана «'+own+'»: '+Math.max(gs,0)+' — сначала перебейте охрану';stop();return}
   if(S.hp<=0){stop();return}
-  if(CAP.pt!==pt){CAP.pt=pt;CAP.start=t;CAP.announced=false}const prog=(t-CAP.start)/CAP_MS;
+  if(CAP.pt!==pt){CAP.pt=pt;CAP.start=t;CAP.announced=false;CAP.out=0}else if(CAP.out){CAP.start+=t-CAP.out;CAP.out=0;log('Вы вернулись в круг — захват '+pt.n+' продолжается.','good')}const prog=(t-CAP.start)/CAP_MS;
   if(!CAP.announced){CAP.announced=true;zoneMsg('⚑ «'+FAC[f].n+'» начали захват: '+pt.n+' ('+MAPS[pt.m].name+')',true)}
   txt.textContent='⚑ Захват: '+pt.n+' · '+fmtMs(CAP_MS-(t-CAP.start))+' — не выходите из круга';fill.style.background=FAC[f].col;fill.style.width=Math.min(100,prog*100)+'%';
   if(prog>=1){const p0=pt;CAP.pt=null;sectMut(d=>{const p=d.pts[p0.i]||{};if((p.lock||0)>Date.now()&&p.o!==f)return false;d.pts[p0.i]={o:f,at:Date.now(),lock:Date.now()+LOCK_MS,g:3+Math.floor(Math.random()*3),by:S.name}}).then(ok=>{if(ok!==false){zoneMsg('⚑ «'+FAC[f].n+'» захватили '+p0.n+' ('+MAPS[p0.m].name+')! Следующий захват — через 3 часа.',true);GSEEN[p0.i]=new Set();facMut(f,d=>{facLog(d,'sector',{c:0,who:p0.n})}).catch(()=>{})}else log('Сектор уже перехватили.','bad')})}},500);
@@ -5227,6 +5232,95 @@ if(typeof SECT!=='undefined'){
   for(const [c,r] of [[3,3],[7,2],[11,3],[13,6],[9,6],[5,7],[3,10],[7,10],[11,10],[13,11]]){const s=spot('chem',c,r);if(s)SECT.pts.push({i:SECT.pts.length,...s})}}
 // первая встреча
 {const _em=enterMap;enterMap=function(id,x,y){const r=_em(id,x,y);if(id==='wild'&&S&&!S.flags.seenWild){S.flags.seenWild=1;log('Чернолесье. Огромный дикий лес к югу от болота: кабаны и стаи псов, упыри у озера, Вороны в заброшенной деревне, аномалии на востоке. Это PvP-зона. Костёр — в лагере охотников у входа.','bad')}return r}}
+
+// ================= ЭТАП 1: ЗНАЧКИ, РЕЙТИНГ, ДОСКА, НОЧЬ, ВЫБРОС =================
+// Значок группировки рядом с ником: 🦂 — Ренегаты, 🦇 — Военные (виден над головой в 2D и 3D).
+const facMark=f=>f==='ren'?'🦂 ':f==='mil'?'🦇 ':'';
+
+// ---------- Рейтинг группировок ----------
+// +100 за каждый удерживаемый сектор за каждые полные 3 часа владения (отобрали — счёт по сектору начинается заново).
+// +200 за каждые 5000 опыта, набранного бойцами (пропорционально: 1250 опыта = +50, 3750 = +150 и т. д.).
+facRating=function(f,d){d=d||FACD[f];return d?Math.round(d.rating||0):0};
+// бойцы сами начисляют свою долю за опыт порциями по 500 (=20 рейтинга)
+{const _gx=gainXp;gainXp=function(n){const r=_gx(n);try{if(S&&myFac()&&n>0){S.facXp=(S.facXp||0)+n;if(S.facXp>=500){const k=Math.floor(S.facXp/500);S.facXp-=k*500;const f=myFac();facMut(f,d=>{d.rating=(d.rating||0)+k*20}).catch(()=>{S.facXp+=k*500})}}}catch(e){}return r}}
+// за удержание секторов: любой онлайн-боец владеющей группировки раз в минуту проверяет, не пора ли начислить
+async function sectorPayout(){const f=myFac();if(!f)return;await sectLoad();const t=Date.now();let gain=0;const due=[];
+  for(const [i,p] of Object.entries(SECT.doc.pts||{})){if(p.o!==f||!p.at)continue;const periods=Math.floor((t-p.at)/LOCK_MS);if(periods>(p.paid|0))due.push([i,periods])}
+  if(!due.length)return;const ok=await sectMut(d=>{let any=false;for(const [i,per] of due){const p=d.pts[i];if(!p||p.o!==f||(p.paid|0)>=per)continue;gain+=(per-(p.paid|0))*100;p.paid=per;any=true}if(!any)return false});
+  if(ok&&gain>0)await facMut(f,d=>{d.rating=(d.rating||0)+gain;facLog(d,'sector',{c:0,who:'удержание секторов: +'+gain+' рейтинга'})})}
+setInterval(()=>{if(S&&!document.hidden&&myFac())sectorPayout().catch(()=>{})},60000);
+// (новый захват создаёт запись сектора заново — счётчик выплат «paid» обнуляется сам)
+// подсказка о рейтинге в штабе и вкладке «Рейтинг»
+{const _rv=TABVIEW.rating;TABVIEW.rating=b=>{_rv(b);const p=[...b.querySelectorAll('p.muted.small')].find(x=>x.textContent.startsWith('Рейтинг ='));if(p)p.textContent='Рейтинг группировки: +100 за каждый удерживаемый сектор за каждые 3 часа владения и +200 за каждые 5000 опыта, набранного её бойцами (начисляется пропорционально). Секторов в игре: '+SECT.pts.length+'.'}}
+
+// ---------- Доска объявлений на старте больше не загорожена парикмахером ----------
+{const g=MAPS.hub.g;if(g[11][17]==='N'){g[11][17]='.';g[11][21]='N'}}
+
+// ---------- Ночью мутанты сильнее и злее, но добыча богаче ----------
+const NIGHT={k:1,on:false,t:0};
+function nightK(){if(now-NIGHT.t<1000)return NIGHT.k;NIGHT.t=now;let on=false;try{const cyc=timeLock==='day'?.5:timeLock==='night'?0:(Date.now()/1000%5760)/5760;on=!!(M&&!M.interior&&!M.safe&&darkLevel(cyc)>.6)}catch(e){}
+  if(on!==NIGHT.on&&S&&M&&!M.interior){NIGHT.on=on;if(on)log('🌑 Ночь: мутанты сильнее и агрессивнее, но и добыча с них богаче.','bad');else log('🌅 Светает: мутанты успокаиваются.','sys')}NIGHT.on=on;NIGHT.k=on?1:0;return NIGHT.k}
+for(const [k,d] of Object.entries(EN)){if(d.fac)continue;const base={aggro:d.aggro,dmg:d.dmg,spd:d.spd};
+  Object.defineProperty(d,'aggro',{configurable:true,get(){return base.aggro*(nightK()?1.5:1)},set(v){base.aggro=v}});
+  Object.defineProperty(d,'dmg',{configurable:true,get(){return base.dmg*(nightK()?1.3:1)},set(v){base.dmg=v}});
+  Object.defineProperty(d,'spd',{configurable:true,get(){return base.spd*(nightK()?1.12:1)},set(v){base.spd=v}})}
+{const _st=stats;stats=function(){const s=_st();if(nightK())return Object.assign({},s,{lootPct:(s.lootPct||0)+60});return s}}
+
+// ---------- Предупреждение о выбросе — на весь экран на несколько секунд ----------
+{const st=document.createElement('style');st.textContent=`#bigAlert{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;pointer-events:none;background:radial-gradient(circle,rgba(120,20,8,.55),rgba(20,4,2,.82));opacity:0;transition:opacity .45s}
+#bigAlert.on{opacity:1}#bigAlert .box{text-align:center;padding:24px 30px;max-width:90%}#bigAlert .ic{font-size:clamp(54px,12vw,110px);line-height:1;animation:baPulse 1s ease-in-out infinite;filter:drop-shadow(0 0 24px #ff5a2a)}
+#bigAlert .t{font:400 clamp(28px,6.5vw,64px) 'Russo One',var(--display,sans-serif);color:#ffe2c8;letter-spacing:.04em;text-shadow:0 4px 0 #3a0c04,0 0 30px rgba(255,90,40,.8);margin-top:8px}
+#bigAlert .s{font:600 clamp(15px,3vw,22px) var(--mono,monospace);color:#ffb89a;margin-top:10px}@keyframes baPulse{50%{transform:scale(1.12)}}`;document.head.append(st)}
+function bigAlert(icon,title,sub,ms=4200){let a=document.getElementById('bigAlert');if(!a){a=el('div');a.id='bigAlert';a.innerHTML='<div class="box"><div class="ic"></div><div class="t"></div><div class="s"></div></div>';document.body.append(a)}
+  a.querySelector('.ic').textContent=icon;a.querySelector('.t').textContent=title;a.querySelector('.s').textContent=sub||'';a.classList.add('on');try{sfx.siren&&sfx.siren()}catch(e){}clearTimeout(a._t);a._t=setTimeout(()=>a.classList.remove('on'),ms)}
+{const _zm=zoneMsg;zoneMsg=function(text,broadcast){const r=_zm(text,broadcast);if(!broadcast&&S){const t=String(text);
+    if(t.startsWith('📻')&&t.includes('выброс'))bigAlert('📻','ВЫБРОС ЧЕРЕЗ 10 МИНУТ','Заранее найдите укрытие: здание, подвал или крышу');
+    else if(t.startsWith('⚠ Приближается выброс'))bigAlert('⚠','ВЫБРОС ЧЕРЕЗ 2 МИНУТЫ','Срочно в укрытие!');
+    else if(t.startsWith('⚠ Выброс через 30'))bigAlert('⚠','30 СЕКУНД ДО ВЫБРОСА','Бегом под крышу!');
+    else if(t.startsWith('☢ ВЫБРОС'))bigAlert('☢','ВЫБРОС!','Всё живое — в укрытия');
+    else if(t.startsWith('Выброс закончился'))bigAlert('🌤','ВЫБРОС ЗАКОНЧИЛСЯ','Пустошь оживает: новые находки и артефакты',3200)}return r}}
+
+// ================= ЗНАЧОК-ЩИТОК ГРУППИРОВКИ У НИКА =================
+// Вместо эмодзи (на части устройств не рисуется) — маленький щиток цвета группировки слева от ника, в 2D и 3D.
+function drawFacShield(c,x,y,f,h){const col=FAC[f].col;const w=h*.82;c.save();c.translate(x,y);c.beginPath();c.moveTo(0,-h*.5);c.lineTo(w*.5,-h*.36);c.lineTo(w*.5,0);c.quadraticCurveTo(w*.5,h*.38,0,h*.52);c.quadraticCurveTo(-w*.5,h*.38,-w*.5,0);c.lineTo(-w*.5,-h*.36);c.closePath();
+  c.fillStyle='#16130f';c.fill();c.lineWidth=Math.max(1.2,h*.11);c.strokeStyle=col;c.stroke();c.fillStyle=col;
+  if(f==='ren'){c.beginPath();c.ellipse(0,h*.08,w*.11,h*.17,0,0,7);c.fill();c.beginPath();c.arc(0,-h*.12,w*.09,0,7);c.fill();c.lineWidth=Math.max(.8,h*.07);c.beginPath();c.moveTo(0,h*.24);c.quadraticCurveTo(w*.3,h*.34,w*.2,h*.02);c.stroke();c.beginPath();c.moveTo(-w*.08,-h*.15);c.lineTo(-w*.3,-h*.32);c.moveTo(w*.08,-h*.15);c.lineTo(w*.3,-h*.32);c.stroke()}
+  else{c.beginPath();c.moveTo(0,-h*.12);c.lineTo(w*.38,-h*.2);c.lineTo(w*.28,h*.06);c.lineTo(w*.12,0);c.lineTo(0,h*.2);c.lineTo(-w*.12,0);c.lineTo(-w*.28,h*.06);c.lineTo(-w*.38,-h*.2);c.closePath();c.fill()}c.restore()}
+function badgeSplit(t){t=String(t);if(t.startsWith('🦂 '))return ['ren',t.slice(3)];if(t.startsWith('🦇 '))return ['mil',t.slice(3)];return [null,t]}
+{const _l=label;label=function(c,x,y,text,col,big){const [f,rest]=badgeSplit(text);if(!f)return _l(c,x,y,text,col,big);_l(c,x,y,rest,col,big);const w=c.measureText(rest).width;const h=big?13:(IS_COARSE?12:10);drawFacShield(c,x-w/2-h*.65,y-h*.36,f,h)}}
+if(typeof label3==='function'){const _l3=label3;label3=function(c,x,y,text,col,big,d){const [f,rest]=badgeSplit(text);if(!f)return _l3(c,x,y,text,col,big,d);_l3(c,x,y,rest,col,big,d);const w=c.measureText(rest).width;const h=(IS_COARSE?15:13)*(big?1.1:1);drawFacShield(c,x-w/2-h*.65,y-h*.36,f,h)}}
+
+// ================= ВОЙНА БОТОВ, ПОКА У ГРУППИРОВКИ НЕТ ЛИДЕРА =================
+// Пока администратор не назначил лидера, за группировку воюют её боты: отряды по 3 бойца появляются
+// в Заречном, Чернолесье и на Химкомбинате и перестреливаются с чужими. Шальные пули задевают игроков.
+EN.war_ren=Object.assign({},EN.gunner,{n:'Боец «Ренегатов»',fac:'ren',xp:40,aggro:3.2,boss:0,lair:0});
+EN.war_mil=Object.assign({},EN.gunner,{n:'Боец «Военных»',fac:'mil',xp:40,aggro:3.2,boss:0,lair:0});
+const WAR={maps:['city','wild','chem'],n:3,last:{},loadT:0};
+const leaderless=f=>{const d=FACD[f];return !d||!Object.values(d.members||{}).some(m=>normR(m.r)==='leader')};
+function warCenter(m){const R=rng(Math.floor(Date.now()/(20*60e3))*31+m.id.length*7);return randFree(m.g,R,(x,y)=>notExit(m,x,y)&&!(typeof inSafe==='function'&&inSafe(x+.5,y+.5))&&(m.g[y][x]==='.'||m.g[y][x]===','||m.g[y][x]==='='),3000)}
+setInterval(async()=>{if(!S||!M||paused||!WAR.maps.includes(M.id))return;try{if(typeof hostId==='function'&&hostId(M.id)!==myNetId())return}catch(e){return}if(emState().st==='active')return;
+  if(Date.now()-WAR.loadT>120000){WAR.loadT=Date.now();await Promise.all([facLoad('ren'),facLoad('mil')]).catch(()=>{})}
+  const r=rtFor(M.id),c=warCenter(M);if(!c)return;const bots=f=>r.enemies.filter(e=>e.alive&&!e.dying&&e.type==='war_'+f);
+  for(const f of ['ren','mil']){if(!leaderless(f))continue;const have=bots(f);if(have.length>=WAR.n)continue;const key=M.id+f;if(Date.now()-(WAR.last[key]||0)<45000)continue;WAR.last[key]=Date.now();
+    const side=f==='ren'?-1:1;for(let k=have.length;k<WAR.n;k++){const x=c[0]+side*(5+Math.random()*3),y=c[1]+(Math.random()-.5)*5;const tx=Math.floor(x),ty=Math.floor(y);if(!walkable(M.g[ty]?.[tx]))continue;const e=mkEnemy('war_'+f,tx,ty);e.x=x;e.y=y;e.id='w'+f+'_'+Math.random().toString(36).slice(2,7);e.summoned=true;r.enemies.push(e)}}},4000);
+// перестрелка: бот ищет ближайшего бойца другой группировки (бота или охранника сектора), сближается и стреляет
+let warAcc=0;
+{const _ue=updateEnemies;updateEnemies=function(dt){_ue(dt);if(!S||!M||!WAR.maps.includes(M.id))return;let host=false;try{host=hostId(M.id)===myNetId()}catch(e){}if(!host)return;warAcc+=dt;if(warAcc<.2)return;const step=warAcc;warAcc=0;
+  const all=rtFor(M.id).enemies.filter(e=>e.alive&&!e.dying&&EN[e.type]&&EN[e.type].fac);
+  for(const e of all){if(!/^war_/.test(e.type))continue;if(e.tg&&e.seen)continue;const d=EN[e.type];let foe=null,fd=14;for(const o of all){if(EN[o.type].fac===d.fac)continue;const dd=Math.hypot(o.x-e.x,o.y-e.y);if(dd<fd){fd=dd;foe=o}}
+    if(!foe){e.moving=false;continue}const a=Math.atan2(foe.y-e.y,foe.x-e.x);e.a=a;
+    if(fd>7){const sp=(d.spd||3)*.8*step;moveBody(e,Math.cos(a)*sp,Math.sin(a)*sp,d.r||.3);e.moving=true;e.phase=(e.phase||0)+step*6}else e.moving=false;
+    e.wcd=(e.wcd||Math.random()*.6)-step;if(fd<=9&&e.wcd<=0){e.wcd=.7+Math.random()*.6;const rg=d.rgd||{dmg:10,spd:16,range:11,spread:.08,kind:'bullet'};try{enemyShoot(e,rg,a)}catch(x){}
+      const t=fd/(rg.spd||16)*1000,dmg=(rg.dmg||10)*(.7+Math.random()*.5),hitP=Math.max(.35,.85-fd*.05);const tgt=foe;setTimeout(()=>{if(tgt.alive&&!tgt.dying&&Math.random()<hitP)try{hostDamage(tgt,dmg,a,1,'war')}catch(x){}},t)}}}}
+// ================= ПОСЫЛКИ НЕ УХОДЯТ В ГРУППИРОВКИ =================
+// Поручения и ивентовые задания больше не отправляют к жителям баз группировок (майору, бате и т. д.).
+function facNpc(n){return /^(ren|mil)_/.test(n.id)||/^base_/.test(n.map)||!!(MAPS[n.map]&&MAPS[n.map].fac)}
+// уже взятые посылки к таким получателям переадресуются обычному жителю
+setInterval(()=>{if(!S||!S.rq||!S.rq.act)return;for(const q of S.rq.act){if(q.type!=='deliver')continue;const n=NPCS.find(x=>x.id===q.to);if(!n||!facNpc(n))continue;
+  const C=NPCS.filter(x=>x.id!==q.giver&&!x.dog&&MAPS[x.map]&&!facNpc(x)&&(x.map!=='city'||S.lvl>=7));if(!C.length)continue;const tg=pickR(C);const old=n.n;
+  Object.assign(q,{to:tg.id,map:tg.map,t:'Посылка: '+tg.n,d:'Отнесите свёрток — '+tg.n+' ('+MAPS[tg.map].name+'). Получатель сменился: в группировки посылки больше не носим.'});log('📦 Посылка для «'+old+'» переадресована: отнесите её — '+tg.n+' ('+MAPS[tg.map].name+').','sys');dirty=true}},5000);
+// объявление о войне при входе на локацию
+let warNote=0;{const _em=enterMap;enterMap=function(id,x,y){const r=_em(id,x,y);if(WAR.maps.includes(id)&&Date.now()>warNote&&(leaderless('ren')||leaderless('mil'))){warNote=Date.now()+600000;log('⚔ Здесь идёт война группировок: пока у них нет лидера, их боты перестреливаются между собой. Берегитесь шальных пуль!','bad')}return r}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
