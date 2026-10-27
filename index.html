@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793075021";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793075273";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -813,7 +813,7 @@ function updateProjs(dt){
         emit(2,{x:p.x,y:p.y,v:.5,life:.6,size:3,color:'rgba(160,150,130,.35)',type:'smoke'});break}
       if(p.from==='p'){for(const e of r.enemies){if(!e.alive||e.dying||p.hit.has(e))continue;const d=EN[e.type];if((e.x-p.x)**2+(e.y-.2-p.y)**2<(d.r+.12)**2){p.hit.add(e);damageEnemy(e,p.dmg,Math.atan2(p.vy,p.vx),p.crit);if(p.pierce>0){p.pierce--;p.dmg*=.75}else p.life=0;break}}
         if(p.life>0&&M.pvp)for(const pe of peerList()){if(!p.hit.has(pe.peer)&&(pe.x-p.x)**2+(pe.y-.2-p.y)**2<.16){p.hit.add(pe.peer);pvpHit(pe,p.dmg);p.life=0;break}}}
-      else if((P.x-p.x)**2+(P.y-.2-p.y)**2<.13){p.life=0;hurt(p.dmg,p.src);if(p.kind==='acid'){addRad(4);emit(8,{x:P.x,y:P.y,v:2,life:.5,size:2,color:'#b8f04a',type:'spark'})}}
+      else if((P.x-p.x)**2+(P.y-.2-p.y)**2<.13&&!(p.fac&&typeof myFac==='function'&&p.fac===myFac())){p.life=0;hurt(p.dmg,p.src);if(p.kind==='acid'){addRad(4);emit(8,{x:P.x,y:P.y,v:2,life:.5,size:2,color:'#b8f04a',type:'spark'})}}
     }
     p.life-=dt;
   }
@@ -2098,7 +2098,7 @@ function onDeal(msg){const d=msg.data;if(!d||typeof d!=='object'||!S||d.to!==myP
     case 'ready':if(TR&&TR.peer===from){TR.theirReady=typeof d.h==='string'?d.h:null;tryFinish();if(TR)openTrade()}break;
     case 'cancel':if(TR&&TR.peer===from){log(name+' отменил обмен.');TR=null;closeWin()}break;
     case 'gift':{const o=cleanOffer(d.o);for(const [id,q] of Object.entries(o.i))add(id,q);S.caps+=o.c;sfx.pickup();log(name+' подарил вам: '+offerText(o),'good');saveLocal();break}
-    case 'hit':if(M&&M.pvp&&d.m===M.id&&!(S.admin&&S.god)){lastHit={peer:from,name,t:now};hurt(Math.max(0,Math.min(150,+d.dmg||0)),'игрок '+name)}break;
+    case 'hit':if(M&&M.pvp&&d.m===M.id&&!(S.admin&&S.god)&&!(typeof sameFacPeer==='function'&&sameFacPeer(from))){lastHit={peer:from,name,t:now};hurt(Math.max(0,Math.min(150,+d.dmg||0)),'игрок '+name)}break;
     case 'killed':{S.stats.pk=(S.stats.pk|0)+1;const vk=+d.k||0;if(vk<=-10)addKarma(3,'побеждён бандит '+name);else addKarma(-10,'убит игрок '+name);const c=Math.max(0,Math.min(1e5,Math.floor(+d.c||0)));if(c){S.caps+=c;log('Трофей: '+c+' крыш.','good')}break}
   }}
 function pvpHit(pe,dmg){dealSend(pe.peer,{t:'hit',dmg:Math.round(Math.min(150,dmg)),m:M.id});floatText(pe.x,pe.y-.9,Math.round(dmg),'#ff9a7a');emit(6,{x:pe.x,y:pe.y-.3,v:3,life:.5,size:2,color:'#7a1a14',type:'blood',g:6,vz:2,z:.4});sfx.hit(pe.x,pe.y)}
@@ -2711,7 +2711,7 @@ function applySnap(list,from){if(!Array.isArray(list))return;const r=rtFor(M.id)
 function applyEvent(ev){if(!Array.isArray(ev))return;const r=rtFor(M.id);const me=myNetId();const find=id=>r.enemies.find(e=>e.id===id);
   switch(ev[0]){
    case 'p':{const [,x,y,vx,vy,kind,dmg,life,src,sid]=ev;if(![x,y,vx,vy,life].every(Number.isFinite)||!['bullet','acid','rock'].includes(kind))return;
-     projs.push({x,y,vx,vy,life:Math.min(3,life),dmg:Math.max(0,Math.min(80,+dmg||0)),from:'e',kind,src:EN[src]?EN[src].n:'враг',px:x,py:y});const sh=find(sid);
+     projs.push({x,y,vx,vy,life:Math.min(3,life),dmg:Math.max(0,Math.min(80,+dmg||0)),from:'e',kind,fac:EN[src]&&EN[src].fac,src:EN[src]?EN[src].n:'враг',px:x,py:y});const sh=find(sid);
      if(kind==='bullet'){sfx.gun(EN[src]?.wpn,x,y);light(x,y,2.5,60,'muzzle');if(sh)sh.shot=now}else sfx.spit(x,y);break}
    case 'k':{const [,id,contrib,a,type,x,y]=ev;let e=find(id);if(e&&!e.dying)worldKill(e,+a||0);if(Array.isArray(contrib)&&contrib.includes(me)&&EN[type]){if(!e)e={type,x:+x||P.x,y:+y||P.y};creditKill(e)}break}
    case 'x':{const [,id,x,y,type]=ev;if(!Number.isFinite(x))return;explodeFx(x,y);const d=EN[type]||EN.glow;const dist=Math.hypot(P.x-x,P.y-y);if(dist<1.7){hurt(d.dmg*(1-dist/2.2),d.n);addRad(15)}const e=find(id);if(e&&!e.dying)worldKill(e,0);break}
@@ -3917,7 +3917,7 @@ ITEMS.grenade={n:'Граната Ф-1',k:'use',p:60,use:{},r:2,d:'Бросок �
 SELL.kalibr.push(['grenade',65,4]);SELL.hmury.push(['grenade',70]);LOOTT.push(['grenade',1,2,.8,1]);EN.gunner.loot.push(['grenade',.12]);EN.cleaner.loot.push(['grenade',.15]);
 const GRN=[];
 function throwGrenade(){if(paused||!S)return;if(!has('grenade')){log('Нет гранат. Их продаёт Калибр.','bad');return}if(M.safe){log('Здесь мирная зона — гранату лучше не доставать.','bad');return}take('grenade');
-  const a=P.a,sp=7.5;const g={x:P.x+Math.cos(a)*.4,y:P.y+Math.sin(a)*.4,z:1.2+V3.jz,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,vz:3.2+(V3.on?Math.max(0,.6-V3.pitch)*3:0),t:now+2500,mine:true};GRN.push(g);sfx.swing();mobSend({t:'gr',m:M.id,g:{x:r2(g.x),y:r2(g.y),z:r2(g.z),vx:r2(g.vx),vy:r2(g.vy),vz:r2(g.vz)}});log('Граната!')}
+  const a=P.a,sp=7.5;const g={x:P.x+Math.cos(a)*.4,y:P.y+Math.sin(a)*.4,z:1.2+V3.jz,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,vz:3.2+(V3.on?Math.max(0,.6-V3.pitch)*3:0),t:now+2500,mine:true};GRN.push(g);sfx.swing();mobSend({t:'gr',m:M.id,g:{x:r2(g.x),y:r2(g.y),z:r2(g.z),vx:r2(g.vx),vy:r2(g.vy),vz:r2(g.vz),fc:typeof myFac==='function'?(myFac()||''):''}});log('Граната!')}
 {const _ui=useItem;useItem=function(id){if(id==='grenade'){throwGrenade();return}_ui(id)}}
 function grenadeTick(dt){for(const g of GRN){g.vz-=14*dt;const nx=g.x+g.vx*dt,ny=g.y+g.vy*dt;const solid=(x,y)=>{const c=M.g[Math.floor(y)]?.[Math.floor(x)];return !c||(SOLID.has(c)&&!(LOW.has(c)&&g.z>.6))};
     if(solid(nx,g.y)){g.vx*=-.45;sfx.hit(g.x,g.y)}else g.x=nx;if(solid(g.x,ny)){g.vy*=-.45}else g.y=ny;g.z+=g.vz*dt;if(g.z<0){g.z=0;if(g.vz<-1.5)sfx.hit(g.x,g.y);g.vz*=-.42;g.vx*=.62;g.vy*=.62}
@@ -3926,7 +3926,7 @@ function grenadeBoom(g){emit(34,{x:g.x,y:g.y,v:7,life:.5,size:3,color:'#ffb050',
   shake=Math.max(shake,Math.max(.3,1.2-Math.hypot(P.x-g.x,P.y-g.y)*.12));decal(g.x,g.y,.9,'#1a1612','scorch');const R=3.2;
   if(g.mine){for(const e of rtFor(M.id).enemies){if(!e.alive||e.dying)continue;const d=Math.hypot(e.x-g.x,e.y-g.y);if(d<R&&los(g.x,g.y,e.x,e.y))damageEnemy(e,95*(1-d/R*.7),Math.atan2(e.y-g.y,e.x-g.x),false,6)}
     if(M.pvp)for(const pe of peerList()){const d=Math.hypot(pe.x-g.x,pe.y-g.y);if(d<R&&los(g.x,g.y,pe.x,pe.y))pvpHit(pe,80*(1-d/R*.7))}}
-  const dm=Math.hypot(P.x-g.x,P.y-g.y);if(dm<R&&los(g.x,g.y,P.x,P.y))hurt(70*(1-dm/R*.7),'граната');
+  const dm=Math.hypot(P.x-g.x,P.y-g.y);if(dm<R&&los(g.x,g.y,P.x,P.y)&&!(!g.mine&&g.fc&&typeof myFac==='function'&&g.fc===myFac()))hurt(70*(1-dm/R*.7),'граната');
   for(const p of rtFor(M.id).drops){const d=Math.hypot(p.x-g.x,p.y-g.y);if(d<R&&d>.05&&!p.bag){p.x+=(p.x-g.x)/d*.8;p.y+=(p.y-g.y)/d*.8;p.t=now}}}
 {const _ue=updateEnemies;updateEnemies=function(dt){_ue(dt);grenadeTick(dt)}}
 {const _om=onMob;onMob=function(msg){const d=msg.data;if(d&&d.t==='gr'&&M&&d.m===M.id&&d.g&&[d.g.x,d.g.y,d.g.z,d.g.vx,d.g.vy,d.g.vz].every(Number.isFinite)){GRN.push({...d.g,t:now+2500,mine:false});return}_om(msg)}}
@@ -5599,8 +5599,8 @@ function launch(kind){const a=P.a;const rk=kind==='rpg'?{kind,x:P.x+Math.cos(a)*
 function rktBoom(g,remote){emit(40,{x:g.x,y:g.y,v:8,life:.55,size:3.4,color:'#ffb050',type:'spark',g:6,vz:4,z:.3});emit(22,{x:g.x,y:g.y,v:2.6,life:1.5,size:9,color:'rgba(70,64,56,.55)',type:'smoke'});light(g.x,g.y,7,300,'muzzle');sfx.boom(g.x,g.y);
   shake=Math.max(shake,Math.max(.3,1.4-Math.hypot(P.x-g.x,P.y-g.y)*.12));decal(g.x,g.y,1.1,'#1a1612','scorch');const R=g.R;
   if(!remote){for(const e of rtFor(M.id).enemies){if(!e.alive||e.dying)continue;const d=Math.hypot(e.x-g.x,e.y-g.y);if(d<R&&los(g.x,g.y,e.x,e.y))damageEnemy(e,g.dmg*(1-d/R*.7),Math.atan2(e.y-g.y,e.x-g.x),false,7)}
-    try{mobSend({t:'rk',m:M.id,g:{x:r2(g.x),y:r2(g.y),R:g.R,dmg:g.dmg}})}catch(e){}}
-  const dm=Math.hypot(P.x-g.x,P.y-g.y);if(dm<R&&los(g.x,g.y,P.x,P.y)&&(!remote||M.pvp))hurt(g.dmg*.7*(1-dm/R*.7),g.kind==='rpg'?'ракета РПГ':'граната ВОГ-25')}
+    try{mobSend({t:'rk',m:M.id,g:{x:r2(g.x),y:r2(g.y),R:g.R,dmg:g.dmg,fc:myFac()||''}})}catch(e){}}
+  const dm=Math.hypot(P.x-g.x,P.y-g.y);if(dm<R&&los(g.x,g.y,P.x,P.y)&&(!remote||(M.pvp&&!(g.fc&&g.fc===myFac()))))hurt(g.dmg*.7*(1-dm/R*.7),g.kind==='rpg'?'ракета РПГ':'граната ВОГ-25')}
 function rktTick(dt){for(const g of RKT){g.life-=dt;g.vz-=g.g*dt;const nx=g.x+g.vx*dt,ny=g.y+g.vy*dt;g.z+=g.vz*dt;
     const c=M.g[Math.floor(ny)]?.[Math.floor(nx)];const wall=!c||(SOLID.has(c)&&!(LOW.has(c)&&g.z>.6));
     let hit=wall||g.z<=0||g.life<=0;if(!hit)for(const e of rtFor(M.id).enemies){if(!e.alive||e.dying)continue;if(Math.hypot(e.x-nx,e.y-ny)<(EN[e.type].r||.4)+.25&&g.z<2){hit=true;break}}
@@ -5608,7 +5608,7 @@ function rktTick(dt){for(const g of RKT){g.life-=dt;g.vz-=g.g*dt;const nx=g.x+g.
     if(hit){g.done=1;if(!wall){g.x=nx;g.y=ny}rktBoom(g,false);continue}g.x=nx;g.y=ny;if(Math.random()<.7)emit(1,{x:g.x,y:g.y,v:.3,life:.7,size:g.kind==='rpg'?4:2.5,color:'rgba(210,200,180,.45)',type:'smoke'})}
   for(let i=RKT.length-1;i>=0;i--)if(RKT[i].done)RKT.splice(i,1)}
 {const _ue=updateEnemies;updateEnemies=function(dt){_ue(dt);if(M)rktTick(dt)}}
-{const _om=onMob;onMob=function(msg){const d=msg.data;if(d&&d.t==='rk'&&M&&d.m===M.id&&d.g&&Number.isFinite(d.g.x)&&Number.isFinite(d.g.y)){rktBoom({x:d.g.x,y:d.g.y,R:Math.min(4,+d.g.R||3),dmg:Math.min(230,+d.g.dmg||100),kind:(+d.g.dmg||0)>150?'rpg':'vog'},true);return}_om(msg)}}
+{const _om=onMob;onMob=function(msg){const d=msg.data;if(d&&d.t==='rk'&&M&&d.m===M.id&&d.g&&Number.isFinite(d.g.x)&&Number.isFinite(d.g.y)){rktBoom({x:d.g.x,y:d.g.y,R:Math.min(4,+d.g.R||3),dmg:Math.min(230,+d.g.dmg||100),kind:(+d.g.dmg||0)>150?'rpg':'vog',fc:typeof d.g.fc==='string'?d.g.fc:''},true);return}_om(msg)}}
 // снаряды в полёте
 {const _dt=drawTilesCached;drawTilesCached=function(c,x0,y0,x1,y1,t){_dt(c,x0,y0,x1,y1,t);for(const g of RKT){c.save();c.translate(g.x*T,(g.y-g.z*.35)*T);c.rotate(Math.atan2(g.vy-g.vz*.35,g.vx));c.fillStyle=g.kind==='rpg'?'#6a7a4a':'#3a3c30';c.fillRect(-5,-1.6,10,3.2);c.fillStyle='#ffcf6a';c.beginPath();c.arc(-6,0,1.8+Math.random(),0,7);c.fill();c.restore()}}}
 
@@ -5678,6 +5678,11 @@ if(typeof LOGTXT==='object')LOGTXT.boost='прокачал(а) бойцов';
     else if(wp&&/^war_/.test(e.type)){const d0=Math.hypot(e.x-wp.x,e.y-wp.y);if(d0<=CAP_R)e.holdPt=wp.i;if(e.holdPt===wp.i)pt=wp}
     if(!pt||pt.m!==M.id)continue;const d=Math.hypot(e.x-pt.x,e.y-pt.y),lim=CAP_R+.3;if(d>lim){e.x=pt.x+(e.x-pt.x)/d*lim;e.y=pt.y+(e.y-pt.y)/d*lim;e.moving=false}}}}
 
+// ---------- Свои не ранят своих ----------
+// Пули ботов и охраны своей группировки пролетают сквозь вас; игроки своей группировки не наносят вам урона (пули, гранаты, ракеты).
+{const _es=enemyShoot;enemyShoot=function(e,r,a){const n=projs.length;_es(e,r,a);const f=EN[e.type]&&EN[e.type].fac;if(f)for(let i=n;i<projs.length;i++)projs[i].fac=f}}
+function sameFacPeer(peer){const f=myFac();if(!f||!room)return false;const p=room.peers().find(x=>x.peer===peer);return !!(p&&p.presence&&p.presence.fc===f)}
+{const _ph=pvpHit;pvpHit=function(pe,dmg){if(pe&&sameFacPeer(pe.peer)){floatText(pe.x,pe.y-.9,'свой','#9ad87a');return}return _ph(pe,dmg)}}
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
