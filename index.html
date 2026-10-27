@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793091397";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793091619";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -5885,8 +5885,7 @@ function lineClear(e,tg,allies){if(!los(e.x,e.y,tg.x,tg.y))return false;const dx
   for(const o of allies){if(o===e||o===tg)continue;const t=((o.x-e.x)*dx+(o.y-e.y)*dy)/L2;if(t<=0||t>=1)continue;const px=e.x+dx*t,py=e.y+dy*t;if(Math.hypot(o.x-px,o.y-py)<.55)return false}return true}
 
 // ================= ЭТАП 5: БАР И ДОСУГ (часть 1) =================
-// Музыкальный автомат в баре заменён слот-машиной «Однорукий бандит»: 5 барабанов, ставки крышками,
-// выигрыш от 3 одинаковых подряд слева, ⭐ — джокер, 3+ ☢ в любом месте — бесплатные вращения.
+// Музыкальный автомат в баре заменён слот-машиной «Однорукий бандит»: поле 4×4, ставки крышками.
 // У костра можно жарить мясо мутантов и кипятить мутную воду через колбу-фильтр (хватает на 10 раз).
 Object.assign(ITEMS,{
  rawmeat:{n:'Сырое мясо мутанта',k:'use',p:6,r:0,use:{hunger:12,rad:6},d:'Есть сырым — так себе идея. Лучше пожарить у костра.'},
@@ -5910,30 +5909,33 @@ function fireCook(tx,ty){const cook=(id,fn)=>{fn();dirty=true;campfire(tx,ty)};
 {const _cf=campfire;campfire=function(tx,ty){_cf(tx,ty);try{const f=ALLFIRES.find(f=>f.m===M.id&&f.x===tx&&f.y===ty);if(!f){openWin('Костёр',b=>{b.append(el('p',null,'Тепло, но и только. Зато можно приготовить еду.'),fireCook(tx,ty))});return}
   const o=ov.querySelector('.opts');if(o)o.after(fireCook(tx,ty))}catch(e){}}}
 
-// ---------- Слот-машина ----------
-// возврат игроку ≈91% (проверено на 600 000 вращений)
-const SLOTSYM=[['🍺',22,[3,6,18]],['🥫',20,[3,7,22]],['🔫',13,[5,12,48]],['💀',10,[6,18,75]],['🧢',4,[12,60,250]],['⭐',5,[12,50,200]],['☢',6,null]];
-const SLOTW=SLOTSYM.reduce((a,s)=>a+s[1],0);
+// ---------- Слот-машина 4×4 ----------
+// 4 барабана × 4 ряда, каждый ряд — линия выигрыша; ставка делится на 4 линии поровну.
+// Выигрыш на линии — от 3 одинаковых подряд слева (⭐ — джокер). 3+ ☢ в любом месте поля — бесплатные вращения.
+// Возврат игроку ≈91% (проверено на 500 000 вращений).
+const SLOTSYM=[['🍺',22,[2.5,9]],['🥫',20,[2.5,10]],['🔫',13,[4,20]],['💀',10,[6,28]],['🧢',4,[14,90]],['⭐',5,[12,70]],['☢',6,null]];
+const SLOTW=SLOTSYM.reduce((a,s)=>a+s[1],0);const SLOT_N=4;
 const slotPick=()=>{let r=Math.random()*SLOTW;for(const s of SLOTSYM){r-=s[1];if(r<0)return s[0]}return '🍺'};
-// выигрыш по центральной линии: подряд слева, ⭐ заменяет любой символ (кроме ☢)
-function slotEval(line,bet){let base=null,n=0;for(const s of line){if(s==='☢')break;if(s==='⭐'){n++;continue}if(!base){base=s;n++;continue}if(s===base)n++;else break}
-  if(!base)base='⭐';const row=SLOTSYM.find(x=>x[0]===base);let win=0;if(row&&row[2]&&n>=3)win=bet*row[2][n-3];return {win,n,base}}
-const SLOT={free:0,busy:false,bet:10};
-function slotWin(){openWin('Однорукий бандит',b=>{const st=el('style');st.textContent='.slm{background:linear-gradient(#3a2414,#1a0f08);border:3px solid #c8a048;border-radius:14px;padding:12px;text-align:center}.slm .rl{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:8px 0}.slm .rc{background:#f2e8d0;border-radius:8px;display:flex;flex-direction:column;overflow:hidden;box-shadow:inset 0 0 10px rgba(0,0,0,.4)}.slm .rc span{color:#d89a00;text-shadow:0 0 3px rgba(120,60,0,.5);font-size:28px;line-height:42px;height:42px}.slm .rc span.mid{background:rgba(255,210,90,.35)}.slm .res{font:700 16px var(--mono);color:#ffe08a;min-height:22px}.slm .pt{font:11px var(--mono);color:#c8b890;text-align:left;margin-top:8px}';b.append(st);
-  const m=el('div','slm');const rl=el('div','rl');const cols=[];for(let i=0;i<5;i++){const c=el('div','rc');for(let j=0;j<3;j++){const s=el('span',j===1?'mid':'',slotPick());c.append(s)}rl.append(c);cols.push(c)}
+function slotEval(line,lineBet){let base=null,n=0;for(const s of line){if(s==='☢')break;if(s==='⭐'){n++;continue}if(!base){base=s;n++;continue}if(s===base)n++;else break}
+  if(!base)base='⭐';const row=SLOTSYM.find(x=>x[0]===base);let win=0;if(row&&row[2]&&n>=3)win=Math.floor(lineBet*row[2][n-3]);return {win,n,base}}
+const SLOT={free:0,busy:false,bet:20};
+function slotWin(){openWin('Однорукий бандит',b=>{const st=el('style');st.textContent='.slm{background:linear-gradient(#3a2414,#1a0f08);border:3px solid #c8a048;border-radius:14px;padding:12px;text-align:center}.slm .rl{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px auto;max-width:330px}.slm .rc{background:#f2e8d0;border-radius:8px;display:flex;flex-direction:column;overflow:hidden;box-shadow:inset 0 0 10px rgba(0,0,0,.4)}.slm .rc span{color:#d89a00;text-shadow:0 0 3px rgba(120,60,0,.5);font-size:28px;line-height:44px;height:44px;transition:background .2s}.slm .rc span.win{background:rgba(255,200,60,.55);box-shadow:inset 0 0 0 2px #e8a020}.slm .res{font:700 16px var(--mono);color:#ffe08a;min-height:22px}.slm .pt{font:11px var(--mono);color:#c8b890;text-align:left;margin-top:8px}';b.append(st);
+  const m=el('div','slm');const rl=el('div','rl');const cols=[];for(let i=0;i<SLOT_N;i++){const c=el('div','rc');for(let j=0;j<SLOT_N;j++)c.append(el('span','',slotPick()));rl.append(c);cols.push(c)}
   const res=el('div','res',SLOT.free?'Бесплатных вращений: '+SLOT.free:'Делайте ставку!');const bets=el('div','startrow');
-  const drawBets=()=>{bets.replaceChildren();for(const v of [10,50,100,500]){const x=btn(v+' кр.',()=>{SLOT.bet=v;drawBets()},SLOT.bet===v?'btn primary':'btn');bets.append(x)}};drawBets();
+  const drawBets=()=>{bets.replaceChildren();for(const v of [20,40,100,400]){bets.append(btn(v+' кр.',()=>{SLOT.bet=v;drawBets()},SLOT.bet===v?'btn primary':'btn'))}};drawBets();
   const spinB=btn('🎰 Крутить',()=>spin(),'btn primary');
   function spin(){if(SLOT.busy)return;const free=SLOT.free>0;const bet=SLOT.bet;if(!free&&S.caps<bet){res.textContent='Не хватает крышек.';return}if(free)SLOT.free--;else S.caps-=bet;updateHud();SLOT.busy=true;spinB.disabled=true;
-    const fin=[];for(let i=0;i<5;i++)fin.push([slotPick(),slotPick(),slotPick()]);let t0=performance.now();sfx.click&&sfx.click();
-    const tick=()=>{const t=performance.now()-t0;cols.forEach((c,i)=>{const stop=500+i*260;const sp=c.children;if(t<stop){for(const s of sp)s.textContent=slotPick()}else for(let j=0;j<3;j++)sp[j].textContent=fin[i][j]});
-      if(t<500+4*260+40){requestAnimationFrame(tick);return}
-      const line=fin.map(c=>c[1]);const r=slotEval(line,bet);const rad=fin.flat().filter(s=>s==='☢').length;let msg='';
-      if(r.win>0){S.caps+=r.win;msg='Выигрыш: '+r.win+' крышек! ('+r.n+'× '+r.base+')';log('🎰 '+msg,'good');if(r.win>=bet*40)zoneMsg('🎰 '+S.name+' сорвал(а) куш в баре: '+r.win+' крышек!',true)}
-      if(rad>=3){const f=rad>=5?10:rad===4?6:3;SLOT.free+=f;msg+=(msg?' · ':'')+'☢ ×'+rad+': бесплатных вращений +'+f+'!'}
+    for(const c of cols)for(const s of c.children)s.classList.remove('win');
+    const fin=[];for(let i=0;i<SLOT_N;i++){const col=[];for(let j=0;j<SLOT_N;j++)col.push(slotPick());fin.push(col)}const t0=performance.now();sfx.click&&sfx.click();
+    const tick=()=>{const t=performance.now()-t0;cols.forEach((c,i)=>{const stop=500+i*280;const sp=c.children;if(t<stop){for(const s of sp)s.textContent=slotPick()}else for(let j=0;j<SLOT_N;j++)sp[j].textContent=fin[i][j]});
+      if(t<500+(SLOT_N-1)*280+40){requestAnimationFrame(tick);return}
+      let total=0;const parts=[];for(let r=0;r<SLOT_N;r++){const ev=slotEval(fin.map(c=>c[r]),bet/SLOT_N);if(ev.win>0){total+=ev.win;parts.push(ev.n+'× '+ev.base);for(let i=0;i<ev.n;i++)cols[i].children[r].classList.add('win')}}
+      const rad=fin.flat().filter(s=>s==='☢').length;let msg='';
+      if(total>0){S.caps+=total;msg='Выигрыш: '+total+' крышек! ('+parts.join(', ')+')';log('🎰 '+msg,'good');if(total>=bet*15)zoneMsg('🎰 '+S.name+' сорвал(а) куш в баре: '+total+' крышек!',true)}
+      if(rad>=3){const f=rad>=5?10:rad===4?6:3;SLOT.free+=f;msg+=(msg?' · ':'')+'☢ ×'+rad+': бесплатных вращений +'+f+'!';for(const c of cols)for(const s of c.children)if(s.textContent==='☢')s.classList.add('win')}
       res.textContent=msg||'Пусто. Ещё разок?';if(SLOT.free)res.textContent+=' · Бесплатных: '+SLOT.free;SLOT.busy=false;spinB.disabled=false;spinB.textContent=SLOT.free?'🎰 Бесплатное вращение':'🎰 Крутить';updateHud();dirty=true};requestAnimationFrame(tick)}
   m.append(el('div','sec','☢ ОДНОРУКИЙ БАНДИТ ☢'),rl,res,bets,spinB);
-  const pt=el('div','pt');pt.innerHTML='Выплаты за 3 / 4 / 5 подряд слева по средней линии (× ставка):<br>'+SLOTSYM.filter(s=>s[2]).map(s=>s[0]+' '+s[2].join(' / ')).join(' &nbsp; ')+'<br>⭐ — джокер, заменяет любой символ. ☢ — 3+ в любом месте: 3 / 6 / 10 бесплатных вращений.';m.append(pt);b.append(m)})}
+  const pt=el('div','pt');pt.innerHTML='4 ряда — 4 линии, ставка делится на них поровну. Выплата за 3 / 4 подряд слева (× ставка на линию):<br>'+SLOTSYM.filter(s=>s[2]).map(s=>s[0]+' '+s[2].join(' / ')).join(' &nbsp; ')+'<br>⭐ — джокер, заменяет любой символ. ☢ — 3 / 4 / 5+ в любом месте: 3 / 6 / 10 бесплатных вращений.';m.append(pt);b.append(m)})}
 playJuke=function(){slotWin()};
 if(typeof JUKE!=='undefined'){}
 
