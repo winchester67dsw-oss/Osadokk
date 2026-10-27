@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793099997";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793100272";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -1562,7 +1562,7 @@ function render(t){
     else{ctx.globalAlpha=Math.min(1,a*1.5);ctx.fillStyle=p.color;circ(ctx,px,py,p.size*.6)}}
   ctx.globalAlpha=1;drawAutumnFx(ctx);
   if(M.id==='swamp'){for(const f of fog){f.x+=f.v*.016;if(f.x>M.w+6)f.x=-6;ctx.fillStyle=rg(ctx,f.x*T,f.y*T,0,f.r*T,'rgba(170,190,150,.10)','rgba(170,190,150,0)');ctx.fillRect((f.x-f.r)*T,(f.y-f.r)*T,f.r*2*T,f.r*2*T)}}
-  const cyc=timeLock==='day'?.5:timeLock==='night'?0:(Date.now()/1000%5760)/5760;const dark=darkLevel(cyc);drawGrading(ctx,W,H,dark);
+  const cyc=timeLock==='day'?.5:timeLock==='night'?0:(typeof realCyc==='function'?realCyc():(Date.now()/1000%5760)/5760);const dark=darkLevel(cyc);drawGrading(ctx,W,H,dark);
   const toS=(wx,wy)=>[(wx-CX)*ZOOM*DPR,(wy-CY)*ZOOM*DPR];
   if(dark>.03){nctx.setTransform(.5,0,0,.5,0,0);nctx.globalCompositeOperation='source-over';nctx.clearRect(0,0,W,H);nctx.fillStyle='rgba(6,9,22,'+dark+')';nctx.fillRect(0,0,W,H);
     nctx.globalCompositeOperation='destination-out';
@@ -2808,7 +2808,7 @@ const EMP=4*3600000,EMW=120000,EMA=60000;
 const EMS={st:'calm',idx:-1,warned:{},saw:{},died:false,hurtT:0,sirenT:0,boltT:0};
 function emState(){const t=Date.now(),ph=t%EMP,i=Math.floor(t/EMP);if(ph<EMA)return {st:'active',left:EMA-ph,idx:i};if(ph>EMP-EMW)return {st:'warn',left:EMP-ph,idx:i+1};return {st:'calm',left:EMP-EMW-ph,idx:i}}
 function sheltered(){if(!M)return true;if(M.interior)return true;const c=M.g[Math.floor(P.y)]?.[Math.floor(P.x)];return c==='_'}
-function gameClock(){const c=(Date.now()/1000%5760)/5760;const mins=Math.floor(c*1440);return String(Math.floor(mins/60)).padStart(2,'0')+':'+String(mins%60).padStart(2,'0')}
+function gameClock(){const _d=new Date();const mins=_d.getHours()*60+_d.getMinutes();return String(Math.floor(mins/60)).padStart(2,'0')+':'+String(mins%60).padStart(2,'0')}
 let envAcc=0,anoT=0;
 function envTick(dt){const es=emState();
   if(es.st==='calm'&&es.left<480000&&!EMS.warned['p'+(es.idx+1)]){EMS.warned['p'+(es.idx+1)]=1;zoneMsg('📻 По рации: через 10 минут выброс. Заранее найдите укрытие.',false)}
@@ -3861,7 +3861,7 @@ function sync3(dt,t){V3.frame=(V3.frame||0)+1;LBL.length=0;const near=(x,y)=>Mat
   L3.fx.geometry.setDrawRange(0,fn);L3.fx.geometry.attributes.position.needsUpdate=true;L3.fx.geometry.attributes.color.needsUpdate=true}
 
 // ---------- Свет, камера, кадр ----------
-function lights3(t){const cyc=timeLock==='day'?.5:timeLock==='night'?0:(Date.now()/1000%5760)/5760;const dark=darkLevel(cyc);const es=emState();const emA=es.st==='active';const out=!M.interior;
+function lights3(t){const cyc=timeLock==='day'?.5:timeLock==='night'?0:(typeof realCyc==='function'?realCyc():(Date.now()/1000%5760)/5760);const dark=darkLevel(cyc);const es=emState();const emA=es.st==='active';const out=!M.interior;
   const day=out?Math.max(0,1-dark/.75):0;const fogC=new THREE.Color(out?B3.fog:'#120f0c');fogC.lerp(new THREE.Color(out?'#0a0d18':'#080706'),out?Math.min(1,dark/.7):0);if(emA&&out)fogC.lerp(new THREE.Color('#6a1a10'),.55);
   SC.fog.color.copy(fogC);SC.background=fogC;if(V3.cam==='top'){SC.fog.near=out?24:16;SC.fog.far=out?60:40}else{SC.fog.near=out?14:6;SC.fog.far=out?(QUAL.lvl?52:36):24}
   L3.hemi.intensity=out?.22+.55*day:.32;L3.hemi.color.set(out?(emA?'#ff8a70':'#ffeedd'):'#ffe2c0');L3.hemi.groundColor.set(out?'#3a3024':'#2a2018');
@@ -4579,7 +4579,7 @@ for(const k of ['Z','M','k','u','w'])CONT[k]&&CONT[k].push(['cells',k==='Z'?2.5:
 {let i=0;for(const q of Object.values(QUESTS)){if(i++%2)continue;q.rew.items=q.rew.items||{};q.rew.items.cells=(q.rew.items.cells||0)+1+(q.rew.xp>200?1:0)}}
 for(const m of Object.values(MAPS))if(m.loot&&m.loot.pool&&!m.safe){m.loot.pool.push(['cells',12]);if((m.tier|0)>=2)m.loot.pool.push(['fl2',.6]);if((m.tier|0)>=3)m.loot.pool.push(['fl3',.3])}
 // 3D: свет фонарика зависит от модели, без фонарика ночью почти ничего не видно
-if(typeof lights3==='function'){const _l3=lights3;lights3=function(t){_l3(t);const cyc=timeLock==='day'?.5:timeLock==='night'?0:(Date.now()/1000%5760)/5760;const dk=darkLevel(cyc);const out=!M.interior;
+if(typeof lights3==='function'){const _l3=lights3;lights3=function(t){_l3(t);const cyc=timeLock==='day'?.5:timeLock==='night'?0:(typeof realCyc==='function'?realCyc():(Date.now()/1000%5760)/5760);const dk=darkLevel(cyc);const out=!M.interior;
   if(out){const n=Math.max(0,Math.min(1,(dk-.35)/.6));L3.hemi.intensity*=1-.93*n;L3.sun.intensity*=1-.97*n;if(n>.5){SC.fog.near=Math.max(4,SC.fog.near*(1-n*.7));SC.fog.far=Math.max(14,SC.fog.far*(1-n*.6))}}
   if(LITROOM(M.id)){L3.hemi.intensity=1;L3.hemi.color.set('#fff0dc');L3.hemi.groundColor.set('#6a5a48')}
   const f=myFl();const need=(dk>.25||M.interior)&&!LITROOM(M.id);L3.flash.intensity=f&&need?1.1+f.s*1.6:0;if(f){L3.flash.distance=f.r/14;L3.flash.angle=f.a+.06}
@@ -5273,7 +5273,7 @@ setInterval(()=>{if(S&&!document.hidden&&ratingHost())sectorPayout().catch(()=>{
 
 // ---------- Ночью мутанты сильнее и злее, но добыча богаче ----------
 const NIGHT={k:1,on:false,t:0};
-function nightK(){if(now-NIGHT.t<1000)return NIGHT.k;NIGHT.t=now;let on=false;try{const cyc=timeLock==='day'?.5:timeLock==='night'?0:(Date.now()/1000%5760)/5760;on=!!(M&&!M.interior&&!M.safe&&darkLevel(cyc)>.6)}catch(e){}
+function nightK(){if(now-NIGHT.t<1000)return NIGHT.k;NIGHT.t=now;let on=false;try{const cyc=timeLock==='day'?.5:timeLock==='night'?0:(typeof realCyc==='function'?realCyc():(Date.now()/1000%5760)/5760);on=!!(M&&!M.interior&&!M.safe&&darkLevel(cyc)>.6)}catch(e){}
   if(on!==NIGHT.on&&S&&M&&!M.interior){NIGHT.on=on;if(on)log('🌑 Ночь: мутанты сильнее и агрессивнее, но и добыча с них богаче.','bad');else log('🌅 Светает: мутанты успокаиваются.','sys')}NIGHT.on=on;NIGHT.k=on?1:0;return NIGHT.k}
 for(const [k,d] of Object.entries(EN)){if(d.fac)continue;const base={aggro:d.aggro,dmg:d.dmg,spd:d.spd};
   Object.defineProperty(d,'aggro',{configurable:true,get(){return base.aggro*(nightK()?1.5:1)},set(v){base.aggro=v}});
@@ -6312,6 +6312,14 @@ async function facStoreView(box,f){f=f||box._f||'ren';box._f=f;box.replaceChildr
   const ids=Object.keys(d.store||{}).filter(id=>d.store[id]>0&&ITEMS[id]);box.append(el('div','sec','Сейчас на складе'));if(!ids.length){box.append(el('p','muted small','Склад пуст.'));return}const l=el('div','list');
   for(const id of ids.sort((a,b)=>ITEMS[a].n.localeCompare(ITEMS[b].n,'ru'))){const r=el('div','row');r.append(iconCanvas(id,30));const gw=el('div','grow');gw.append(el('div','t',ITEMS[id].n+' ×'+d.store[id]));r.append(gw,btn('−1',()=>act(dd=>{if(!(dd.store[id]>0))return false;dd.store[id]--;if(dd.store[id]<=0)delete dd.store[id]},'Убрано: '+ITEMS[id].n+' ×1'),'btn'),btn('Убрать всё',()=>{if(!confirm('Убрать со склада все «'+ITEMS[id].n+'»?'))return;act(dd=>{if(!dd.store[id])return false;delete dd.store[id]},'Убрано со склада: '+ITEMS[id].n)},'btn'));l.append(r)}box.append(l)}
 if(typeof TABVIEW.admin==='function'){const _av=TABVIEW.admin;TABVIEW.admin=b=>{const sec=el('div');sec.append(el('div','sec','📦 Склад и общак группировки'));const q=el('div');sec.append(btn('Открыть',()=>facStoreView(q,'ren'),'btn primary'),q);b.append(sec);_av(b)}}
+// ================= СУТКИ ПО РЕАЛЬНОМУ ВРЕМЕНИ =================
+// День и ночь в игре совпадают с местным временем игрока: светло с 7:00 до 17:30, сумерки 17:30–19:30 и 5:00–7:00,
+// ночь с 19:30 до 5:00 (в это время мутанты злее, а добыча богаче). Часы на экране показывают реальное время.
+function realNight(){const d=new Date();const h=d.getHours()+d.getMinutes()/60+d.getSeconds()/3600;const ramp=(a,b,x)=>Math.max(0,Math.min(1,(x-a)/(b-a)));
+  if(h>=7&&h<17.5)return 0;if(h>=17.5&&h<19.5)return ramp(17.5,19.5,h);if(h>=5&&h<7)return 1-ramp(5,7,h);return 1}
+// «фаза» для старой формулы освещения: 0 — глубокая ночь, 0.5 — полдень
+function realCyc(){const n=realNight();return n>=1?0:n<=0?.5:Math.acos(n)/(Math.PI*2)}
+
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
