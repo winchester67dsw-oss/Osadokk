@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793100272";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793100733";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -2808,7 +2808,7 @@ const EMP=4*3600000,EMW=120000,EMA=60000;
 const EMS={st:'calm',idx:-1,warned:{},saw:{},died:false,hurtT:0,sirenT:0,boltT:0};
 function emState(){const t=Date.now(),ph=t%EMP,i=Math.floor(t/EMP);if(ph<EMA)return {st:'active',left:EMA-ph,idx:i};if(ph>EMP-EMW)return {st:'warn',left:EMP-ph,idx:i+1};return {st:'calm',left:EMP-EMW-ph,idx:i}}
 function sheltered(){if(!M)return true;if(M.interior)return true;const c=M.g[Math.floor(P.y)]?.[Math.floor(P.x)];return c==='_'}
-function gameClock(){const _d=new Date();const mins=_d.getHours()*60+_d.getMinutes();return String(Math.floor(mins/60)).padStart(2,'0')+':'+String(mins%60).padStart(2,'0')}
+function gameClock(){const mins=typeof gameMins==='function'?gameMins():0;return String(Math.floor(mins/60)).padStart(2,'0')+':'+String(mins%60).padStart(2,'0')}
 let envAcc=0,anoT=0;
 function envTick(dt){const es=emState();
   if(es.st==='calm'&&es.left<480000&&!EMS.warned['p'+(es.idx+1)]){EMS.warned['p'+(es.idx+1)]=1;zoneMsg('📻 По рации: через 10 минут выброс. Заранее найдите укрытие.',false)}
@@ -6312,13 +6312,19 @@ async function facStoreView(box,f){f=f||box._f||'ren';box._f=f;box.replaceChildr
   const ids=Object.keys(d.store||{}).filter(id=>d.store[id]>0&&ITEMS[id]);box.append(el('div','sec','Сейчас на складе'));if(!ids.length){box.append(el('p','muted small','Склад пуст.'));return}const l=el('div','list');
   for(const id of ids.sort((a,b)=>ITEMS[a].n.localeCompare(ITEMS[b].n,'ru'))){const r=el('div','row');r.append(iconCanvas(id,30));const gw=el('div','grow');gw.append(el('div','t',ITEMS[id].n+' ×'+d.store[id]));r.append(gw,btn('−1',()=>act(dd=>{if(!(dd.store[id]>0))return false;dd.store[id]--;if(dd.store[id]<=0)delete dd.store[id]},'Убрано: '+ITEMS[id].n+' ×1'),'btn'),btn('Убрать всё',()=>{if(!confirm('Убрать со склада все «'+ITEMS[id].n+'»?'))return;act(dd=>{if(!dd.store[id])return false;delete dd.store[id]},'Убрано со склада: '+ITEMS[id].n)},'btn'));l.append(r)}box.append(l)}
 if(typeof TABVIEW.admin==='function'){const _av=TABVIEW.admin;TABVIEW.admin=b=>{const sec=el('div');sec.append(el('div','sec','📦 Склад и общак группировки'));const q=el('div');sec.append(btn('Открыть',()=>facStoreView(q,'ren'),'btn primary'),q);b.append(sec);_av(b)}}
-// ================= СУТКИ ПО РЕАЛЬНОМУ ВРЕМЕНИ =================
-// День и ночь в игре совпадают с местным временем игрока: светло с 7:00 до 17:30, сумерки 17:30–19:30 и 5:00–7:00,
-// ночь с 19:30 до 5:00 (в это время мутанты злее, а добыча богаче). Часы на экране показывают реальное время.
-function realNight(){const d=new Date();const h=d.getHours()+d.getMinutes()/60+d.getSeconds()/3600;const ramp=(a,b,x)=>Math.max(0,Math.min(1,(x-a)/(b-a)));
-  if(h>=7&&h<17.5)return 0;if(h>=17.5&&h<19.5)return ramp(17.5,19.5,h);if(h>=5&&h<7)return 1-ramp(5,7,h);return 1}
+// ================= СУТКИ: 2 ЧАСА ДЕНЬ, 2 ЧАСА НОЧЬ — ОДИНАКОВО ДЛЯ ВСЕХ =================
+// Цикл длится 4 часа реального времени и считается от общего времени (UTC), поэтому день и ночь у всех игроков
+// совпадают, в каком бы часовом поясе они ни сидели. Первые 10 минут дня — рассвет, последние 10 минут — закат.
+// На часах в игре: день — с 07:00 до 19:00, ночь — с 19:00 до 07:00 (12 игровых часов за 2 реальных).
+const DAY_MS=2*3600e3,CYCLE_MS=2*DAY_MS,TWI=10*60e3;
+const cyclePos=()=>((Date.now()%CYCLE_MS)+CYCLE_MS)%CYCLE_MS;
+function realNight(){const p=cyclePos();if(p>=DAY_MS)return 1;if(p<TWI)return 1-p/TWI;if(p>DAY_MS-TWI)return (p-(DAY_MS-TWI))/TWI;return 0}
 // «фаза» для старой формулы освещения: 0 — глубокая ночь, 0.5 — полдень
 function realCyc(){const n=realNight();return n>=1?0:n<=0?.5:Math.acos(n)/(Math.PI*2)}
+// игровые часы: минуты от полуночи
+function gameMins(){const p=cyclePos();const m=p<DAY_MS?7*60+p/DAY_MS*720:19*60+(p-DAY_MS)/DAY_MS*720;return Math.floor(m)%1440}
+// сколько осталось до смены дня/ночи (мс)
+function cycleLeft(){const p=cyclePos();return p<DAY_MS?DAY_MS-p:CYCLE_MS-p}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
