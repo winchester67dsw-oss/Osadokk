@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793076356";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793088747";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -5883,6 +5883,168 @@ addEventListener('keydown',e=>{if(!S||!titleEl.hidden||!ov.hidden||document.acti
 // и открывают огонь только со свободной позиции. Это же работает, когда враги захватывают сектор.
 function lineClear(e,tg,allies){if(!los(e.x,e.y,tg.x,tg.y))return false;const dx=tg.x-e.x,dy=tg.y-e.y,L2=dx*dx+dy*dy||1;
   for(const o of allies){if(o===e||o===tg)continue;const t=((o.x-e.x)*dx+(o.y-e.y)*dy)/L2;if(t<=0||t>=1)continue;const px=e.x+dx*t,py=e.y+dy*t;if(Math.hypot(o.x-px,o.y-py)<.55)return false}return true}
+
+// ================= ЭТАП 5: БАР И ДОСУГ (часть 1) =================
+// Музыкальный автомат в баре заменён слот-машиной «Однорукий бандит»: 5 барабанов, ставки крышками,
+// выигрыш от 3 одинаковых подряд слева, ⭐ — джокер, 3+ ☢ в любом месте — бесплатные вращения.
+// У костра можно жарить мясо мутантов и кипятить мутную воду через колбу-фильтр (хватает на 10 раз).
+Object.assign(ITEMS,{
+ rawmeat:{n:'Сырое мясо мутанта',k:'use',p:6,r:0,use:{hunger:12,rad:6},d:'Есть сырым — так себе идея. Лучше пожарить у костра.'},
+ cookedmeat:{n:'Жареное мясо',k:'use',p:22,r:1,use:{hunger:45,hp:12},d:'Пожарено на костре. Сытно и почти не фонит.'},
+ filter:{n:'Колба-фильтр',k:'res',p:120,r:1,d:'Фильтр для кипячения мутной воды у костра. Одной колбы хватает на 10 кипячений.'}});
+Object.assign(WT,{rawmeat:.4,cookedmeat:.35,filter:.3});
+for(const [k,d] of Object.entries(EN)){if(d.human||d.fac||!Array.isArray(d.loot))continue;d.loot.push(['rawmeat',.55,2])}
+SELL.seny&&SELL.seny.push(['filter',130]);SELL.vet&&SELL.vet.push(['filter',140]);SELL.tolik&&SELL.tolik.push(['cookedmeat',30]);
+LOOTT.push(['filter',1,1,.6,1]);
+{let n=0;for(const q of Object.values(QUESTS)){if(n>=4)break;if(['olya','luda','zoya','grisha'].includes(q.giver)){q.rew.items=q.rew.items||{};q.rew.items.filter=(q.rew.items.filter||0)+1;n++}}}
+
+// ---------- Костёр: готовка ----------
+function fireCook(tx,ty){const cook=(id,fn)=>{fn();dirty=true;campfire(tx,ty)};
+  const box=el('div');box.append(el('div','sec','Готовка'));const o=el('div','opts');
+  const meat=S.inv.rawmeat|0,dw=S.inv.dwater|0,fu=S.fuses|0,flt=S.inv.filter|0;
+  o.append(btn('🍖 Пожарить мясо ('+meat+')',()=>cook('m',()=>{take('rawmeat');add('cookedmeat');log('🍖 Мясо пожарено: аппетитно шкворчит.','good');sfx.click&&sfx.click()}),'btn',!meat));
+  if(meat>1)o.append(btn('🍖 Пожарить всё ('+meat+')',()=>cook('ma',()=>{take('rawmeat',meat);add('cookedmeat',meat);log('🍖 Пожарено мяса: '+meat+'.','good')}),'btn'));
+  const canBoil=dw>0&&(fu>0||flt>0);
+  o.append(btn('💧 Вскипятить мутную воду ('+dw+')',()=>cook('w',()=>{if(!(S.fuses>0)){take('filter');S.fuses=10;log('🧪 Вставлена новая колба-фильтр (10 кипячений).','sys')}take('dwater');add('water');S.fuses--;log('💧 Вода вскипячена и процежена через фильтр. Осталось кипячений: '+S.fuses+'.','good')}),'btn',!canBoil));
+  box.append(o,el('p','muted small','Колба-фильтр: '+(fu>0?'осталось кипячений — '+fu:'не вставлена')+' · запасных колб: '+flt+'. Колбы продают Сеня и Тоня, попадаются в тайниках и дают за задания.'));return box}
+{const _cf=campfire;campfire=function(tx,ty){_cf(tx,ty);try{const f=ALLFIRES.find(f=>f.m===M.id&&f.x===tx&&f.y===ty);if(!f){openWin('Костёр',b=>{b.append(el('p',null,'Тепло, но и только. Зато можно приготовить еду.'),fireCook(tx,ty))});return}
+  const o=ov.querySelector('.opts');if(o)o.after(fireCook(tx,ty))}catch(e){}}}
+
+// ---------- Слот-машина ----------
+// возврат игроку ≈91% (проверено на 600 000 вращений)
+const SLOTSYM=[['🍺',22,[3,6,18]],['🥫',20,[3,7,22]],['🔫',13,[5,12,48]],['💀',10,[6,18,75]],['🧢',4,[12,60,250]],['⭐',5,[12,50,200]],['☢',6,null]];
+const SLOTW=SLOTSYM.reduce((a,s)=>a+s[1],0);
+const slotPick=()=>{let r=Math.random()*SLOTW;for(const s of SLOTSYM){r-=s[1];if(r<0)return s[0]}return '🍺'};
+// выигрыш по центральной линии: подряд слева, ⭐ заменяет любой символ (кроме ☢)
+function slotEval(line,bet){let base=null,n=0;for(const s of line){if(s==='☢')break;if(s==='⭐'){n++;continue}if(!base){base=s;n++;continue}if(s===base)n++;else break}
+  if(!base)base='⭐';const row=SLOTSYM.find(x=>x[0]===base);let win=0;if(row&&row[2]&&n>=3)win=bet*row[2][n-3];return {win,n,base}}
+const SLOT={free:0,busy:false,bet:10};
+function slotWin(){openWin('Однорукий бандит',b=>{const st=el('style');st.textContent='.slm{background:linear-gradient(#3a2414,#1a0f08);border:3px solid #c8a048;border-radius:14px;padding:12px;text-align:center}.slm .rl{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:8px 0}.slm .rc{background:#f2e8d0;border-radius:8px;display:flex;flex-direction:column;overflow:hidden;box-shadow:inset 0 0 10px rgba(0,0,0,.4)}.slm .rc span{color:#d89a00;text-shadow:0 0 3px rgba(120,60,0,.5);font-size:28px;line-height:42px;height:42px}.slm .rc span.mid{background:rgba(255,210,90,.35)}.slm .res{font:700 16px var(--mono);color:#ffe08a;min-height:22px}.slm .pt{font:11px var(--mono);color:#c8b890;text-align:left;margin-top:8px}';b.append(st);
+  const m=el('div','slm');const rl=el('div','rl');const cols=[];for(let i=0;i<5;i++){const c=el('div','rc');for(let j=0;j<3;j++){const s=el('span',j===1?'mid':'',slotPick());c.append(s)}rl.append(c);cols.push(c)}
+  const res=el('div','res',SLOT.free?'Бесплатных вращений: '+SLOT.free:'Делайте ставку!');const bets=el('div','startrow');
+  const drawBets=()=>{bets.replaceChildren();for(const v of [10,50,100,500]){const x=btn(v+' кр.',()=>{SLOT.bet=v;drawBets()},SLOT.bet===v?'btn primary':'btn');bets.append(x)}};drawBets();
+  const spinB=btn('🎰 Крутить',()=>spin(),'btn primary');
+  function spin(){if(SLOT.busy)return;const free=SLOT.free>0;const bet=SLOT.bet;if(!free&&S.caps<bet){res.textContent='Не хватает крышек.';return}if(free)SLOT.free--;else S.caps-=bet;updateHud();SLOT.busy=true;spinB.disabled=true;
+    const fin=[];for(let i=0;i<5;i++)fin.push([slotPick(),slotPick(),slotPick()]);let t0=performance.now();sfx.click&&sfx.click();
+    const tick=()=>{const t=performance.now()-t0;cols.forEach((c,i)=>{const stop=500+i*260;const sp=c.children;if(t<stop){for(const s of sp)s.textContent=slotPick()}else for(let j=0;j<3;j++)sp[j].textContent=fin[i][j]});
+      if(t<500+4*260+40){requestAnimationFrame(tick);return}
+      const line=fin.map(c=>c[1]);const r=slotEval(line,bet);const rad=fin.flat().filter(s=>s==='☢').length;let msg='';
+      if(r.win>0){S.caps+=r.win;msg='Выигрыш: '+r.win+' крышек! ('+r.n+'× '+r.base+')';log('🎰 '+msg,'good');if(r.win>=bet*40)zoneMsg('🎰 '+S.name+' сорвал(а) куш в баре: '+r.win+' крышек!',true)}
+      if(rad>=3){const f=rad>=5?10:rad===4?6:3;SLOT.free+=f;msg+=(msg?' · ':'')+'☢ ×'+rad+': бесплатных вращений +'+f+'!'}
+      res.textContent=msg||'Пусто. Ещё разок?';if(SLOT.free)res.textContent+=' · Бесплатных: '+SLOT.free;SLOT.busy=false;spinB.disabled=false;spinB.textContent=SLOT.free?'🎰 Бесплатное вращение':'🎰 Крутить';updateHud();dirty=true};requestAnimationFrame(tick)}
+  m.append(el('div','sec','☢ ОДНОРУКИЙ БАНДИТ ☢'),rl,res,bets,spinB);
+  const pt=el('div','pt');pt.innerHTML='Выплаты за 3 / 4 / 5 подряд слева по средней линии (× ставка):<br>'+SLOTSYM.filter(s=>s[2]).map(s=>s[0]+' '+s[2].join(' / ')).join(' &nbsp; ')+'<br>⭐ — джокер, заменяет любой символ. ☢ — 3+ в любом месте: 3 / 6 / 10 бесплатных вращений.';m.append(pt);b.append(m)})}
+playJuke=function(){slotWin()};
+if(typeof JUKE!=='undefined'){}
+
+// ================= ЭТАП 5: БАР И ДОСУГ (часть 2) — НАСТОЛЬНЫЕ ИГРЫ =================
+// Дед Михалыч на старте играет в шахматы и шашки, Картёжник Валет в баре — ещё и в «дурака».
+// Можно играть на интерес или на крышки: ставка списывается в начале, победа приносит двойную ставку, ничья — возврат.
+{const g=MAPS.hub.g;let pos=null;for(let y=6;y<=10&&!pos;y++)for(let x=6;x<=26&&!pos;x++)if(walkable(g[y]?.[x])&&g[y][x]!=='='&&!NPCS.some(n=>n.map==='hub'&&Math.abs(n.x-x)<2&&Math.abs(n.y-y)<2))pos=[x,y];
+  pos=pos||[12,8];NPCS.push({id:'mihalych',map:'hub',x:pos[0],y:pos[1],a:Math.PI/2,n:'Дед Михалыч',role:'Шахматы и шашки на крышки',lines:['Сыграем, сынок? Голова тоже должна работать.','Я ещё до войны в шахматном кружке… а, неважно. Садись.','Шашки — для разминки, шахматы — для души.','Проиграешь — не плачь. Выиграешь — не зазнавайся.'],lk:{g:'m',skin:1,hair:'bald',hc:'gray',outfit:0,beard:'beard',eye:1},eq:{body:'jacket'}})}
+const GSTK={stake:0};
+function stakeRow(onPick){const r=el('div','startrow');for(const v of [0,50,100,200])r.append(btn(v?v+' крыш.':'На интерес',()=>{if(v&&S.caps<v){log('Не хватает крышек.','bad');return}GSTK.stake=v;if(v){S.caps-=v;updateHud();dirty=true}onPick()},'btn',v>0&&S.caps<v));return r}
+function gameOver(res,who){const v=GSTK.stake;if(res==='win'){if(v){S.caps+=v*2;updateHud()}log('🏆 Победа над '+who+'!'+(v?' +'+v*2+' крышек.':''),'good')}else if(res==='draw'){if(v){S.caps+=v;updateHud()}log('🤝 Ничья с '+who+'.'+(v?' Ставка возвращена.':''),'sys')}else log('😞 '+who+' выиграл.'+(v?' Ставка '+v+' крышек проиграна.':''),'bad');GSTK.stake=0;dirty=true}
+const gst=document.createElement('style');gst.textContent='.gb{display:grid;grid-template-columns:repeat(8,1fr);width:min(92vw,400px);aspect-ratio:1;margin:8px auto;border:3px solid #5a3a1a;border-radius:6px;overflow:hidden}.gb button{border:0;padding:0;margin:0;font-size:min(7vw,30px);line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer}.gb .pw{color:#fbf3e0;text-shadow:0 0 2px #000,0 0 2px #000,0 1px 1px #000;font-family:"Segoe UI Symbol","DejaVu Sans",serif}.gb .pb{color:#14100c;text-shadow:0 0 2px rgba(255,240,210,.7);font-family:"Segoe UI Symbol","DejaVu Sans",serif}.gb .l{background:#e8d4a8}.gb .d{background:#8a5a32}.gb .sel{box-shadow:inset 0 0 0 3px #ffd84a}.gb .tg{box-shadow:inset 0 0 0 3px #6ad040}.gb .lm{box-shadow:inset 0 0 0 3px rgba(80,160,255,.7)}.gstat{text-align:center;font:600 13px var(--mono);color:#ffe08a;min-height:20px}.ck{width:78%;height:78%;border-radius:50%;box-shadow:inset 0 -3px 0 rgba(0,0,0,.35),0 2px 3px rgba(0,0,0,.4)}.ck.w{background:#f4ecd8}.ck.b{background:#2a2420}.ck.k::after{content:"♛";display:block;font-size:min(5vw,20px);color:#c89020;text-align:center;line-height:1.6}.cards{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:6px 0}.card{width:44px;height:62px;border-radius:6px;background:#fbf6ea;border:1px solid #8a7a5a;font:700 15px var(--mono);color:#1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0;cursor:pointer}.card.r{color:#c02020}.card.back{background:repeating-linear-gradient(45deg,#6a2a1a,#6a2a1a 4px,#8a3a22 4px,#8a3a22 8px);cursor:default}.card.dim{opacity:.45}.tbl{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:70px;margin:6px 0;padding:6px;background:rgba(40,80,40,.35);border-radius:10px}.pair{position:relative;width:60px;height:70px}.pair .card{position:absolute}.pair .card+.card{left:14px;top:8px}';document.head.append(gst);
+
+// ---------- ШАХМАТЫ ----------
+const CH={b:null,sel:null,moves:[],last:null,ply:0,over:false};
+const CHG={K:'♚',Q:'♛',R:'♜',B:'♝',N:'♞',P:'♟',k:'♚',q:'♛',r:'♜',b:'♝',n:'♞',p:'♟'};
+const chW=p=>!!p&&p===p.toUpperCase();
+function chNew(){const r='rnbqkbnr',b=Array(64).fill('');for(let c=0;c<8;c++){b[c]=r[c];b[8+c]='p';b[48+c]='P';b[56+c]=r[c].toUpperCase()}return b}
+function chAttacked(b,r,c,byW){const at=(rr,cc)=>rr>=0&&rr<8&&cc>=0&&cc<8?b[rr*8+cc]:null;const own=p=>byW?p&&chW(p):p&&!chW(p);
+  const pr=byW?r+1:r-1;for(const dc of [-1,1]){const p=at(pr,c+dc);if(p&&own(p)&&p.toUpperCase()==='P')return true}
+  for(const [dr,dc] of [[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]]){const p=at(r+dr,c+dc);if(p&&own(p)&&p.toUpperCase()==='N')return true}
+  for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){if(!dr&&!dc)continue;const p=at(r+dr,c+dc);if(p&&own(p)&&p.toUpperCase()==='K')return true;
+    let rr=r+dr,cc=c+dc;while(rr>=0&&rr<8&&cc>=0&&cc<8){const q=b[rr*8+cc];if(q){if(own(q)){const u=q.toUpperCase();if(u==='Q'||(dr&&dc?u==='B':u==='R'))return true}break}rr+=dr;cc+=dc}}return false}
+function chPseudo(b,w){const out=[];for(let i=0;i<64;i++){const p=b[i];if(!p||chW(p)!==w)continue;const r=i>>3,c=i&7,u=p.toUpperCase();const add=(rr,cc)=>{if(rr<0||rr>7||cc<0||cc>7)return false;const q=b[rr*8+cc];if(q&&chW(q)===w)return false;out.push([i,rr*8+cc]);return !q};
+    if(u==='P'){const d=w?-1:1,r1=r+d;if(r1>=0&&r1<8&&!b[r1*8+c]){out.push([i,r1*8+c]);const r2=r+2*d;if((w?r===6:r===1)&&!b[r2*8+c])out.push([i,r2*8+c])}for(const dc of [-1,1]){const cc=c+dc;if(cc<0||cc>7||r1<0||r1>7)continue;const q=b[r1*8+cc];if(q&&chW(q)!==w)out.push([i,r1*8+cc])}}
+    else if(u==='N'){for(const [dr,dc] of [[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]])add(r+dr,c+dc)}
+    else if(u==='K'){for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++)if(dr||dc)add(r+dr,c+dc)}
+    else{const dirs=u==='R'?[[1,0],[-1,0],[0,1],[0,-1]]:u==='B'?[[1,1],[1,-1],[-1,1],[-1,-1]]:[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];for(const [dr,dc] of dirs){let rr=r+dr,cc=c+dc;while(add(rr,cc)){rr+=dr;cc+=dc}}}}return out}
+function chMake(b,m){const n=b.slice();let p=n[m[0]];n[m[0]]='';const r=m[1]>>3;if(p==='P'&&r===0)p='Q';if(p==='p'&&r===7)p='q';n[m[1]]=p;return n}
+function chInCheck(b,w){const k=b.indexOf(w?'K':'k');return k<0||chAttacked(b,k>>3,k&7,!w)}
+function chLegal(b,w){return chPseudo(b,w).filter(m=>!chInCheck(chMake(b,m),w))}
+const CHV={P:100,N:300,B:320,R:500,Q:900,K:0};
+function chEval(b){let s=0;for(let i=0;i<64;i++){const p=b[i];if(!p)continue;const v=CHV[p.toUpperCase()]+((i>>3)>1&&(i>>3)<6&&(i&7)>1&&(i&7)<6?8:0);s+=chW(p)?-v:v}return s}// плюс — в пользу чёрных (ИИ)
+function chSearch(b,w,d,al,be){const ms=chLegal(b,w);if(!ms.length)return chInCheck(b,w)?(w?100000+d:-100000-d):0;if(d===0)return chEval(b);
+  ms.sort((x,y)=>(b[y[1]]?CHV[b[y[1]].toUpperCase()]:0)-(b[x[1]]?CHV[b[x[1]].toUpperCase()]:0));
+  if(!w){let v=-1e9;for(const m of ms){v=Math.max(v,chSearch(chMake(b,m),true,d-1,al,be));al=Math.max(al,v);if(al>=be)break}return v}
+  let v=1e9;for(const m of ms){v=Math.min(v,chSearch(chMake(b,m),false,d-1,al,be));be=Math.min(be,v);if(al>=be)break}return v}
+function chAI(){const ms=chLegal(CH.b,false);let best=null,bv=-1e9;const depth=ms.length<12?3:2;for(const m of ms){const v=chSearch(chMake(CH.b,m),true,depth,-1e9,1e9)+Math.random()*12;if(v>bv){bv=v;best=m}}return best}
+function chessWin(fresh){if(fresh){CH.b=null}openWin('Шахматы с Михалычем',b=>{if(!CH.b){b.append(el('p',null,'Вы играете белыми. Пешка, дошедшая до края, становится ферзём. Рокировки и взятия на проходе в этой версии нет.'),el('div','sec','Ставка'),stakeRow(()=>{CH.b=chNew();CH.sel=null;CH.last=null;CH.ply=0;CH.over=false;chessWin()}));return}
+  const stat=el('div','gstat');const board=el('div','gb');const legal=CH.over?[]:chLegal(CH.b,true);
+  const status=()=>{if(CH.over)return CH.over;return chInCheck(CH.b,true)?'Шах! Ваш ход.':'Ваш ход (белые).'};stat.textContent=status();
+  for(let i=0;i<64;i++){const r=i>>3,c=i&7;const cell=el('button',((r+c)%2?'d':'l'));if(CH.b[i]){cell.textContent=CHG[CH.b[i]]+'\uFE0E';cell.classList.add(chW(CH.b[i])?'pw':'pb')}if(CH.sel===i)cell.classList.add('sel');if(CH.sel!=null&&legal.some(m=>m[0]===CH.sel&&m[1]===i))cell.classList.add('tg');if(CH.last&&(CH.last[0]===i||CH.last[1]===i))cell.classList.add('lm');
+    cell.onclick=()=>{if(CH.over)return;const mv=legal.find(m=>m[0]===CH.sel&&m[1]===i);if(mv){CH.b=chMake(CH.b,mv);CH.last=mv;CH.sel=null;CH.ply++;chAfter();return}if(CH.b[i]&&chW(CH.b[i])){CH.sel=i;chessWin()}};board.append(cell)}
+  b.append(stat,board);if(!CH.over)b.append(btn('Сдаться',()=>{CH.over='Вы сдались.';gameOver('lose','Михалыч');chessWin()},'btn'));else b.append(btn('Новая партия',()=>chessWin(true),'btn primary'))})}
+function chAfter(){const end=w=>{const ms=chLegal(CH.b,w);if(ms.length)return false;if(chInCheck(CH.b,w)){CH.over=w?'Мат. Михалыч победил.':'Мат! Вы победили!';gameOver(w?'lose':'win','Михалыч')}else{CH.over='Пат — ничья.';gameOver('draw','Михалычем')}return true};
+  if(end(false)){chessWin();return}if(CH.ply>=160){CH.over='Ничья по числу ходов.';gameOver('draw','Михалычем');chessWin();return}chessWin();
+  setTimeout(()=>{const m=chAI();if(!m)return;CH.b=chMake(CH.b,m);CH.last=m;CH.ply++;end(true);chessWin()},250)}
+
+// ---------- ШАШКИ (русские: бить обязательно, назад тоже; дамка ходит на любое расстояние) ----------
+const DR={b:null,sel:null,over:false,last:null};
+function drNew(){const b=Array(64).fill('');for(let r=0;r<8;r++)for(let c=0;c<8;c++)if((r+c)%2){if(r<3)b[r*8+c]='b';else if(r>4)b[r*8+c]='w'}return b}
+const drOwn=(p,w)=>p&&(w?p.toLowerCase()==='w':p.toLowerCase()==='b');
+// все цепочки взятий для шашки: [путь клеток, побитые]
+function drCaps(b,i,w){const res=[];const king0=b[i]===b[i].toUpperCase();
+  const dfs=(bd,pos,king,path,taken)=>{let ext=false;const r=pos>>3,c=pos&7;for(const [dr,dc] of [[1,1],[1,-1],[-1,1],[-1,-1]]){
+      if(king){let rr=r+dr,cc=c+dc;while(rr>=0&&rr<8&&cc>=0&&cc<8&&!bd[rr*8+cc]){rr+=dr;cc+=dc}if(rr<0||rr>7||cc<0||cc>7)continue;const q=rr*8+cc;if(!drOwn(bd[q],!w)||taken.includes(q))continue;let lr=rr+dr,lc=cc+dc;
+        while(lr>=0&&lr<8&&lc>=0&&lc<8&&!bd[lr*8+lc]){const L=lr*8+lc;const nb=bd.slice();nb[L]=nb[pos];nb[pos]='';ext=true;dfs(nb,L,true,path.concat(L),taken.concat(q));lr+=dr;lc+=dc}}
+      else{const mr=r+dr,mc=c+dc,lr=r+2*dr,lc=c+2*dc;if(lr<0||lr>7||lc<0||lc>7)continue;const q=mr*8+mc,L=lr*8+lc;if(!drOwn(bd[q],!w)||taken.includes(q)||bd[L])continue;const nb=bd.slice();nb[L]=nb[pos];nb[pos]='';const prom=w?lr===0:lr===7;ext=true;dfs(nb,L,prom,path.concat(L),taken.concat(q))}}
+    if(!ext&&taken.length)res.push([path,taken])};dfs(b,i,king0,[i],[]);return res}
+function drMoves(b,w){const caps=[],moves=[];for(let i=0;i<64;i++){if(!drOwn(b[i],w))continue;const cs=drCaps(b,i,w);caps.push(...cs)}if(caps.length)return caps;
+  for(let i=0;i<64;i++){if(!drOwn(b[i],w))continue;const r=i>>3,c=i&7,king=b[i]===b[i].toUpperCase();for(const [dr,dc] of [[1,1],[1,-1],[-1,1],[-1,-1]]){if(!king&&(w?dr>0:dr<0))continue;let rr=r+dr,cc=c+dc;while(rr>=0&&rr<8&&cc>=0&&cc<8&&!b[rr*8+cc]){moves.push([[i,rr*8+cc],[]]);if(!king)break;rr+=dr;cc+=dc}}}return moves}
+function drApply(b,mv){const n=b.slice();const [path,taken]=mv;const from=path[0],to=path[path.length-1];let p=n[from];n[from]='';for(const t of taken)n[t]='';const r=to>>3;
+  if(p==='w'&&(r===0||path.some(x=>(x>>3)===0)))p='W';if(p==='b'&&(r===7||path.some(x=>(x>>3)===7)))p='B';n[to]=p;return n}
+function drAI(){const ms=drMoves(DR.b,false);if(!ms.length)return null;const sc=m=>{const nb=drApply(DR.b,m);const opp=drMoves(nb,true);const oc=opp.reduce((a,x)=>Math.max(a,x[1].length),0);const prom=nb[m[0][m[0].length-1]]==='B'&&DR.b[m[0][0]]==='b';return m[1].length*10-oc*8+(prom?6:0)+Math.random()*2};let best=ms[0],bv=-1e9;for(const m of ms){const v=sc(m);if(v>bv){bv=v;best=m}}return best}
+function draughtsWin(fresh){if(fresh)DR.b=null;openWin('Шашки с Михалычем',b=>{if(!DR.b){b.append(el('p',null,'Русские шашки: вы — белые, ходите первыми. Бить обязательно, можно назад; дамка ходит на любое расстояние.'),el('div','sec','Ставка'),stakeRow(()=>{DR.b=drNew();DR.sel=null;DR.over=false;DR.last=null;draughtsWin()}));return}
+  const ms=DR.over?[]:drMoves(DR.b,true);const stat=el('div','gstat',DR.over||(ms.length&&ms[0][1].length?'Ваш ход: бить обязательно!':'Ваш ход (белые).'));const board=el('div','gb');
+  for(let i=0;i<64;i++){const r=i>>3,c=i&7;const cell=el('button',(r+c)%2?'d':'l');const p=DR.b[i];if(p){const d=el('div','ck '+(p.toLowerCase())+(p===p.toUpperCase()?' k':''));cell.append(d)}
+    if(DR.sel===i)cell.classList.add('sel');const mine=ms.filter(m=>m[0][0]===DR.sel&&m[0][m[0].length-1]===i);if(mine.length)cell.classList.add('tg');if(DR.last&&DR.last.includes(i))cell.classList.add('lm');
+    cell.onclick=()=>{if(DR.over)return;if(mine.length){const mv=mine.sort((a,b2)=>b2[1].length-a[1].length)[0];DR.b=drApply(DR.b,mv);DR.last=mv[0];DR.sel=null;drAfter();return}if(drOwn(p,true)&&ms.some(m=>m[0][0]===i)){DR.sel=i;draughtsWin()}};board.append(cell)}
+  b.append(stat,board);if(!DR.over)b.append(btn('Сдаться',()=>{DR.over='Вы сдались.';gameOver('lose','Михалыч');draughtsWin()},'btn'));else b.append(btn('Новая партия',()=>draughtsWin(true),'btn primary'))})}
+function drAfter(){if(!drMoves(DR.b,false).length){DR.over='У Михалыча нет ходов — вы победили!';gameOver('win','Михалычем');draughtsWin();return}draughtsWin();
+  setTimeout(()=>{const m=drAI();if(!m)return;DR.b=drApply(DR.b,m);DR.last=m[0];if(!drMoves(DR.b,true).length){DR.over='У вас нет ходов. Михалыч победил.';gameOver('lose','Михалыч')}draughtsWin()},350)}
+
+// ---------- ДУРАК (подкидной, вдвоём с Валетом) ----------
+const SUITS=['♠','♣','♥','♦'],CRANKS=['6','7','8','9','10','В','Д','К','Т'];
+const DK={on:false};
+const crd=(s,r)=>({s,r});const cname=c=>CRANKS[c.r]+c.s;
+function beats(a,d,tr){if(d.s===a.s)return d.r>a.r;return d.s===tr&&a.s!==tr}
+function dkNew(){const deck=[];for(const s of SUITS)for(let r=0;r<9;r++)deck.push(crd(s,r));for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}
+  const trc=deck[0];Object.assign(DK,{on:true,deck,trc,tr:trc.s,p:[],a:[],table:[],att:'p',over:false,msg:'',lim:6});dkFill();
+  const low=h=>Math.min(...h.filter(c=>c.s===DK.tr).map(c=>c.r),99);DK.att=low(DK.a)<low(DK.p)?'a':'p';DK.lim=Math.min(6,(DK.att==='p'?DK.a:DK.p).length);DK.msg=DK.att==='p'?'Вы ходите первым.':'Валет ходит первым.';if(DK.att==='a')setTimeout(dkAIAttack,500)}
+function dkFill(){const order=DK.att==='p'?['p','a']:['a','p'];for(const w of order)while(DK[w].length<6&&DK.deck.length)DK[w].push(DK.deck.pop());const so=h=>h.sort((x,y)=>(x.s===DK.tr)-(y.s===DK.tr)||x.r-y.r);so(DK.p);so(DK.a)}
+const dkRanks=()=>new Set(DK.table.flatMap(t=>[t.a.r,...(t.d?[t.d.r]:[])]));
+const dkCanAdd=c=>DK.table.length<DK.lim&&(DK.table.length===0||dkRanks().has(c.r));
+function dkCheckEnd(){if(DK.deck.length)return false;const pe=!DK.p.length,ae=!DK.a.length;if(!pe&&!ae)return false;DK.over=true;if(pe&&ae){DK.msg='Ничья!';gameOver('draw','Валетом')}else if(pe){DK.msg='Вы вышли первым — Валет остался дураком!';gameOver('win','Валетом')}else{DK.msg='Валет вышел первым. Вы — дурак!';gameOver('lose','Валет')}return true}
+function dkEndRound(taken){const def=DK.att==='p'?'a':'p';if(taken){DK[def].push(...DK.table.flatMap(t=>[t.a,...(t.d?[t.d]:[])]));}DK.table=[];dkFill();if(dkCheckEnd()){durakWin();return}
+  if(!taken)DK.att=def;DK.lim=Math.min(6,(DK.att==='p'?DK.a:DK.p).length);durakWin();if(DK.att==='a')setTimeout(dkAIAttack,600)}
+// ИИ
+function dkAIAttack(){if(DK.over||DK.att!=='a')return;const h=DK.a;let pick=null;const cand=h.filter(dkCanAdd);if(!cand.length){DK.msg='Валет: «Бито».';dkEndRound(false);return}
+  if(DK.table.length===0)pick=cand.find(c=>c.s!==DK.tr)||cand[0];else{pick=cand.find(c=>c.s!==DK.tr&&(c.r<5||!DK.deck.length))||(!DK.deck.length?cand[0]:null)}
+  if(!pick||DK.table.length>=Math.min(DK.lim,DK.p.length+DK.table.filter(t=>!t.d).length)){if(DK.table.every(t=>t.d)){DK.msg='Валет: «Бито».';dkEndRound(false)}return}
+  h.splice(h.indexOf(pick),1);DK.table.push({a:pick,d:null});DK.msg='Валет ходит: '+cname(pick);durakWin()}
+function dkAIDefend(){const open=DK.table.filter(t=>!t.d);for(const t of open){const opts=DK.a.filter(c=>beats(t.a,c,DK.tr)).sort((x,y)=>(x.s===DK.tr)-(y.s===DK.tr)||x.r-y.r);if(!opts.length){DK.msg='Валет берёт.';DK.aTake=true;durakWin();return}const c=opts[0];DK.a.splice(DK.a.indexOf(c),1);t.d=c}DK.msg='Валет отбился.';durakWin()}
+function dkPlayerCard(i){if(DK.over)return;const c=DK.p[i];
+  if(DK.att==='p'){if(DK.aTake){if(!dkCanAdd(c)||DK.table.filter(t=>!t.d).length>=DK.a.length){return}DK.p.splice(i,1);DK.table.push({a:c,d:null});durakWin();return}
+    if(!dkCanAdd(c)||DK.table.filter(t=>!t.d).length>=DK.a.length)return;DK.p.splice(i,1);DK.table.push({a:c,d:null});durakWin();setTimeout(dkAIDefend,400);return}
+  const t=DK.table.find(t=>!t.d&&beats(t.a,c,DK.tr));if(!t)return;DK.p.splice(i,1);t.d=c;if(DK.table.every(t=>t.d)){DK.msg='Вы отбились.';durakWin();setTimeout(dkAIAttack,500)}else durakWin()}
+function durakWin(fresh){if(fresh)DK.on=false;openWin('Дурак с Валетом',b=>{if(!DK.on){b.append(el('p',null,'Подкидной дурак вдвоём, 36 карт. Кто первым избавится от карт, когда колода кончилась, — победил.'),el('div','sec','Ставка'),stakeRow(()=>{DK.aTake=false;dkNew();durakWin()}));return}
+  const top=el('div','cards');for(let i=0;i<DK.a.length;i++)top.append(el('div','card back'));const info=el('div','gstat','Козырь: '+cname(DK.trc)+' · в колоде: '+DK.deck.length+' · у Валета: '+DK.a.length);
+  const tbl=el('div','tbl');for(const t of DK.table){const pr=el('div','pair');const mk=c=>{const x=el('div','card'+(c.s==='♥'||c.s==='♦'?' r':''));x.append(el('span',null,CRANKS[c.r]),el('span',null,c.s));return x};pr.append(mk(t.a));if(t.d)pr.append(mk(t.d));tbl.append(pr)}
+  const msg=el('div','gstat',DK.msg||'');const hand=el('div','cards');DK.p.forEach((c,i)=>{const ok=DK.over?false:DK.att==='p'?dkCanAdd(c):DK.table.some(t=>!t.d&&beats(t.a,c,DK.tr));const x=el('button','card'+(c.s==='♥'||c.s==='♦'?' r':'')+(ok?'':' dim'));x.append(el('span',null,CRANKS[c.r]),el('span',null,c.s));x.onclick=()=>dkPlayerCard(i);hand.append(x)});
+  const acts=el('div','startrow');
+  if(!DK.over){if(DK.att==='p'){if(DK.aTake)acts.append(btn('Отдать карты Валету',()=>{DK.aTake=false;DK.msg='Валет забрал карты.';dkEndRound(true)},'btn primary'));else if(DK.table.length&&DK.table.every(t=>t.d))acts.append(btn('Бито',()=>dkEndRound(false),'btn primary'))}
+    else if(DK.table.some(t=>!t.d))acts.append(btn('Взять',()=>{const add=DK.a.filter(c=>DK.table.length<DK.lim&&dkRanks().has(c.r)&&c.s!==DK.tr);for(const c of add){if(DK.table.length>=DK.lim)break;DK.a.splice(DK.a.indexOf(c),1);DK.table.push({a:c,d:null})}DK.msg='Вы взяли карты.';dkEndRound(true)},'btn'))}
+  else acts.append(btn('Новая партия',()=>durakWin(true),'btn primary'));
+  b.append(top,info,tbl,msg,el('div','muted small',DK.over?'':DK.att==='p'?(DK.aTake?'Валет берёт: можете подкинуть ещё карты тех же достоинств.':'Ваш ход: кладите карту (подкидывать можно карты тех же достоинств, что на столе).'):'Отбивайтесь: нажмите карту, которая бьёт карту на столе.'),hand,acts)})}
+
+// ---------- Кнопки у NPC ----------
+{const _nd=npcDialog;npcDialog=function(n){_nd(n);if(n.id!=='mihalych'&&n.id!=='valet')return;const o=ov.querySelector('.opts');if(!o)return;const leave=o.lastElementChild;
+  if(n.id==='mihalych'){o.insertBefore(btn('♟ Сыграть в шахматы',()=>chessWin(true),'btn primary'),leave);o.insertBefore(btn('⛀ Сыграть в шашки',()=>draughtsWin(true),'btn primary'),leave)}
+  else o.insertBefore(btn('🃏 Сыграть в дурака',()=>durakWin(true),'btn primary'),leave)}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
