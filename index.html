@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793074740";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793075021";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -4979,7 +4979,7 @@ let hqTab='roster';
 async function hqWin(f){await facLoad(f);const d=FACD[f];const mgr=isMgr()&&myFac()===f||isAdm();const stk=(canStore()&&myFac()===f)||isAdm();openWin('Штаб «'+FAC[f].n+'»',b=>{
   const head=el('div','startrow');head.style.alignItems='center';head.append(facBadge(f,44));const ht=el('div');const mem=Object.keys(d.members).length;ht.append(el('b',null,FAC[f].n+' · '+mem+' чел.'),el('div','muted small',(myFac()===f?'Ваше звание: '+rn(f,myRank())+' · ':isAdm()?'Вы смотрите как администратор · ':'')+'рейтинг группировки: '+facRating(f,d)));head.append(ht);b.append(head);
   const apps=Object.entries(d.apps||{}),reqs=d.reqs||[];
-  const tb=el('div','cats');for(const [k,n] of [['roster','Состав'],...(mgr?[['apps','Заявки'+(apps.length?' ('+apps.length+')':'')]]:[]),...(stk?[['reqs','Выдача со склада'+(reqs.length?' ('+reqs.length+')':'')]]:[]),['log','Журнал'],['fund','Общак'],['manage','Управление']]){const x=el('button',null,n);x.setAttribute('aria-pressed',hqTab===k);x.onclick=()=>{hqTab=k;hqWin(f)};tb.append(x)}b.append(tb);
+  const tb=el('div','cats');for(const [k,n] of [['roster','Состав'],...(mgr?[['apps','Заявки'+(apps.length?' ('+apps.length+')':'')]]:[]),...(stk?[['reqs','Выдача со склада'+(reqs.length?' ('+reqs.length+')':'')]]:[]),['log','Журнал'],['fund','Общак'],['bots','Бойцы'],['manage','Управление']]){const x=el('button',null,n);x.setAttribute('aria-pressed',hqTab===k);x.onclick=()=>{hqTab=k;hqWin(f)};tb.append(x)}b.append(tb);
   if(hqTab==='apps'&&!mgr)hqTab='roster';if(hqTab==='reqs'&&!stk)hqTab='roster';
   if(hqTab==='roster'){const pres={};if(room)for(const p of room.peers()){const pr=p.presence||{};if(pr.pid)pres[pr.pid]=pr}
     const l=el('div','list');for(const [pid,m] of Object.entries(d.members).sort((a,b)=>RANKS_F.indexOf(normR(a[1].r))-RANKS_F.indexOf(normR(b[1].r))||b[1].lv-a[1].lv)){const r=el('div','row');const gw=el('div','grow');const on=pid===S.pid?{m:M.id,x:P.x,y:P.y}:pres[pid];
@@ -4993,7 +4993,7 @@ async function hqWin(f){await facLoad(f);const d=FACD[f];const mgr=isMgr()&&myFa
       r.append(gw,btn('Выдать',()=>reqDecide(f,q.id,true),'btn primary',(d.store[q.i]||0)<q.q),btn('Отказать',()=>reqDecide(f,q.id,false)));l.append(r)}b.append(l)}
   else if(hqTab==='log'){if(mgr)b.append(btn('Очистить журнал',async()=>{if(!confirm('Очистить журнал?'))return;await facMut(f,dd=>{dd.log=[];facLog(dd,'clear')});hqWin(f)}));const l=el('div','notifList');for(const e of (d.log||[]).slice().reverse()){const r=el('div','nrow'+(['take','fund-','kick','deny','reject'].includes(e.a)?' bad':['put','fund+','approve','accept'].includes(e.a)?' good':''));const tm=new Date(e.t);
       r.append(el('span','nt',tm.toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'})+' '+String(tm.getHours()).padStart(2,'0')+':'+String(tm.getMinutes()).padStart(2,'0')),el('span','nx',e.n+' '+(LOGTXT[e.a]||e.a)+(e.who?': '+e.who+(e.r?' → '+rn(f,e.r):''):'')+(e.i&&ITEMS[e.i]?(e.who?' — ':': ')+ITEMS[e.i].n+(e.q>1?' ×'+e.q:''):'')+(e.c?': '+e.c+' крыш.':'')));l.append(r)}if(!(d.log||[]).length)l.append(el('p','muted','Журнал пуст.'));b.append(l)}
-  else if(hqTab==='fund'){b.append(el('p',null,'В общаке: '),el('h2',null,(d.fund|0)+' крышек'));if(myFac()===f){const r=el('div','startrow');for(const c of [10,100,500,1000])r.append(btn('Внести '+c,()=>facFund(f,c),'btn',S.caps<c));b.append(el('div','sec','Внести'),r)}
+  else if(hqTab==='bots'&&typeof botsView==='function'){botsView(b,f,d)}else if(hqTab==='fund'){b.append(el('p',null,'В общаке: '),el('h2',null,(d.fund|0)+' крышек'));if(myFac()===f){const r=el('div','startrow');for(const c of [10,100,500,1000])r.append(btn('Внести '+c,()=>facFund(f,c),'btn',S.caps<c));b.append(el('div','sec','Внести'),r)}
     if(mgr){const r2=el('div','startrow');for(const c of [100,500,1000])r2.append(btn('Взять '+c,()=>facFund(f,-c),'btn',(d.fund|0)<c));b.append(el('div','sec','Взять ('+rn(f,'leader')+' и '+rn(f,'deputy')+')'),r2)}}
   else{if(!mgr)b.append(el('p','muted','Полный функционал штаба доступен: '+rn(f,'leader')+' и '+rn(f,'deputy')+'.'));else{b.append(el('div','sec','Склад'),el('p','small','Вместимость: '+fmtKg(d.cap)+'. Расширение +50 кг стоит 1500 крышек из общака.'),btn('Расширить склад (+50 кг)',async()=>{const ok=await facMut(f,dd=>{if((dd.fund|0)<1500){log('В общаке не хватает крышек.','bad');return false}dd.fund-=1500;dd.cap+=50;facLog(dd,'cap')});if(ok)log('Склад расширен до '+fmtKg(FACD[f].cap)+'.','good');hqWin(f)},'btn',(d.fund|0)<1500))}
     if(myFac()===f)b.append(el('div','sec','Выход из группировки'),btn('Выйти из «'+FAC[f].n+'»',()=>{if(confirm('Выйти из группировки?')){closeWin();facLeave()}}))}})}
@@ -5336,7 +5336,7 @@ let warAcc=0;
     if(!foe){const pt=WAR.pt;if(pt&&pt.m===M.id){const dd=Math.hypot(pt.x-e.x,pt.y-e.y);if(dd>CAP_R*.55){const a=Math.atan2(pt.y-e.y,pt.x-e.x);e.a=a;const sp=(d.spd||3)*.7*step;moveBody(e,Math.cos(a)*sp,Math.sin(a)*sp,d.r||.3);e.moving=true;e.phase=(e.phase||0)+step*6;continue}}e.moving=false;continue}const a=Math.atan2(foe.y-e.y,foe.x-e.x);e.a=a;
     if(fd>7){const sp=(d.spd||3)*.8*step;moveBody(e,Math.cos(a)*sp,Math.sin(a)*sp,d.r||.3);e.moving=true;e.phase=(e.phase||0)+step*6}else e.moving=false;
     e.wcd=(e.wcd||Math.random()*.6)-step;if(fd<=9&&e.wcd<=0){e.wcd=.7+Math.random()*.6;const rg=d.rgd||{dmg:10,spd:16,range:11,spread:.08,kind:'bullet'};try{enemyShoot(e,rg,a)}catch(x){}
-      const t=fd/(rg.spd||16)*1000,dmg=(rg.dmg||10)*(.7+Math.random()*.5),hitP=Math.max(.35,.85-fd*.05);const tgt=foe;setTimeout(()=>{if(tgt.alive&&!tgt.dying&&Math.random()<hitP)try{hostDamage(tgt,dmg,a,1,'war')}catch(x){}},t)}}}}
+      const t=fd/(rg.spd||16)*1000,bl=typeof botLv==='function'?botLv(d.fac):0,dmg=(rg.dmg||10)*(1+.2*bl)*(.7+Math.random()*.5),hitP=Math.min(.95,Math.max(.35,.85-fd*.05)+.04*bl);const tgt=foe;setTimeout(()=>{if(tgt.alive&&!tgt.dying&&Math.random()<hitP)try{hostDamage(tgt,dmg,a,1,'war')}catch(x){}},t)}}}}
 // ================= ПОСЫЛКИ НЕ УХОДЯТ В ГРУППИРОВКИ =================
 // Поручения и ивентовые задания больше не отправляют к жителям баз группировок (майору, бате и т. д.).
 function facNpc(n){return /^(ren|mil)_/.test(n.id)||/^base_/.test(n.map)||!!(MAPS[n.map]&&MAPS[n.map].fac)}
@@ -5640,6 +5640,44 @@ function camoFill(c,tp,id,x,top){const cols=CAMO[id];if(!cols)return;c.save();c.
 if(ITEMS.ren_helm)ITEMS.ren_helm.look='s5h';
 const FACEQ=t=>{const f=EN[t]&&EN[t].fac;return f==='ren'?{body:'ren_jacket',head:'ren_helm',face:'ren_mask'}:f==='mil'?{body:'mil_vest',head:'mil_helm',face:'mil_gas'}:null};
 for(const t of ['war_ren','fg_ren'])if(EN[t])EN[t].wpn='ren_aks';for(const t of ['war_mil','fg_mil'])if(EN[t])EN[t].wpn='mil_ak';
+// ================= ПРОКАЧКА БОЙЦОВ ГРУППИРОВКИ И ОБОРОНА СЕКТОРОВ =================
+// Лидер, заместители и командиры прокачивают ботов группировки (бойцов войны и охрану секторов) из общака.
+// 5 уровней, каждый следующий мощнее; прокачка временная — 3 часа, потом бойцы возвращаются к обычной силе.
+// Бойцы, стоящие на секторе, держат оборону и не уходят из круга за врагом.
+const BOOST_MS=3*3600e3;
+const BOOST_COST=[0,800,1600,3000,5000,8000];
+const BOOST_TXT=['обычные','+30% здоровья, +20% урона','+60% здоровья, +40% урона','+90% здоровья, +60% урона','+120% здоровья, +80% урона','+150% здоровья, +100% урона, меткие как снайперы'];
+const botLv=f=>{const b=FACD[f]&&FACD[f].bots;return b&&b.until>Date.now()?Math.max(0,Math.min(5,b.lv|0)):0};
+const canBoost=f=>(myFac()===f&&['leader','deputy','commander'].includes(myRank()))||(S&&S.admin);
+// сила бойцов зависит от уровня прокачки их группировки
+for(const t of ['war_ren','war_mil','fg_ren','fg_mil']){const d=EN[t];if(!d)continue;const f=d.fac;const base={hp:d.hp,dmg:d.dmg,n:d.n};
+  if(d.ranged){const rb=d.ranged.dmg;d.ranged=Object.assign({},d.ranged);Object.defineProperty(d.ranged,'dmg',{configurable:true,get(){return rb*(1+.2*botLv(f))},set(){}})}
+  Object.defineProperty(d,'hp',{configurable:true,get(){return Math.round(base.hp*(1+.3*botLv(f)))},set(v){base.hp=v}});
+  Object.defineProperty(d,'dmg',{configurable:true,get(){return (base.dmg||0)*(1+.2*botLv(f))},set(v){base.dmg=v}});
+  Object.defineProperty(d,'n',{configurable:true,get(){const l=botLv(f);return base.n+(l?' ★'+l:'')},set(v){base.n=v}})}
+// хозяин локации держит данные группировок свежими, чтобы прокачка сразу действовала
+setInterval(()=>{if(S&&M&&(M.pvp||M.fac)&&!document.hidden){facLoad('ren').catch(()=>{});facLoad('mil').catch(()=>{})}},90000);
+// уже стоящим бойцам при прокачке добавляется здоровье
+let lastLv={ren:0,mil:0};
+setInterval(()=>{if(!S||!M)return;for(const f of ['ren','mil']){const l=botLv(f);if(l>lastLv[f]){for(const e of rtFor(M.id).enemies){if(!e.alive||e.dying||!EN[e.type]||EN[e.type].fac!==f)continue;e.hp=Math.min(EN[e.type].hp,e.hp*(1+.3*l)/(1+.3*lastLv[f]))}}lastLv[f]=l}},5000);
+async function buyBoost(f,lv){const cost=BOOST_COST[lv];const ok=await facMut(f,d=>{const cur=d.bots&&d.bots.until>Date.now()?d.bots.lv|0:0;if(lv>cur+1){log('Сначала прокачайте до '+(cur+1)+' уровня.','bad');return false}if((d.fund|0)<cost){log('В общаке не хватает крышек: нужно '+cost+'.','bad');return false}
+  d.fund-=cost;d.bots={lv,until:Date.now()+BOOST_MS,by:S.name};facLog(d,'boost',{c:cost,who:'бойцы → '+lv+' ур.'})}).catch(()=>false);
+  if(ok!==false){log('⚔ Бойцы «'+FAC[f].n+'» прокачаны до '+lv+' уровня на 3 часа.','good');zoneMsg('⚔ «'+FAC[f].n+'» прокачали своих бойцов до '+lv+' уровня!',true)}hqWin(f)}
+function botsView(b,f,d){const l=botLv(f),b0=d.bots||{};b.append(el('p',null,'Уровень бойцов: '),el('h2',null,(l?'★'.repeat(l)+' '+l+' уровень':'без прокачки')));
+  if(l)b.append(el('p','muted','Действует ещё '+fmtHM(b0.until-Date.now())+(b0.by?' · прокачал(а) '+b0.by:'')+'. '+BOOST_TXT[l]+'.'));
+  b.append(el('p','small','Прокачка действует на бойцов группировки: охрану захваченных секторов и бойцов войны (пока у группировки нет лидера). Оплачивается из общака (сейчас '+(d.fund|0)+' крышек) и длится 3 часа. Повышать можно только на один уровень за раз, повторная покупка того же уровня продлевает срок.'));
+  const can=canBoost(f);if(!can)b.append(el('p','muted','Прокачивать бойцов могут: '+rn(f,'leader')+', '+rn(f,'deputy')+' и '+rn(f,'commander')+'.'));
+  const list=el('div','list');for(let i=1;i<=5;i++){const r=el('div','row');const gw=el('div','grow');gw.append(el('div','t','★'.repeat(i)+' '+i+' уровень · '+BOOST_COST[i]+' крышек'),el('div','s',BOOST_TXT[i]));r.append(gw);
+    const lab=i===l?'Продлить':i===l+1?'Прокачать':i<l?'Есть':'Недоступно';r.append(btn(lab,()=>buyBoost(f,i),i===l+1?'btn primary':'btn',!can||i>l+1||i<l||(d.fund|0)<BOOST_COST[i]));list.append(r)}b.append(list)}
+if(typeof LOGTXT==='object')LOGTXT.boost='прокачал(а) бойцов';
+
+// ---------- Оборона сектора: бойцы на секторе не покидают круг ----------
+{const _ue=updateEnemies;updateEnemies=function(dt){_ue(dt);if(!S||!M)return;const pts=SECT.pts;const wp=typeof WAR!=='undefined'&&WAR.pt&&WAR.pt.m===M.id?WAR.pt:null;
+  for(const e of rtFor(M.id).enemies){if(!e.alive||e.dying)continue;let pt=null;
+    if(typeof e.id==='string'&&e.id[0]==='g'){const m=/^g(\d+)_/.exec(e.id);if(m)pt=pts[+m[1]]}
+    else if(wp&&/^war_/.test(e.type)){const d0=Math.hypot(e.x-wp.x,e.y-wp.y);if(d0<=CAP_R)e.holdPt=wp.i;if(e.holdPt===wp.i)pt=wp}
+    if(!pt||pt.m!==M.id)continue;const d=Math.hypot(e.x-pt.x,e.y-pt.y),lim=CAP_R+.3;if(d>lim){e.x=pt.x+(e.x-pt.x)/d*lim;e.y=pt.y+(e.y-pt.y)/d*lim;e.moving=false}}}}
+
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
