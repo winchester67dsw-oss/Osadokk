@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793100733";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793101057";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -903,7 +903,7 @@ const TABVIEW={
   if(!ids.length)list.append(el('div','muted small','Пусто.'));
   for(const id of ids){const it=ITEMS[id];const right=[el('span','q','×'+S.inv[id])];
     if(it.k==='use')right.push(btn('Исп.',()=>{useItem(id);openTab('inv')}));
-    else if(it.k==='weapon'){const on=S.eq.w1===id||S.eq.w2===id;right.push(btn(on?'Убрать':'В руки',()=>{equip(id);openTab('inv')},on?'btn primary':'btn'))}
+    else if(it.k==='weapon'){const on=S.eq.w1===id||S.eq.w2===id||S.eq.w3===id;right.push(btn(on?'Убрать':'В руки',()=>{equip(id);openTab('inv')},on?'btn primary':'btn'))}
     else if(GEAR.includes(it.k)||it.k==='art'){const on=it.k==='art'&&typeof artOn==='function'?artOn(id):S.eq[it.k]===id;right.push(btn(on?'Снять':'Надеть',()=>{equip(id);openTab('inv')},on?'btn primary':'btn',on&&id==='rags'))}
     list.append(itemRow(id,right))}
   R.append(list);
@@ -1961,7 +1961,7 @@ function invView(b){
   if(invSel&&ITEMS[invSel]&&(S.inv[invSel]||equippedCount(invSel))){const id=invSel,it=ITEMS[id];const dt=el('div','idetail');dt.append(iconCanvas(id,48));const gw=el('div','grow');gw.append(el('div','t',it.n+(S.inv[id]>1?' ×'+S.inv[id]:'')),el('div','s',describe(id)+(it.set?' · комплект «'+SETS[it.set].n+'»':'')));dt.append(gw);
     const a=el('div','acts');
     if(it.k==='use')a.append(btn('Использовать',()=>{useItem(id);if(!S.inv[id])invSel=null;openTab('inv')},'btn primary'));
-    else if(it.k==='weapon'){const on=S.eq.w1===id||S.eq.w2===id;a.append(btn(on?'Убрать':'В руки',()=>{equip(id);openTab('inv')},on?'btn':'btn primary'))}
+    else if(it.k==='weapon'){const on=S.eq.w1===id||S.eq.w2===id||S.eq.w3===id;a.append(btn(on?'Убрать':'В руки',()=>{equip(id);openTab('inv')},on?'btn':'btn primary'))}
     else if(GEAR.includes(it.k)||it.k==='art'){const on=it.k==='art'&&typeof artOn==='function'?artOn(id):S.eq[it.k]===id;a.append(btn(on?'Снять':'Надеть',()=>{equip(id);openTab('inv')},on?'btn':'btn primary',on&&id==='rags'))}
     dt.append(a);b.append(dt)}
 }
@@ -6325,6 +6325,105 @@ function realCyc(){const n=realNight();return n>=1?0:n<=0?.5:Math.acos(n)/(Math.
 function gameMins(){const p=cyclePos();const m=p<DAY_MS?7*60+p/DAY_MS*720:19*60+(p-DAY_MS)/DAY_MS*720;return Math.floor(m)%1440}
 // сколько осталось до смены дня/ночи (мс)
 function cycleLeft(){const p=cyclePos();return p<DAY_MS?DAY_MS-p:CYCLE_MS-p}
+
+// ================= РЮКЗАК, ПРОФИЛЬ СТАЛКЕРА И СЛОТ НОЖА =================
+// «Рюкзак» — только вещи, с разделами (оружие, снаряжение, медикаменты, еда, патроны, артефакты, материалы…).
+// «Профиль» — как КПК: аватар 500×500 по центру, слева 4 места под награды, справа ник/ID/ранг/группировка/звание/
+// репутация/опыт; ниже — имя, локация, время в игре, «о себе», регистрация, последнее посещение, история банов,
+// навыки (у себя — с прокачкой) и экипировка. Профили других игроков открываются из меню игрока.
+// Нож носится в отдельном слоте: клавиша 3 или кнопка 🔪 — достать/убрать.
+
+// ---------- Слот ножа ----------
+SLOTS.w3='Нож';SLOTPOS.push(['w3','left']);
+{const _eq=equip;equip=function(id,h){const it=ITEMS[id];if(it&&it.k==='weapon'&&it.cls==='melee'&&h!=='w1'&&h!=='w2'){
+    if(S.eq.w3===id){S.eq.w3=null;if(S.eq.active==='w3')S.eq.active='w1';log('Нож убран: '+it.n)}else{if(S.eq.w1===id)S.eq.w1=null;if(S.eq.w2===id)S.eq.w2=null;S.eq.w3=id;log('🔪 В слоте ножа: '+it.n+'. Достать — клавиша 3 или кнопка 🔪.')}
+    statCache=null;P.reloadT=0;sendPresence();dirty=true;updateHud();updKnifeBtn();return}return _eq(id,h)}}
+swapWeapon=function(){if(paused||!S)return;const order=['w1','w2','w3'].filter(s=>S.eq[s]);if(!order.length)return;const i=order.indexOf(S.eq.active);S.eq.active=order[(i+1)%order.length];P.reloadT=0;P.swing=0;const w=curW();log('В руках: '+(w?ITEMS[w].n:'кулаки'));sendPresence();dirty=true;updKnifeBtn()};
+function knifeToggle(){if(paused||!S)return;if(!S.eq.w3){log('В слоте ножа пусто. Наденьте нож или другое холодное оружие из рюкзака.','bad');return}
+  if(S.eq.active==='w3'){S.eq.active=S.eq.w1?'w1':S.eq.w2?'w2':'w3'}else{S.eq.lastGun=S.eq.active;S.eq.active='w3'}P.reloadT=0;P.swing=0;const w=curW();log('В руках: '+(w?ITEMS[w].n:'кулаки'));sendPresence();dirty=true;updKnifeBtn()}
+{const a=document.getElementById('acts');if(a){const b=document.createElement('button');b.id='bKnife';b.textContent='🔪';b.setAttribute('aria-label','Нож');b.onclick=e=>{e.preventDefault();knifeToggle()};a.append(b)}
+  const st=document.createElement('style');st.textContent='#acts #bKnife{right:372px;bottom:150px;width:52px;height:52px;font-size:20px;padding:0}#acts #bKnife.on{border-color:#e0a030;box-shadow:0 0 12px rgba(224,160,48,.45)}#acts #bKnife[hidden]{display:none}';document.head.append(st)}
+function updKnifeBtn(){const b=document.getElementById('bKnife');if(!b)return;b.hidden=!(S&&S.eq.w3);b.classList.toggle('on',!!(S&&S.eq.active==='w3'))}
+setInterval(updKnifeBtn,1500);
+addEventListener('keydown',e=>{if(!S||!titleEl.hidden||!ov.hidden||document.activeElement===chatIn||e.repeat)return;const k=keyOf(e);if(k==='3'){e.preventDefault();knifeToggle()}else if(k==='p'||k==='з'){e.preventDefault();openTab('profile')}});
+
+// ---------- Рюкзак ----------
+const BAGCAT=[['all','Всё'],['wpn','Оружие'],['gear','Снаряжение'],['med','Медикаменты'],['food','Еда и вода'],['ammo','Патроны'],['art','Артефакты'],['mod','Обвес'],['pet','Для питомца'],['mat','Материалы'],['etc','Прочее']];
+const bagShelf=id=>{const it=ITEMS[id];if(!it)return 'etc';if(it.k==='mod')return 'mod';if(it.pacc||id==='petfood')return 'pet';if(it.k==='det'||it.k==='light')return 'gear';return shelfOf(id)};
+const eqSlotsOf=id=>Object.entries(S.eq).filter(([k,v])=>k!=='active'&&k!=='lastGun'&&v===id).map(([k])=>SLOTS[k]||k);
+let BAG={cat:'all',sel:null};
+TABVIEW.bag=b=>{const st=el('style');st.textContent='.bagg{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:6px}.bagg button{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;border-radius:9px;border:1px solid #4a3c28;background:rgba(30,24,16,.75);color:#ebe1cc;font:11px var(--sans,sans-serif);min-height:92px}.bagg button.sel{border-color:#e8c060;box-shadow:0 0 10px rgba(232,192,96,.35)}.bagg .q{position:absolute;top:3px;right:5px;font:700 11px var(--mono);color:#f2b65c}.bagg .eq{position:absolute;top:3px;left:5px;font-size:11px;color:#9ad87a}.bagd{display:flex;gap:10px;align-items:flex-start;padding:10px;margin-bottom:8px;border:1px solid #6a5a38;border-radius:10px;background:rgba(40,32,20,.75)}.bagd .acts{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}';b.append(st);
+  const w=invWeight(),cap=typeof maxWeight==='function'?maxWeight():null;b.append(el('p','small','Вес: '+(Math.round(w*10)/10)+(cap?' из '+cap:'')+' кг · крышки: '+S.caps));
+  const cats=el('div','cats');for(const [k,n] of BAGCAT){const cnt=k==='all'?Object.keys(S.inv).length:Object.keys(S.inv).filter(id=>bagShelf(id)===k).length;if(k!=='all'&&!cnt)continue;const x=el('button',null,n+' ('+cnt+')');x.setAttribute('aria-pressed',BAG.cat===k);x.onclick=()=>{BAG.cat=k;openTab('bag')};cats.append(x)}b.append(cats);
+  const ids=Object.keys(S.inv).filter(id=>ITEMS[id]&&S.inv[id]>0&&(BAG.cat==='all'||bagShelf(id)===BAG.cat)).sort((a,c)=>(ITEMS[c].r|0)-(ITEMS[a].r|0)||ITEMS[a].n.localeCompare(ITEMS[c].n,'ru'));
+  if(BAG.sel&&ITEMS[BAG.sel]&&S.inv[BAG.sel]>0){const id=BAG.sel,it=ITEMS[id];const d=el('div','bagd');d.append(iconCanvas(id,64));const gw=el('div','grow');gw.append(el('div','t',it.n+(S.inv[id]>1?' ×'+S.inv[id]:'')),el('div','s',describe(id)));if(it.d)gw.append(el('div','muted small',it.d));const worn=eqSlotsOf(id);if(worn.length)gw.append(el('div','s','✓ Надето: '+worn.join(', ')));
+    const a=el('div','acts');const re=()=>openTab('bag');
+    if(it.k==='weapon'){if(it.cls==='melee')a.append(btn(S.eq.w3===id?'Убрать нож':'🔪 В слот ножа',()=>{equip(id);re()},'btn primary'));else{const on=S.eq.w1===id||S.eq.w2===id||S.eq.w3===id;a.append(btn(on?'Убрать':'В руки',()=>{equip(id);re()},on?'btn':'btn primary'))}}
+    else if(it.k==='art'){a.append(btn(artOn(id)?'Снять':'Надеть',()=>{equip(id);re()},'btn primary'))}
+    else if(GEAR.includes(it.k)||it.k==='art'){const on=it.k==='art'&&typeof artOn==='function'?artOn(id):S.eq[it.k]===id;a.append(btn(on?'Снять':'Надеть',()=>{equip(id);re()},on?'btn':'btn primary',on&&id==='rags'))}
+    else if(it.k==='use'){a.append(btn('Использовать',()=>{useItem(id);if(!S.inv[id])BAG.sel=null;re()},'btn primary'))}
+    else if(it.k==='mod')a.append(el('span','muted small','Ставится на верстаке («Обвес оружия»).'));
+    if(it.k!=='quest'){a.append(btn('Выбросить 1',()=>{throwItem(id,1);if(!S.inv[id])BAG.sel=null;re()},'btn'));if(S.inv[id]>1)a.append(btn('Выбросить всё',()=>{if(!confirm('Выбросить все «'+it.n+'»?'))return;throwItem(id,S.inv[id]);BAG.sel=null;re()},'btn'))}
+    gw.append(a);d.append(gw);b.append(d)}
+  if(!ids.length){b.append(el('p','muted','Здесь пусто.'));return}const g=el('div','bagg');
+  for(const id of ids){const it=ITEMS[id];const x=el('button',BAG.sel===id?'sel':'');x.style.borderBottom='3px solid '+RAR[it.r|0][1];x.append(iconCanvas(id,44),el('span',null,it.n));if(S.inv[id]>1)x.append(el('span','q','×'+S.inv[id]));if(eqSlotsOf(id).length)x.append(el('span','eq','✓'));x.onclick=()=>{BAG.sel=BAG.sel===id?null:id;openTab('bag')};g.append(x)}b.append(g)};
+ICO.bag='<svg viewBox="0 0 24 24"><path d="M9 6V4h6v2"/><path d="M5 8h14l-1 12H6z"/><path d="M9 12h6"/></svg>';
+ICO.profile='<svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M7 18c1-3 9-3 10 0"/></svg>';
+TABS.splice(0,0,['profile','Профиль']);TABS.splice(TABS.findIndex(t=>t[0]==='inv')+1,0,['bag','Рюкзак']);
+// клавиша I теперь открывает рюкзак
+addEventListener('keydown',e=>{if(!S||!titleEl.hidden||document.activeElement===chatIn||e.repeat)return;const k=keyOf(e);if((k==='i'||k==='ш')&&ov.hidden){e.stopImmediatePropagation();e.preventDefault();openTab('bag')}},true);
+
+// ---------- Время в игре ----------
+setInterval(()=>{if(S&&!document.hidden){S.playMs=(S.playMs||0)+15000;dirty=true}},15000);
+function fmtPlay(ms){let m=Math.floor((ms||0)/60000);const y=Math.floor(m/525600);m-=y*525600;const mo=Math.floor(m/43200);m-=mo*43200;const d=Math.floor(m/1440);m-=d*1440;const h=Math.floor(m/60);m-=h*60;
+  const p=[];if(y)p.push(y+' г.');if(mo)p.push(mo+' мес.');if(d)p.push(d+' дн.');if(h||p.length)p.push(h+' ч');p.push(m+' мин');return p.join(' ')}
+function fmtAgo(t){if(!t)return 'неизвестно';const s=(Date.now()-t)/1000;if(s<180)return 'в сети';const m=Math.floor(s/60);const dt=new Date(t).toLocaleString('ru-RU',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  if(m<60)return m+' мин назад ('+dt+')';const h=Math.floor(m/60);if(h<24)return h+' ч назад ('+dt+')';return Math.floor(h/24)+' дн. назад ('+dt+')'}
+
+// ---------- Данные профиля (свои и опубликованные) ----------
+const PROF_T=pid=>'osadok/'+(TESTROOM?'t_'+TESTROOM:'v1')+'/prof/'+pid;
+function myProfile(){const f=myFac();const eq={};for(const k of ['head','face','body','w1','w2','w3','light'])eq[k]=S.eq[k]||'';const arts=ARTSL.map(s=>S.eq[s]).filter(Boolean);
+  return {v:1,at:Date.now(),ct:'1',pid:S.pid,no:S.uno||0,n:S.name,lvl:S.lvl,xp:Math.round(S.xp),fac:f||'',frank:f?myRank():'',karma:S.karma|0,ord:(S.rep&&S.rep.order)|0,map:M?M.id:'',play:S.playMs||0,about:String(S.about||'').slice(0,300),real:String(S.realName||'').slice(0,24),born:S.born||((IDS.map.get(S.pid)||{}).b)||0,last:Date.now(),skills:Object.assign({},S.skills),eq,arts,awards:(S.awards||[]).slice(0,4)}}
+let profLast='';
+async function profPublish(force){if(!S||!S.pid||inClaude())return;const p=myProfile();const key=JSON.stringify(Object.assign({},p,{at:0,last:0}));if(!force&&key===profLast&&Date.now()-(S._profT||0)<120000)return;profLast=key;S._profT=Date.now();try{await cloudPut(PROF_T(S.pid),p)}catch(e){}}
+setInterval(()=>{if(S&&!document.hidden)profPublish()},30000);
+{const _as=afterStart;afterStart=async function(){const r=await _as();setTimeout(()=>profPublish(true),15000);return r}}
+addEventListener('pagehide',()=>{try{profPublish(true)}catch(e){}});
+
+// ---------- Окно профиля ----------
+{const st=document.createElement('style');st.textContent=`.pda{--sq:min(500px,32vw);display:grid;grid-template-columns:calc(var(--sq)/4) var(--sq) minmax(220px,1fr);gap:12px;align-items:start}
+.pda .aw{display:grid;grid-template-rows:repeat(4,1fr);gap:6px;height:var(--sq)}.pda .aw div{border:1px dashed #5a4a30;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#5a4a30;background:rgba(20,16,10,.5)}
+.pda .av{width:var(--sq);height:var(--sq);background:#000;border:2px solid #c8a048;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}.pda .av img{width:100%;height:100%;object-fit:cover}.pda .av .qm{font:700 calc(var(--sq)/3) 'Russo One',sans-serif;color:#3a3226}
+.pda .inf{display:flex;flex-direction:column;gap:5px;min-width:0}.pda .inf .nm{font:700 22px 'Russo One',sans-serif;color:#f2b65c;word-break:break-word}.pda .inf .ln{font:13px var(--mono);color:#d8c8a0}.pda .inf .ln b{color:#ffe0a0}
+.pda .xpb{height:8px;background:#0c0b08;border-radius:4px;overflow:hidden;border:1px solid #3a3020}.pda .xpb u{display:block;height:100%;background:linear-gradient(90deg,#c8a048,#f2d070)}
+.pdl{margin-top:12px;display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font:13px var(--mono);color:#d8c8a0}.pdl .k{color:#9d917a}.pdl .v{color:#ebe1cc;word-break:break-word}
+@media (max-width:640px){.pda{--sq:min(72vw,300px);grid-template-columns:calc(var(--sq)/4) var(--sq)}.pda .inf{grid-column:1/-1}}`;document.head.append(st)}
+function profView(b,p,own){const f=p.fac&&FAC[p.fac]?p.fac:'';const lvl=p.lvl|0,xp=p.xp|0,need=xpFor(lvl);const g=el('div','pda');
+  const aw=el('div','aw');for(let i=0;i<4;i++){const a=(p.awards||[])[i];const x=el('div',null,a?a.ic||'🏅':'·');x.title=a?a.n||'Награда':'Место для награды';aw.append(x)}
+  const av=el('div','av');const im=document.createElement('img');const setImg=src=>{av.replaceChildren(im);im.src=src};av.append(el('div','qm','?'));const t0=AVA.ok.get(p.pid);if(t0)setImg(t0);avaFull(p.pid).then(src=>{if(src)setImg(src)}).catch(()=>{});
+  const inf=el('div','inf');inf.append(el('div','nm',p.n||'Выживший'));const ln=(k,v)=>{const x=el('div','ln');x.append(document.createTextNode(k+': '));x.append(el('b',null,v));inf.append(x)};
+  ln('ID','№'+(p.no||'…')+' · '+(p.pid||'—'));ln('Ранг',rankName(lvl)+' ('+rankOf(lvl)+' из '+RANKS.length+')');ln('Группировка',f?FAC[f].n:'Одиночка');if(f)ln('Звание',rn(f,p.frank||'private'));
+  const kr=karmaRank(p.karma|0);ln('Репутация',kr[0]+' ('+(p.karma|0)+')'+(p.ord?' · Орден: '+p.ord:''));ln('Уровень',lvl+' · до нового ранга: '+(10-lvl%10)+' ур.');
+  const xb=el('div','xpb');const u=document.createElement('u');u.style.width=Math.min(100,xp/need*100)+'%';xb.append(u);inf.append(el('div','ln','Опыт: '+xp+' / '+need+(own?' · очков навыков: '+S.sp:'')),xb);
+  g.append(aw,av,inf);b.append(g);
+  if(own){const r=el('div','startrow');r.style.marginTop='6px';const fi=document.createElement('input');fi.type='file';fi.accept='image/*';fi.style.display='none';fi.onchange=()=>avaUpload(fi.files[0]).then(()=>openTab('profile'));r.append(btn('🖼 Загрузить аватарку',()=>fi.click(),'btn'),fi,el('span','muted small',S.avaSt==='pending'?'аватарка на проверке':S.avaSt==='rej'?'аватарка отклонена'+(S.avaWhy?': '+S.avaWhy:''):''));b.append(r)}
+  // данные
+  const dl=el('div','pdl');const row=(k,v)=>{dl.append(el('div','k',k),v instanceof Node?v:el('div','v',v))};
+  const editable=(val,max,ph,save)=>{if(!own)return el('div','v',val||'—');const w=el('div','v');const i=document.createElement(max>40?'textarea':'input');i.value=val||'';i.maxLength=max;i.placeholder=ph;i.style.cssText='width:100%;background:#14110c;color:#f2e2b8;border:1px solid #5a4a30;border-radius:6px;padding:5px;font:12px var(--mono)'+(max>40?';min-height:54px':'');const s=btn('Сохранить',()=>{save(cleanText(i.value,max).trim());dirty=true;profPublish(true);log('Сохранено.','good')},'btn');s.style.marginTop='4px';w.append(i,s);return w};
+  row('Имя',editable(p.real,24,'Ваше имя (по желанию)',v=>S.realName=v));row('Где сейчас',p.map&&MAPS[p.map]?MAPS[p.map].name:'—');row('Время в игре',fmtPlay(p.play)+(p.play<86400000?' (учёт с 27.10.2026)':''));
+  row('О себе',editable(p.about,300,'Пара слов о себе',v=>S.about=v));row('Регистрация',typeof bornTxt==='function'?bornTxt(p.born).replace(/^зарегистрирован\(а\) /,''):'—');row('Последнее посещение',own?'в сети':fmtAgo(p.last));
+  const bans=(MOD.list||[]).filter(e=>(e.pid&&e.pid===p.pid)||(e.name&&p.n&&lc(e.name)===lc(p.n)));row('История банов',bans.length?bans.map(e=>{const parts=[];if(e.ban)parts.push('бан до '+new Date(e.ban).toLocaleString('ru-RU'));if(e.chat)parts.push('чат до '+new Date(e.chat).toLocaleString('ru-RU'));if(e.voice)parts.push('голос до '+new Date(e.voice).toLocaleString('ru-RU'));return parts.join(', ')+(e.why?' — '+e.why:'')}).join('; '):'нарушений нет');
+  b.append(dl);
+  // навыки
+  b.append(el('div','sec','Навыки'+(own&&S.sp>0?' · свободных очков: '+S.sp:'')));const sk=el('div','pdl');for(const [k,[n,dsc]] of Object.entries(SKILLS)){const v=(p.skills||{})[k]|0;sk.append(el('div','k',n+':'));const w=el('div','v');w.append(document.createTextNode(v+' / 5  '));if(own&&S.sp>0&&v<5)w.append(btn('+1',()=>{S.skills[k]++;S.sp--;statCache=null;if(k==='end')S.hp+=15;dirty=true;profPublish(true);openTab('profile')},'btn primary'));w.title=dsc;sk.append(w)}b.append(sk);
+  // экипировка
+  b.append(el('div','sec','Экипировка'));const eqd=el('div','pdl');const nm=id=>id&&ITEMS[id]?ITEMS[id].n:'—';const e=p.eq||{};
+  for(const [k,l] of [['head','Шлем'],['face','Противогаз / маска'],['body','Броня / одежда'],['w1','Основное оружие'],['w2','Дополнительное оружие'],['w3','Нож'],['light','Фонарик']]){eqd.append(el('div','k',l+':'),el('div','v',nm(e[k])))}
+  eqd.append(el('div','k','Артефакты:'),el('div','v',(p.arts||[]).length?(p.arts||[]).map(nm).join(', '):'—'));b.append(eqd)}
+TABVIEW.profile=b=>{profView(b,myProfile(),true)};
+async function profileWin(pid,name){openWin('Профиль: '+(name||'сталкер'),b=>{b.append(el('p','muted','Загружаем профиль…'))});let p=null;try{p=await cloudGet(PROF_T(pid),4000)}catch(e){}
+  openWin('Профиль: '+((p&&p.n)||name||'сталкер'),b=>{if(!p){b.append(el('p','muted','Профиль ещё не опубликован — игрок давно не заходил в обновлённую версию игры.'));return}if(!p.no&&typeof IDS!=='undefined'&&IDS.map.get(pid))p.no=IDS.map.get(pid).no;profView(b,p,false)})}
+{const _pm=peerMenu;peerMenu=function(np){_pm(np);try{const pid=np.pid||(typeof avaPidByName==='function'?avaPidByName(np.name):null);if(!pid)return;const o=ov.querySelector('.opts')||ov.querySelector('.startrow');const bt=btn('📟 Профиль',()=>profileWin(pid,np.name),'btn primary');if(o)o.prepend(bt);else{const p=ov.querySelector('p');if(p)p.after(bt)}}catch(e){}}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
