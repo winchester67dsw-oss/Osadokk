@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793097640";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793098675";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -761,6 +761,7 @@ function updateEnemies(dt){
     if(!e.alive)continue;
     if(e.dying){e.dying-=dt;if(e.dying<=0)e.alive=false;continue}
     if(e.hp<=0)continue;
+    if(typeof farIdle==='function'&&farIdle(e))continue;
     e.cd-=dt;e.rcd-=dt;e.scd-=dt;e.lcd-=dt;
     if(e.kx||e.ky){moveBody(e,e.kx*dt*8,e.ky*dt*8,d.r);e.kx*=Math.max(0,1-dt*10);e.ky*=Math.max(0,1-dt*10);if(Math.abs(e.kx)+Math.abs(e.ky)<.01)e.kx=e.ky=0}
     const dx=P.x-e.x,dy=P.y-e.y,dist=Math.hypot(dx,dy),toP=Math.atan2(dy,dx);
@@ -1532,12 +1533,12 @@ function render(t){
   treeQ=[];drawTilesCached(ctx,x0,y0,x1,y1,t);
   for(const q of treeQ)drawTreeFull(ctx,q[0],q[1],M.id,t);
   const r=rtFor(M.id);
-  for(const d of r.decals){const age=(now-d.t)/1000;const a=Math.max(0,1-age/90);if(a<=0)continue;ctx.globalAlpha=a*(d.type==='scorch'?.7:.75);ctx.save();ctx.translate(d.x*T,d.y*T);ctx.rotate(d.rot);ctx.fillStyle=d.color;
+  for(const d of r.decals){if(d.x*T<CX-60||d.x*T>CX+VW+60||d.y*T<CY-60||d.y*T>CY+VH+60)continue;const age=(now-d.t)/1000;const a=Math.max(0,1-age/90);if(a<=0)continue;ctx.globalAlpha=a*(d.type==='scorch'?.7:.75);ctx.save();ctx.translate(d.x*T,d.y*T);ctx.rotate(d.rot);ctx.fillStyle=d.color;
     ctx.beginPath();for(let i=0;i<9;i++){const an=i/9*Math.PI*2,rr=d.r*T*(.6+hash2(i,Math.floor(d.seed*1000))*.6);i?ctx.lineTo(Math.cos(an)*rr,Math.sin(an)*rr*.7):ctx.moveTo(Math.cos(an)*rr,Math.sin(an)*rr*.7)}ctx.closePath();ctx.fill();
     for(let i=0;i<4;i++){const an=hash2(i,Math.floor(d.seed*999))*6.28;circ(ctx,Math.cos(an)*d.r*T*1.3,Math.sin(an)*d.r*T,d.r*T*.18)}ctx.restore()}ctx.globalAlpha=1;
   for(const ex of M.exits){if(ex.door)continue;ctx.fillStyle='rgba(242,182,92,'+(.16+Math.sin(t*3)*.07)+')';ctx.fillRect(ex.x*T,ex.y*T,ex.w*T,ex.h*T)}
-  for(const p of r.pickups){if(!p.gone)drawItem(ctx,p.item,p.x*T,p.y*T+Math.sin(t*3+p.x)*1.2,t)}
-  for(const p of r.drops)drawItem(ctx,p.item,p.x*T,p.y*T+Math.sin(t*3+p.x)*1.2,t);
+  for(const p of r.pickups){if(!p.gone&&p.x*T>CX-40&&p.x*T<CX+VW+40&&p.y*T>CY-40&&p.y*T<CY+VH+40)drawItem(ctx,p.item,p.x*T,p.y*T+Math.sin(t*3+p.x)*1.2,t)}
+  for(const p of r.drops)if(p.x*T>CX-40&&p.x*T<CX+VW+40&&p.y*T>CY-40&&p.y*T<CY+VH+40)drawItem(ctx,p.item,p.x*T,p.y*T+Math.sin(t*3+p.x)*1.2,t);
   for(const p of parts){if(p.type!=='shell'&&!(p.type==='blood'&&p.z<=0))continue;const a=1-p.life/p.max;ctx.globalAlpha=Math.min(1,a*2);if(p.type==='shell'){ctx.save();ctx.translate(p.x*T,p.y*T-p.z*T);ctx.rotate(p.rot);ctx.fillStyle=p.color;ctx.fillRect(-1.2,-.5,2.4,1);ctx.restore()}else{ctx.fillStyle=p.color;circ(ctx,p.x*T,p.y*T,p.size*.6)}}ctx.globalAlpha=1;
   const ents=[];
   for(const n of npcsHere()){const x=(n.x+.5)*T,y=(n.y+.5)*T;if(x<CX-80||x>CX+VW+80||y<CY-80||y>CY+VH+90)continue;const near=Math.hypot(P.x-n.x-.5,P.y-n.y-.5)<3.5;const lookA=near?Math.atan2(P.y-n.y-.5,P.x-n.x-.5):n.a;
@@ -1590,7 +1591,7 @@ function render(t){
 
 // ================= ЦИКЛ =================
 let lastT=performance.now();
-function frame(t){if(QUAL.lvl<2&&t-lastT<15){requestAnimationFrame(frame);return}if(S&&!paused)QUAL.samples.push(t-lastT);
+function frame(t){if(QUAL.lvl<2&&t-lastT<(QUAL.lvl===0?31:15)){requestAnimationFrame(frame);return}if(S&&!paused)QUAL.samples.push(t-lastT);
   const dt=Math.min(.05,(t-lastT)/1000);lastT=t;now=t;
   if(S&&M&&!paused){
     let ix=0,iy=0;if(keys.has('r'))ix+=1;if(keys.has('l'))ix-=1;if(keys.has('d'))iy+=1;if(keys.has('u'))iy-=1;if(joy.on){ix+=joy.x;iy+=joy.y}
@@ -1612,7 +1613,7 @@ function frame(t){if(QUAL.lvl<2&&t-lastT<15){requestAnimationFrame(frame);return
       r.drops=r.drops.filter(p=>p.t>-1e8);
       updateEnemies(dt);updateProjs(dt);survival(dt);
     }
-    if(Math.floor(t/100)!==Math.floor((t-dt*1000)/100))sendPresence();
+    if(Math.floor(t/150)!==Math.floor((t-dt*1000)/150))sendPresence();
   }
   updateParts(dt);updateWeather(dt);updateAutumn(dt);
   shake=Math.max(0,shake-dt*2.2);hurtFlash=Math.max(0,hurtFlash-dt*1.6);
@@ -5117,7 +5118,7 @@ setInterval(()=>{const bar=capUI();if(!S||!M||!titleEl.hidden){bar.classList.add
 // отображение: круги на земле (2D), на плане карты и на мини-карте
 function ptCol(st){return st.o?FAC[st.o].col:'#c8c0a8'}
 {const _dt=drawTilesCached;drawTilesCached=function(c,x0,y0,x1,y1,t){_dt(c,x0,y0,x1,y1,t);const pts=SECT.pts.filter(p=>p.m===M.id);if(!pts.length)return;c.save();
-  for(const pt of pts){const st=ptState(pt),col=ptCol(st);c.strokeStyle=col;c.globalAlpha=.8;c.lineWidth=2;c.setLineDash([8,6]);c.lineDashOffset=-t*20;c.beginPath();c.arc(pt.x*T,pt.y*T,CAP_R*T,0,7);c.stroke();c.setLineDash([]);c.globalAlpha=.12;c.fillStyle=col;c.fill();c.globalAlpha=1;
+  for(const pt of pts){if(pt.x<x0-4||pt.x>x1+4||pt.y<y0-4||pt.y>y1+4)continue;const st=ptState(pt),col=ptCol(st);c.strokeStyle=col;c.globalAlpha=.8;c.lineWidth=2;c.setLineDash([8,6]);c.lineDashOffset=-t*20;c.beginPath();c.arc(pt.x*T,pt.y*T,CAP_R*T,0,7);c.stroke();c.setLineDash([]);c.globalAlpha=.12;c.fillStyle=col;c.fill();c.globalAlpha=1;
     c.fillStyle='#3a2c18';c.fillRect(pt.x*T-1,pt.y*T-26,2.5,26);c.fillStyle=col;c.beginPath();c.moveTo(pt.x*T+1.5,pt.y*T-26);c.lineTo(pt.x*T+16,pt.y*T-21+Math.sin(t*4)*1.5);c.lineTo(pt.x*T+1.5,pt.y*T-15);c.fill();
     c.font='700 11px "IBM Plex Mono",monospace';c.textAlign='center';c.lineWidth=3;c.strokeStyle='rgba(0,0,0,.8)';const lab=pt.n+' · '+(st.o?FAC[st.o].n:'ничей')+(capActive(st)&&FAC[st.cap.f]?' · ⚑ захват «'+FAC[st.cap.f].n+'» '+fmtMs(CAP_MS-(Date.now()-st.cap.at)):'');c.strokeText(lab,pt.x*T,pt.y*T-30);c.fillStyle=col;c.fillText(lab,pt.x*T,pt.y*T-30)}c.restore()}}
 if(typeof drawPlan==='function'){const _dp=drawPlan;drawPlan=function(m,maxW){const cnv=_dp(m,maxW);const s=parseFloat(cnv.style.width)/m.w;const c=cnv.getContext('2d');for(const pt of SECT.pts){if(pt.m!==m.id)continue;const st=ptState(pt);c.strokeStyle=ptCol(st);c.lineWidth=2;c.beginPath();c.arc(pt.x*s,pt.y*s,CAP_R*s,0,7);c.stroke();c.fillStyle=ptCol(st);c.font='700 10px sans-serif';c.fillText('⚑',pt.x*s-4,pt.y*s+4)}return cnv}}
@@ -5502,7 +5503,7 @@ function updDetHud(){let h=document.getElementById('detHud');if(!h){h=el('div');
   if(!anoMapOk(M)){h.innerHTML='📡 '+ITEMS[id].n.replace('Детектор ','')+' · '+ch+'%<br>здесь тихо';return}
   if(ch<=0){h.innerHTML='📡 разряжен — нужны батарейки';return}const det=DETS[id],A=anoGen(M);let na=null,nd=1e9;for(const a of A.list){if(a.t==='tele'&&det.lvl<4)continue;const p=anoPos(a);const d=Math.hypot(P.x-p.x,P.y-p.y)-a.r;if(d<nd){nd=d;na=[a,p]}}
   let s='📡 '+ITEMS[id].n.replace('Детектор ','')+' · '+ch+'%';if(na&&nd<det.r)s+='<br>'+(det.lvl>=3?ANOT[na[0].t].ic+' '+ANOT[na[0].t].n:'⚠ аномалия')+': <b>'+Math.max(0,nd).toFixed(1)+' м</b> '+(det.lvl>=2?arrTo(na[1].x,na[1].y):'');else s+='<br>аномалий рядом нет';
-  if(det.lvl>=2){let nr=null,rd=1e9;for(const r of A.arts){if(S.artGot&&S.artGot[r.k])continue;const p=artPos(r);const d=Math.hypot(P.x-p.x,P.y-p.y);if(d<rd){rd=d;nr=p}}if(nr&&rd<det.r)s+='<br>✦ артефакт: <b>'+rd.toFixed(1)+' м</b> '+arrTo(nr.x,nr.y)}h.innerHTML=s}
+  if(det.lvl>=2){let nr=null,rd=1e9;for(const r of A.arts){if(S.artGot&&S.artGot[r.k])continue;const p=artPos(r);const d=Math.hypot(P.x-p.x,P.y-p.y);if(d<rd){rd=d;nr=p}}if(nr&&rd<det.r)s+='<br>✦ артефакт: <b>'+rd.toFixed(1)+' м</b> '+arrTo(nr.x,nr.y)}if(h._s!==s){h._s=s;h.innerHTML=s}}
 // отрисовка: в детектор — яркие аномалии и артефакты; без детектора лишь изредка дрожит воздух
 function drawAno(c,a,p,t,vis){const T=ANOT[a.t],X=p.x*TILE_PX(),Y=p.y*TILE_PX(),R=a.r*TILE_PX();c.save();
   if(!vis){if(Math.random()>.035){c.restore();return}c.globalAlpha=.07;c.fillStyle='#ffffff';c.beginPath();c.arc(X,Y,R*.7,0,7);c.fill();c.restore();return}
@@ -5515,7 +5516,7 @@ function drawAno(c,a,p,t,vis){const T=ANOT[a.t],X=p.x*TILE_PX(),Y=p.y*TILE_PX(),
   c.restore()}
 const TILE_PX=()=>T;
 {const _dt=drawTilesCached;drawTilesCached=function(c,x0,y0,x1,y1,t){_dt(c,x0,y0,x1,y1,t);if(!S||!M||!anoMapOk(M))return;const A=anoGen(M),det=myDet();
-  for(const a of A.list){const p=anoPos(a);const d=Math.hypot(P.x-p.x,P.y-p.y);const vis=!!det&&det.lvl>=2&&d<=det.r&&(a.t!=='tele'||det.lvl>=4);drawAno(c,a,p,t,vis);
+  for(const a of A.list){const p=anoPos(a);if(p.x<x0-3||p.x>x1+3||p.y<y0-3||p.y>y1+3)continue;const d=Math.hypot(P.x-p.x,P.y-p.y);const vis=!!det&&det.lvl>=2&&d<=det.r&&(a.t!=='tele'||det.lvl>=4);drawAno(c,a,p,t,vis);
     if(vis&&det.lvl>=3){c.save();c.font='700 10px "IBM Plex Mono",monospace';c.textAlign='center';c.fillStyle=ANOT[a.t].col;c.fillText(ANOT[a.t].n,p.x*T,p.y*T-a.r*T-4);c.restore()}}
   if(det&&det.lvl>=2)for(const r of A.arts){if(S.artGot&&S.artGot[r.k])continue;const p=artPos(r);if(Math.hypot(P.x-p.x,P.y-p.y)>det.r*(det.lvl>=3?1:.8))continue;drawArt(c,r.id,p.x*T,p.y*T+Math.sin(t*3+p.x)*1.5,t)}}}
 // подсказка при входе в опасную локацию
@@ -6235,6 +6236,64 @@ async function idsEnsure(){if(!S||!S.pid||IDS.busy)return;IDS.busy=true;try{awai
 function idsView(box){box.replaceChildren(el('p','muted','Загружаем…'));idsLoad().then(m=>{box.replaceChildren();const rows=[...m.entries()].sort((a,b)=>a[1].no-b[1].no);box.append(el('p','muted small','Всего аккаунтов: '+rows.length+'. Номер выдаётся по порядку регистрации.'));const l=el('div','list');
   for(const [pid,d] of rows){const r=el('div','row');const gw=el('div','grow');gw.append(el('div','t','№'+d.no+' · '+(d.n||'Выживший')),el('div','s',bornTxt(d.b)+' · ID '+pid));r.append(gw);l.append(r)}box.append(l)}).catch(()=>box.replaceChildren(el('p','muted small','Нет связи с облаком.')))}
 if(typeof TABVIEW.admin==='function'){const _av=TABVIEW.admin;TABVIEW.admin=b=>{const sec=el('div');sec.append(el('div','sec','🪪 Игроки по номерам'));const q=el('div');sec.append(btn('Показать список',()=>idsView(q),'btn primary'),q);b.append(sec);_av(b)}}
+
+// ================= ОПТИМИЗАЦИЯ =================
+// 1) Дальние мобы, которые никого не преследуют, просчитываются в 4 раза реже (вблизи игроков — каждый кадр).
+// 2) Предметы на земле и следы рисуются только в пределах экрана (замены в сборке), старые следы удаляются.
+// 3) Слабые телефоны сразу получают экономную графику и 30 кадров в секунду — без рывков и перегрева.
+// 4) Круги секторов, аномалии и табло детектора не рисуются и не обновляются впустую.
+let FAR={t:-1,pl:[]};
+function farIdle(e){if(e.tg||e.seen||e.dying||e.distT>now)return false;if(FAR.t!==now){FAR.t=now;try{FAR.pl=mapPlayers(M.id)}catch(x){FAR.pl=[{x:P.x,y:P.y}]}}
+  let md=1e9;for(const p of FAR.pl){const d=Math.abs(p.x-e.x)+Math.abs(p.y-e.y);if(d<md)md=d}if(md<32)return false;e._sk=((e._sk|0)+1)&3;return e._sk!==0}
+// старые следы (кровь, подпалины) — не храним дольше 90 с
+setInterval(()=>{const t=now;for(const r of Object.values(RT))if(r.decals&&r.decals.length)r.decals=r.decals.filter(d=>t-d.t<90000)},10000);
+// слабое устройство: экономная графика по умолчанию (если игрок сам не выбирал)
+{const low=(navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=3;if(QUAL.auto&&coarse()&&low&&QUAL.lvl>0){try{setQual(0,true)}catch(e){}}}
+
+// ================= ЗАЩИТА ДАННЫХ ГРУППИРОВОК =================
+// Причина прошлого сбоя: если облако не ответило вовремя, игра подставляла пустую группировку, при ближайшем изменении
+// записывала её поверх настоящей (все бойцы стирались), а затем каждому бойцу писала «Вас исключили».
+// Теперь: 1) группировка записывается только после уверенной загрузки из облака; 2) одним действием нельзя убрать больше
+// одного бойца; 3) «исключён» — только если это есть в журнале, иначе боец сам восстанавливается в составе;
+// 4) раз в 10 минут сохраняется резервная копия; 5) админ может вернуть игрока и восстановить группировку из копии.
+const FACOK={},FACBK={};
+// быстрая и уверенная загрузка: ответ сразу, как только пришла сохранённая запись; «пусто» — только после подтверждения подписки
+async function facProbe(topic){const cs=await cloud();return new Promise(res=>{let best=null,done=false,acked=0;const hs=[];const fin=sure=>{if(done)return;done=true;clearTimeout(tm);for(const [c,h] of hs){c.removeListener('message',h);try{c.unsubscribe(topic)}catch(e){}}res({pkt:best,sure:!!best||sure})};const tm=setTimeout(()=>fin(false),7000);
+  for(const c of cs){const h=(tp,buf)=>{if(tp!==topic)return;try{const d=JSON.parse(dec.decode(buf));if(d&&d.ct&&(!best||(d.at||0)>(best.at||0)))best=d}catch(e){}if(best)setTimeout(()=>fin(true),150)};hs.push([c,h]);c.on('message',h);const sub=()=>c.subscribe(topic,{qos:1},err=>{if(err)return;acked++;if(acked>=cs.length)setTimeout(()=>fin(true),900)});c.connected?sub():c.once('connect',sub)}})}
+const facParse=p=>p&&p.ct?Object.assign(emptyFac(),JSON.parse(p.ct)):emptyFac();
+facLoad=async function(f){try{const r=await facProbe(facT(f));if(!r||!r.sure)throw 0;FACD[f]=facParse(r.pkt);FACOK[f]=Date.now()}catch(e){FACOK[f]=0;FACD[f]=FACD[f]||emptyFac()}return FACD[f]};
+facMut=async function(f,fn){const r=await facProbe(facT(f));if(!r||!r.sure)throw new Error('cloud');const d=facParse(r.pkt);
+  const known=FACD[f]?Object.keys(FACD[f].members||{}).length:0,cur=Object.keys(d.members).length;
+  if(!r.pkt&&known>=2)throw new Error('suspect');// облако «пустое», а состав мы знаем — не пишем
+  const before=Object.keys(d.members);const res=fn(d);if(res===false)return false;const after=Object.keys(d.members).length;const mass=!!d._mass;delete d._mass;
+  // учёт исключённых/вышедших: кто пропал из состава — в список, кто вернулся — из списка
+  d.kicked=d.kicked||{};for(const pid of before)if(!d.members[pid])d.kicked[pid]={t:Date.now(),self:S&&pid===S.pid?1:0};for(const pid of Object.keys(d.members))delete d.kicked[pid];
+  if(cur-after>1&&!mass)throw new Error('mass');
+  d.log=(d.log||[]).slice(-200);d.at=Date.now();await cloudPut(facT(f),{v:1,at:d.at,ct:JSON.stringify(d)});FACD[f]=d;FACOK[f]=Date.now();
+  if(after>0&&Date.now()-(FACBK[f]||0)>600000){FACBK[f]=Date.now();cloudPut(facT(f)+'_bak',{v:1,at:d.at,ct:JSON.stringify(d)}).catch(()=>{})}return true};
+// синхронизация бойца: без уверенной загрузки ничего не меняем; «исключён» только по журналу
+{const _fs=facSync;facSync=async function(){if(!S)return;
+  if(!myFac()){for(const f of Object.keys(FAC)){const d=await facLoad(f);if(!FACOK[f])continue;const me=d.members[S.pid];if(me){S.fac={id:f,rank:normR(me.r)};delete S.facApp;dirty=true;saveLocal();sendPresence();log('🦂🦇 Вы снова в группировке «'+FAC[f].n+'» (звание сохранено).','good');return _fs()}}return _fs()}
+  const f=myFac();const d=await facLoad(f);if(!FACOK[f])return;S.facLast={id:f,rank:S.fac.rank};
+  if(!d.members[S.pid]){const kicked=!!(d.kicked&&d.kicked[S.pid])||(d.log||[]).some(e=>e.who===S.name&&(e.a==='kick'||e.a==='leave'));
+    if(kicked)return _fs();
+    // в журнале нет исключения — это сбой данных: возвращаемся в состав с прежним званием
+    try{await facMut(f,dd=>{if(dd.members[S.pid])return false;dd.members[S.pid]={n:S.name,r:normR(S.fac.rank)||'private',lv:S.lvl,at:Date.now()};facLog(dd,'restore',{who:S.name})});log('Ваше членство в «'+FAC[f].n+'» восстановлено после сбоя данных.','sys')}catch(e){}return}
+  return _fs()}}
+if(typeof LOGTXT==='object'){LOGTXT.restore='восстановлен(а) в составе после сбоя';LOGTXT.adminadd='возвращён(а) администратором';LOGTXT.backup='группировка восстановлена из резервной копии'}
+// ---------- Админ: вернуть игрока и восстановить из копии ----------
+function facFixView(box){box.replaceChildren();const pool=adminPlayerPool().sort((a,b)=>b.on-a.on||b.lv-a.lv);
+  const sel=(opts,ph)=>{const s=document.createElement('select');s.style.cssText='min-width:150px;background:#14110c;color:#f2e2b8;border:1px solid #5a4a30;border-radius:6px;padding:6px';if(ph){const o=document.createElement('option');o.value='';o.textContent=ph;s.append(o)}for(const [v,t] of opts){const o=document.createElement('option');o.value=v;o.textContent=t;s.append(o)}return s};
+  const who=sel(pool.map(p=>[p.pid,p.n+' · ур. '+(p.lv|0)+(p.on?' · в сети':'')]),'— игрок —'),fac=sel(Object.keys(FAC).map(f=>[f,FAC[f].n])),rk=sel([]);
+  const fillR=()=>{rk.replaceChildren();for(const r of RANKS_F){const o=document.createElement('option');o.value=r;o.textContent=rn(fac.value,r);rk.append(o)}rk.value='private'};fac.onchange=fillR;fillR();
+  const row=el('div','startrow');row.append(who,fac,rk);const act=async(fn,ok)=>{try{const r=await fn();if(r===false){log('Ничего не изменилось.','sys');return}log(ok,'good');facFixView(box)}catch(e){log(e.message==='cloud'?'Облако не ответило — попробуйте ещё раз.':e.message==='empty'?'Выберите игрока.':'Не удалось: '+e.message,'bad')}};
+  box.append(el('p','muted small','Вернуть игрока в группировку с нужным званием. Игрок подхватит группировку сам при следующем входе (или в течение 1,5 минуты).'),row,
+    btn('↩ Вернуть в группировку',()=>act(async()=>{if(!who.value)throw new Error('empty');const p=pool.find(x=>x.pid===who.value);return facMut(fac.value,d=>{for(const ff of Object.keys(FAC))if(ff!==fac.value&&FACD[ff]&&FACD[ff].members[who.value]){}if(rk.value==='leader')for(const x of Object.values(d.members))if(x.r==='leader')x.r='deputy';d.members[who.value]={n:p.n,r:rk.value,lv:p.lv|0,at:Date.now()};delete d.apps[who.value];facLog(d,'adminadd',{who:p.n,r:rk.value})})},'Игрок возвращён в группировку.'),'btn primary'));
+  box.append(el('div','sec','Резервные копии'));const bl=el('div');box.append(bl);
+  for(const f of Object.keys(FAC)){cloudGet(facT(f)+'_bak',4000).then(p=>{if(!p||!p.ct){bl.append(el('p','muted small',FAC[f].n+': копии пока нет (появится в течение 10 минут после любого изменения).'));return}const b=JSON.parse(p.ct);const n=Object.keys(b.members||{}).length;const r=el('div','row');const gw=el('div','grow');
+    gw.append(el('div','t',FAC[f].n+' · копия от '+new Date(p.at).toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})),el('div','s','В копии бойцов: '+n+' ('+Object.values(b.members||{}).map(m=>m.n).slice(0,12).join(', ')+(n>12?'…':'')+') · общак: '+(b.fund|0)));r.append(gw,
+      btn('Восстановить',()=>{if(!confirm('Вернуть в «'+FAC[f].n+'» всех бойцов из копии? Текущие бойцы останутся.'))return;act(()=>facMut(f,d=>{let added=0;for(const [pid,m] of Object.entries(b.members||{}))if(!d.members[pid]){d.members[pid]=m;added++}if(!d.fund&&b.fund)d.fund=b.fund;if(!Object.keys(d.store||{}).length&&b.store)d.store=b.store;if(!added)return false;facLog(d,'backup',{who:'+'+added})}),'Бойцы из копии возвращены.')},'btn'));bl.append(r)}).catch(()=>{})}}
+if(typeof TABVIEW.admin==='function'){const _av=TABVIEW.admin;TABVIEW.admin=b=>{const sec=el('div');sec.append(el('div','sec','🛡 Группировки: вернуть игрока / восстановить'));const q=el('div');sec.append(btn('Открыть',()=>facFixView(q),'btn primary'),q);b.append(sec);_av(b)}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
