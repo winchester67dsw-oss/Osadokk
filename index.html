@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793072639";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793073928";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -903,7 +903,7 @@ const TABVIEW={
   for(const id of ids){const it=ITEMS[id];const right=[el('span','q','×'+S.inv[id])];
     if(it.k==='use')right.push(btn('Исп.',()=>{useItem(id);openTab('inv')}));
     else if(it.k==='weapon'){const on=S.eq.w1===id||S.eq.w2===id;right.push(btn(on?'Убрать':'В руки',()=>{equip(id);openTab('inv')},on?'btn primary':'btn'))}
-    else if(GEAR.includes(it.k)){const on=S.eq[it.k]===id;right.push(btn(on?'Снять':'Надеть',()=>{equip(id);openTab('inv')},on?'btn primary':'btn',on&&id==='rags'))}
+    else if(GEAR.includes(it.k)||it.k==='art'){const on=it.k==='art'&&typeof artOn==='function'?artOn(id):S.eq[it.k]===id;right.push(btn(on?'Снять':'Надеть',()=>{equip(id);openTab('inv')},on?'btn primary':'btn',on&&id==='rags'))}
     list.append(itemRow(id,right))}
   R.append(list);
  },
@@ -1961,7 +1961,7 @@ function invView(b){
     const a=el('div','acts');
     if(it.k==='use')a.append(btn('Использовать',()=>{useItem(id);if(!S.inv[id])invSel=null;openTab('inv')},'btn primary'));
     else if(it.k==='weapon'){const on=S.eq.w1===id||S.eq.w2===id;a.append(btn(on?'Убрать':'В руки',()=>{equip(id);openTab('inv')},on?'btn':'btn primary'))}
-    else if(GEAR.includes(it.k)){const on=S.eq[it.k]===id;a.append(btn(on?'Снять':'Надеть',()=>{equip(id);openTab('inv')},on?'btn':'btn primary',on&&id==='rags'))}
+    else if(GEAR.includes(it.k)||it.k==='art'){const on=it.k==='art'&&typeof artOn==='function'?artOn(id):S.eq[it.k]===id;a.append(btn(on?'Снять':'Надеть',()=>{equip(id);openTab('inv')},on?'btn':'btn primary',on&&id==='rags'))}
     dt.append(a);b.append(dt)}
 }
 function craftView(b){
@@ -5089,34 +5089,37 @@ setInterval(()=>{if(!S||!M||paused)return;try{if(typeof hostId==='function'&&hos
       const e=mkEnemy('fg_'+st.o,Math.floor(x),Math.floor(y));e.x=x;e.y=y;e.id=id;e.summoned=true;rtFor(M.id).enemies.push(e);ids.add(id);seen.add(id)}}},3000);
 // захват
 const CAP={pt:null,start:0,announced:false,out:0},CAP_OUT_MS=60e3;
+// ход захвата записывается в облако: все видят, кто и сколько уже держит сектор, а засчитывается он только через 5 минут по облаку
+const capActive=st=>!!(st&&st.cap&&Date.now()-st.cap.at<CAP_MS+90000);
+function capCloud(pt,cap,by){return sectMut(d=>{const p=d.pts[pt.i]||(d.pts[pt.i]={o:'',at:0,lock:0,g:0});if(!cap){if(!p.cap||p.cap.by!==(by||S.name))return false;delete p.cap}else p.cap=cap}).catch(()=>false)}
 function capUI(){let b=document.getElementById('capBar');if(!b){b=el('div');b.id='capBar';b.innerHTML='<span class="t"></span><i><u></u></i>';document.getElementById('stage').append(b)}return b}
 {const st=document.createElement('style');st.textContent='#capBar{position:absolute;z-index:4;left:50%;transform:translateX(-50%);top:calc(60px + var(--sat));min-width:240px;max-width:80%;background:rgba(20,16,10,.88);border:1px solid #c8a048;border-radius:10px;padding:6px 12px;font:600 12.5px var(--mono);color:#f2e2b8;text-align:center;pointer-events:none}#capBar i{display:block;height:6px;background:#0c0b08;border-radius:3px;margin-top:5px;overflow:hidden}#capBar u{display:block;height:100%;width:0;background:#e8c040;transition:width .4s}#capBar.hide{display:none}';document.head.append(st)}
 function fmtHM(ms){const m=Math.ceil(ms/60000);return m>=60?Math.floor(m/60)+' ч '+(m%60)+' мин':m+' мин'}
 function fmtMs(ms){const s=Math.max(0,Math.ceil(ms/1000));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
 setInterval(()=>{const bar=capUI();if(!S||!M||!titleEl.hidden){bar.classList.add('hide');return}const f=myFac();const pt=SECT.pts.find(p=>p.m===M.id&&Math.hypot(P.x-p.x,P.y-p.y)<=CAP_R);
   // вышли из круга — захват замораживается на 1 минуту: вернулись — продолжается, нет — сбрасывается
-  if(!pt){if(CAP.pt){const t0=Date.now();if(CAP.pt.m!==M.id){log('Вы ушли с локации — захват '+CAP.pt.n+' сброшен.','bad');CAP.pt=null;CAP.out=0}
+  if(!pt){if(CAP.pt){const t0=Date.now();if(CAP.pt.m!==M.id){log('Вы ушли с локации — захват '+CAP.pt.n+' сброшен.','bad');capCloud(CAP.pt,null);CAP.pt=null;CAP.out=0}
       else{if(!CAP.out){CAP.out=t0;log('Вы вышли из круга — захват заморожен. Вернитесь в течение минуты, иначе он сбросится.','bad')}const left=CAP_OUT_MS-(t0-CAP.out);
-        if(left<=0){log('Вы не вернулись в круг — захват '+CAP.pt.n+' сброшен.','bad');CAP.pt=null;CAP.out=0}
+        if(left<=0){log('Вы не вернулись в круг — захват '+CAP.pt.n+' сброшен.','bad');capCloud(CAP.pt,null);CAP.pt=null;CAP.out=0}
         else{bar.classList.remove('hide');bar.querySelector('.t').textContent='❄ Захват заморожен: '+CAP.pt.n+' · вернитесь в круг за '+fmtMs(left);const u=bar.querySelector('u');u.style.background='#6aa8d8';u.style.width=Math.min(100,(CAP.out-CAP.start)/CAP_MS*100)+'%';return}}}bar.classList.add('hide');return}
   const st=ptState(pt),t=Date.now();bar.classList.remove('hide');const fill=bar.querySelector('u'),txt=bar.querySelector('.t');const own=st.o?FAC[st.o].n:'ничей';
-  const stop=msg=>{if(CAP.pt===pt&&msg)log(msg,'bad');CAP.pt=null;CAP.out=0;fill.style.width='0';fill.style.background='#8a7a5a'};
+  const stop=msg=>{if(CAP.pt===pt){if(msg)log(msg,'bad');capCloud(pt,null)}CAP.pt=null;CAP.out=0;fill.style.width='0';fill.style.background='#8a7a5a'};
   if(!f){txt.textContent='⚑ '+pt.n+' · '+own+' — захватывать могут только члены группировок';stop();return}
   if(st.o===f){txt.textContent='⚑ '+pt.n+' · под контролем «'+FAC[f].n+'»'+(st.g>0?' · охрана: '+st.g:'');stop();fill.style.width='100%';fill.style.background=FAC[f].col;return}
   if(st.lock>t){txt.textContent='⚑ '+pt.n+' · '+own+' · перезахват через '+fmtHM(st.lock-t);stop();return}
   const gs=guardsOf(pt).length;if(gs>0||(st.o&&st.g>0&&pt.m===M.id&&gs===0&&(t-(CAP.seenG||0)<4000))){if(gs>0)CAP.seenG=t;txt.textContent='⚑ '+pt.n+' · охрана «'+own+'»: '+Math.max(gs,0)+' — сначала перебейте охрану';stop();return}
   if(S.hp<=0){stop();return}
-  if(CAP.pt!==pt){CAP.pt=pt;CAP.start=t;CAP.announced=false;CAP.out=0}else if(CAP.out){CAP.start+=t-CAP.out;CAP.out=0;log('Вы вернулись в круг — захват '+pt.n+' продолжается.','good')}const prog=(t-CAP.start)/CAP_MS;
+  if(CAP.pt!==pt){if(CAP.pt)capCloud(CAP.pt,null);CAP.pt=pt;CAP.start=t;CAP.announced=false;CAP.out=0;capCloud(pt,{f,at:t,by:S.name})}else if(CAP.out){CAP.start+=t-CAP.out;CAP.out=0;log('Вы вернулись в круг — захват '+pt.n+' продолжается.','good');capCloud(pt,{f,at:CAP.start,by:S.name})}const prog=(t-CAP.start)/CAP_MS;
   if(!CAP.announced){CAP.announced=true;zoneMsg('⚑ «'+FAC[f].n+'» начали захват: '+pt.n+' ('+MAPS[pt.m].name+')',true)}
   txt.textContent='⚑ Захват: '+pt.n+' · '+fmtMs(CAP_MS-(t-CAP.start))+' — не выходите из круга';fill.style.background=FAC[f].col;fill.style.width=Math.min(100,prog*100)+'%';
-  if(prog>=1){const p0=pt;CAP.pt=null;sectMut(d=>{const p=d.pts[p0.i]||{};if((p.lock||0)>Date.now()&&p.o!==f)return false;d.pts[p0.i]={o:f,at:Date.now(),lock:Date.now()+LOCK_MS,g:3+Math.floor(Math.random()*3),by:S.name}}).then(ok=>{if(ok!==false){zoneMsg('⚑ «'+FAC[f].n+'» захватили '+p0.n+' ('+MAPS[p0.m].name+')! Следующий захват — через 3 часа.',true);GSEEN[p0.i]=new Set();facMut(f,d=>{facLog(d,'sector',{c:0,who:p0.n})}).catch(()=>{})}else log('Сектор уже перехватили.','bad')})}},500);
-{const _die=die;die=function(src){if(CAP.pt){log('Вы погибли — захват сброшен.','bad');CAP.pt=null}return _die(src)}}
+  if(prog>=1){const p0=pt;CAP.pt=null;sectMut(d=>{const p=d.pts[p0.i]||{};if((p.lock||0)>Date.now()&&p.o!==f)return false;if(!p.cap||p.cap.f!==f||Date.now()-p.cap.at<CAP_MS-5000)return false;d.pts[p0.i]={o:f,at:Date.now(),lock:Date.now()+LOCK_MS,g:3+Math.floor(Math.random()*3),by:S.name}}).then(ok=>{if(ok!==false){zoneMsg('⚑ «'+FAC[f].n+'» захватили '+p0.n+' ('+MAPS[p0.m].name+')! Следующий захват — через 3 часа.',true);GSEEN[p0.i]=new Set();facMut(f,d=>{facLog(d,'sector',{c:0,who:p0.n})}).catch(()=>{})}else log('Захват не засчитан: сектор перехватили или облако не подтвердило 5 минут удержания. Начните заново.','bad')})}},500);
+{const _die=die;die=function(src){if(CAP.pt){log('Вы погибли — захват сброшен.','bad');capCloud(CAP.pt,null);CAP.pt=null}return _die(src)}}
 // отображение: круги на земле (2D), на плане карты и на мини-карте
 function ptCol(st){return st.o?FAC[st.o].col:'#c8c0a8'}
 {const _dt=drawTilesCached;drawTilesCached=function(c,x0,y0,x1,y1,t){_dt(c,x0,y0,x1,y1,t);const pts=SECT.pts.filter(p=>p.m===M.id);if(!pts.length)return;c.save();
   for(const pt of pts){const st=ptState(pt),col=ptCol(st);c.strokeStyle=col;c.globalAlpha=.8;c.lineWidth=2;c.setLineDash([8,6]);c.lineDashOffset=-t*20;c.beginPath();c.arc(pt.x*T,pt.y*T,CAP_R*T,0,7);c.stroke();c.setLineDash([]);c.globalAlpha=.12;c.fillStyle=col;c.fill();c.globalAlpha=1;
     c.fillStyle='#3a2c18';c.fillRect(pt.x*T-1,pt.y*T-26,2.5,26);c.fillStyle=col;c.beginPath();c.moveTo(pt.x*T+1.5,pt.y*T-26);c.lineTo(pt.x*T+16,pt.y*T-21+Math.sin(t*4)*1.5);c.lineTo(pt.x*T+1.5,pt.y*T-15);c.fill();
-    c.font='700 11px "IBM Plex Mono",monospace';c.textAlign='center';c.lineWidth=3;c.strokeStyle='rgba(0,0,0,.8)';const lab=pt.n+' · '+(st.o?FAC[st.o].n:'ничей');c.strokeText(lab,pt.x*T,pt.y*T-30);c.fillStyle=col;c.fillText(lab,pt.x*T,pt.y*T-30)}c.restore()}}
+    c.font='700 11px "IBM Plex Mono",monospace';c.textAlign='center';c.lineWidth=3;c.strokeStyle='rgba(0,0,0,.8)';const lab=pt.n+' · '+(st.o?FAC[st.o].n:'ничей')+(capActive(st)&&FAC[st.cap.f]?' · ⚑ захват «'+FAC[st.cap.f].n+'» '+fmtMs(CAP_MS-(Date.now()-st.cap.at)):'');c.strokeText(lab,pt.x*T,pt.y*T-30);c.fillStyle=col;c.fillText(lab,pt.x*T,pt.y*T-30)}c.restore()}}
 if(typeof drawPlan==='function'){const _dp=drawPlan;drawPlan=function(m,maxW){const cnv=_dp(m,maxW);const s=parseFloat(cnv.style.width)/m.w;const c=cnv.getContext('2d');for(const pt of SECT.pts){if(pt.m!==m.id)continue;const st=ptState(pt);c.strokeStyle=ptCol(st);c.lineWidth=2;c.beginPath();c.arc(pt.x*s,pt.y*s,CAP_R*s,0,7);c.stroke();c.fillStyle=ptCol(st);c.font='700 10px sans-serif';c.fillText('⚑',pt.x*s-4,pt.y*s+4)}return cnv}}
 // рейтинг группировок — во вкладке «Рейтинг»
 {const _rv=TABVIEW.rating;TABVIEW.rating=b=>{const box=el('div');box.append(el('div','sec','Рейтинг группировок'));const l=el('div','list');box.append(l,el('p','muted small','Рейтинг = уровни бойцов ×10 + захваченные сектора ×100 + общак/100. Секторов в игре: '+SECT.pts.length+'.'));b.append(box);
@@ -5124,7 +5127,7 @@ if(typeof drawPlan==='function'){const _dp=drawPlan;drawPlan=function(m,maxW){co
     for(const [f,r,sc,mem] of rows){const row=el('div','row');row.append(facBadge(f,32));const gw=el('div','grow');gw.append(el('div','t',FAC[f].n+' · рейтинг '+r),el('div','s','секторов: '+sc+' · бойцов: '+mem));row.append(gw);l.append(row)}});if(_rv)_rv(b)}}
 // во вкладке «Карта» — список секторов и владельцев
 {const _mv=TABVIEW.map;TABVIEW.map=b=>{_mv(b);const sel=MAPV.sel&&MAPS[MAPV.sel]?MAPV.sel:M.id;const pts=SECT.pts.filter(p=>p.m===sel);if(!pts.length)return;const w=b.querySelector('.wmap');const box=el('div');box.append(el('div','sec','Сектора для захвата'));const l=el('div','list');const t=Date.now();
-  for(const pt of pts){const st=ptState(pt);const r=el('div','row');const gw=el('div','grow');gw.append(el('div','t','⚑ '+pt.n+' · '+(st.o?FAC[st.o].n:'ничей')),el('div','s',(st.o?'охрана: '+(st.g|0)+' · ':'')+(st.lock>t?'перезахват через '+Math.ceil((st.lock-t)/60000)+' мин':'можно захватить')));r.append(gw);l.append(r)}box.append(l);(w||b).append(box)}}
+  for(const pt of pts){const st=ptState(pt);const r=el('div','row');const gw=el('div','grow');gw.append(el('div','t','⚑ '+pt.n+' · '+(st.o?FAC[st.o].n:'ничей')),el('div','s',(st.o?'охрана: '+(st.g|0)+' · ':'')+(capActive(st)&&FAC[st.cap.f]?'⚑ идёт захват: «'+FAC[st.cap.f].n+'» ('+st.cap.by+'), осталось '+fmtMs(CAP_MS-(t-st.cap.at))+' · ':'')+(st.lock>t?'перезахват через '+Math.ceil((st.lock-t)/60000)+' мин':'можно захватить')));r.append(gw);l.append(r)}box.append(l);(w||b).append(box)}}
 
 // ================= АДМИН: НАЗНАЧИТЬ / СНЯТЬ ЛИДЕРА БЕЗ ЗАЯВКИ =================
 // Админ выбирает любого игрока (онлайн или из рейтинга) и делает его лидером группировки. Снять лидера может только админ.
@@ -5297,18 +5300,40 @@ EN.war_ren=Object.assign({},EN.gunner,{n:'Боец «Ренегатов»',fac:'
 EN.war_mil=Object.assign({},EN.gunner,{n:'Боец «Военных»',fac:'mil',xp:40,aggro:3.2,boss:0,lair:0});
 const WAR={maps:['city','wild','chem'],n:3,last:{},loadT:0};
 const leaderless=f=>{const d=FACD[f];return !d||!Object.values(d.members||{}).some(m=>normR(m.r)==='leader')};
-function warCenter(m){const R=rng(Math.floor(Date.now()/(20*60e3))*31+m.id.length*7);return randFree(m.g,R,(x,y)=>notExit(m,x,y)&&!(typeof inSafe==='function'&&inSafe(x+.5,y+.5))&&(m.g[y][x]==='.'||m.g[y][x]===','||m.g[y][x]==='='),3000)}
+// Бой идёт за спорный сектор: если кто-то уже захватывает сектор группировки без лидера — её боты идут отбивать именно его,
+// иначе раз в 20 минут выбирается доступный сектор. Боты захватывают по тем же правилам, что и игроки: 5 минут в круге,
+// пока в круге нет врагов и перебита охрана; ушли из круга больше чем на минуту — захват сброшен.
+function warSector(m){const t=Date.now();const pts=SECT.pts.filter(p=>p.m===m.id);if(!pts.length)return null;
+  const hot=pts.find(p=>{const st=ptState(p);return capActive(st)&&st.o&&st.o!==st.cap.f&&leaderless(st.o)});if(hot)return hot;
+  const free=pts.filter(p=>!(ptState(p).lock>t));const pool=free.length?free:pts;const R=rng(Math.floor(t/(20*60e3))*31+m.id.length*7);return pool[Math.floor(R()*pool.length)]}
+function warCenter(m){const p=warSector(m);if(p)return [Math.floor(p.x),Math.floor(p.y)];const R=rng(Math.floor(Date.now()/(20*60e3))*31+m.id.length*7);return randFree(m.g,R,(x,y)=>notExit(m,x,y)&&!(typeof inSafe==='function'&&inSafe(x+.5,y+.5))&&(m.g[y][x]==='.'||m.g[y][x]===','||m.g[y][x]==='='),3000)}
+function warSpot(c,side){for(let k=0;k<30;k++){const an=(side<0?Math.PI:0)+(Math.random()-.5)*1.6,rr=6+Math.random()*3;const x=c[0]+.5+Math.cos(an)*rr,y=c[1]+.5+Math.sin(an)*rr;const tx=Math.floor(x),ty=Math.floor(y);const ch=M.g[ty]?.[tx];if(ch&&walkable(ch)&&ch!=='~'&&ch!=='W'&&notExit(M,tx,ty))return [x,y]}return null}
+WAR.cap={};
 setInterval(async()=>{if(!S||!M||paused||!WAR.maps.includes(M.id))return;try{if(typeof hostId==='function'&&hostId(M.id)!==myNetId())return}catch(e){return}if(emState().st==='active')return;
-  if(Date.now()-WAR.loadT>120000){WAR.loadT=Date.now();await Promise.all([facLoad('ren'),facLoad('mil')]).catch(()=>{})}
+  if(Date.now()-WAR.loadT>120000){WAR.loadT=Date.now();await Promise.all([facLoad('ren'),facLoad('mil'),sectLoad()]).catch(()=>{})}
   const r=rtFor(M.id),c=warCenter(M);if(!c)return;const bots=f=>r.enemies.filter(e=>e.alive&&!e.dying&&e.type==='war_'+f);
   for(const f of ['ren','mil']){if(!leaderless(f))continue;const have=bots(f);if(have.length>=WAR.n)continue;const key=M.id+f;if(Date.now()-(WAR.last[key]||0)<45000)continue;WAR.last[key]=Date.now();
-    const side=f==='ren'?-1:1;for(let k=have.length;k<WAR.n;k++){const x=c[0]+side*(5+Math.random()*3),y=c[1]+(Math.random()-.5)*5;const tx=Math.floor(x),ty=Math.floor(y);if(!walkable(M.g[ty]?.[tx]))continue;const e=mkEnemy('war_'+f,tx,ty);e.x=x;e.y=y;e.id='w'+f+'_'+Math.random().toString(36).slice(2,7);e.summoned=true;r.enemies.push(e)}}},4000);
+    const side=f==='ren'?-1:1;for(let k=have.length;k<WAR.n;k++){const s=warSpot(c,side);if(!s)continue;const e=mkEnemy('war_'+f,Math.floor(s[0]),Math.floor(s[1]));e.x=s[0];e.y=s[1];e.id='w'+f+'_'+Math.random().toString(36).slice(2,7);e.summoned=true;r.enemies.push(e)}}
+  warCapture(r,bots)},4000);
+async function warCapture(r,bots){const pt=warSector(M);if(!pt)return;WAR.pt=pt;const st=ptState(pt),t=Date.now();
+  for(const f of ['ren','mil']){const key=M.id+'_'+f;const cp=WAR.cap[key];const by='Боты «'+FAC[f].n+'»';
+    const reset=msg=>{if(WAR.cap[key]){if(msg)zoneMsg(msg,true);capCloud(WAR.cap[key].pt,null,by)}delete WAR.cap[key]};
+    if(cp&&cp.pt!==pt){reset();continue}
+    if(!leaderless(f)||st.o===f||st.lock>t){reset();continue}
+    const inside=bots(f).filter(e=>Math.hypot(e.x-pt.x,e.y-pt.y)<=CAP_R);
+    const foes=r.enemies.filter(e=>e.alive&&!e.dying&&EN[e.type]&&EN[e.type].fac&&EN[e.type].fac!==f&&Math.hypot(e.x-pt.x,e.y-pt.y)<=CAP_R);
+    const hold=inside.length>0&&foes.length===0&&guardsOf(pt).length===0;
+    if(hold){if(!cp){WAR.cap[key]={pt,at:t,out:0};capCloud(pt,{f,at:t,by},by);zoneMsg('⚑ '+by+' начали захват: '+pt.n+' ('+MAPS[pt.m].name+')',true)}
+      else if(cp.out){cp.at+=t-cp.out;cp.out=0;capCloud(pt,{f,at:cp.at,by},by)}
+      const c2=WAR.cap[key];if(t-c2.at>=CAP_MS){delete WAR.cap[key];const ok=await sectMut(d=>{const p=d.pts[pt.i]||{};if((p.lock||0)>Date.now()&&p.o!==f)return false;if(!p.cap||p.cap.f!==f||Date.now()-p.cap.at<CAP_MS-5000)return false;d.pts[pt.i]={o:f,at:Date.now(),lock:Date.now()+LOCK_MS,g:3+Math.floor(Math.random()*3),by}}).catch(()=>false);
+        if(ok!==false){GSEEN[pt.i]=new Set();zoneMsg('⚑ '+by+' захватили '+pt.n+' ('+MAPS[pt.m].name+')! Следующий захват — через 3 часа.',true)}}}
+    else if(cp){if(!cp.out)cp.out=t;else if(t-cp.out>CAP_OUT_MS)reset('⚑ '+by+' не удержали '+pt.n+' — захват сорван.')}}}
 // перестрелка: бот ищет ближайшего бойца другой группировки (бота или охранника сектора), сближается и стреляет
 let warAcc=0;
 {const _ue=updateEnemies;updateEnemies=function(dt){_ue(dt);if(!S||!M||!WAR.maps.includes(M.id))return;let host=false;try{host=hostId(M.id)===myNetId()}catch(e){}if(!host)return;warAcc+=dt;if(warAcc<.2)return;const step=warAcc;warAcc=0;
   const all=rtFor(M.id).enemies.filter(e=>e.alive&&!e.dying&&EN[e.type]&&EN[e.type].fac);
   for(const e of all){if(!/^war_/.test(e.type))continue;if(e.tg&&e.seen)continue;const d=EN[e.type];let foe=null,fd=14;for(const o of all){if(EN[o.type].fac===d.fac)continue;const dd=Math.hypot(o.x-e.x,o.y-e.y);if(dd<fd){fd=dd;foe=o}}
-    if(!foe){e.moving=false;continue}const a=Math.atan2(foe.y-e.y,foe.x-e.x);e.a=a;
+    if(!foe){const pt=WAR.pt;if(pt&&pt.m===M.id){const dd=Math.hypot(pt.x-e.x,pt.y-e.y);if(dd>CAP_R*.55){const a=Math.atan2(pt.y-e.y,pt.x-e.x);e.a=a;const sp=(d.spd||3)*.7*step;moveBody(e,Math.cos(a)*sp,Math.sin(a)*sp,d.r||.3);e.moving=true;e.phase=(e.phase||0)+step*6;continue}}e.moving=false;continue}const a=Math.atan2(foe.y-e.y,foe.x-e.x);e.a=a;
     if(fd>7){const sp=(d.spd||3)*.8*step;moveBody(e,Math.cos(a)*sp,Math.sin(a)*sp,d.r||.3);e.moving=true;e.phase=(e.phase||0)+step*6}else e.moving=false;
     e.wcd=(e.wcd||Math.random()*.6)-step;if(fd<=9&&e.wcd<=0){e.wcd=.7+Math.random()*.6;const rg=d.rgd||{dmg:10,spd:16,range:11,spread:.08,kind:'bullet'};try{enemyShoot(e,rg,a)}catch(x){}
       const t=fd/(rg.spd||16)*1000,dmg=(rg.dmg||10)*(.7+Math.random()*.5),hitP=Math.max(.35,.85-fd*.05);const tgt=foe;setTimeout(()=>{if(tgt.alive&&!tgt.dying&&Math.random()<hitP)try{hostDamage(tgt,dmg,a,1,'war')}catch(x){}},t)}}}}
@@ -5321,6 +5346,196 @@ setInterval(()=>{if(!S||!S.rq||!S.rq.act)return;for(const q of S.rq.act){if(q.ty
   Object.assign(q,{to:tg.id,map:tg.map,t:'Посылка: '+tg.n,d:'Отнесите свёрток — '+tg.n+' ('+MAPS[tg.map].name+'). Получатель сменился: в группировки посылки больше не носим.'});log('📦 Посылка для «'+old+'» переадресована: отнесите её — '+tg.n+' ('+MAPS[tg.map].name+').','sys');dirty=true}},5000);
 // объявление о войне при входе на локацию
 let warNote=0;{const _em=enterMap;enterMap=function(id,x,y){const r=_em(id,x,y);if(WAR.maps.includes(id)&&Date.now()>warNote&&(leaderless('ren')||leaderless('mil'))){warNote=Date.now()+600000;log('⚔ Здесь идёт война группировок: пока у них нет лидера, их боты перестреливаются между собой. Берегитесь шальных пуль!','bad')}return r}}
+
+// ================= ЭТАП 2: АНОМАЛИИ, ДЕТЕКТОРЫ, АРТЕФАКТЫ =================
+// Невидимые аномалии (ток, химожог, радиация, гравиволна, телепорт) видны только в детектор.
+// Расклад общий для всех игроков: меняется каждые 30 минут и после каждого выброса; часть аномалий блуждает.
+// Возле аномалий лежат артефакты: чем опаснее локация, тем сильнее; слабые — с побочкой.
+// Слоты артефактов открываются рангами: 1 ранг — 1 слот, +1 за каждый ранг (до 6).
+
+// ---------- Детекторы ----------
+Object.assign(ITEMS,{
+ det1:{n:'Детектор «Отклик»',k:'det',p:150,r:1,d:'Простой пищалка-детектор: чем ближе аномалия, тем чаще писк. Самих аномалий не показывает. Радиус 6 м. Слот «Детектор», работает от батареек.'},
+ det2:{n:'Детектор «Медведь»',k:'det',p:650,r:2,d:'Показывает аномалии и артефакты поблизости. Радиус 8 м. Работает от батареек.'},
+ det3:{n:'Детектор «Велес»',k:'det',p:1900,r:3,d:'Показывает аномалии с их типом и артефакты. Радиус 12 м. Работает от батареек.'},
+ det4:{n:'Детектор «Сварог»',k:'det',p:4800,r:4,d:'Лучший детектор Пустоши: радиус 18 м, видит всё, включая пространственные пузыри-телепорты. Работает от батареек.'}});
+Object.assign(WT,{det1:.3,det2:.4,det3:.5,det4:.6});
+const DETS={det1:{lvl:1,r:6,min:30},det2:{lvl:2,r:8,min:30},det3:{lvl:3,r:12,min:35},det4:{lvl:4,r:18,min:40}};
+SLOTS.det='Детектор';if(!GEAR.includes('det'))GEAR.push('det');SLOTPOS.push(['det','right']);
+// иконка детектора: корпус с экраном и антенной, цвет экрана — по уровню
+{const _dg=drawGearIcon;drawGearIcon=function(c,id,x,y){const d=DETS[id];if(!d)return _dg(c,id,x,y);const sc=['#7adf8a','#5ac8ff','#ffd24a','#ff7a5a'][d.lvl-1];c.save();c.translate(x,y);
+  c.strokeStyle='#2a2a2a';c.lineWidth=.9;c.beginPath();c.moveTo(3,-4);c.lineTo(5.5,-8.5);c.stroke();c.fillStyle='#d8d8d8';c.beginPath();c.arc(5.5,-8.5,.9,0,7);c.fill();
+  const g=c.createLinearGradient(-5,-5,5,7);g.addColorStop(0,'#5a5e60');g.addColorStop(1,'#2a2c2e');c.fillStyle=g;c.beginPath();c.roundRect?c.roundRect(-5,-5,10,12.5,2):c.rect(-5,-5,10,12.5);c.fill();c.strokeStyle='#111';c.lineWidth=.6;c.stroke();
+  c.fillStyle='#0c1410';c.fillRect(-3.6,-3.6,7.2,5.2);c.strokeStyle=sc;c.lineWidth=.7;c.beginPath();for(let i=0;i<=8;i++)c.lineTo(-3.2+i*.8,-1+Math.sin(i*1.3+d.lvl)*1.4);c.stroke();
+  for(let i=0;i<d.lvl;i++){c.fillStyle=sc;c.beginPath();c.arc(-3+i*2,4.2,.7,0,7);c.fill()}c.restore()}}
+function detCharge(id){S.dtc=S.dtc||{};if(S.dtc[id]==null)S.dtc[id]=1;return S.dtc[id]}
+const myDet=()=>{if(!S)return null;const id=S.eq.det;if(!id||!DETS[id]||(S.inv[id]||0)<=0||detCharge(id)<=0)return null;return Object.assign({id},DETS[id])};
+SELL.kalibr.push(['det1',170],['det2',720,5]);SELL.hmury&&SELL.hmury.push(['det2',700,5],['det3',2050,12]);SELL.gosha&&SELL.gosha.push(['det3',2000,12],['det4',5200,25]);
+LOOTT.push(['det1',1,1,.25,1],['det2',1,1,.1,2],['det3',1,1,.04,3]);
+
+// ---------- Артефакты ----------
+// at — сила (1 слабые с побочкой … 4 редчайшие); sh/c — внешний вид
+const ARTV={
+ art_pebble:{at:1,sh:'stone',c:'#b9a27a',g:'#ffd9a0'},art_thorn:{at:1,sh:'thorn',c:'#7a8a5a',g:'#c8ff8a'},art_bubble:{at:1,sh:'orb',c:'#8ab8c8',g:'#c8f0ff'},art_spark:{at:1,sh:'crystal',c:'#d8c050',g:'#fff4a0'},
+ art_flash:{at:2,sh:'crystal',c:'#7ac8ff',g:'#d0f0ff'},art_jelly:{at:2,sh:'jelly',c:'#d870b0',g:'#ffb0e0'},art_crystal:{at:2,sh:'crystal',c:'#c05050',g:'#ff9a8a'},art_slime:{at:2,sh:'jelly',c:'#6ac050',g:'#b8ff9a'},
+ art_stone:{at:3,sh:'flower',c:'#9a8a7a',g:'#ffe0b0'},art_moon:{at:3,sh:'orb',c:'#c8d8ff',g:'#ffffff'},art_battery:{at:3,sh:'ring',c:'#e8b040',g:'#fff0a0'},art_eye:{at:3,sh:'eye',c:'#40a0a0',g:'#a0ffff'},
+ art_soul:{at:4,sh:'heart',c:'#e04848',g:'#ffb0a0'},art_heart:{at:4,sh:'heart',c:'#a02060',g:'#ff80c0'},art_compass:{at:4,sh:'ring',c:'#60c0ff',g:'#e0faff'},art_goldfish:{at:4,sh:'fish',c:'#f0b030',g:'#fff0a0'}};
+Object.assign(ITEMS,{
+ art_pebble:{n:'Артефакт «Галька»',k:'art',art:1,st:{def:2,speedPct:-3},p:140,d:'Гладкий тёплый камешек. Немного держит удар, но тянет к земле.'},
+ art_thorn:{n:'Артефакт «Колючка»',k:'art',art:1,st:{critPct:4,maxHp:-8},p:160,d:'Колется даже через перчатку. Зато рука твёрже.'},
+ art_bubble:{n:'Артефакт «Пузырь»',k:'art',art:1,st:{radRes:.12,accPct:-6},p:170,d:'Мутный шар, в нём что-то плавает. Глушит радиацию, но мешает целиться.'},
+ art_spark:{n:'Артефакт «Искорка»',k:'art',art:1,st:{speedPct:5,radRes:-.06},p:180,d:'Слабо искрит. Ноги бегут, но фонит.'},
+ art_crystal:{n:'Артефакт «Кровавый кристалл»',k:'art',art:1,st:{dmgPct:7,maxHp:-6},p:520,d:'Тёмно-красный, будто налитый кровью. Злит.'},
+ art_slime:{n:'Артефакт «Слизь»',k:'art',art:1,st:{regen:1,radRes:.05},p:480,d:'Липкий зелёный комок. Затягивает царапины.'},
+ art_battery:{n:'Артефакт «Батарейка»',k:'art',art:1,st:{reloadPct:12,speedPct:5},p:1150,d:'Кольцо, гудящее током. Руки сами перезаряжают.'},
+ art_eye:{n:'Артефакт «Глаз»',k:'art',art:1,st:{accPct:14,critPct:4},p:1250,d:'Смотрит на тебя, даже когда лежит в рюкзаке.'},
+ art_heart:{n:'Артефакт «Сердце Пустоши»',k:'art',art:1,st:{maxHp:25,regen:2,def:2},p:2300,d:'Бьётся. Медленно, но бьётся.'},
+ art_compass:{n:'Артефакт «Компас»',k:'art',art:1,st:{speedPct:10,radRes:.2,dmgPct:6},p:2500,d:'Стрелка внутри указывает не на север, а туда, где безопаснее.'},
+ art_goldfish:{n:'Артефакт «Золотая рыбка»',k:'art',art:1,st:{capsPct:20,critPct:6,radRes:.12},p:2700,d:'Желаний не исполняет, но крышки к ней так и липнут.'}});
+for(const [id,a] of Object.entries(ARTV)){const it=ITEMS[id];if(!it)continue;it.k='art';it.art=1;it.at=a.at;it.r=Math.min(4,a.at+1);WT[id]=WT[id]||.3}
+const ARTPOOL=[1,2,3,4].map(t=>Object.keys(ARTV).filter(id=>ARTV[id].at===t));
+// рисунок артефакта: камень, кристалл, шар, медуза, цветок, кольцо, глаз, сердце, рыбка, колючка
+function drawArt(c,id,x,y,t){const a=ARTV[id];const pul=1+Math.sin((t||0)*3+x)*.08;c.save();c.translate(x,y);
+  const gr=c.createRadialGradient(0,0,0,0,0,8*pul);gr.addColorStop(0,a.g+'aa');gr.addColorStop(1,a.g+'00');c.fillStyle=gr;c.beginPath();c.arc(0,0,8*pul,0,7);c.fill();
+  const lgr=c.createLinearGradient(-4,-4,4,4);lgr.addColorStop(0,a.g);lgr.addColorStop(1,a.c);c.fillStyle=lgr;c.strokeStyle='rgba(0,0,0,.55)';c.lineWidth=.6;c.beginPath();
+  switch(a.sh){
+   case 'stone':{const R=[4.2,3.6,4.6,3.9,4.4,3.4,4.1];for(let i=0;i<7;i++){const an=i/7*6.283;c.lineTo(Math.cos(an)*R[i],Math.sin(an)*R[i]*.85)}c.closePath();c.fill();c.stroke();break}
+   case 'crystal':c.moveTo(0,-5.5);c.lineTo(2.6,-1);c.lineTo(1.6,4.5);c.lineTo(-1.6,4.5);c.lineTo(-2.6,-1);c.closePath();c.fill();c.stroke();c.beginPath();c.moveTo(0,-5.5);c.lineTo(0,4.5);c.moveTo(-2.6,-1);c.lineTo(2.6,-1);c.strokeStyle='rgba(255,255,255,.45)';c.stroke();break;
+   case 'orb':c.arc(0,0,4,0,7);c.fill();c.stroke();c.fillStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(-1.4,-1.5,1.2,0,7);c.fill();break;
+   case 'jelly':c.moveTo(-4.5,1);c.quadraticCurveTo(-4.5,-4.5,0,-4.5);c.quadraticCurveTo(4.5,-4.5,4.5,1);for(let i=0;i<4;i++)c.quadraticCurveTo(3.4-i*2.6,3.5+Math.sin((t||0)*4+i)*.8,2.25-i*2.25,1);c.closePath();c.fill();c.stroke();break;
+   case 'flower':for(let i=0;i<6;i++){const an=i/6*6.283;c.moveTo(0,0);c.ellipse(Math.cos(an)*2.4,Math.sin(an)*2.4,2.2,1.3,an,0,7)}c.fill();c.stroke();c.fillStyle='#4a3a2a';c.beginPath();c.arc(0,0,1.3,0,7);c.fill();break;
+   case 'ring':c.arc(0,0,4.2,0,7);c.arc(0,0,2.2,0,7,true);c.fill('evenodd');c.stroke();break;
+   case 'eye':c.ellipse(0,0,4.8,2.8,0,0,7);c.fill();c.stroke();c.fillStyle='#102020';c.beginPath();c.arc(0,0,1.5,0,7);c.fill();c.fillStyle='#fff';c.beginPath();c.arc(-.5,-.5,.5,0,7);c.fill();break;
+   case 'heart':c.moveTo(0,4.5);c.bezierCurveTo(-6,0,-3,-5.5,0,-2.2);c.bezierCurveTo(3,-5.5,6,0,0,4.5);c.fill();c.stroke();break;
+   case 'fish':c.ellipse(-.6,0,3.6,2.3,0,0,7);c.moveTo(2.6,0);c.lineTo(5.2,-2.4);c.lineTo(5.2,2.4);c.closePath();c.fill();c.stroke();c.fillStyle='#302010';c.beginPath();c.arc(-2.6,-.5,.55,0,7);c.fill();break;
+   case 'thorn':for(let i=0;i<10;i++){const an=i/10*6.283,r=i%2?1.8:4.8;c.lineTo(Math.cos(an)*r,Math.sin(an)*r)}c.closePath();c.fill();c.stroke();break}
+  c.restore()}
+{const _di=drawItem;drawItem=function(c,id,x,y,t){if(ARTV[id]){c.fillStyle='rgba(0,0,0,.3)';ellp(c,x,y+7,5,1.6);c.fill();drawArt(c,id,x,y,t);return}return _di(c,id,x,y,t)}}
+
+// ---------- Слоты артефактов по рангам ----------
+const ARTSL=['art1','art2','art3','art4','art5','art6'];
+ARTSL.forEach((s,i)=>{SLOTS[s]='Артефакт '+(i+1);if(!GEAR.includes(s))GEAR.push(s)});
+const artSlots=()=>S?Math.min(ARTSL.length,rankOf(S.lvl)):1;
+const artOn=id=>ARTSL.some(s=>S.eq[s]===id);
+{const _eq=equip;equip=function(id,h){const it=ITEMS[id];if(!it||it.k!=='art')return _eq(id,h);
+  const on=ARTSL.find(s=>S.eq[s]===id);if(on){S.eq[on]=null;log('Снято: '+it.n)}
+  else{const n=artSlots();const free=ARTSL.slice(0,n).find(s=>!S.eq[s]);if(!free){log('Все слоты артефактов заняты: ваш ранг «'+rankName(S.lvl)+'» даёт '+n+' сл. Снимите один артефакт или поднимите ранг (каждые 10 уровней).','bad');return}S.eq[free]=id;log('Надето: '+it.n)}
+  statCache=null;sendPresence();dirty=true;updateHud()}}
+{const _as=afterStart;afterStart=async function(){const r=await _as();try{if(S.eq.amulet&&ITEMS[S.eq.amulet]&&ITEMS[S.eq.amulet].art){if(!S.eq.art1)S.eq.art1=S.eq.amulet;S.eq.amulet=null;statCache=null}
+  for(const s of ARTSL.slice(artSlots()))if(S.eq[s]){S.eq[s]=null;statCache=null}}catch(e){}return r}}
+// ряд слотов артефактов под куклой персонажа
+{const st=document.createElement('style');st.textContent='.artrow{margin:8px 0 4px}.artrow .ah{font:600 12px var(--mono);color:#c8b890;margin-bottom:5px}.artrow .ag{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}.artrow button{aspect-ratio:1;min-height:44px;border-radius:8px;border:1px solid #5a4a30;background:rgba(30,24,16,.8);display:flex;align-items:center;justify-content:center;padding:0;font-size:10px;color:#7a6a50;line-height:1.1}.artrow button.on{border-color:#e8c060;box-shadow:0 0 10px rgba(232,192,96,.3)}.artrow button.lock{opacity:.45}';document.head.append(st)}
+{const _iv=TABVIEW.inv;invView=TABVIEW.inv=function(b){_iv(b);try{const doll=b.querySelector('.doll');if(!doll)return;const n=artSlots();const box=el('div','artrow');box.append(el('div','ah','✦ Артефакты · ранг «'+rankName(S.lvl)+'»: открыто слотов '+n+' из '+ARTSL.length));const g=el('div','ag');
+  ARTSL.forEach((s,i)=>{const v=S.eq[s];const lock=i>=n;const bt=el('button',(v?'on':'')+(lock?' lock':''));if(v){bt.append(iconCanvas(v,34));bt.title=ITEMS[v].n;bt.onclick=()=>{invSel=v;openTab('inv')}}else bt.textContent=lock?'🔒 ранг '+(i+1):'пусто';g.append(bt)});box.append(g);doll.after(box)}catch(e){}}}
+
+// ---------- Аномалии ----------
+const ANOT={
+ elec:{n:'Электра',col:'#7ad0ff',ic:'⚡',r:1.4,cd:1200},
+ chem:{n:'Химожог',col:'#9be04a',ic:'☣',r:1.7,cd:700},
+ rad:{n:'Радиоактивное пятно',col:'#ffd23a',ic:'☢',r:2.1,cd:600},
+ wave:{n:'Гравиволна',col:'#c08aff',ic:'◎',r:1.3,cd:1500},
+ tele:{n:'Пространственный пузырь',col:'#e8ffff',ic:'✺',r:1.0,cd:15000}};
+const ANO={key:'',list:[],arts:[]};
+const anoMapOk=m=>!!(m&&!m.safe&&!m.interior&&!m.arena&&m.loot&&!m.fac&&!/^base_/.test(m.id));
+const mapTier=m=>m.tier==null?1:Math.max(0,Math.min(4,m.tier|0));
+function strHash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function anoGen(m){const key=m.id+'_'+Math.floor(Date.now()/1800000)+'_'+EMS.idx;if(ANO.key===key)return ANO;const R=rng(strHash(key));const mt=mapTier(m);
+  const cond=(x,y)=>{const ch=m.g[y]?.[x];return ch&&walkable(ch)&&ch!=='~'&&ch!=='W'&&notExit(m,x,y)&&!(m.id==='city'&&typeof inSafe==='function'&&inSafe(x+.5,y+.5))};
+  const n=Math.max(5,Math.min(36,Math.round(m.w*m.h/260)));const list=[],arts=[];let tele=0;
+  for(let i=0;i<n;i++){const pos=randFree(m.g,R,cond,2000);if(!pos)continue;let t=['elec','chem','rad','wave'][Math.floor(R()*4)];if(mt>=2&&tele<2&&R()<.07){t='tele';tele++}
+    const a={i,t,x:pos[0]+.5,y:pos[1]+.5,r:ANOT[t].r*(1+mt*.06),mov:t!=='tele'&&R()<.3,A:1.5+R()*2.5,w:.12+R()*.2,ph:R()*6.283};list.push(a);
+    if(t!=='tele'&&R()<.16+mt*.04){let at=mt<=1?1:mt===2?2:mt===3?3:4;const q=R();if(q<.18)at=Math.min(4,at+1);else if(q<.4)at=Math.max(1,at-1);const pool=ARTPOOL[at-1];const an=R()*6.283,rr=a.r*(.35+R()*.45);
+      arts.push({k:key+'_'+i,id:pool[Math.floor(R()*pool.length)],x:a.x+Math.cos(an)*rr,y:a.y+Math.sin(an)*rr,a})}}
+  ANO.key=key;ANO.list=list;ANO.arts=arts;if(S){S.artGot=S.artGot||{};const ks=Object.keys(S.artGot);if(ks.length>150)for(const k of ks)if(!k.startsWith(m.id+'_'+Math.floor(Date.now()/1800000)))delete S.artGot[k]}return ANO}
+function anoPos(a){if(!a.mov)return a;const tt=Date.now()/1000*a.w+a.ph;const x=a.x+Math.cos(tt)*a.A,y=a.y+Math.sin(2*tt)*a.A*.5;if(walkable(M.g[Math.floor(y)]?.[Math.floor(x)])){a.cx=x;a.cy=y}return {x:a.cx==null?a.x:a.cx,y:a.cy==null?a.y:a.cy}}
+// артефакты рядом с блуждающей аномалией двигаются вместе с ней
+function artPos(r){if(!r.a.mov)return r;const p=anoPos(r.a);return {x:r.x+(p.x-r.a.x),y:r.y+(p.y-r.a.y)}}
+function anoTeleport(){const maps=Object.values(MAPS).filter(m=>anoMapOk(m)&&(m.id!=='city'||S.lvl>=7));const same=Math.random()<.4;const m=same?M:maps[Math.floor(Math.random()*maps.length)]||M;
+  const pos=randFree(m.g,Math.random,(x,y)=>{const ch=m.g[y]?.[x];return ch&&walkable(ch)&&ch!=='~'&&ch!=='W'&&notExit(m,x,y)},3000);if(!pos)return;
+  bigAlert('✺','ТЕЛЕПОРТ!','Пространственный пузырь выбросил вас: '+m.name,2600);if(m===M){P.x=pos[0]+.5;P.y=pos[1]+.5}else enterMap(m.id,pos[0]+.5,pos[1]+.5);log('✺ Вас затянуло в пространственный пузырь и выбросило: '+m.name+'.','bad')}
+let anoBeepT=0;
+function anoBeep(f){try{const o=sndOut();if(o)tone(o,SND.ctx.currentTime,.05,{type:'square',f:f||1500,v:.08})}catch(e){}}
+setInterval(()=>{if(!S||!M||paused||!titleEl.hidden||!anoMapOk(M)||S.hp<=0)return;const A=anoGen(M),t=Date.now(),mt=mapTier(M);
+  for(const a of A.list){const p=anoPos(a);const d=Math.hypot(P.x-p.x,P.y-p.y);if(d>=a.r)continue;const T=ANOT[a.t];if(t-(a.hit||0)<T.cd)continue;a.hit=t;
+    if(a.t==='elec'){hurt(6+5*mt,'аномалия «Электра»');floatText(P.x,P.y-1,'⚡ Электра','#7ad0ff');shake=Math.max(shake,.5)}
+    else if(a.t==='chem'){hurt(3+3*mt,'аномалия «Химожог»');floatText(P.x,P.y-1,'☣ химожог','#9be04a')}
+    else if(a.t==='rad'){S.rad=Math.min(200,(S.rad||0)+3+2*mt);floatText(P.x,P.y-1,'☢ +'+(3+2*mt)+' рад','#ffd23a')}
+    else if(a.t==='wave'){hurt(6+4*mt,'аномалия «Гравиволна»');const an=Math.atan2(P.y-p.y,P.x-p.x);for(let k=0;k<8;k++)moveBody(P,Math.cos(an)*.3,Math.sin(an)*.3,.3);floatText(P.x,P.y-1,'◎ отбросило','#c08aff');shake=Math.max(shake,.6)}
+    else if(a.t==='tele'){anoTeleport();return}
+    dirty=true}
+  S.artGot=S.artGot||{};for(const r of A.arts){if(S.artGot[r.k])continue;const p=artPos(r);if(Math.hypot(P.x-p.x,P.y-p.y)>.65)continue;S.artGot[r.k]=1;add(r.id);S.stats.arts=(S.stats.arts|0)+1;
+    zoneMsg('✦ '+S.name+' нашёл артефакт: '+ITEMS[r.id].n.replace('Артефакт ',''),true);log('✦ Подобран '+ITEMS[r.id].n+'. Наденьте его в слот артефактов (вкладка «Снаряжение»).','good');sfx.click&&sfx.click();checkAch();dirty=true}
+  // писк детектора
+  const det=myDet();if(det){let best=1e9;for(const a of A.list){if(a.t==='tele'&&det.lvl<4)continue;const p=anoPos(a);best=Math.min(best,Math.hypot(P.x-p.x,P.y-p.y)-a.r)}
+    let ab=1e9;for(const r of A.arts){if(S.artGot[r.k])continue;const p=artPos(r);ab=Math.min(ab,Math.hypot(P.x-p.x,P.y-p.y))}
+    const d=Math.min(best,ab);if(d<det.r&&t>anoBeepT){anoBeepT=t+140+Math.max(0,d)*110;anoBeep(ab<best?2100:1400)}}
+  updDetHud()},200);
+// разряд детектора (тратит заряд только в опасных местах)
+setInterval(()=>{if(!S||paused||!M||!anoMapOk(M))return;const id=S.eq.det;if(!id||!DETS[id]||(S.inv[id]||0)<=0)return;detCharge(id);if(S.dtc[id]<=0)return;S.dtc[id]=Math.max(0,S.dtc[id]-1/(DETS[id].min*60));
+  if(S.dtc[id]<=0){if((S.inv.cells||0)>0){take('cells',1);S.dtc[id]=1;log('🔋 Вставили новые батарейки: '+ITEMS[id].n+' заряжен.','good')}else log('📡 '+ITEMS[id].n+' сел. Нужны батарейки.','bad')}},1000);
+// батарейки вставляются и в разряженный детектор при надевании
+{const _eq2=equip;equip=function(id,h){const r=_eq2(id,h);try{if(ITEMS[id]&&ITEMS[id].k==='det'&&S.eq.det===id&&detCharge(id)<=0&&(S.inv.cells||0)>0){take('cells',1);S.dtc[id]=1;log('🔋 Батарейки вставлены: '+ITEMS[id].n+' заряжен.','good')}}catch(e){}return r}}
+// табло детектора
+{const st=document.createElement('style');st.textContent='#detHud{position:absolute;z-index:4;right:calc(12px + var(--sar,0px));top:calc(170px + var(--sat));background:rgba(14,18,16,.85);border:1px solid #4a8a6a;border-radius:9px;padding:5px 9px;font:600 11.5px var(--mono);color:#b8f0d0;pointer-events:none;max-width:210px;line-height:1.35}#detHud.hide{display:none}#detHud b{color:#ffe08a}';document.head.append(st)}
+const ARR=['→','↘','↓','↙','←','↖','↑','↗'];const arrTo=(x,y)=>ARR[(Math.round(Math.atan2(y-P.y,x-P.x)/(Math.PI/4))+8)%8];
+function updDetHud(){let h=document.getElementById('detHud');if(!h){h=el('div');h.id='detHud';document.getElementById('stage').append(h)}const id=S&&S.eq.det;
+  if(!S||!M||!id||!DETS[id]||!titleEl.hidden){h.classList.add('hide');return}h.classList.remove('hide');const ch=Math.round(detCharge(id)*100);
+  if(!anoMapOk(M)){h.innerHTML='📡 '+ITEMS[id].n.replace('Детектор ','')+' · '+ch+'%<br>здесь тихо';return}
+  if(ch<=0){h.innerHTML='📡 разряжен — нужны батарейки';return}const det=DETS[id],A=anoGen(M);let na=null,nd=1e9;for(const a of A.list){if(a.t==='tele'&&det.lvl<4)continue;const p=anoPos(a);const d=Math.hypot(P.x-p.x,P.y-p.y)-a.r;if(d<nd){nd=d;na=[a,p]}}
+  let s='📡 '+ITEMS[id].n.replace('Детектор ','')+' · '+ch+'%';if(na&&nd<det.r)s+='<br>'+(det.lvl>=3?ANOT[na[0].t].ic+' '+ANOT[na[0].t].n:'⚠ аномалия')+': <b>'+Math.max(0,nd).toFixed(1)+' м</b> '+(det.lvl>=2?arrTo(na[1].x,na[1].y):'');else s+='<br>аномалий рядом нет';
+  if(det.lvl>=2){let nr=null,rd=1e9;for(const r of A.arts){if(S.artGot&&S.artGot[r.k])continue;const p=artPos(r);const d=Math.hypot(P.x-p.x,P.y-p.y);if(d<rd){rd=d;nr=p}}if(nr&&rd<det.r)s+='<br>✦ артефакт: <b>'+rd.toFixed(1)+' м</b> '+arrTo(nr.x,nr.y)}h.innerHTML=s}
+// отрисовка: в детектор — яркие аномалии и артефакты; без детектора лишь изредка дрожит воздух
+function drawAno(c,a,p,t,vis){const T=ANOT[a.t],X=p.x*TILE_PX(),Y=p.y*TILE_PX(),R=a.r*TILE_PX();c.save();
+  if(!vis){if(Math.random()>.035){c.restore();return}c.globalAlpha=.07;c.fillStyle='#ffffff';c.beginPath();c.arc(X,Y,R*.7,0,7);c.fill();c.restore();return}
+  const g=c.createRadialGradient(X,Y,0,X,Y,R);g.addColorStop(0,T.col+'70');g.addColorStop(1,T.col+'00');c.fillStyle=g;c.beginPath();c.arc(X,Y,R,0,7);c.fill();c.strokeStyle=T.col;c.lineWidth=1.5;
+  if(a.t==='elec'){for(let k=0;k<3;k++){c.globalAlpha=.5+Math.random()*.5;c.beginPath();let x=X,y=Y;c.moveTo(x,y);const an=Math.random()*6.283;for(let s=0;s<5;s++){x+=Math.cos(an)*R/5+(Math.random()-.5)*8;y+=Math.sin(an)*R/5+(Math.random()-.5)*8;c.lineTo(x,y)}c.stroke()}}
+  else if(a.t==='chem'){c.fillStyle=T.col;for(let k=0;k<6;k++){const q=(t*.6+k/6)%1;c.globalAlpha=.6*(1-q);c.beginPath();c.arc(X+Math.cos(k*2.1)*R*.5,Y+Math.sin(k*2.7)*R*.4-q*10,2+q*3,0,7);c.fill()}}
+  else if(a.t==='rad'){c.setLineDash([6,5]);c.lineDashOffset=-t*15;c.globalAlpha=.8;c.beginPath();c.arc(X,Y,R*.9,0,7);c.stroke();c.setLineDash([])}
+  else if(a.t==='wave'){for(let k=0;k<3;k++){const q=(t*.8+k/3)%1;c.globalAlpha=.8*(1-q);c.beginPath();c.arc(X,Y,R*q,0,7);c.stroke()}}
+  else if(a.t==='tele'){c.globalAlpha=.9;c.beginPath();for(let s=0;s<40;s++){const an=s*.4+t*4,rr=s/40*R;c.lineTo(X+Math.cos(an)*rr,Y+Math.sin(an)*rr)}c.stroke()}
+  c.restore()}
+const TILE_PX=()=>T;
+{const _dt=drawTilesCached;drawTilesCached=function(c,x0,y0,x1,y1,t){_dt(c,x0,y0,x1,y1,t);if(!S||!M||!anoMapOk(M))return;const A=anoGen(M),det=myDet();
+  for(const a of A.list){const p=anoPos(a);const d=Math.hypot(P.x-p.x,P.y-p.y);const vis=!!det&&det.lvl>=2&&d<=det.r&&(a.t!=='tele'||det.lvl>=4);drawAno(c,a,p,t,vis);
+    if(vis&&det.lvl>=3){c.save();c.font='700 10px "IBM Plex Mono",monospace';c.textAlign='center';c.fillStyle=ANOT[a.t].col;c.fillText(ANOT[a.t].n,p.x*T,p.y*T-a.r*T-4);c.restore()}}
+  if(det&&det.lvl>=2)for(const r of A.arts){if(S.artGot&&S.artGot[r.k])continue;const p=artPos(r);if(Math.hypot(P.x-p.x,P.y-p.y)>det.r*(det.lvl>=3?1:.8))continue;drawArt(c,r.id,p.x*T,p.y*T+Math.sin(t*3+p.x)*1.5,t)}}}
+// подсказка при входе в опасную локацию
+{const _em=enterMap;enterMap=function(id,x,y){const r=_em(id,x,y);try{if(S&&anoMapOk(MAPS[id])&&!S.anoTip){S.anoTip=1;log('📡 В Пустоши есть невидимые аномалии: ток, химожог, радиация, гравиволны и телепорты. Увидеть их и артефакты возле них помогает детектор (слот «Детектор», продаёт Калибр).','sys')}}catch(e){}return r}}
+
+// ================= РЕФЕРАЛЬНЫЕ ССЫЛКИ =================
+// У каждого игрока в профиле есть ID и ссылка-приглашение (…/?ref=ID). Новичок, пришедший по ссылке, привязывается
+// к пригласившему автоматически. За каждые 1000 крышек, заработанных приглашённым, пригласивший получает 100 крышек.
+const REF_T=pid=>'osadok/'+(TESTROOM?'t_'+TESTROOM:'v1')+'/ref/'+pid;
+{try{const u=new URLSearchParams(location.search).get('ref');if(u&&/^[A-Za-z0-9]{4,16}$/.test(u))localStorage.setItem('osadok_ref',u)}catch(e){}}
+const refLink=()=>location.origin+location.pathname.replace(/index\.html$/,'')+'?ref='+(S&&S.pid||'');
+async function refPublish(){if(!S||!S.refBy||!S.pid)return;try{await cloudPut(REF_T(S.refBy)+'/'+S.pid,{v:1,at:Date.now(),ct:'1',n:S.name,u:S.refSent|0,dv:typeof DEVID!=='undefined'?DEVID:''})}catch(e){}}
+// привязка новичка (только для новых персонажей: до 5 уровня и пока не было привязки)
+setInterval(()=>{if(!S||!S.pid||S.refBy||S.refNo)return;let r='';try{r=localStorage.getItem('osadok_ref')||''}catch(e){}
+  if(!r||r===S.pid){if((S.lvl|0)>5)S.refNo=1;return}if((S.lvl|0)>5){S.refNo=1;return}
+  S.refBy=r;S.refEarn=0;S.refSent=0;S._pc=S.caps;dirty=true;log('🤝 Вы пришли в Пустошь по приглашению друга. Играйте — за ваши успехи он получит награду.','good');refPublish()},5000);
+// учёт заработанных крышек приглашённым
+setInterval(()=>{if(!S||!S.refBy)return;if(S._pc==null){S._pc=S.caps;return}const dlt=S.caps-S._pc;S._pc=S.caps;if(dlt>0&&dlt<50000){S.refEarn=(S.refEarn||0)+dlt;dirty=true}
+  const u=Math.floor((S.refEarn||0)/1000);if(u>(S.refSent|0)){S.refSent=u;dirty=true;refPublish()}},2000);
+// пригласивший забирает бонусы: читаем все записи своих приглашённых
+async function refFetch(){if(!S||!S.pid)return {};const cs=await cloud();const base=REF_T(S.pid)+'/';const found={};
+  await new Promise(res=>{const hs=[];const fin=()=>{for(const [c,h] of hs){c.removeListener('message',h);try{c.unsubscribe(base+'+')}catch(e){}}res()};setTimeout(fin,3500);
+    for(const c of cs){const h=(tp,buf)=>{if(!tp.startsWith(base))return;try{const d=JSON.parse(dec.decode(buf));const pid=tp.slice(base.length);if(d&&d.n&&(!found[pid]||(d.at||0)>(found[pid].at||0)))found[pid]=d}catch(e){}};hs.push([c,h]);c.on('message',h);const sub=()=>c.subscribe(base+'+',{qos:1});c.connected?sub():c.once('connect',sub)}});
+  S.refPaid=S.refPaid||{};S.refList=S.refList||{};let gain=0;
+  for(const [pid,d] of Object.entries(found)){if(pid===S.pid||(typeof DEVID!=='undefined'&&d.dv&&d.dv===DEVID))continue;const u=Math.max(0,Math.min(100000,d.u|0));S.refList[pid]={n:String(d.n).slice(0,24),u};
+    const paid=S.refPaid[pid]|0;if(u>paid){gain+=(u-paid)*100;S.refPaid[pid]=u}}
+  if(gain>0){S.caps+=gain;log('🤝 Ваши приглашённые друзья заработали крышки — вам бонус +'+gain+' крышек!','good');floatText(P.x,P.y-1.4,'+'+gain+' крыш.','#f2b65c');dirty=true;updateHud()}return found}
+setInterval(()=>{if(S&&!document.hidden)refFetch().catch(()=>{})},180000);
+{const _as=afterStart;afterStart=async function(){const r=await _as();setTimeout(()=>refFetch().catch(()=>{}),8000);return r}}
+// блок «Пригласи друга» в профиле
+{const st=document.createElement('style');st.textContent='.refbox{margin-top:10px;padding:10px;border:1px solid #6a5a38;border-radius:10px;background:rgba(40,32,20,.6)}.refbox .rl{display:flex;gap:6px;margin:6px 0}.refbox input{flex:1;min-width:0;font:12px var(--mono);background:#14110c;color:#f2e2b8;border:1px solid #5a4a30;border-radius:6px;padding:6px}.refbox .rr{font:12px var(--mono);color:#c8b890;margin-top:3px}';document.head.append(st)}
+{const _iv=TABVIEW.inv;invView=TABVIEW.inv=function(b){_iv(b);try{if(!S.pid){S.pid=Math.random().toString(36).slice(2,12);dirty=true}const box=el('div','refbox');box.append(el('div','sec','🤝 Пригласи друга'));
+  box.append(el('div','rr','Ваш ID: '+S.pid));const row=el('div','rl');const inp=document.createElement('input');inp.readOnly=true;inp.value=refLink();inp.onclick=()=>inp.select();
+  row.append(inp,btn('Копировать',async()=>{try{await navigator.clipboard.writeText(inp.value);log('Ссылка-приглашение скопирована.','good')}catch(e){inp.select();document.execCommand('copy');log('Ссылка-приглашение скопирована.','good')}},'btn primary'));box.append(row);
+  box.append(el('p','muted small','Друг, который зайдёт по этой ссылке и создаст персонажа, станет вашим приглашённым. За каждые 1000 крышек, которые он заработает, вы получите 100 крышек.'));
+  const lst=el('div');const draw=()=>{lst.replaceChildren();const L=Object.values(S.refList||{});if(!L.length){lst.append(el('div','rr','Приглашённых пока нет.'));return}let tot=0;for(const x of L){tot+=x.u*100;lst.append(el('div','rr','• '+x.n+' — заработал '+(x.u*1000)+'+ крышек, ваш бонус '+(x.u*100)))}lst.append(el('div','rr','Всего получено бонусов: '+tot+' крышек'))};draw();box.append(lst);
+  if(S.refBy)box.append(el('div','rr','Вас пригласил игрок с ID '+S.refBy+'.'));
+  refFetch().then(()=>{if(lst.isConnected)draw()}).catch(()=>{});
+  const L=b.querySelector('.grid2>div')||b;L.append(box)}catch(e){}}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
