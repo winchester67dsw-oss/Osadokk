@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793059919";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793060329";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -4521,7 +4521,7 @@ function drawPlan(m,maxW){const s=Math.max(4,Math.min(12,Math.floor(maxW/m.w)));
   if(m.id===M.id){c.save();c.translate(P.x*s,P.y*s);c.rotate(P.a);c.fillStyle='#ffb347';c.beginPath();c.moveTo(7,0);c.lineTo(-5,-5);c.lineTo(-2,0);c.lineTo(-5,5);c.closePath();c.fill();c.strokeStyle='#000';c.lineWidth=1.2;c.stroke();c.restore()}
   return cnv}
 TABVIEW.map=b=>{const w=el('div','wmap');b.append(w);const sel=MAPV.sel&&MAPS[MAPV.sel]?MAPV.sel:M.id;const m=MAPS[sel];
-  const locs=el('div','locs');const main=['hub','ruins','swamp','chem','city','bar','shops','mayor','workshop','cellar','lab1','lab2','lab3'].filter(id=>MAPS[id]);
+  const locs=el('div','locs');const main=['hub','ruins','swamp','wild','chem','city','bar','shops','mayor','workshop','cellar','lab1','lab2','lab3'].filter(id=>MAPS[id]);
   for(const id of main){const x=el('button',null,(id===M.id?'● ':'')+MAPS[id].name.replace('Лаборатория «Х-9» · ','Х-9 · '));x.setAttribute('aria-pressed',id===sel);x.onclick=()=>{MAPV.sel=id;openTab('map')};locs.append(x)}
   const others=Object.keys(MAPS).filter(id=>!main.includes(id)&&!MAPS[id].arena).sort((a,b)=>MAPS[a].name.localeCompare(MAPS[b].name,'ru',{numeric:true}));
   if(others.length){const s2=el('select');s2.append(el('option',null,'Другие здания…'));for(const id of others){const o=el('option',null,MAPS[id].name);o.value=id;if(id===sel)o.selected=true;s2.append(o)}s2.onchange=()=>{if(MAPS[s2.value]){MAPV.sel=s2.value;openTab('map')}};locs.append(s2)}
@@ -4769,7 +4769,9 @@ function gridChunk(c,cx,cy){if(!GRID.on)return;const tx0=cx*TCH,ty0=cy*TCH,tx1=M
 // на плане локации — сетка секторов с номерами
 if(typeof drawPlan==='function'){const _dp=drawPlan;drawPlan=function(m,maxW){const cnv=_dp(m,maxW);const s=parseFloat(cnv.style.width)/m.w;const [cX,cY]=secGrid(m),sw=m.w/cX*s,sh=m.h/cY*s;const c=cnv.getContext('2d');c.save();c.strokeStyle='rgba(255,240,200,.3)';c.lineWidth=1;c.beginPath();
   for(let i=1;i<cX;i++){c.moveTo(i*sw,0);c.lineTo(i*sw,m.h*s)}for(let j=1;j<cY;j++){c.moveTo(0,j*sh);c.lineTo(m.w*s,j*sh)}c.stroke();
-  const fs=Math.max(7,Math.min(10,sw/4));c.font='700 '+fs+'px "IBM Plex Mono",monospace';c.textBaseline='top';c.textAlign='left';if(sw>=18)for(let j=0;j<cY;j++)for(let i=0;i<cX;i++){const t=(i+1)+'.'+(j+1);c.fillStyle='rgba(0,0,0,.5)';c.fillRect(i*sw+1,j*sh+1,c.measureText(t).width+4,fs+3);c.fillStyle='#f2d28a';c.fillText(t,i*sw+3,j*sh+2)}c.restore();return cnv}}
+  const fs=Math.max(7,Math.min(10,sw/4));c.font='700 '+fs+'px "IBM Plex Mono",monospace';c.textBaseline='top';c.textAlign='left';const tag=(t,x,y)=>{c.fillStyle='rgba(0,0,0,.55)';c.fillRect(x-1,y-1,c.measureText(t).width+4,fs+3);c.fillStyle='#f2d28a';c.fillText(t,x+1,y)};
+  if(sw>=30)for(let j=0;j<cY;j++)for(let i=0;i<cX;i++)tag((i+1)+'.'+(j+1),i*sw+2,j*sh+2);
+  else{for(let i=0;i<cX;i++)tag(String(i+1),i*sw+2,2);for(let j=1;j<cY;j++)tag(String(j+1),2,j*sh+2)}c.restore();return cnv}}
 // переключатель сетки в «Настройках»
 {const _sv=TABVIEW.settings;TABVIEW.settings=b=>{const box=el('div');box.append(el('div','sec','Сетка секторов на карте'));const r=el('div','startrow');
   r.append(btn('Показывать',()=>{GRID.on=true;try{localStorage.setItem('osadok_grid','1')}catch(e){}TC.chunks.clear();openTab('settings')},GRID.on?'btn primary':'btn'),btn('Скрыть',()=>{GRID.on=false;try{localStorage.setItem('osadok_grid','0')}catch(e){}TC.chunks.clear();openTab('settings')},GRID.on?'btn':'btn primary'));
@@ -5158,6 +5160,67 @@ function throwItem(id,q){const it=ITEMS[id];if(!it||it.k==='quest'){log('Это�
 const fireFac=id=>{const f=ALLFIRES.find(x=>x.id===id);return f&&MAPS[f.m]&&MAPS[f.m].fac||null};
 {const _cf=campfire;campfire=function(tx,ty){const f=ALLFIRES.find(f=>f.m===M.id&&f.x===tx&&f.y===ty);if(f&&MAPS[f.m].fac&&MAPS[f.m].fac!==myFac()&&!isAdm()){log('Это костёр группировки «'+FAC[MAPS[f.m].fac].n+'». Возрождаться здесь могут только её члены.','bad');return}return _cf(tx,ty)}}
 {const _die=die;die=function(src){if(S&&S.spawn){const ff=fireFac(S.spawn);if(ff&&ff!==myFac()){S.spawn=ALLFIRES[0].id;log('Точка возрождения группировки вам больше недоступна — вы очнётесь у обычного костра.','sys')}}return _die(src)}}
+
+// ================= ЧЕРНОЛЕСЬЕ: ОГРОМНАЯ ЛОКАЦИЯ К ЮГУ ОТ БОЛОТА =================
+// 150×110 клеток: дремучий лес, озеро с островом, заброшенная деревня с бандитами, овраги,
+// аномальное поле с артефактами, лагерь охотников (костёр) и логово вожака стаи. Опасно и PvP.
+function genWild(){const W=150,H=110,R=rng(8080),g=grid(W,H,'.');
+  for(let x=0;x<W;x++){g[0][x]='#';g[H-1][x]='#'}for(let y=0;y<H;y++){g[y][0]='#';g[y][W-1]='#'}
+  // плавный «шум» для леса и травы
+  const N=(sx,sy,s)=>{const f=(x,y)=>hash2(Math.floor(x)+s,Math.floor(y)+s*3);const xi=Math.floor(sx),yi=Math.floor(sy),xf=sx-xi,yf=sy-yi,sm=t=>t*t*(3-2*t);const a=f(xi,yi),b=f(xi+1,yi),c=f(xi,yi+1),d=f(xi+1,yi+1);return a+(b-a)*sm(xf)+(c-a)*sm(yf)+(a-b-c+d)*sm(xf)*sm(yf)};
+  const noise=(x,y,s)=>N(x/11,y/11,s)*.6+N(x/5,y/5,s+40)*.4;
+  for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){const n=noise(x,y,7),gr=noise(x,y,91);if(n>.66)g[y][x]=R()<.55?'T':',';else if(n>.58)g[y][x]=R()<.18?'T':',';else if(gr>.55)g[y][x]=',';if(R()<.006)g[y][x]='r'}
+  // дорога с севера на юг, к деревне
+  const road=(x,y)=>{if(x>1&&y>0&&x<W-2&&y<H-1)for(let k=0;k<3;k++)g[y][x+k]='='};let rx=74;for(let y=1;y<H-14;y++){road(rx,y);if(y%4===0)rx=Math.max(20,Math.min(W-24,rx+Math.floor(R()*3)-1+(y>60?-1:0)))}
+  // озеро с островом (запад)
+  const lk={x:32,y:44,rx:20,ry:13};for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){const d=Math.hypot((x-lk.x)/lk.rx,(y-lk.y)/lk.ry)+(hash2(x,y+5)-.5)*.12;if(d<.62)g[y][x]='W';else if(d<1)g[y][x]='~';else if(d<1.12&&g[y][x]==='.')g[y][x]=','}
+  for(let y=lk.y-2;y<=lk.y+2;y++)for(let x=lk.x-3;x<=lk.x+3;x++)g[y][x]=Math.hypot(x-lk.x,y-lk.y)<2.6?',':'~';g[lk.y][lk.x]='L';
+  for(let x=lk.x+3;x<=lk.x+lk.rx+2;x++)for(const y of [lk.y,lk.y+1])if(g[y][x]==='W')g[y][x]='~';   // брод к острову
+  // овраги
+  for(let k=0;k<4;k++){let x=95+Math.floor(R()*40),y=15+Math.floor(R()*70),a=R()*6;for(let s=0;s<38;s++){x+=Math.cos(a);y+=Math.sin(a)*.7;a+=(R()-.5)*.6;const X=Math.round(x),Y=Math.round(y);if(X<3||Y<3||X>W-4||Y>H-4)break;if(g[Y][X]!=='='){g[Y][X]=R()<.75?'B':'r';if(R()<.4&&g[Y+1]&&g[Y+1][X]!=='=')g[Y+1][X]='r'}}}
+  // аномальное поле (восток)
+  const af={x:126,y:30,r:13};let an=0;for(let y=af.y-af.r;y<=af.y+af.r;y++)for(let x=af.x-af.r;x<=af.x+af.r;x++){const d=Math.hypot(x-af.x,y-af.y);if(d>af.r||g[y][x]==='=')continue;const r=R();g[y][x]=r<.38?'%':r<.43&&an<14?(an++,'A'):r<.5?'r':'.'}
+  // заброшенная деревня (юг)
+  const vil={x:58,y:84,w:40,h:20};const houses=[];
+  for(let t=0;t<60&&houses.length<9;t++){const w=6+Math.floor(R()*4),h=5+Math.floor(R()*3),x=vil.x+Math.floor(R()*(vil.w-w)),y=vil.y+Math.floor(R()*(vil.h-h));if(houses.some(o=>x<o.x+o.w+2&&x+w+2>o.x&&y<o.y+o.h+2&&y+h+2>o.y))continue;houses.push({x,y,w,h})}
+  for(const o of houses){for(let j=o.y;j<o.y+o.h;j++)for(let i=o.x;i<o.x+o.w;i++){const edge=j===o.y||j===o.y+o.h-1||i===o.x||i===o.x+o.w-1;g[j][i]=edge?(R()<.15?'r':'#'):(R()<.12?'r':'_')}
+    const side=R()<.5;g[side?o.y+o.h-1:o.y][o.x+(o.w>>1)]='_';let f=0;for(let tt=0;tt<14&&f<3;tt++){const i=o.x+1+Math.floor(R()*(o.w-2)),j=o.y+1+Math.floor(R()*(o.h-2));if(g[j][i]==='_'&&freeAround(g,i,j,['_','r'])){g[j][i]=['w','Z','k','L','o','M','z'][Math.floor(R()*7)];f++}}}
+  for(let x=vil.x-2;x<vil.x+vil.w+2;x++){if(R()<.7&&g[vil.y-2][x]==='.')g[vil.y-2][x]='F'}
+  // лагерь охотников у входа
+  const camp={x:80,y:8};for(let j=camp.y-3;j<=camp.y+3;j++)for(let i=camp.x-4;i<=camp.x+4;i++)if(g[j][i]!=='=')g[j][i]=(Math.abs(j-camp.y)===3||Math.abs(i-camp.x)===4)&&R()<.55?'F':'.';g[camp.y][camp.x]='f';g[camp.y-2][camp.x+2]='K';g[camp.y+1][camp.x-2]='h';g[camp.y-1][camp.x-2]='h';g[camp.y+2][camp.x+3]='N';
+  // логово вожака (глубокий лес на северо-западе)
+  const lair=[18,14];for(let j=lair[1]-3;j<=lair[1]+3;j++)for(let i=lair[0]-4;i<=lair[0]+4;i++)g[j][i]=R()<.3?'r':',';
+  // брошенные машины на дороге
+  for(let y=4;y<H-16;y++)for(let x=2;x<W-2;x++)if(g[y][x]==='='&&g[y][x-1]==='='&&g[y][x+1]==='='&&R()<.01)g[y][x]='c';
+  // вход с севера (с болота)
+  const ex=74;for(let k=0;k<3;k++)g[0][ex+k]='=';
+  const inAF=(x,y)=>Math.hypot(x-af.x,y-af.y)<=af.r,inVil=(x,y)=>x>=vil.x-2&&x<vil.x+vil.w+2&&y>=vil.y-2&&y<vil.y+vil.h+1,nearLake=(x,y)=>Math.hypot((x-lk.x)/lk.rx,(y-lk.y)/lk.ry)<1.6,deep=(x,y)=>noise(x,y,7)>.6;
+  const away=(x,y)=>Math.hypot(x-camp.x,y-camp.y)>14&&y>12;
+  return {id:'wild',name:'Чернолесье',pvp:true,w:W,h:H,g,pal:'swamp',tier:3,
+    fires:[{id:'wild_camp',x:camp.x,y:camp.y,n:'Лагерь охотников',sx:camp.x+1.5,sy:camp.y+1.5}],
+    exits:[{x:ex,y:0,w:3,h:1,to:'swamp',tx:0,ty:0,label:'Гнилое болото'}],spawns:[],pickups:[],
+    mob:{n:110,cond:away,table:[['boar',16,null,[2,4]],['dog',12,null,[3,5]],['flesh',10],['ghoul',12,nearLake],['bloat',4,nearLake],['sucker',6,deep],['jumper',6],['zombie',6,inVil],['raider',10,inVil],['gunner',6,inVil],['glow',6,inAF],['brain',2,inAF],['brute',3,deep],['chimera',2,deep],['rat',6]]},
+    bosses:[{type:'alpha',x:lair[0],y:lair[1],resp:900}],
+    loot:{n:150,cond:away,pool:[['scrap',8],['rag',5],['nails',4],['tape',3],['spring',2],['powder',4],['wire',3],['battery',2],['cells',10],['hide',4],['fang',3],['shroom',6],['water',3],['dwater',4],['can',3],['bread',2],['bandage',4],['antirad',3],['medkit',1],['a12',4],['a545',3],['a762',2],['gunparts',1],['kevlar',1],['fl2',.5],['fl3',.3],
+      ['art_flash',.8,inAF],['art_jelly',.5,inAF],['art_stone',.35,inAF],['art_moon',.18,inAF],['art_soul',.08,inAF],['goldchain',.5,inVil],['watch',1,inVil],['phone',1,inVil]]},
+    rz:inAF,vil,lake:lk,af,camp}}
+{const w=genWild();MAPS.wild=w;for(const f of w.fires)ALLFIRES.push({...f,m:'wild'});
+  // проход с южного края болота
+  const sw=MAPS.swamp;let sx=null;for(let dx=0;dx<sw.w/2&&sx==null;dx++)for(const x of [Math.floor(sw.w/2)+dx+4,Math.floor(sw.w/2)-dx+4]){if(x<2||x>sw.w-5)continue;let ok=true;for(let k=0;k<3;k++){const c=sw.g[sw.h-2][x+k];if(!c||c==='W'||c==='~'||c==='D'||!notExit(sw,x+k,sw.h-2))ok=false}if(ok){sx=x;break}}
+  if(sx!=null){for(let k=0;k<3;k++){sw.g[sw.h-1][sx+k]='.';if(SOLID.has(sw.g[sw.h-2][sx+k]))sw.g[sw.h-2][sx+k]='.'}
+    sw.exits.push({x:sx,y:sw.h-1,w:3,h:1,to:'wild',tx:74,ty:1,label:'Чернолесье'});w.exits[0].tx=sx;w.exits[0].ty=sw.h-3}
+  try{fixConn(w);const ex0=sw.exits[0];sw.exits.sort((a,b)=>a===ex0?-1:b===ex0?1:0);fixConn(sw)}catch(e){}
+  SECGRID.wild=[25,18];if(typeof GROUND!=='undefined'&&!GROUND.wild)GROUND.wild=GROUND.swamp}
+// 2 доп. жителя в лагере охотников: торговец и поручения
+NPCS.push({id:'hunter',map:'wild',x:MAPS.wild.camp.x+2,y:MAPS.wild.camp.y+1,a:Math.PI,n:'Охотник Лось',role:'Лагерь охотников: шкуры, патроны, поручения',lk:{g:'m',skin:1,hair:'long',hc:'chestnut',outfit:0,beard:'beard',eye:2},eq:{body:'jacket',head:'ushanka',w1:'mosin'},
+  lines:['Чернолесье не прощает шума. Ходи тихо, стреляй один раз.','У озера упыри, в деревне — Вороны, в чаще — вожак стаи. Выбирай, кого злить.','На востоке поле аномалий. Там артефакты… и кости тех, кто их искал.']});
+SELL.hunter=[['a12',3],['a762',5],['bandage',7],['antirad',22],['cells',14],['fl2',150],['water',8],['jerky',10]];
+QUESTS.q_wild1={giver:'hunter',t:'Шкуры для лагеря',d:'Кабаны в Чернолесье расплодились. Принеси 6 шкур — сошьём палатки к зиме.',goal:{bring:'hide',n:6},rew:{caps:220,xp:320,items:{cells:3,a762:20}},rep:1};
+QUESTS.q_wild2={giver:'hunter',pre:'q_wild1',t:'Вожак стаи',d:'В северо-западной чаще логово вожака стаи. Убьёшь — будешь своим в лагере навсегда.',goal:{kill:'alpha',n:1},rew:{caps:600,xp:900,items:{fl3:1,medkit:2}}};
+// 4 сектора для захвата в Чернолесье (сверх 20, если модуль секторов загружен)
+if(typeof SECT!=='undefined'){const m=MAPS.wild,[cX,cY]=secGrid(m),sw2=m.w/cX,sh2=m.h/cY;for(const [c,r] of [[6,5],[19,6],[13,12],[20,15]]){let cx=Math.floor((c-.5)*sw2),cy=Math.floor((r-.5)*sh2),best=null,bd=1e9;for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){const x=cx+dx,y=cy+dy,ch=m.g[y]?.[x];if(!ch||!walkable(ch)||ch==='~'||!notExit(m,x,y))continue;const d=dx*dx+dy*dy;if(d<bd){bd=d;best=[x,y]}}if(best)SECT.pts.push({i:SECT.pts.length,m:'wild',x:best[0]+.5,y:best[1]+.5,n:'Сектор '+c+'.'+r})}}
+// первая встреча
+{const _em=enterMap;enterMap=function(id,x,y){const r=_em(id,x,y);if(id==='wild'&&S&&!S.flags.seenWild){S.flags.seenWild=1;log('Чернолесье. Огромный дикий лес к югу от болота: кабаны и стаи псов, упыри у озера, Вороны в заброшенной деревне, аномалии на востоке. Это PvP-зона. Костёр — в лагере охотников у входа.','bad')}return r}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
