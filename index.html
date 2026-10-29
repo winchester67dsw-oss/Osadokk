@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793107845";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793257136";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -977,7 +977,7 @@ function shopSell(n){
     const ids=Object.keys(S.inv).filter(id=>{const it=ITEMS[id];if(!it.p)return false;if(!B.cats.includes(it.k))return false;if(B.only&&!B.only.includes(id))return false;return S.inv[id]>equippedCount(id)});
     if(!ids.length)list.append(el('div','muted small','Продавать нечего.'));
     for(const id of ids){const p=sellPrice(n,id);const free=S.inv[id]-equippedCount(id);
-      list.append(itemRow(id,[el('span','q','×'+free+' · '+p+' кр.'),btn('Продать',()=>{take(id);S.caps+=p;shopSell(n)}),free>1?btn('Все',()=>{take(id,free);S.caps+=p*free;shopSell(n)}):el('span')]))}
+      list.append(itemRow(id,[el('span','q','×'+free+' · '+p+' кр.'),btn('Продать',()=>{take(id);S.caps+=p;refSold(id,1,p);shopSell(n)}),free>1?btn('Все',()=>{take(id,free);S.caps+=p*free;refSold(id,free,p);shopSell(n)}):el('span')]))}
     b.append(list);const o=el('div','startrow');o.style.marginTop='12px';o.append(btn('Назад',()=>npcDialog(n)));b.append(o)})}
 function upgCost(id){const it=ITEMS[id],lv=S.upg[id]?.lv||0;const tier=Math.max(1,Math.round(it.p/100));const disc=1-S.skills.craft*.1;return {caps:Math.round(40*(lv+1)*tier*disc),gunparts:it.k==='weapon'&&it.cls!=='melee'?lv+1:0,scrap:2*(lv+1),tape:lv}}
 function workbench(n){
@@ -2086,7 +2086,7 @@ function offerChanged(){if(!TR)return;TR.myReady=false;TR.theirReady=null;dealSe
 function tryFinish(){const tr=TR;if(!tr||!tr.myReady||!tr.theirReady||tr.theirReady!==readyHash(tr.theirs,tr.mine))return;
   for(const [id,q] of Object.entries(tr.mine.i))if(freeQty(id)<q){log('Не хватает предмета: '+ITEMS[id].n+'. Обмен отменён.','bad');dealSend(tr.peer,{t:'cancel'});TR=null;closeWin();return}
   if(S.caps<tr.mine.c){log('Не хватает крышек. Обмен отменён.','bad');dealSend(tr.peer,{t:'cancel'});TR=null;closeWin();return}
-  for(const [id,q] of Object.entries(tr.mine.i))take(id,q);S.caps-=tr.mine.c;for(const [id,q] of Object.entries(tr.theirs.i))add(id,q);S.caps+=tr.theirs.c;
+  for(const [id,q] of Object.entries(tr.mine.i))take(id,q);S.caps-=tr.mine.c;for(const [id,q] of Object.entries(tr.theirs.i)){add(id,q);refItem(id,q)}S.caps+=tr.theirs.c;refX(tr.theirs.c);
   log('Обмен с '+tr.name+' завершён. Получено: '+offerText(tr.theirs),'good');sfx.pickup();const k='t'+tr.peer;if(!karmaGate[k]||now-karmaGate[k]>300000){karmaGate[k]=now;addKarma(2,'честный обмен')}
   TR=null;closeWin();saveLocal()}
 function onDeal(msg){const d=msg.data;if(!d||typeof d!=='object'||!S||d.to!==myPeerId())return;const from=msg.peer,name=(typeof d.nm==='string'?cleanText(d.nm,16):'')||'Выживший';
@@ -2098,9 +2098,9 @@ function onDeal(msg){const d=msg.data;if(!d||typeof d!=='object'||!S||d.to!==myP
     case 'offer':if(TR&&TR.peer===from){TR.theirs=cleanOffer(d.o);TR.myReady=false;TR.theirReady=null;openTrade()}break;
     case 'ready':if(TR&&TR.peer===from){TR.theirReady=typeof d.h==='string'?d.h:null;tryFinish();if(TR)openTrade()}break;
     case 'cancel':if(TR&&TR.peer===from){log(name+' отменил обмен.');TR=null;closeWin()}break;
-    case 'gift':{const o=cleanOffer(d.o);for(const [id,q] of Object.entries(o.i))add(id,q);S.caps+=o.c;sfx.pickup();log(name+' подарил вам: '+offerText(o),'good');saveLocal();break}
+    case 'gift':{const o=cleanOffer(d.o);for(const [id,q] of Object.entries(o.i)){add(id,q);refItem(id,q)}S.caps+=o.c;refX(o.c);sfx.pickup();log(name+' подарил вам: '+offerText(o),'good');saveLocal();break}
     case 'hit':if(M&&M.pvp&&d.m===M.id&&!(S.admin&&S.god)&&!(typeof sameFacPeer==='function'&&sameFacPeer(from))){lastHit={peer:from,name,t:now};hurt(Math.max(0,Math.min(150,+d.dmg||0)),'игрок '+name)}break;
-    case 'killed':{S.stats.pk=(S.stats.pk|0)+1;const vk=+d.k||0;if(vk<=-10)addKarma(3,'побеждён бандит '+name);else addKarma(-10,'убит игрок '+name);const c=Math.max(0,Math.min(1e5,Math.floor(+d.c||0)));if(c){S.caps+=c;log('Трофей: '+c+' крыш.','good')}break}
+    case 'killed':{S.stats.pk=(S.stats.pk|0)+1;const vk=+d.k||0;if(vk<=-10)addKarma(3,'побеждён бандит '+name);else addKarma(-10,'убит игрок '+name);const c=Math.max(0,Math.min(1e5,Math.floor(+d.c||0)));if(c){S.caps+=c;refX(c);log('Трофей: '+c+' крыш.','good')}break}
   }}
 function pvpHit(pe,dmg){dealSend(pe.peer,{t:'hit',dmg:Math.round(Math.min(150,dmg)),m:M.id});floatText(pe.x,pe.y-.9,Math.round(dmg),'#ff9a7a');emit(6,{x:pe.x,y:pe.y-.3,v:3,life:.5,size:2,color:'#7a1a14',type:'blood',g:6,vz:2,z:.4});sfx.hit(pe.x,pe.y)}
 
@@ -2789,7 +2789,7 @@ const bagWire=p=>({id:p.bid,x:r2(p.x),y:r2(p.y),i:p.items,c:p.caps,n:p.owner});
 function addBag(mid,b,fresh){if(!b||typeof b!=='object'||typeof b.id!=='string')return;const o=cleanOffer({i:b.i,c:b.c});const r=rtFor(mid);if(r.drops.some(p=>p.bag&&p.bid===b.id))return;
   const x=+b.x,y=+b.y;if(!Number.isFinite(x)||!Number.isFinite(y))return;r.drops.push({bag:true,bid:b.id,item:'bag',q:1,x,y,items:o.i,caps:o.c,owner:(typeof b.n==='string'?cleanText(b.n,16):'')||'Выживший',t:now})}
 function dropBag(items,caps){const b={id:rid()+rid(),x:r2(P.x),y:r2(P.y),i:items,c:caps,n:S.name};addBag(M.id,b,true);mobSend({t:'bag',m:M.id,b})}
-function takeBag(p){const o={i:p.items||{},c:p.caps|0};for(const [id,q] of Object.entries(o.i))add(id,q);S.caps+=o.c;p.t=-1e9;sfx.pickup();
+function takeBag(p){const o={i:p.items||{},c:p.caps|0};for(const [id,q] of Object.entries(o.i))add(id,q);S.caps+=o.c;p.t=-1e9;if(p.owner!==S.name){refX(o.c);for(const [id,q] of Object.entries(o.i))refItem(id,q)}sfx.pickup();
   log('Вы подобрали рюкзак ('+p.owner+'): '+offerText(o),'good');floatText(p.x,p.y-.6,'+рюкзак','#f2b65c');mobSend({t:'bagtake',m:M.id,id:p.bid});dirty=true}
 die=function(src){if(!S)return;S.stats.deaths++;const lost=Math.floor(S.caps*.15);S.caps-=lost;const pvpKill=lastHit&&now-lastHit.t<10000&&M&&M.pvp;
   if(pvpKill)dealSend(lastHit.peer,{t:'killed',k:S.karma|0,c:Math.floor(lost/2)});
@@ -4969,7 +4969,7 @@ async function storeWin(f){await facLoad(f);const d=FACD[f];const free=canStore(
 let storeBusy=false;
 async function storeOp(f,a,id,q){if(storeBusy)return;storeBusy=true;try{
   if(a==='put'){if(freeQty(id)<q){log('Столько нет.','bad');return}const ok=await facMut(f,d=>{if(storeKg(d)+wOf(id)*q>d.cap+1e-6){log('Склад переполнен. Лидер может расширить его в штабе.','bad');return false}d.store[id]=(d.store[id]||0)+q;facLog(d,'put',{i:id,q})});if(ok){take(id,q);saveLocal();log('Положено на склад: '+ITEMS[id].n+(q>1?' ×'+q:''),'good')}}
-  else{if(!(canStore()||isAdm())){log('Свободно брать со склада могут только '+rn(f,'leader')+', '+rn(f,'deputy')+' и '+rn(f,'storekeeper')+'.','bad');return}const ok=await facMut(f,d=>{if((d.store[id]||0)<q){log('На складе уже нет столько — кто-то забрал раньше.','bad');return false}d.store[id]-=q;if(d.store[id]<=0)delete d.store[id];facLog(d,'take',{i:id,q})});if(ok){add(id,q);saveLocal();log('Взято со склада: '+ITEMS[id].n+(q>1?' ×'+q:''),'good')}}
+  else{if(!(canStore()||isAdm())){log('Свободно брать со склада могут только '+rn(f,'leader')+', '+rn(f,'deputy')+' и '+rn(f,'storekeeper')+'.','bad');return}const ok=await facMut(f,d=>{if((d.store[id]||0)<q){log('На складе уже нет столько — кто-то забрал раньше.','bad');return false}d.store[id]-=q;if(d.store[id]<=0)delete d.store[id];facLog(d,'take',{i:id,q})});if(ok){add(id,q);refItem(id,q);saveLocal();log('Взято со склада: '+ITEMS[id].n+(q>1?' ×'+q:''),'good')}}
  }catch(e){log('Нет связи с облаком — попробуйте ещё раз.','bad')}finally{storeBusy=false}storeWin(f)}
 async function storeReq(f,id,q){const ok=await facMut(f,d=>{d.reqs=d.reqs||[];if(d.reqs.filter(r=>r.pid===S.pid).length>=5){log('У вас уже 5 запросов — дождитесь ответа.','bad');return false}d.reqs.push({id:Math.random().toString(36).slice(2,9),pid:S.pid,n:S.name,i:id,q,t:Date.now()});facLog(d,'req',{i:id,q})});
   if(ok)log('Запрос отправлен: '+ITEMS[id].n+(q>1?' ×'+q:'')+'. Его одобрят '+rn(f,'storekeeper')+' или руководство.','good');storeWin(f)}
@@ -5001,7 +5001,7 @@ async function hqWin(f){await facLoad(f);const d=FACD[f];const mgr=isMgr()&&myFa
 async function facRank(f,pid,rk){if(rk==='leader'&&!isAdm()){log(rn(f,'leader')+'а назначает только администратор.','bad');return}const ok=await facMut(f,d=>{const m=d.members[pid];if(!m)return false;const cnt=Object.values(d.members).filter(x=>normR(x.r)===rk).length;if(cnt>=RANKLIM[rk]){log('Лимит звания «'+rn(f,rk)+'»: '+RANKLIM[rk]+'.','bad');return false}
   if(rk==='leader')for(const x of Object.values(d.members))if(x.r==='leader')x.r='deputy';m.r=rk;facLog(d,'rank',{who:m.n,r:rk})});if(ok)log('Звание изменено.','good');facSync();hqWin(f)}
 async function facKick(f,pid){await facMut(f,d=>{const m=d.members[pid];if(!m)return false;delete d.members[pid];facLog(d,'kick',{who:m.n})});hqWin(f)}
-async function facFund(f,c){if(c>0&&S.caps<c)return;const ok=await facMut(f,d=>{if(c<0&&(d.fund|0)<-c)return false;d.fund=(d.fund|0)+c;facLog(d,c>0?'fund+':'fund-',{c:Math.abs(c)})});if(ok){S.caps-=c;dirty=true;saveLocal()}hqWin(f)}
+async function facFund(f,c){if(c>0&&S.caps<c)return;const ok=await facMut(f,d=>{if(c<0&&(d.fund|0)<-c)return false;d.fund=(d.fund|0)+c;facLog(d,c>0?'fund+':'fund-',{c:Math.abs(c)})});if(ok){S.caps-=c;if(c<0)refX(-c);dirty=true;saveLocal()}hqWin(f)}
 function facRating(f,d){d=d||FACD[f];if(!d)return 0;const lv=Object.values(d.members).reduce((a,m)=>a+(m.lv|0),0);const sec=(typeof SECT!=='undefined'?SECT.owned(f):0);return lv*10+sec*100+Math.floor((d.fund|0)/100)}
 // админ-панель: управление группировками
 {const _av=TABVIEW.admin;TABVIEW.admin=b=>{if(S.admin){b.append(el('div','sec','Группировки'));const r=el('div','startrow');for(const f of Object.keys(FAC)){const x=btn('Штаб «'+FAC[f].n+'»',()=>{hqTab='apps';hqWin(f)});x.prepend(facBadge(f,20));r.append(x)}b.append(r,el('p','muted small','Здесь вы принимаете заявки и назначаете лидеров («Принять лидером» во вкладке «Заявки» или звание в «Составе»).'))}_av(b)}}
@@ -5166,7 +5166,7 @@ function throwItem(id,q){const it=ITEMS[id];if(!it||it.k==='quest'){log('Это�
 // одиночный выброшенный предмет на земле выглядит как сам предмет, а не как рюкзак
 {const _ab=addBag;addBag=function(mid,b,fresh){_ab(mid,b,fresh);try{const r=rtFor(mid);const p=r.drops.find(x=>x.bag&&x.bid===b.id);if(p&&p.items){const ks=Object.keys(p.items);if(String(p.bid).startsWith('th')){p.thrown=1;if(ks.length===1){p.item=ks[0];p.q=p.items[ks[0]]}}}}catch(e){}}}
 // подобрать выброшенное — без надписи «рюкзак»
-{const _tb=takeBag;takeBag=function(p){if(!p.thrown)return _tb(p);const o={i:p.items||{},c:p.caps|0};for(const [id,q] of Object.entries(o.i))add(id,q);S.caps+=o.c;p.t=-1e9;sfx.pickup();log('Подобрано: '+offerText(o)+(p.owner&&p.owner!==S.name?' (выбросил '+p.owner+')':''),'good');mobSend({t:'bagtake',m:M.id,id:p.bid});dirty=true}}
+{const _tb=takeBag;takeBag=function(p){if(!p.thrown)return _tb(p);const o={i:p.items||{},c:p.caps|0};for(const [id,q] of Object.entries(o.i))add(id,q);S.caps+=o.c;p.t=-1e9;if(p.owner!==S.name){refX(o.c);for(const [id,q] of Object.entries(o.i))refItem(id,q)}sfx.pickup();log('Подобрано: '+offerText(o)+(p.owner&&p.owner!==S.name?' (выбросил '+p.owner+')':''),'good');mobSend({t:'bagtake',m:M.id,id:p.bid});dirty=true}}
 {const _iv=TABVIEW.inv;TABVIEW.inv=function(b){_iv(b);const id=invSel;if(!id||!ITEMS[id]||ITEMS[id].k==='quest')return;const a=b.querySelector('.idetail .acts');if(!a)return;const fq=freeQty(id);if(fq<=0)return;
   a.append(btn('Выбросить',()=>{throwItem(id,1);openTab('inv')}));if(fq>1)a.append(btn('Выбросить всё ('+fq+')',()=>{if(confirm('Выбросить '+ITEMS[id].n+' ×'+fq+'?')){throwItem(id,fq);openTab('inv')}}))}}
 
@@ -5533,7 +5533,7 @@ setInterval(()=>{if(!S||!S.pid||S.refBy||S.refNo)return;let r='';try{r=localStor
   if(!r||r===S.pid){if((S.lvl|0)>5)S.refNo=1;return}if((S.lvl|0)>5){S.refNo=1;return}
   S.refBy=r;S.refEarn=0;S.refSent=0;S._pc=S.caps;dirty=true;log('🤝 Вы пришли в Пустошь по приглашению друга. Играйте — за ваши успехи он получит награду.','good');refPublish()},5000);
 // учёт заработанных крышек приглашённым
-setInterval(()=>{if(!S||!S.refBy)return;if(S._pc==null){S._pc=S.caps;return}const dlt=S.caps-S._pc;S._pc=S.caps;if(dlt>0&&dlt<50000){S.refEarn=(S.refEarn||0)+dlt;dirty=true}
+setInterval(()=>{if(!S||!S.refBy)return;if(S._pc==null){S._pc=S.caps;return}const dlt=S.caps-S._pc-(typeof REFX!=='undefined'?REFX.p:0);if(typeof REFX!=='undefined')REFX.p=0;S._pc=S.caps;if(dlt>0&&dlt<50000){S.refEarn=(S.refEarn||0)+dlt;dirty=true}
   const u=Math.floor((S.refEarn||0)/1000);if(u>(S.refSent|0)){S.refSent=u;dirty=true;refPublish()}},2000);
 // пригласивший забирает бонусы: читаем все записи своих приглашённых
 async function refFetch(){if(!S||!S.pid)return {};const cs=await cloud();const base=REF_T(S.pid)+'/';const found={};
@@ -5542,7 +5542,7 @@ async function refFetch(){if(!S||!S.pid)return {};const cs=await cloud();const b
   S.refPaid=S.refPaid||{};S.refList=S.refList||{};let gain=0;
   for(const [pid,d] of Object.entries(found)){if(pid===S.pid||(typeof DEVID!=='undefined'&&d.dv&&d.dv===DEVID))continue;const u=Math.max(0,Math.min(100000,d.u|0));S.refList[pid]={n:String(d.n).slice(0,24),u};
     const paid=S.refPaid[pid]|0;if(u>paid){gain+=(u-paid)*100;S.refPaid[pid]=u}}
-  if(gain>0){S.caps+=gain;log('🤝 Ваши приглашённые друзья заработали крышки — вам бонус +'+gain+' крышек!','good');floatText(P.x,P.y-1.4,'+'+gain+' крыш.','#f2b65c');dirty=true;updateHud()}return found}
+  if(gain>0){S.caps+=gain;refX(gain);log('🤝 Ваши приглашённые друзья заработали крышки — вам бонус +'+gain+' крышек!','good');floatText(P.x,P.y-1.4,'+'+gain+' крыш.','#f2b65c');dirty=true;updateHud()}return found}
 setInterval(()=>{if(S&&!document.hidden)refFetch().catch(()=>{})},180000);
 {const _as=afterStart;afterStart=async function(){const r=await _as();setTimeout(()=>refFetch().catch(()=>{}),8000);return r}}
 // блок «Пригласи друга» в профиле
@@ -6527,11 +6527,7 @@ function postWorld(c,ppx,ppy,CX,CY,W,H){drawBushes(c,CX,CY);if(M.interior)return
 
 // ---------- Прицел на телефоне: зажать «ОГОНЬ» и вести пальцем ----------
 const AIM={on:false,a:0,id:null,cx:0,cy:0,tg:null};
-(function(){const b=document.getElementById('bFire');if(!b)return;
-  b.addEventListener('pointerdown',e=>{AIM.id=e.pointerId;const r=b.getBoundingClientRect();AIM.cx=r.left+r.width/2;AIM.cy=r.top+r.height/2;AIM.on=false;try{b.setPointerCapture(e.pointerId)}catch(x){}
-    if(S&&!S.flags.aimTip){S.flags.aimTip=1;log('🎯 Прицел: зажмите «ОГОНЬ» и ведите пальцем в сторону цели — ствол повернётся туда, а рядом с врагом прицел сам немного доведёт. Просто нажатие — стрельба по ближайшему врагу.','sys')}});
-  b.addEventListener('pointermove',e=>{if(e.pointerId!==AIM.id)return;let dx=e.clientX-AIM.cx,dy=e.clientY-AIM.cy;if(document.documentElement.classList.contains('rotl')){const t0=dx;dx=dy;dy=-t0}if(Math.hypot(dx,dy)>16){AIM.on=true;AIM.a=Math.atan2(dy,dx);b.classList.add('aiming')}});
-  const end=e=>{if(e.pointerId!==AIM.id)return;AIM.id=null;AIM.on=false;AIM.tg=null;b.classList.remove('aiming')};b.addEventListener('pointerup',end);b.addEventListener('pointercancel',end)})();
+// стрельба на телефоне — как раньше: нажатие «ОГОНЬ» стреляет по ближайшему врагу (перетаскивание отключено по просьбе игроков)
 function aimAssist(a,it){const rg=it&&it.range?it.range:2.2;let best=null,sc=1;const cand=[];for(const e of rtFor(M.id).enemies)if(e.alive&&!e.dying&&!seeHid(e,e.x,e.y,0))cand.push(e);if(M.pvp)for(const p of peerList())cand.push(p);
   for(const e of cand){const d=Math.hypot(e.x-P.x,e.y-P.y);if(d>rg+.5||d<.2)continue;const lim=Math.max(.12,Math.min(.4,.55/d));const s=Math.abs(angDiff(Math.atan2(e.y-P.y,e.x-P.x),a))/lim;if(s<sc&&los(P.x,P.y,e.x,e.y)){sc=s;best=e}}
   AIM.tg=best;if(!best)return a;const ta=Math.atan2(best.y-P.y,best.x-P.x);return a+angDiff(ta,a)*.85}
@@ -6540,7 +6536,7 @@ function aimAssist(a,it){const rg=it&&it.range?it.range:2.2;let best=null,sc=1;c
 {const _r=render;render=function(t){_r(t);if(!S||!M||(V3.on&&V3.ready))return;const c=ctx,W=cv.width,H=cv.height;const [cx0,cy0]=render.cam||[0,0];
   c.save();c.setTransform(DPR*ZOOM,0,0,DPR*ZOOM,-cx0*DPR*ZOOM,-cy0*DPR*ZOOM);const ppx=P.x*T,ppy=P.y*T-6;
   if(WX.fog>.2&&!M.interior){const MF=fogFl(myFl());const dk=darkLevel(typeof realCyc==='function'?realCyc():.5);if(MF&&dk>.25){const R=MF.r/ZOOM*1.1;c.globalCompositeOperation='lighter';c.beginPath();c.moveTo(ppx,ppy);c.arc(ppx,ppy,R,P.a-MF.a*1.3,P.a+MF.a*1.3);c.closePath();const g=c.createRadialGradient(ppx,ppy,0,ppx,ppy,R);g.addColorStop(0,'rgba(200,205,195,'+(.16*WX.fog)+')');g.addColorStop(1,'rgba(200,205,195,0)');c.fillStyle=g;c.fill();c.globalCompositeOperation='source-over'}}
-  if(coarse()&&(AIM.on||firing)&&!paused){const it=ITEMS[curW()];const L=Math.min(fogVis(),it&&it.range?it.range:2.2)*T;c.strokeStyle='rgba(255,90,60,.55)';c.lineWidth=1.2;c.setLineDash([4,4]);c.beginPath();c.moveTo(ppx,ppy);c.lineTo(ppx+Math.cos(P.a)*L,ppy+Math.sin(P.a)*L);c.stroke();c.setLineDash([]);
+  if(coarse()&&AIM.on&&!paused){const it=ITEMS[curW()];const L=Math.min(fogVis(),it&&it.range?it.range:2.2)*T;c.strokeStyle='rgba(255,90,60,.55)';c.lineWidth=1.2;c.setLineDash([4,4]);c.beginPath();c.moveTo(ppx,ppy);c.lineTo(ppx+Math.cos(P.a)*L,ppy+Math.sin(P.a)*L);c.stroke();c.setLineDash([]);
     if(AIM.tg){const tx=AIM.tg.x*T,ty=AIM.tg.y*T-8;c.strokeStyle='rgba(255,120,80,.9)';c.lineWidth=1.4;c.beginPath();c.arc(tx,ty,9,0,7);c.moveTo(tx-13,ty);c.lineTo(tx-6,ty);c.moveTo(tx+6,ty);c.lineTo(tx+13,ty);c.stroke()}}
   c.restore();
   if(WX.flash>.01&&!M.interior){c.save();c.setTransform(1,0,0,1,0,0);c.fillStyle='rgba(220,230,255,'+(WX.flash*.45)+')';c.fillRect(0,0,W,H);c.restore()}}}
@@ -6652,6 +6648,249 @@ setInterval(kpkClock,5000);
 
 // ---------- Оптимизация: всплывающих надписей не больше 40 ----------
 {const _ft=floatText;floatText=function(x,y,text,col,big){_ft(x,y,text,col,big);if(floaters.length>40)floaters.splice(0,floaters.length-40)}}
+
+// ================= v41: ДЕТАЛЬНОЕ ОРУЖИЕ — РЕАЛИСТИЧНЫЕ МОДЕЛИ ДЛЯ ИКОНОК И В РУКАХ =================
+// Каждый ствол рисуется один раз в высоком разрешении (металл, дерево, полимер, зерно, блики, винты) и хранится готовой картинкой.
+// Иконки и оружие в руках персонажей берут эту картинку — в кадре это обычный drawImage, нагрузки почти нет.
+
+const HDW=a=>{a.wood=1;return a};
+const HDM={blk:['#6b6f74','#2b2d30','#0b0c0d'],park:['#66665e','#2f2f2b','#121210'],steel:['#c4c8cc','#767b80','#33373b'],
+  wood:HDW(['#a8652f','#6a3517','#2e1407']),maple:HDW(['#e0b066','#ad7634','#5c3914']),woodD:HDW(['#8e5832','#572f17','#2a150a']),
+  plum:['#80493a','#52291d','#27130c'],poly:['#44443f','#272725','#121211'],rubber:['#2e2e2c','#171716','#080808'],hole:['#000','#060606','#141414'],
+  bake:['#86432a','#512414','#240f06'],olive:['#717553','#474a31','#212317'],red:['#d44a34','#922818','#46110a'],tape:['#666a6c','#3e4144','#1d1f21'],brass:['#e8c46a','#a8822c','#5a400e']};
+let HDG=null;
+function hdGrainPat(c,s){if(!hdGrainPat.cv){const g=document.createElement('canvas');g.width=g.height=96;const x=g.getContext('2d');const im=x.createImageData(96,96);
+  for(let i=0;i<im.data.length;i+=4){const v=Math.random()*255|0;im.data[i]=im.data[i+1]=im.data[i+2]=v;im.data[i+3]=Math.random()<.55?14+Math.random()*34:0}x.putImageData(im,0,0);hdGrainPat.cv=g}
+  const p=c.createPattern(hdGrainPat.cv,'repeat');try{p.setTransform(new DOMMatrix().scale(1/s))}catch(e){}return p}
+// пути
+const hR=(c,x,y,w,h,r=0)=>()=>{c.beginPath();if(r&&c.roundRect)c.roundRect(x,y,w,h,Math.min(r,w/2,h/2));else c.rect(x,y,w,h)};
+const hP=(c,pts)=>()=>{c.beginPath();let f=1;for(const p of pts){if(p[0]==='q'){c.quadraticCurveTo(p[1],p[2],p[3],p[4])}else if(p[0]==='b'){c.bezierCurveTo(p[1],p[2],p[3],p[4],p[5],p[6])}else if(f){c.moveTo(p[0],p[1]);f=0}else c.lineTo(p[0],p[1])}c.closePath()};
+// заливка материалом: градиент сверху вниз, волокна дерева, зерно, блик и тень, контур
+function hF(c,path,m,y0,y1,o={}){c.save();path();const g=c.createLinearGradient(0,y0,0,y1);g.addColorStop(0,m[0]);g.addColorStop(.38,m[1]);g.addColorStop(1,m[2]);c.fillStyle=g;c.fill();c.clip();const h=y1-y0;
+  if(m.wood){c.lineWidth=.3;for(let i=0;i<16;i++){const yy=y0+h*(i+.5)/16;c.globalAlpha=.18+.2*((i*7)%3)/2;c.strokeStyle=i%3?m[2]:m[0];c.beginPath();c.moveTo(-20,yy);c.bezierCurveTo(70,yy+Math.sin(i*1.9)*h*.12,160,yy-Math.cos(i*1.3)*h*.12,320,yy+Math.sin(i*2.7)*h*.1);c.stroke()}}
+  if(HDG&&o.grain!==0){c.globalAlpha=o.grain||.55;c.fillStyle=HDG;c.fillRect(-20,y0-4,360,h+8)}
+  if(o.hi!==0){c.globalAlpha=o.hi||.24;c.fillStyle='#fff';c.fillRect(-20,y0+h*.08,360,Math.max(.35,h*.07));c.globalAlpha=(o.hi||.24)*.4;c.fillRect(-20,y0+h*.18,360,Math.max(.3,h*.12))}
+  c.globalAlpha=.28;c.fillStyle='#000';c.fillRect(-20,y1-h*.2,360,h*.2);
+  // фаска: верхние края светлые, нижние тёмные; на металле — царапины
+  c.globalAlpha=1;c.lineWidth=.9;c.translate(0,.32);path();c.strokeStyle='rgba(255,255,255,'+(m.wood?.14:.2)+')';c.stroke();c.translate(0,-.64);path();c.strokeStyle='rgba(0,0,0,.45)';c.stroke();c.translate(0,.32);
+  if(!m.wood&&o.grain!==0&&h>2.5){let sd=Math.floor(y0*97+h*31)>>>0;const rn=()=>{sd=(Math.imul(sd,1664525)+1013904223)>>>0;return sd/4294967296};c.lineWidth=.18;for(let i=0;i<10;i++){const sx=rn()*300-10,sy=y0+rn()*h,l=1+rn()*4;c.strokeStyle='rgba(255,255,255,'+(.08+rn()*.14)+')';c.beginPath();c.moveTo(sx,sy);c.lineTo(sx+l,sy+(rn()-.5)*1.2);c.stroke()}}
+  c.restore();
+  c.save();path();c.strokeStyle='rgba(0,0,0,.9)';c.lineWidth=o.lw||.55;c.stroke();c.restore()}
+function hScrew(c,x,y,r=.8){const g=c.createRadialGradient(x-r*.35,y-r*.35,0,x,y,r);g.addColorStop(0,'#b4b8bc');g.addColorStop(1,'#2a2c2e');c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,7);c.fill();c.strokeStyle='rgba(0,0,0,.85)';c.lineWidth=.22;c.stroke();c.beginPath();c.moveTo(x-r*.6,y+r*.2);c.lineTo(x+r*.6,y-r*.2);c.stroke()}
+function hSeam(c,x0,y0,x1,y1){c.lineWidth=.3;c.strokeStyle='rgba(0,0,0,.75)';c.beginPath();c.moveTo(x0,y0);c.lineTo(x1,y1);c.stroke();c.strokeStyle='rgba(255,255,255,.13)';c.beginPath();c.moveTo(x0,y0+.35);c.lineTo(x1,y1+.35);c.stroke()}
+function hSlots(c,x,y,w,h,n,gap){for(let i=0;i<n;i++)hF(c,hR(c,x+i*(w+gap),y,w,h,Math.min(w,h)/2),HDM.hole,y,y+h,{grain:0,hi:0,lw:.3})}
+function hRibs(c,x0,x1,y0,y1,step){c.lineWidth=.3;for(let x=x0;x<=x1;x+=step){c.strokeStyle='rgba(0,0,0,.55)';c.beginPath();c.moveTo(x,y0);c.lineTo(x,y1);c.stroke();c.strokeStyle='rgba(255,255,255,.1)';c.beginPath();c.moveTo(x+.35,y0);c.lineTo(x+.35,y1);c.stroke()}}
+function hRail(c,x,y,w){hF(c,hR(c,x,y,w,2.2,.3),HDM.blk,y,y+2.2);c.fillStyle='rgba(0,0,0,.65)';for(let i=x+1;i<x+w-1;i+=2.2)c.fillRect(i,y,.8,1.1)}
+function hTrig(c,x,y,w){c.strokeStyle='#121314';c.lineWidth=1.1;c.beginPath();c.moveTo(x,y);c.quadraticCurveTo(x+w*.15,y+7.5,x+w*.6,y+7.2);c.quadraticCurveTo(x+w,y+6.8,x+w,y);c.stroke();c.lineWidth=.9;c.beginPath();c.moveTo(x+w*.45,y);c.quadraticCurveTo(x+w*.4,y+3,x+w*.55,y+4.5);c.stroke()}
+function hScope(c,x0,x1,y,big){const r=big?5:4.2;
+  hF(c,hR(c,x0+14,y+r-1,6,6.5,1),HDM.blk,y+r-1,y+r+5.5);hF(c,hR(c,x1-22,y+r-1,6,6.5,1),HDM.blk,y+r-1,y+r+5.5);
+  hF(c,hP(c,[[x0,y-r],[x0+10,y-r*.62],[x1-14,y-r*.62],[x1-7,y-r*1.1],[x1,y-r*1.1],[x1,y+r*1.1],[x1-7,y+r*1.1],[x1-14,y+r*.62],[x0+10,y+r*.62],[x0,y+r]]),HDM.blk,y-r*1.1,y+r*1.1);
+  const mx=(x0+x1)/2-2;hF(c,hR(c,mx,y-r*.62-4.5,6,4.5,1),HDM.blk,y-r-4.5,y-r*.62);hRibs(c,mx+1,mx+5,y-r*.62-4.3,y-r*.62-.3,1);
+  c.save();c.beginPath();c.arc(mx+3,y,2.3,0,7);c.fillStyle='#1a1b1c';c.fill();c.strokeStyle='rgba(255,255,255,.2)';c.lineWidth=.3;c.stroke();c.restore();
+  const g=c.createLinearGradient(x1-1,y-r,x1+1.5,y+r);g.addColorStop(0,'#6a5aa8');g.addColorStop(.5,'#2a6a7a');g.addColorStop(1,'#1a1a2a');c.fillStyle=g;c.beginPath();c.ellipse(x1+.4,y,.9,r*1.05,0,0,7);c.fill();
+  c.fillStyle='rgba(255,255,255,.55)';c.beginPath();c.ellipse(x1+.2,y-r*.45,.35,r*.25,0,0,7);c.fill();hSeam(c,x0+10,y-r*.35,x1-14,y-r*.35)}
+function hBipod(c,x,y){for(const [dx,a] of [[0,.42],[1.5,.18]]){c.save();c.translate(x+dx,y);c.rotate(a);hF(c,hR(c,-.8,0,1.6,24,.6),HDM.blk,0,24,{hi:.15});hF(c,hR(c,-2.2,23,4.4,2.2,1),HDM.rubber,23,25.2);c.restore()}hF(c,hR(c,x-2.5,y-2,6,4,1),HDM.blk,y-2,y+2)}
+function hBrakeAK(c,x,y){hF(c,hR(c,x,y-3.4,17,6.6,1),HDM.blk,y-3.4,y+3.2);hSlots(c,x+3,y-1.6,3.4,1.2,2,2.4);hF(c,hR(c,x+15.5,y-3.4,1.5,6.6,.4),HDM.park,y-3.4,y+3.2)}
+function hCone(c,x,y,len,r0,r1){hF(c,hP(c,[[x,y-r0],[x+len,y-r1],[x+len,y+r1],[x,y+r0]]),HDM.blk,y-r1,y+r1);hSlots(c,x+len*.3,y-r1*.35,len*.45,r1*.3,1,0)}
+function hBarrel(c,x0,x1,y,t=1.6,m=HDM.park){hF(c,hR(c,x0,y-t,x1-x0,t*2,t*.6),m,y-t,y+t,{hi:.3})}
+function hStar(c,x,y,r){c.fillStyle='rgba(20,10,5,.55)';c.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.42:r;c.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}c.closePath();c.fill()}
+function hGripTex(c,path,x0,y0,x1,y1){c.save();path();c.clip();c.strokeStyle='rgba(0,0,0,.35)';c.lineWidth=.22;for(let i=-30;i<30;i+=1.1){c.beginPath();c.moveTo(x0+i,y0);c.lineTo(x0+i+(y1-y0)*.5,y1);c.stroke();c.beginPath();c.moveTo(x1-i,y0);c.lineTo(x1-i-(y1-y0)*.5,y1);c.stroke()}c.restore()}
+
+// ---------- сами стволы. Ось ствола — y=0, «grip» — где лежит рука на рукояти ----------
+function hdAK(c,st,fu,brake){
+  hF(c,hP(c,[[3,-7],[64,-6],[64,3],[3,15],[1,15],[1,-7]]),st,-7,15);hF(c,hR(c,-1,-7.4,4,23,1),HDM.rubber,-7.4,15.6);hSeam(c,8,-4.5,60,-3.8);
+  hF(c,hP(c,[[62,-6],[66,-9],[128,-9],[132,-7],[140,-7],[140,3],[62,3]]),HDM.blk,-9,3);
+  hF(c,hR(c,125,-13,15,5,1),HDM.blk,-13,-8);hF(c,hR(c,127,-14.5,6,2,.5),HDM.park,-14.5,-12.5);hSeam(c,66,-6.4,125,-6.4);
+  hF(c,hR(c,103,-5.8,17,3,.8),HDM.hole,-5.8,-2.8,{grain:0,hi:0});hF(c,hR(c,113,-5.4,5,2.2,.4),HDM.steel,-5.4,-3.2);
+  hF(c,hP(c,[[70,-4.4],[106,-5],[108,-3.6],[72,-2.6]]),HDM.park,-5,-2.6);for(const x of [76,84,122,134])hScrew(c,x,.6,.65);
+  const gp=hP(c,[[94,3],[106,3],[102,26],[92,28],[88,25]]);hF(c,gp,fu,3,28);hGripTex(c,gp,86,4,106,27);hTrig(c,106,3,15);
+  hF(c,hP(c,[[120,3],[136,3],['q',139,18,150,31],[138,35],['q',126,20,120,3]]),fu,3,35);c.strokeStyle='rgba(0,0,0,.4)';c.lineWidth=.3;for(let i=1;i<5;i++){c.beginPath();c.moveTo(121+i*3.2,3.5);c.quadraticCurveTo(125+i*2.8,19,138+i*2.2,33);c.stroke()}
+  hF(c,hP(c,[[140,-3],[177,-3],[177,4],[141,5]]),fu,-3,5);hRibs(c,146,172,-2.4,4.2,3.4);hF(c,hR(c,140,-10.5,39,6.5,3),fu,-10.5,-4);
+  hF(c,hR(c,177,-11,9,13.5,1),HDM.blk,-11,2.5);hBarrel(c,185,234,-.6,1.6);c.strokeStyle='#1a1b1c';c.lineWidth=.7;c.beginPath();c.moveTo(150,3.2);c.lineTo(228,1.6);c.stroke();
+  hF(c,hP(c,[[213,-1],[216,-12],[221,-12],[224,-1]]),HDM.blk,-12,-1);hF(c,hR(c,217.5,-15,1.4,3.5,.3),HDM.park,-15,-11.5);
+  if(brake==='cone')hCone(c,232,-.6,16,2.2,3.2);else hBrakeAK(c,232,-.6)}
+const HDDEF={
+  pm:{L:60,y0:-12,y1:28,grip:14,d:c=>{hF(c,hP(c,[[3,-6],[8,-11],[11,-9]]),HDM.blk,-11,-6);const g=hP(c,[[7,0],[24,0],[19,26],[5,27],[1,22]]);hF(c,g,HDM.bake,0,27);hGripTex(c,g,4,2,24,26);hStar(c,14,9,3.2);hScrew(c,14,18,.8);
+    hF(c,hR(c,8,-1,48,4,1),HDM.blk,-1,3);hTrig(c,24,3,14);hF(c,hP(c,[[6,-9],[56,-9],['q',59,-9,59,-6],[59,-1],[6,-1]]),HDM.blk,-9,-1,{hi:.32});hRibs(c,8,16,-8.4,-1.6,1.1);hSeam(c,18,-4.8,54,-4.8);
+    hF(c,hR(c,30,-8.6,8,2.4,.6),HDM.hole,-8.6,-6.2,{grain:0,hi:0});hF(c,hR(c,52,-11,3,2,.4),HDM.blk,-11,-9);hF(c,hR(c,58.5,-6.2,1.5,2.4,.6),HDM.hole,-6.2,-3.8,{grain:0,hi:0})}},
+  tt:{L:64,y0:-12,y1:28,grip:14,d:c=>{const g=hP(c,[[8,0],[25,0],[20,27],[6,28],[3,24]]);hF(c,g,HDM.poly,0,28);hGripTex(c,g,6,2,25,27);hStar(c,15.5,10,3.4);hF(c,hR(c,13,25,4,4,2),HDM.steel,25,29);
+    hF(c,hR(c,8,-1,52,4,.8),HDM.blk,-1,3);hTrig(c,25,3,14);hF(c,hR(c,6,-9.5,56,8.5,1),HDM.blk,-9.5,-1,{hi:.32});hRibs(c,8,20,-9,-1.5,1.4);hSeam(c,22,-5,60,-5);
+    hF(c,hR(c,4,-8,4,4,1),HDM.blk,-8,-4);hF(c,hR(c,33,-9,9,2.5,.6),HDM.hole,-9,-6.5,{grain:0,hi:0});hF(c,hR(c,56,-11.5,3,2.2,.4),HDM.blk,-11.5,-9.3)}},
+  selfmade:{L:112,y0:-10,y1:26,grip:30,d:c=>{hF(c,hP(c,[[0,-2],[38,-6],[40,4],[30,6],[18,24],[6,25],[10,8],[0,7]]),HDM.woodD,-6,25);hF(c,hR(c,34,-5,78,6.5,3),HDM.steel,-5,1.5,{hi:.35});
+    for(const x of [46,76,98])hF(c,hR(c,x,-5.8,8,8,1),HDM.tape,-5.8,2.2);c.strokeStyle='rgba(0,0,0,.4)';c.lineWidth=.25;for(const x of [46,76,98])for(let i=1;i<4;i++){c.beginPath();c.moveTo(x+i*2,-5.8);c.lineTo(x+i*2+1,2.2);c.stroke()}
+    hF(c,hR(c,24,-9,10,4,1),HDM.park,-9,-5);c.strokeStyle='#2a2c2e';c.lineWidth=1;c.beginPath();c.moveTo(26,-5);c.quadraticCurveTo(20,0,26,6);c.stroke();hScrew(c,38,2,1);hScrew(c,20,0,.9);hF(c,hR(c,111,-4.2,1.5,4.8,.6),HDM.hole,-4.2,.6,{grain:0,hi:0})}},
+  obrez:{L:122,y0:-10,y1:28,grip:22,d:c=>{hF(c,hP(c,[[0,6],[30,-6],[48,-6],[48,4],[36,6],[22,24],[8,26]]),HDM.wood,-6,26);hF(c,hR(c,20,22,4,4,1),HDM.blk,22,26);
+    hF(c,hP(c,[[44,-7],[66,-7],[66,5],[52,5],[44,2]]),HDM.steel,-7,5,{hi:.35});c.strokeStyle='rgba(60,40,10,.45)';c.lineWidth=.3;for(let i=0;i<5;i++){c.beginPath();c.arc(55,-1,1.5+i*1.2,0,Math.PI*1.4);c.stroke()}hScrew(c,50,1.5,1);hTrig(c,40,5,10);
+    hF(c,hR(c,42,-10,6,4,1),HDM.blk,-10,-6);hF(c,hR(c,66,-6,56,5,2),HDM.blk,-6,-1,{hi:.32});hF(c,hR(c,66,-1,56,4.5,2),HDM.blk,-1,3.5);hF(c,hP(c,[[66,2],[92,2],[90,7],[66,7]]),HDM.wood,2,7);hF(c,hR(c,120,-6,2,9.5,.5),HDM.hole,-6,3.5,{grain:0,hi:0})}},
+  toz:{L:232,y0:-12,y1:24,grip:60,d:c=>{hF(c,hP(c,[[2,-4],[58,-6],[72,-6],[72,4],[60,5],[50,12],['q',30,10,2,20],[0,18],[0,-2]]),HDM.wood,-6,20);hF(c,hR(c,-1,-4.5,4,24.5,1.5),HDM.rubber,-4.5,20);hSeam(c,10,0,56,-2);
+    hF(c,hP(c,[[68,-8],[94,-8],[94,5],[76,5],[68,2]]),HDM.steel,-8,5,{hi:.35});c.strokeStyle='rgba(60,40,10,.45)';c.lineWidth=.3;for(let i=0;i<6;i++){c.beginPath();c.arc(82,-1.5,1.4+i*1.1,0,Math.PI*1.5);c.stroke()}hScrew(c,74,1,1);hTrig(c,64,5,12);
+    hF(c,hR(c,66,-11,8,4,1),HDM.blk,-11,-7);hF(c,hR(c,94,-7,138,5,2),HDM.blk,-7,-2,{hi:.32});hF(c,hR(c,94,-2,138,4.6,2),HDM.blk,-2,2.6);hF(c,hP(c,[[94,2],[146,2],[140,7],[96,7]]),HDM.wood,2,7);
+    c.fillStyle='#e0d8b0';c.beginPath();c.arc(229,-7.6,.9,0,7);c.fill();hF(c,hR(c,230.5,-7,1.5,9.6,.5),HDM.hole,-7,2.6,{grain:0,hi:0})}},
+  saiga:{L:206,y0:-14,y1:42,grip:98,d:c=>{hF(c,hP(c,[[3,-7],[64,-6],[64,3],[3,15],[1,15],[1,-7]]),HDM.poly,-7,15);hF(c,hR(c,-1,-7.4,4,23,1),HDM.rubber,-7.4,15.6);
+    hF(c,hP(c,[[62,-6],[66,-9],[128,-9],[132,-7],[140,-7],[140,3],[62,3]]),HDM.blk,-9,3);hF(c,hR(c,103,-5.8,17,3,.8),HDM.hole,-5.8,-2.8,{grain:0,hi:0});hF(c,hP(c,[[70,-4.4],[106,-5],[108,-3.6],[72,-2.6]]),HDM.park,-5,-2.6);
+    const gp=hP(c,[[94,3],[106,3],[102,26],[92,28],[88,25]]);hF(c,gp,HDM.poly,3,28);hGripTex(c,gp,86,4,106,27);hTrig(c,106,3,15);
+    hF(c,hP(c,[[119,3],[139,3],[142,38],[121,40]]),HDM.poly,3,40);hRibs(c,123,138,8,36,5);
+    hF(c,hP(c,[[140,-4],[176,-4],[176,5],[141,6]]),HDM.poly,-4,6);hSlots(c,146,-1.5,4,2.4,5,1.6);hF(c,hR(c,140,-11,38,7,3),HDM.poly,-11,-4);hF(c,hR(c,176,-11,8,14,1),HDM.blk,-11,3);hBarrel(c,184,206,-.6,2.6);hF(c,hR(c,196,-12,3,9,.5),HDM.blk,-12,-3)}},
+  kedr:{L:124,y0:-16,y1:34,grip:44,d:c=>{c.strokeStyle='#1c1d1f';c.lineWidth=1.6;c.beginPath();c.moveTo(30,-6);c.lineTo(4,-6);c.lineTo(4,2);c.lineTo(30,2);c.stroke();c.strokeStyle='rgba(255,255,255,.18)';c.lineWidth=.4;c.beginPath();c.moveTo(30,-6.4);c.lineTo(4,-6.4);c.stroke();hF(c,hR(c,0,-8,5,13,1.5),HDM.blk,-8,5);
+    hF(c,hP(c,[[28,-9],[96,-9],[98,-6],[98,4],[28,4]]),HDM.blk,-9,4);hF(c,hR(c,60,-7.5,16,3,.8),HDM.hole,-7.5,-4.5,{grain:0,hi:0});hSeam(c,30,-2,96,-2);for(const x of [34,90])hScrew(c,x,1.5,.7);
+    const gp=hP(c,[[38,4],[50,4],[46,26],[35,28],[32,24]]);hF(c,gp,HDM.poly,4,28);hGripTex(c,gp,38,5,53,27);hF(c,hP(c,[[60,4],[70,4],[71,32],[61,32]]),HDM.blk,4,32);hRibs(c,62,69,8,30,3);hTrig(c,50,4,10);
+    hBarrel(c,98,124,-2.4,1.8);hF(c,hR(c,110,-12,4,8,1),HDM.blk,-12,-4);hF(c,hR(c,30,-13,6,4,1),HDM.blk,-13,-9)}},
+  bizon:{L:194,y0:-16,y1:30,grip:88,d:c=>{c.strokeStyle='#1c1d1f';c.lineWidth=1.8;c.beginPath();c.moveTo(62,-6);c.lineTo(8,-5);c.lineTo(4,10);c.lineTo(62,2);c.stroke();hF(c,hR(c,0,-7,6,20,2),HDM.rubber,-7,13);
+    hF(c,hP(c,[[60,-6],[64,-9],[128,-9],[132,-7],[140,-7],[140,3],[60,3]]),HDM.blk,-9,3);hF(c,hR(c,125,-13,15,5,1),HDM.blk,-13,-8);hF(c,hR(c,100,-5.8,17,3,.8),HDM.hole,-5.8,-2.8,{grain:0,hi:0});hF(c,hP(c,[[68,-4.4],[100,-5],[102,-3.6],[70,-2.6]]),HDM.park,-5,-2.6);
+    const gp=hP(c,[[84,3],[96,3],[92,26],[82,28],[78,25]]);hF(c,gp,HDM.poly,3,28);hGripTex(c,gp,84,4,101,27);hTrig(c,96,3,14);
+    hF(c,hR(c,112,3,72,14,6),HDM.poly,3,17,{hi:.3});c.strokeStyle='rgba(0,0,0,.5)';c.lineWidth=.35;for(let x=116;x<182;x+=4.5){c.beginPath();c.moveTo(x,3.5);c.quadraticCurveTo(x+2.5,10,x,16.5);c.stroke()}
+    hF(c,hR(c,140,-10,36,7,3),HDM.poly,-10,-3);hF(c,hR(c,176,-10,6,10,1),HDM.blk,-10,0);hBarrel(c,182,194,-1.8,2);hF(c,hR(c,186,-13,3,8,.5),HDM.blk,-13,-5)}},
+  aks:{L:184,y0:-16,y1:40,grip:80,d:c=>{c.strokeStyle='#1c1d1f';c.lineWidth=1.8;c.beginPath();c.moveTo(52,-6);c.lineTo(6,-6);c.lineTo(3,8);c.lineTo(52,2);c.moveTo(6,-6);c.lineTo(52,2);c.stroke();hF(c,hR(c,0,-8,6,18,2),HDM.blk,-8,10);
+    hF(c,hP(c,[[50,-6],[54,-9],[112,-9],[118,-7],[124,-7],[124,3],[50,3]]),HDM.blk,-9,3);hF(c,hP(c,[[54,-9],[106,-9],['q',112,-15,118,-11],[118,-9]]),HDM.blk,-15,-9);hF(c,hR(c,88,-5.8,17,3,.8),HDM.hole,-5.8,-2.8,{grain:0,hi:0});hF(c,hP(c,[[58,-4.4],[90,-5],[92,-3.6],[60,-2.6]]),HDM.park,-5,-2.6);
+    const gp=hP(c,[[76,3],[88,3],[84,26],[74,28],[70,25]]);hF(c,gp,HDM.plum,3,28);hGripTex(c,gp,76,4,93,27);hTrig(c,88,3,15);
+    hF(c,hP(c,[[104,3],[121,3],['q',125,20,139,35],[125,40],['q',111,23,104,3]]),HDM.plum,3,40);
+    hF(c,hP(c,[[124,-3],[150,-3],[150,4],[125,5]]),HDM.wood,-3,5);hF(c,hR(c,124,-10.5,27,6.5,3),HDM.wood,-10.5,-4);hF(c,hP(c,[[150,-11],[158,-11],[158,-15],[162,-15],[162,2],[150,2]]),HDM.blk,-15,2);hBarrel(c,162,166,-.6,1.8);hCone(c,166,-.6,16,2.4,3.6)}},
+  ak:{L:252,y0:-16,y1:42,grip:100,d:c=>hdAK(c,HDM.plum,HDM.plum)},
+  akmaple:{L:252,y0:-16,y1:42,grip:100,d:c=>{hdAK(c,HDM.maple,HDM.maple);for(const [x,y] of [[30,3],[156,0],[110,15]]){c.fillStyle='rgba(200,90,20,.7)';c.beginPath();for(let i=0;i<10;i++){const a=i/10*6.28,r=i%2?1.4:3;c.lineTo(x+Math.cos(a)*r,y+Math.sin(a)*r)}c.closePath();c.fill()}}},
+  val:{L:204,y0:-18,y1:32,grip:78,d:c=>{c.strokeStyle='#1c1d1f';c.lineWidth=2;c.beginPath();c.moveTo(54,-6);c.lineTo(6,-5);c.lineTo(4,10);c.lineTo(54,2);c.stroke();hF(c,hR(c,0,-7,6,20,2),HDM.rubber,-7,13);
+    hF(c,hP(c,[[52,-6],[56,-9],[124,-9],[124,3],[52,3]]),HDM.blk,-9,3);hF(c,hR(c,108,-14,10,5,1),HDM.blk,-14,-9);hF(c,hR(c,84,-5.8,15,3,.8),HDM.hole,-5.8,-2.8,{grain:0,hi:0});hSeam(c,56,-6.4,122,-6.4);
+    const gp=hP(c,[[74,3],[86,3],[82,26],[72,28],[68,25]]);hF(c,gp,HDM.poly,3,28);hGripTex(c,gp,74,4,91,27);hTrig(c,86,3,14);hF(c,hP(c,[[98,3],[112,3],[114,24],[100,24]]),HDM.blk,3,24);hRibs(c,101,111,6,22,3.3);
+    hF(c,hR(c,124,-8,30,12,3),HDM.poly,-8,4);hSlots(c,128,-3,3.2,5,5,2);hF(c,hR(c,150,-7,54,11,4),HDM.blk,-7,4,{hi:.34});hSeam(c,152,-3,200,-3);hF(c,hR(c,202,-4.5,2,6,.6),HDM.hole,-4.5,1.5,{grain:0,hi:0});hF(c,hR(c,190,-13,4,6,1),HDM.blk,-13,-7)}},
+  pkm:{L:264,y0:-18,y1:46,grip:104,d:c=>{hF(c,hP(c,[[2,-8],[66,-6],[66,4],[2,14],[0,14],[0,-8]]),HDM.woodD,-8,14);c.save();c.globalCompositeOperation='destination-out';c.beginPath();c.moveTo(16,-2);c.lineTo(54,-2.5);c.lineTo(54,1.5);c.lineTo(16,7);c.closePath();c.fill();c.restore();c.save();c.strokeStyle='rgba(0,0,0,.8)';c.lineWidth=.5;c.beginPath();c.moveTo(16,-2);c.lineTo(54,-2.5);c.lineTo(54,1.5);c.lineTo(16,7);c.closePath();c.stroke();c.restore();hF(c,hR(c,-1,-8.4,4,23,1),HDM.rubber,-8.4,14.6);
+    hF(c,hP(c,[[64,-7],[68,-11],[150,-11],[150,4],[64,4]]),HDM.blk,-11,4);hF(c,hP(c,[[70,-11],[140,-11],[142,-14],[72,-14]]),HDM.blk,-14,-11);hSeam(c,70,-7,148,-7);for(const x of [74,96,120,144])hScrew(c,x,0,.7);
+    const gp=hP(c,[[94,4],[106,4],[102,27],[92,29],[88,26]]);hF(c,gp,HDM.woodD,4,29);hTrig(c,106,4,14);hF(c,hR(c,118,4,30,28,2),HDM.olive,4,32,{hi:.2});hF(c,hR(c,124,14,18,4,1),HDM.olive,14,18);hSeam(c,120,8,146,8);
+    hBarrel(c,150,248,-3,2.2);hF(c,hR(c,150,1,80,3.4,1.5),HDM.blk,1,4.4);hF(c,hR(c,154,-11,22,4,1.5),HDM.woodD,-11,-7);hF(c,hR(c,162,-7,3,4,.5),HDM.blk,-7,-3);hCone(c,246,-3,18,2.6,4);hF(c,hR(c,238,-13,3,8,.5),HDM.blk,-13,-5);hBipod(c,224,2)}},
+  svd:{L:272,y0:-26,y1:30,grip:106,d:c=>{const hole=()=>{c.beginPath();c.moveTo(16,-3);c.lineTo(52,-5.5);c.quadraticCurveTo(64,-5,66,-1);c.quadraticCurveTo(58,3,52,4);c.lineTo(22,10);c.quadraticCurveTo(14,8,16,-3);c.closePath()};hF(c,hP(c,[[2,-8],[30,-9.5],[50,-11],[66,-10.5],[78,-6],[78,4],[66,5],[58,8],[4,16],[0,15],[0,-7]]),HDM.wood,-11,16);c.save();c.globalCompositeOperation='destination-out';hole();c.fill();c.restore();c.save();hole();c.strokeStyle='rgba(0,0,0,.85)';c.lineWidth=.55;c.stroke();c.translate(0,-.35);hole();c.strokeStyle='rgba(255,255,255,.12)';c.lineWidth=.8;c.stroke();c.restore();hF(c,hR(c,-1,-7.4,4,23,1),HDM.rubber,-7.4,15.6);hF(c,hP(c,[[24,-9],[50,-12.5],[50,-9],[26,-6]]),HDM.woodD,-12.5,-6);
+    hF(c,hP(c,[[76,-6],[80,-9],[150,-9],[150,3],[76,3]]),HDM.blk,-9,3);hF(c,hR(c,108,-5.8,17,3,.8),HDM.hole,-5.8,-2.8,{grain:0,hi:0});hTrig(c,90,3,14);hF(c,hP(c,[[118,3],[134,3],[136,22],[120,22]]),HDM.blk,3,22);hRibs(c,121,133,6,20,4);
+    hF(c,hP(c,[[150,-6],[198,-6],[198,4],[150,5]]),HDM.wood,-6,5);hSlots(c,156,-3.4,6,1.6,5,2.6);hSlots(c,156,.6,6,1.6,5,2.6);hBarrel(c,198,258,-1,1.4);hF(c,hR(c,214,-13,6,12,1),HDM.blk,-13,-1);hF(c,hR(c,256,-3,16,4,1),HDM.blk,-3,1);hSlots(c,259,-2.2,10,.8,1,0);
+    hF(c,hR(c,104,-13,16,4,1),HDM.blk,-13,-9);hScope(c,90,164,-19,true)}},
+  mosin:{L:282,y0:-14,y1:26,grip:72,d:c=>{hF(c,hP(c,[[2,-4],[70,-4],[76,-1],[240,-1],[242,5],[100,6],[78,8],[60,10],['q',30,12,2,20],[0,18],[0,-2]]),HDM.wood,-4,20);hF(c,hR(c,-1,-4.5,4,24.5,1.2),HDM.steel,-4.5,20);
+    hBarrel(c,76,282,-3,1.6);hF(c,hR(c,70,-7,44,7,2),HDM.steel,-7,0,{hi:.35});hF(c,hR(c,104,-11,10,5,1),HDM.blk,-11,-6);c.strokeStyle='#3a3c40';c.lineWidth=1.4;c.beginPath();c.moveTo(92,-4);c.quadraticCurveTo(96,2,94,7);c.stroke();hF(c,()=>{c.beginPath();c.arc(94,8,2.2,0,7)},HDM.steel,5.8,10.2);
+    hF(c,hP(c,[[82,6],[98,6],[98,9],[82,9]]),HDM.blk,6,9);hTrig(c,72,8,10);for(const x of [150,226])hF(c,hR(c,x,-5,4,11,.6),HDM.blk,-5,6);hF(c,hR(c,272,-9,3,6,.6),HDM.blk,-9,-3);hScrew(c,118,2.4,.8);hScrew(c,60,2,.8)}},
+  rpg7:{L:236,y0:-22,y1:32,grip:96,d:c=>{hF(c,hP(c,[[0,-8],[18,-4],[18,4],[0,8]]),HDM.blk,-8,8);hF(c,hR(c,16,-4,158,8,3),HDM.olive,-4,4,{hi:.3});hF(c,hR(c,68,-6.5,50,13,4),HDM.woodD,-6.5,6.5);for(const x of [66,120])hF(c,hR(c,x,-6,3,12,.5),HDM.blk,-6,6);
+    const g1=hP(c,[[90,4],[100,4],[96,26],[86,28]]);hF(c,g1,HDM.woodD,4,28);hF(c,hP(c,[[72,4],[80,4],[78,22],[70,22]]),HDM.woodD,4,22);hTrig(c,100,4,12);hF(c,hR(c,110,-18,18,7,2),HDM.blk,-18,-11);hF(c,hR(c,112,-12,4,6,1),HDM.blk,-12,-6);
+    hF(c,hP(c,[[170,-4],[174,-9],[198,-9],['q',204,-9,206,-5],[236,-1],[236,1],[206,5],['q',204,9,198,9],[174,9],[170,4]]),HDM.olive,-9,9,{hi:.32});hF(c,hR(c,176,-9.3,4,18.6,1),HDM.blk,-9.3,9.3);for(let i=0;i<4;i++)hF(c,hP(c,[[176,8+i*.1],[170-i*3,14+i*2],[173-i*3,14+i*2],[180,8]]),HDM.olive,8,16)}},
+  knife:{L:62,y0:-6,y1:6,grip:10,d:c=>{hF(c,hR(c,0,-3.2,24,6.4,2),HDM.tape,-3.2,3.2);c.strokeStyle='rgba(0,0,0,.45)';c.lineWidth=.3;for(let x=2;x<24;x+=2.2){c.beginPath();c.moveTo(x,-3.2);c.lineTo(x+1.2,3.2);c.stroke()}hF(c,hR(c,23,-4,3,8,1),HDM.park,-4,4);
+    hF(c,hP(c,[[26,-3],[50,-3],['q',58,-2.5,62,0],['q',56,2.8,46,3],[26,3]]),HDM.steel,-3,3,{hi:.45});c.fillStyle='rgba(255,255,255,.35)';c.beginPath();c.moveTo(28,1.4);c.lineTo(50,1.6);c.lineTo(60,.2);c.lineTo(50,2.6);c.lineTo(28,2.6);c.closePath();c.fill()}},
+  crowbar:{L:120,y0:-14,y1:6,grip:14,d:c=>{hF(c,hP(c,[[0,-1],[4,-2.4],[106,-2.4],['q',118,-2.4,118,-12],[115,-13],['q',114,-5,106,2.4],[4,2.4],[0,1]]),HDM.red,-13,2.4,{hi:.35});c.fillStyle='rgba(180,184,188,.65)';for(const [x,w] of [[0,6],[30,3],[60,2],[112,6]])c.fillRect(x,-2.2,w,4.4);c.fillStyle='rgba(0,0,0,.6)';c.fillRect(115,-12.5,1,3)}},
+  machete:{L:132,y0:-8,y1:10,grip:14,d:c=>{hF(c,hP(c,[[0,-3],[30,-3.5],[30,4],[0,4],[-1,2]]),HDM.woodD,-3.5,4);for(const x of [8,22])hScrew(c,x,.3,1);hF(c,hR(c,29,-5,3,10,1),HDM.blk,-5,5);
+    hF(c,hP(c,[[32,-4],[118,-6],['q',132,-5,130,2],['q',120,8,96,8],[32,4]]),HDM.blk,-6,8,{hi:.25});c.fillStyle='rgba(220,224,228,.6)';c.beginPath();c.moveTo(34,3.2);c.lineTo(96,6.4);c.quadraticCurveTo(120,6.6,129,1.8);c.lineTo(128,3.2);c.quadraticCurveTo(118,8.2,96,8);c.lineTo(34,4);c.closePath();c.fill()}},
+  axe:{L:132,y0:-16,y1:22,grip:16,d:c=>{hF(c,hP(c,[[0,-2.6],['q',60,-4,124,-3],[124,3],['q',60,2,0,3]]),HDM.wood,-4,3);hF(c,hP(c,[[106,-7],[124,-7],[124,-4],[132,-15],[129,-16],[120,-6],[110,-6],[106,-4]]),HDM.red,-16,-4);
+    hF(c,hP(c,[[104,-6],[126,-6],[128,6],[134,20],[110,22],[112,6]]),HDM.red,-6,22,{hi:.3});c.fillStyle='rgba(225,228,232,.75)';c.beginPath();c.moveTo(113,17);c.lineTo(133,15.5);c.lineTo(134,20);c.lineTo(110,22);c.closePath();c.fill()}},
+  bat:{L:132,y0:-9,y1:9,grip:12,d:c=>{hF(c,hP(c,[[0,-2.6],[4,-2],[40,-2.4],['q',90,-4.5,126,-6],['q',132,-6,132,0],['q',132,6,126,6],['q',90,4.5,40,2.4],[4,2],[0,2.6]]),HDM.wood,-6,6);hF(c,hR(c,4,-2.3,26,4.6,1),HDM.tape,-2.3,2.3);
+    c.strokeStyle='#8a8e92';c.lineWidth=.6;for(const [x,a] of [[100,-1],[108,1],[116,-1],[122,1],[112,-1],[104,1]]){c.beginPath();c.moveTo(x,a*4);c.lineTo(x+1,a*8.5);c.stroke()}}},
+  sledge:{L:132,y0:-14,y1:14,grip:12,d:c=>{hF(c,hP(c,[[0,-2.6],[112,-2.2],[112,2.2],[0,2.6]]),HDM.wood,-2.6,2.6);hF(c,hR(c,4,-2.8,24,5.6,1),HDM.rubber,-2.8,2.8);hF(c,hR(c,108,-13,22,26,2),HDM.steel,-13,13,{hi:.3});hSeam(c,108,-9,130,-9);hSeam(c,108,9,130,9)}}};
+// длина в руках (в старых единицах): огнестрел — до дула PX.mz, холодное — до кончика
+const HDHAND={knife:11,crowbar:16,machete:17,axe:17,bat:17,sledge:18};
+const HD={c:{}};
+function hdSprite(id,s){const k=lookOf(id)+'|'+s;if(HD.c[k])return HD.c[k];const d=HDDEF[lookOf(id)];if(!d)return null;const pad=4;
+  const W=Math.ceil((d.L+pad*2)*s),H=Math.ceil((d.y1-d.y0+pad*2)*s);const a=document.createElement('canvas');a.width=W;a.height=H;const c=a.getContext('2d');c.scale(s,s);c.translate(pad,pad-d.y0);HDG=hdGrainPat(c,s);
+  try{d.d(c)}catch(e){console.error(e)}HDG=null;
+  // тень под оружием
+  const b=document.createElement('canvas');b.width=W;b.height=H;const x=b.getContext('2d');x.shadowColor='rgba(0,0,0,.55)';x.shadowBlur=Math.max(1,2.2*s);x.shadowOffsetY=Math.max(.5,1.2*s);x.drawImage(a,0,0);
+  return HD.c[k]={cv:b,d,s,pad}}
+// иконки: картинка повёрнута по диагонали (короткие пистолеты почти ровно)
+{const _ic=iconCanvas;iconCanvas=function(id,size=40){const it=ITEMS[id];if(!it||it.k!=='weapon'||!HDDEF[lookOf(id)])return _ic(id,size);
+  const sp=hdSprite(id,size>=60?3:2);const wide=size>=40&&sp.d.L>=100;const cw=wide?size*2:size;
+  const c=document.createElement('canvas');const dp=Math.min(2,window.devicePixelRatio||1);c.width=cw*dp;c.height=size*dp;c.style.width=cw+'px';c.style.height=size+'px';c.style.maxWidth='100%';c.style.objectFit='contain';const x=c.getContext('2d');
+  const a=wide?-.12:sp.d.L<80?-.22:-.5;const w=sp.cv.width,h=sp.cv.height;const bw=Math.abs(w*Math.cos(a))+Math.abs(h*Math.sin(a)),bh=Math.abs(w*Math.sin(a))+Math.abs(h*Math.cos(a));const k=Math.min(c.width*.98/bw,c.height*.98/bh);
+  x.imageSmoothingQuality='high';x.translate(c.width/2,c.height/2);x.rotate(a);x.drawImage(sp.cv,-w*k/2,-h*k/2,w*k,h*k);return c}}
+// в руках: та же модель, уменьшенная до размеров старого ствола
+function hdHandDraw(c,w,len){const sp=hdSprite(w,QUAL.lvl===0?.5:.8);if(!sp)return false;const d=sp.d;const k=len/(d.L-d.grip);c.drawImage(sp.cv,(-sp.pad-d.grip)*k,(d.y0-sp.pad)*k-.8,(d.L+sp.pad*2)*k,(d.y1-d.y0+sp.pad*2)*k);return true}
+{const _dg=drawGun;drawGun=function(c,w){const lw=lookOf(w);if(!HDDEF[lw]){_dg(c,w);return}const len=(PX[w]||PX[lw]||{}).mz||14;if(!hdHandDraw(c,w,len)){_dg(c,w);return}
+  if(w!=='rpg7')try{drawMods(c,w,GM_DRAW!=null?GM_DRAW:(ITEMS[w]&&ITEMS[w].k==='weapon'?myGm(w):''))}catch(e){}}}
+{const _dm=drawMelee;drawMelee=function(c,w){const lw=lookOf(w);if(!HDDEF[lw]||!HDHAND[lw]){_dm(c,w);return}if(!hdHandDraw(c,w,HDHAND[lw]))_dm(c,w)}}
+// превью всего арсенала (для проверки и картинок к новостям)
+function hdArsenal(cols=3){const ids=Object.keys(HDDEF);const cw=420,ch=150;const cv=document.createElement('canvas');cv.width=cw*cols;cv.height=ch*Math.ceil(ids.length/cols)+60;const x=cv.getContext('2d');
+  const g=x.createLinearGradient(0,0,0,cv.height);g.addColorStop(0,'#2a2a26');g.addColorStop(1,'#121210');x.fillStyle=g;x.fillRect(0,0,cv.width,cv.height);x.fillStyle='#f2b65c';x.font='700 26px "Russo One",sans-serif';x.fillText('ОСАДОК — АРСЕНАЛ',20,40);
+  ids.forEach((id,i)=>{const sp=hdSprite(id,3);const cx=(i%cols)*cw,cy=60+Math.floor(i/cols)*ch;const k=Math.min((cw-30)/sp.cv.width,(ch-36)/sp.cv.height);x.drawImage(sp.cv,cx+(cw-sp.cv.width*k)/2,cy+6+(ch-36-sp.cv.height*k)/2,sp.cv.width*k,sp.cv.height*k);
+    x.fillStyle='#d8ccb0';x.font='600 14px "IBM Plex Mono",monospace';x.textAlign='center';x.fillText(ITEMS[id]?ITEMS[id].n:id,cx+cw/2,cy+ch-10);x.textAlign='left'});return cv}
+
+// ================= v42: ГРУППИРОВКИ БЕЗ ПОТЕРЬ, РАДИАЦИЯ, ВЫКУП ИЗ БОЛЬНИЦЫ, ДЖОЙСТИК, РЕФЕРАЛЫ =================
+
+// ---------- Группировки: состав, склад, журнал и прокачка не теряются ----------
+// Прошлый сбой: если облако отвечало медленно, «пусто» считалось правдой — игра запоминала пустую группировку,
+// а самовосстановление бойца записывало её поверх настоящей (оставался один боец, склад и журнал пропадали),
+// после чего всех стёртых засчитывало «исключёнными» и выкидывало при входе.
+// Теперь: пустой ответ облака — не правда; перед записью урезанная группировка сливается с резервной копией
+// и с последней известной версией на этом устройстве; «исключён» — только если это записано в журнале.
+const facCnt=d=>d&&d.members?Object.keys(d.members).length:0;
+const facLsKey=f=>'osadok_fac_'+(TESTROOM?'t_'+TESTROOM:'v1')+'_'+f;
+function facLocal(f){try{const d=JSON.parse(localStorage.getItem(facLsKey(f))||'null');return d&&d.members?Object.assign(emptyFac(),d):null}catch(e){return null}}
+function facRemember(f,d){if(!d||!facCnt(d))return;const o=facLocal(f);if(o&&facCnt(d)<facCnt(o)*.6&&facCnt(o)>=3)return;try{localStorage.setItem(facLsKey(f),JSON.stringify(d))}catch(e){}}
+const FACBAK={};
+async function facBak(f){if(FACBAK[f]&&Date.now()-FACBAK[f].t<120000)return FACBAK[f].d;let d=null;try{const p=await cloudGet(facT(f)+'_bak',4000);if(p&&p.ct)d=Object.assign(emptyFac(),JSON.parse(p.ct))}catch(e){}FACBAK[f]={t:Date.now(),d};return d}
+// лучшая известная копия: резерв в облаке или своя локальная — у кого больше бойцов
+async function facBest(f){const a=await facBak(f),b=facLocal(f);if(!a)return b;if(!b)return a;return facCnt(b)>facCnt(a)?b:a}
+const facStoreN=d=>Object.values(d&&d.store||{}).reduce((s,q)=>s+(q>0?q:0),0);
+function facWiped(d,b){if(!b)return false;const nd=facCnt(d),nb=facCnt(b);return (nb>=3&&nd<nb*.6)||(facStoreN(d)===0&&facStoreN(b)>0&&(d.log||[]).length<(b.log||[]).length)}
+// кто ушёл или исключён по журналу после времени копии
+function facGone(d,since){const g=new Set();for(const e of (d.log||[])){if((e.t||0)<since)continue;if(e.a==='kick'&&e.who)g.add(e.who);if(e.a==='leave'&&e.n)g.add(e.n)}return g}
+function facMerge(d,b){const out=Object.assign(emptyFac(),b,d);const gone=facGone(d,b.at||0);out.members=Object.assign({},d.members);
+  for(const [pid,m] of Object.entries(b.members||{}))if(!out.members[pid]&&!gone.has(m.n))out.members[pid]=m;
+  if(!facStoreN(d)&&facStoreN(b))out.store=Object.assign({},b.store);if(!(d.fund|0)&&(b.fund|0))out.fund=b.fund;out.cap=Math.max(d.cap|0,b.cap|0)||out.cap;
+  const seen=new Set();out.log=[...(b.log||[]),...(d.log||[])].filter(e=>{const k=(e.t||0)+'|'+e.a+'|'+(e.who||'');if(seen.has(k))return false;seen.add(k);return true}).sort((x,y)=>(x.t||0)-(y.t||0)).slice(-200);
+  if(b.bots&&(!d.bots||(b.bots.until||0)>(d.bots.until||0)))out.bots=b.bots;out.kicked={};return out}
+facLoad=async function(f){try{const r=await facProbe(facT(f));if(!r||!r.pkt)throw 0;let d=facParse(r.pkt);const b=facLocal(f);if(b&&facWiped(d,b))d=facMerge(d,b);FACD[f]=d;FACOK[f]=Date.now();facRemember(f,d)}catch(e){FACOK[f]=0;FACD[f]=FACD[f]||facLocal(f)||emptyFac()}return FACD[f]};
+facMut=async function(f,fn){const r=await facProbe(facT(f));if(!r||!r.sure)throw new Error('cloud');const best=await facBest(f);
+  let d=r.pkt?facParse(r.pkt):null;let healed=false;
+  if(!d){if(best){d=JSON.parse(JSON.stringify(best));healed=true}else d=emptyFac()}
+  else if(best&&facWiped(d,best)){d=facMerge(d,best);healed=true}
+  const before=Object.keys(d.members);const res=fn(d);if(res===false&&!healed)return false;const mass=!!d._mass;delete d._mass;const after=Object.keys(d.members);
+  if(before.length-after.length>1&&!mass)throw new Error('mass');
+  // «исключён» помечаем только при одиночном исключении или выходе
+  d.kicked=d.kicked||{};if(before.length-after.length===1){for(const pid of before)if(!d.members[pid])d.kicked[pid]={t:Date.now(),self:S&&pid===S.pid?1:0}}for(const pid of after)delete d.kicked[pid];
+  d.log=(d.log||[]).slice(-200);d.at=Date.now();await cloudPut(facT(f),{v:1,at:d.at,ct:JSON.stringify(d)});FACD[f]=d;FACOK[f]=Date.now();facRemember(f,d);
+  // резервная копия: не затираем хорошую копию урезанной группировкой
+  if(after.length>0&&Date.now()-(FACBK[f]||0)>600000){const b=await facBak(f);if(!b||!facWiped(d,b)){FACBK[f]=Date.now();FACBAK[f]={t:Date.now(),d:JSON.parse(JSON.stringify(d))};cloudPut(facT(f)+'_bak',{v:1,at:d.at,ct:JSON.stringify(d)}).catch(()=>{})}}
+  return res===false?false:true};
+// синхронизация бойца: исключён — только если это есть в журнале; иначе возвращается в состав (и группировка лечится из копии)
+{const _fs0=facSync;facSync=async function(){if(!S)return;const f=myFac();if(!f)return _fs0();const d=await facLoad(f);if(!FACOK[f])return;
+  if(d.members[S.pid])return _fs0();
+  const byLog=facOut(d,S.name);
+  if(byLog){S.fac=null;dirty=true;log('Вас исключили из группировки «'+FAC[f].n+'».','bad');sendPresence();return}
+  try{await facMut(f,dd=>{if(dd.members[S.pid])return false;dd.members[S.pid]={n:S.name,r:normR(S.fac.rank)||'private',lv:S.lvl,at:Date.now()};facLog(dd,'restore',{who:S.name})});log('Ваше членство в «'+FAC[f].n+'» сохранено.','sys')}catch(e){}}}
+// последнее событие игрока в журнале: вступил/возвращён — или исключён/вышел
+function facOut(d,name){let out=false;for(const e of (d.log||[])){if((e.a==='kick'&&e.who===name)||(e.a==='leave'&&e.n===name))out=true;else if(['accept','adminadd','restore','backup'].includes(e.a)&&e.who===name)out=false}return out}
+
+// ---------- Радиация: чем больше, тем сильнее отнимает здоровье ----------
+// до 15 — не ранит; 50 — около 0,7 ХП/с; 100 — около 4 ХП/с; 150 — около 10 ХП/с
+const RADT={acc:0,ft:0};
+setInterval(()=>{if(!S||!M||paused||S.hosp||(S.admin&&S.god))return;const r=S.rad|0;if(r<=15)return;RADT.acc+=4*Math.pow((r-15)/85,2);if(RADT.acc<1)return;const d=Math.floor(RADT.acc);RADT.acc-=d;S.hp-=d;
+  if(Date.now()-RADT.ft>1500){RADT.ft=Date.now();floatText(P.x,P.y-1,'☢ -'+d,'#95d03a')}hurtFlash=Math.min(1,hurtFlash+.15);if(S.hp<=0)die('радиация');else dirty=true},1000);
+
+// ---------- Больница: выкуп через минуту за 100 крышек, сосед по палате с играми ----------
+const HOSP_BUY=100,HOSP_WAIT=60e3;
+function hospBuy(){const h=S&&S.hosp;if(!h)return;if(Date.now()-(h.until-HOSP_MS)<HOSP_WAIT){log('Выписаться досрочно можно через минуту после поступления.','bad');return}if(S.caps<HOSP_BUY){log('Нужно '+HOSP_BUY+' крышек.','bad');return}
+  S.caps-=HOSP_BUY;h.until=Date.now()-1;updateHud();log('🏥 Вы выписались досрочно за '+HOSP_BUY+' крышек.','good');hospTick()}
+hospUi=function(){let e=document.getElementById('hospBar');const h=S&&S.hosp;if(!h){if(e)e.hidden=true;return}
+  if(!e){e=el('div');e.id='hospBar';e.append(el('span','t'),btn('Выписаться · '+HOSP_BUY+' крыш.',hospBuy,'btn'));document.getElementById('stage').append(e)}e.hidden=false;
+  const s=Math.max(0,Math.ceil((h.until-Date.now())/1000));e.querySelector('.t').textContent='🏥 Больница · выписка через '+Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  const can=Date.now()-(h.until-HOSP_MS)>=HOSP_WAIT;const b=e.querySelector('button');b.hidden=!can;b.disabled=S.caps<HOSP_BUY};
+NPCS.push({id:'patient',map:'hospital',x:8,y:7,a:Math.PI/2,n:'Сосед по палате Гена',role:'Шахматы, шашки, дурак и «однорукий»',lines:['О, новенький! Скучно тут. Сыграем во что-нибудь?','Я тут третью неделю. Шахматы, шашки, карты — выбирай.','Медсестра говорит, азарт вредит здоровью. А мне уже ничего не вредит.','Пока лечат — хоть крышек поднимем.'],lk:{g:'m',skin:1,hair:'short',hc:'brown',outfit:2,beard:'stubble',eye:0},eq:{body:'jacket'}});
+{const _nd=npcDialog;npcDialog=function(n){_nd(n);if(n.id!=='patient')return;const o=ov.querySelector('.opts');if(!o)return;const leave=o.lastElementChild;
+  o.insertBefore(btn('♟ Шахматы',()=>chessWin(true),'btn primary'),leave);o.insertBefore(btn('⛀ Шашки',()=>draughtsWin(true),'btn primary'),leave);o.insertBefore(btn('🃏 Дурак',()=>durakWin(true),'btn primary'),leave);o.insertBefore(btn('🎰 Однорукий бандит',()=>slotWin(),'btn'),leave)}}
+
+// ---------- Рефералы: в зачёт идут только крышки, заработанные самим игроком ----------
+// Крышки и вещи от других игроков (обмен, подарок, чужой рюкзак, трофей за убийство, склад и общак группировки) не считаются;
+// вещи, полученные от игроков и проданные торговцу, тоже не считаются.
+const REFX={p:0};
+function refX(c){if(c>0)REFX.p+=c}
+function refItem(id,q){if(!S||!(q>0))return;S.refItems=S.refItems||{};S.refItems[id]=(S.refItems[id]||0)+q;dirty=true}
+function refSold(id,q,p){if(!S||!S.refItems||!S.refItems[id])return;const k=Math.min(q,S.refItems[id]);S.refItems[id]-=k;if(S.refItems[id]<=0)delete S.refItems[id];refX(k*p)}
+
+// ---------- Телефон: ходьба — вся левая половина экрана, джойстик появляется под пальцем ----------
+(function(){const zone=el('div');zone.id='joyZone';const st=document.createElement('style');st.textContent='#joyZone{display:none;position:absolute;left:0;top:0;bottom:0;width:50%;z-index:2;touch-action:none}@media (pointer:coarse){#joyZone{display:block}#joy{display:none!important;pointer-events:none;left:0;top:0;bottom:auto;transform:none!important;transition:none}#joy.on{display:block!important}}';document.head.append(st);
+  const stage=document.getElementById('stage');stage.insertBefore(zone,cv.nextSibling);
+  zone.addEventListener('pointerdown',e=>{if(joyId!=null)return;e.preventDefault();joyId=e.pointerId;try{zone.setPointerCapture(e.pointerId)}catch(x){}const sr=stage.getBoundingClientRect();const R=joyEl.offsetWidth/2||66;
+    joyEl.style.left=(e.clientX-sr.left-R)+'px';joyEl.style.top=(e.clientY-sr.top-R)+'px';joyEl.classList.add('on');knob.style.transform='translate(0,0)';joy.x=joy.y=0;joy.on=false});
+  zone.addEventListener('pointermove',e=>{if(e.pointerId===joyId)joyMove(e)});
+  const end=e=>{if(e.pointerId!==joyId)return;joyId=null;joy.on=false;joy.x=joy.y=0;knob.style.transform='translate(0,0)';joyEl.classList.remove('on')};zone.addEventListener('pointerup',end);zone.addEventListener('pointercancel',end)})();
+// джойстик не обрывает ходьбу, если палец ушёл дальше края: направление сохраняется
+joyMove=function(e){const r=joyEl.getBoundingClientRect(),cx0=r.left+r.width/2,cy0=r.top+r.height/2;let dx=e.clientX-cx0,dy=e.clientY-cy0;if(document.documentElement.classList.contains('rotl')){const t0=dx;dx=dy;dy=-t0}const R=r.width/2-14;const l=Math.hypot(dx,dy);
+  if(l<6){joy.x=joy.y=0;joy.on=false;knob.style.transform='translate(0,0)';return}const k=Math.min(1,R/l);joy.x=dx*k/R;joy.y=dy*k/R;joy.on=true;knob.style.transform=`translate(${dx*k}px,${dy*k}px)`};
+
+// ---------- Android: альбомный режим включается сам ----------
+const IS_ANDROID=/android/i.test(navigator.userAgent);
+let landT=0;
+addEventListener('pointerdown',()=>{if(!IS_ANDROID||!S||Date.now()-landT<60000)return;if(screen.orientation&&screen.orientation.type&&screen.orientation.type.startsWith('landscape')&&document.fullscreenElement)return;landT=Date.now();
+  const lock=()=>{try{const p=screen.orientation&&screen.orientation.lock&&screen.orientation.lock('landscape');if(p&&p.catch)p.catch(()=>{})}catch(e){}};
+  try{const de=document.documentElement;if(!document.fullscreenElement&&de.requestFullscreen){const p=de.requestFullscreen({navigationUI:'hide'});if(p&&p.then)p.then(lock).catch(lock);else lock()}else lock()}catch(e){}},true);
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
