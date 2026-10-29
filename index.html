@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793282885";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793289110";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -1593,7 +1593,7 @@ let lastBoard='';
 async function pushBoard(){if(!db||!uid||!S)return;const d={n:S.name.slice(0,16),lv:S.lvl,k:kills(S),q:S.stats.quests,score:S.lvl*10000+S.xp};const js=JSON.stringify(d);if(js===lastBoard)return;lastBoard=js;try{await db.doc('board/'+uid).set(d)}catch(e){}}
 let lastPres='';
 function sendPresence(){if(!room||!S||!M)return;const e={};for(const k of GEAR)if(S.eq[k])e[k]=S.eq[k];
-  const pr={m:M.id,x:Math.round(P.x*100)/100,y:Math.round(P.y*100)/100,a:Math.round(P.a*100)/100,w:curW(),gm:typeof myGm==='function'?myGm(curW()):'',pt:typeof petCode==='function'?petCode():'',inv:typeof adminInv==='function'&&adminInv()?1:0,rl:P.rollT>now?1:0,pn:P.prone?1:0,sh:P.shotN%1000,n:S.name.slice(0,16),lv:S.lvl,k:S.karma|0,adm:S.admin?1:0,v:5,fl:typeof myFlId==='function'?myFlId():'',fc:typeof myFac==='function'?(myFac()||''):'',pid:S.pid||'',dv:typeof DEVID!=='undefined'?DEVID:'',sq:(typeof SQ!=='undefined'&&SQ.id)||'',hp:Math.round(S.hp/effMax()*100),ag:Math.round((1+stats().aggroPct/100)*(typeof proneK==='function'?proneK():1)*100)/100,lk:{g:S.lk.g,skin:S.lk.skin,hair:S.lk.hair,hc:S.lk.hc,outfit:S.lk.outfit,beard:S.lk.beard||'none',eye:S.lk.eye|0},e};
+  const pr={m:M.id,x:Math.round(P.x*100)/100,y:Math.round(P.y*100)/100,a:Math.round(P.a*100)/100,w:curW(),gm:typeof myGm==='function'?myGm(curW()):'',pt:typeof petCode==='function'?petCode():'',inv:typeof adminInv==='function'&&adminInv()?1:0,rl:P.rollT>now?1:0,pn:P.prone?1:0,sh:P.shotN%1000,n:S.name.slice(0,16),lv:S.lvl,k:S.karma|0,adm:S.admin?1:0,v:5,md:typeof medPres==='function'?medPres():0,fl:typeof myFlId==='function'?myFlId():'',fc:typeof myFac==='function'?(myFac()||''):'',pid:S.pid||'',dv:typeof DEVID!=='undefined'?DEVID:'',sq:(typeof SQ!=='undefined'&&SQ.id)||'',hp:Math.round(S.hp/effMax()*100),ag:Math.round((1+stats().aggroPct/100)*(typeof proneK==='function'?proneK():1)*100)/100,lk:{g:S.lk.g,skin:S.lk.skin,hair:S.lk.hair,hc:S.lk.hc,outfit:S.lk.outfit,beard:S.lk.beard||'none',eye:S.lk.eye|0},e};
   const js=JSON.stringify(pr);if(js===lastPres)return;lastPres=js;room.presence(pr).catch(()=>{})}
 // Онлайн без Claude (itch.io и любой сайт): все игроки подключаются к общим публичным серверам-посредникам (MQTT),
 // сразу к двум — если один недоступен, связь идёт через второй. Отдаёт тот же набор вызовов, что и комната Claude.
@@ -4925,12 +4925,12 @@ function facRating(f,d){d=d||FACD[f];if(!d)return 0;const lv=Object.values(d.mem
 // мастерская и оружейная: починка своим за полцены; мастера и оружейники изготавливают снаряжение группировки
 const FCRAFT={work:{ren:[['ren_mask',{rag:4,tape:2}],['ren_helm',{scrap:6,tape:3,rubber:2}],['ren_jacket',{rag:8,kevlar:2,tape:4,hide:2}]],mil:[['mil_gas',{rubber:4,lens:1,chem:1}],['mil_helm',{scrap:7,tape:3,kevlar:1}],['mil_vest',{kevlar:4,scrap:6,tape:4}]]},
   armory:{ren:[['ren_saiga',{gunparts:4,scrap:6,spring:2}],['ren_aks',{gunparts:5,scrap:6,spring:2,wire:2}]],mil:[['mil_ak',{gunparts:5,scrap:6,spring:2,wire:2}],['mil_svd',{gunparts:7,scrap:6,lens:2,spring:2}]]}};
-function facShopWin(f,kind){const armory=kind==='armory';const can=['leader',armory?'gunsmith':'master'].includes(myRank())||isAdm();
+function facShopWin(f,kind){const armory=kind==='armory';const can=['leader','deputy',armory?'gunsmith':'master'].includes(myRank())||isAdm();
   openWin((armory?'Оружейная':'Мастерская')+' «'+FAC[f].n+'»',b=>{b.append(el('div','sec',armory?'Починка оружия (своим — за полцены)':'Починка брони и снаряжения (своим — за полцены)'));
     const ids=[...new Set([...Object.values(S.eq).filter(Boolean),...Object.keys(S.inv)])].filter(id=>ITEMS[id]&&wearable(id)&&(S.inv[id]>0||equippedCount(id))&&durOf(id)<100&&(armory===(ITEMS[id].k==='weapon')));const l=el('div','list');if(!ids.length)l.append(el('div','muted small','Чинить нечего.'));
     for(const id of ids){const pr=Math.max(1,Math.round(repPrice(id)*.5));const r=el('div','row');r.append(iconCanvas(id,32));const gw=el('div','grow');gw.append(el('div','t',ITEMS[id].n),el('div','s','состояние '+Math.round(durOf(id))+'%'));r.append(gw,btn('Починить · '+pr,()=>{if(S.caps<pr)return;S.caps-=pr;S.dur[id]=100;statCache=null;dirty=true;log('Починено: '+ITEMS[id].n,'good');facShopWin(f,kind)},'btn primary',S.caps<pr));l.append(r)}b.append(l);
-    b.append(el('div','sec',armory?'Изготовление (оружейники и лидер)':'Изготовление (мастера и лидер)'));if(!can)b.append(el('p','muted small','Изготавливать снаряжение группировки могут только '+(armory?'оружейники':'мастера')+' и лидер. Ранг назначают в штабе.'));
-    const list=[...FCRAFT[kind][f]];if(armory)list.push(['a545',{casing:15,powder:2},20],['a762',{casing:10,powder:3},12],['a12',{casing:10,powder:2},10]);
+    b.append(el('div','sec',armory?'Изготовление (оружейники, заместители и лидер)':'Изготовление (мастера, заместители и лидер)'));if(!can)b.append(el('p','muted small','Изготавливать '+(armory?'оружие':'снаряжение')+' группировки могут только '+(armory?'оружейники':'мастера')+', заместители и лидер. Ранг назначают в штабе.'));
+    const list=[...((FCRAFT[kind]||{})[f]||[])];if(armory)list.push(['a545',{casing:15,powder:2},20],['a762',{casing:10,powder:3},12],['a12',{casing:10,powder:2},10]);
     const cl=el('div','list');for(const [out,need,q] of list){const okM=Object.entries(need).every(([k,v])=>(S.inv[k]||0)>=v);const r=el('div','row');r.append(iconCanvas(out,32));const gw=el('div','grow');gw.append(el('div','t',ITEMS[out].n+(q>1?' ×'+q:'')),el('div','s',Object.entries(need).map(([k,v])=>(ITEMS[k]?ITEMS[k].n:k)+' '+(S.inv[k]||0)+'/'+v).join(', ')));
       r.append(gw,btn('Изготовить',async()=>{if(!can||!okM)return;for(const [k,v] of Object.entries(need))take(k,v);add(out,q||1);saveLocal();log('Изготовлено: '+ITEMS[out].n+(q>1?' ×'+q:''),'good');facMut(f,d=>{facLog(d,'craft',{i:out,q:q||1})}).catch(()=>{});facShopWin(f,kind)},'btn primary',!can||!okM));cl.append(r)}b.append(cl)})}
 // взаимодействие на базе: подходим к точке и жмём ДЕЛО
@@ -7544,6 +7544,283 @@ function drawHumanHD(c,x,y,o){
     if(side)c.restore()});
   if(o.flash){c.fillStyle='rgba(255,255,255,.35)';ellp(c,x,y-3,10,17);c.fill()}
   if(o.reload){c.strokeStyle='rgba(242,182,92,.9)';c.lineWidth=1.5;c.beginPath();c.arc(x,y-29,3.5,-Math.PI/2,-Math.PI/2+Math.PI*2*o.reload);c.stroke()}}
+
+// ================= v51: СВОЯ ЭМБЛЕМА ГРУППИРОВКИ — ЗАЯВКА ЛИДЕРА, ОДОБРЕНИЕ АДМИНИСТРАТОРОМ =================
+// Лидер загружает картинку (файл до 30 КБ, эмблема не больше 64×64) и отправляет на проверку.
+// Администратор одобряет, отклоняет с причиной или ставит свою картинку. Одобренная эмблема подписана ключом администратора.
+const FEMB_T=k=>'osadok/'+(TESTROOM?'t_'+TESTROOM:'v1')+'/femb/'+k;
+const FEMB_MAX=30*1024,FEMB_PX=64;
+const FEMBI={img:{},st:{}};
+const fembBytes=u=>Math.floor((u.length-u.indexOf(',')-1)*3/4);
+const fembOkUrl=u=>typeof u==='string'&&/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(u)&&fembBytes(u)<=FEMB_MAX;
+async function fembVerify(f,d){if(!d||typeof d.sig!=='string'||!(d.off||fembOkUrl(d.img)))return false;const msg=enc.encode(f+'|'+(d.off?'off':d.img)+'|'+(d.at||0));
+  for(const k of [await newsPub().catch(()=>null),DEV_PUB]){if(!k)continue;try{const key=await crypto.subtle.importKey('jwk',k,ECP,false,['verify']);if(await crypto.subtle.verify(ECS,key,unb64(d.sig),msg))return true}catch(e){}}return false}
+async function fembLoad(){try{const found=await subAll(FEMB_T('ok/'));for(const [f,d] of Object.entries(found)){if(!/^[a-z0-9]{2,17}$/.test(f)||!(await fembVerify(f,d)))continue;if(d.off)delete FEMBI.img[f];else FEMBI.img[f]=d.img}}catch(e){}}
+fembLoad();setInterval(()=>{if(!document.hidden)fembLoad()},300000);
+{const _as=afterStart;afterStart=async function(){fembLoad();return _as()}}
+// картинку из файла — в эмблему 64×64 (больше не бывает: крупную уменьшаем, края прозрачные)
+async function fembFromFile(file){if(!file||!/^image\/(png|jpeg|webp|gif)$/.test(file.type))throw new Error('Выберите картинку PNG, JPG, WEBP или GIF.');
+  if(file.size>FEMB_MAX)throw new Error('Файл весит '+Math.ceil(file.size/1024)+' КБ — можно не больше 30 КБ.');
+  const url=URL.createObjectURL(file);let img;try{img=await loadImg(url)}catch(e){throw new Error('Не удалось открыть картинку.')}finally{URL.revokeObjectURL(url)}
+  const k=Math.min(1,FEMB_PX/Math.max(img.width,img.height)),w=Math.max(1,Math.round(img.width*k)),h=Math.max(1,Math.round(img.height*k));
+  const cv=document.createElement('canvas');cv.width=cv.height=FEMB_PX;const x=cv.getContext('2d');x.imageSmoothingQuality='high';x.drawImage(img,(FEMB_PX-w)/2,(FEMB_PX-h)/2,w,h);
+  let u=cv.toDataURL('image/png');if(!fembOkUrl(u))u=cv.toDataURL('image/webp',.9);if(!fembOkUrl(u))u=cv.toDataURL('image/jpeg',.85);if(!fembOkUrl(u))throw new Error('Не удалось сжать эмблему до 30 КБ.');return u}
+// значок группировки со своей картинкой: щиток её цвета, картинка внутри
+const fembSVG=(f,img,sz)=>{const id='fe'+f+(sz|0);return '<svg viewBox="0 0 100 100" width="'+sz+'" height="'+sz+'" aria-hidden="true"><defs><clipPath id="'+id+'"><path d="M50 9L87 20V48C87 71 69 85 50 91C31 85 13 71 13 48V20Z"/></clipPath></defs><path d="M50 4L92 17V48C92 74 72 90 50 97C28 90 8 74 8 48V17Z" fill="#1c1a16" stroke="'+((FAC[f]&&FAC[f].col)||'#c8a048')+'" stroke-width="5"/><image href="'+img+'" x="14" y="12" width="72" height="72" preserveAspectRatio="xMidYMid meet" clip-path="url(#'+id+')"/></svg>'};
+{const _es=emblemSVG;emblemSVG=function(f,sz=48){const im=FEMBI.img[f];return im&&FAC[f]&&fembOkUrl(im)?fembSVG(f,im,sz):_es(f,sz)}}
+const fembPrev=(f,img,sz)=>{const s=el('span');s.innerHTML=fembSVG(f,img,sz);s.style.cssText='display:inline-flex;vertical-align:middle';return s};
+const fembPick=(onPick)=>{const i=document.createElement('input');i.type='file';i.accept='image/png,image/jpeg,image/webp,image/gif';i.onchange=async()=>{try{onPick(await fembFromFile(i.files[0]))}catch(e){log(e.message,'bad')}};i.click()};
+if(typeof LOGTXT==='object'){LOGTXT.embreq='отправил(а) новую эмблему на одобрение';LOGTXT.emb='эмблема группировки обновлена'}
+
+// ---------- Лидер: заявка на новую эмблему (штаб → Управление) ----------
+async function fembSubmit(f,img){if(myFac()!==f||myRank()!=='leader')throw new Error('Эмблему меняет только '+rn(f,'leader').toLowerCase()+'.');if(!fembOkUrl(img))throw new Error('Неверная картинка.');
+  const at=Date.now();await cloudPut(FEMB_T('pending/'+f),{v:1,at,ct:'1',img,n:FAC[f].n,by:String(S.name||'').slice(0,16),pid:S.pid||''});await cloudPut(FEMB_T('res/'+f),{v:1,at,ct:'1',st:'pending'});
+  FEMBI.st[f]={st:'pending',at};facMut(f,d=>{facLog(d,'embreq')}).catch(()=>{})}
+async function fembStatus(f){try{const r=await cloudGet(FEMB_T('res/'+f),3500);if(r&&r.st)FEMBI.st[f]=r}catch(e){}return FEMBI.st[f]||null}
+function fembLeaderBox(f){const box=el('div');box.append(el('div','sec','Эмблема группировки'));const lead=myFac()===f&&myRank()==='leader';
+  const row=el('div','startrow');row.style.alignItems='center';row.append(facBadge(f,56));const st=el('div','muted small','');row.append(st);box.append(row);
+  fembStatus(f).then(r=>{if(!r)return;st.textContent=r.st==='pending'?'⏳ Новая эмблема на проверке у администратора.':r.st==='ok'?'✅ Последняя заявка одобрена.':r.st==='rej'?'❌ Заявка отклонена'+(r.why?': '+r.why:'')+'.':''});
+  if(!lead){box.append(el('p','muted small','Подать заявку на новую эмблему может только '+rn(f,'leader').toLowerCase()+'.'));return box}
+  let pick=null;const pv=el('div','startrow');pv.style.alignItems='center';
+  const send=btn('📨 Отправить на одобрение',async()=>{if(!pick)return;send.disabled=true;try{await fembSubmit(f,pick);log('🛡 Эмблема отправлена на проверку администратору.','good');hqWin(f)}catch(e){send.disabled=false;log(e.message==='cloud'?'Нет связи с облаком, попробуйте ещё раз.':e.message,'bad')}},'btn primary',true);
+  box.append(el('p','small','Своя картинка: файл до 30 КБ, эмблема не больше 64×64 (крупную картинку уменьшим сами). После одобрения администратором её увидят все.'),
+    btn('🖼 Выбрать картинку',()=>fembPick(u=>{pick=u;pv.replaceChildren(fembPrev(f,u,56),el('span','muted small','так будет выглядеть · '+Math.ceil(fembBytes(u)/1024)+' КБ'));send.disabled=false})),pv,send);return box}
+{const _hq=hqWin;hqWin=async function(f){await _hq(f);if(['roster','apps','reqs','log','fund','bots'].includes(hqTab))return;const b=ov.querySelector('.win .body');if(!b||!FAC[f])return;if(myFac()===f||isAdm())b.append(fembLeaderBox(f))}}
+
+// ---------- Администратор: заявки на эмблемы и замена ----------
+async function fembApprove(f,img){if(!NEWS.priv)throw new Error('nokey');if(!fembOkUrl(img))throw new Error('Неверная картинка.');const at=Date.now();const sig=b64(await crypto.subtle.sign(ECS,NEWS.priv,enc.encode(f+'|'+img+'|'+at)));
+  await cloudPut(FEMB_T('ok/'+f),{v:1,at,ct:'1',img,sig});await cloudPut(FEMB_T('res/'+f),{v:1,at,ct:'1',st:'ok'});await cloudPut(FEMB_T('pending/'+f),{v:1,at,ct:'0',done:1});FEMBI.img[f]=img;facMut(f,d=>{facLog(d,'emb')}).catch(()=>{})}
+async function fembReset(f){if(!NEWS.priv)throw new Error('nokey');const at=Date.now();const sig=b64(await crypto.subtle.sign(ECS,NEWS.priv,enc.encode(f+'|off|'+at)));await cloudPut(FEMB_T('ok/'+f),{v:1,at,ct:'0',off:1,sig});delete FEMBI.img[f]}
+async function fembReject(f,why){const at=Date.now();await cloudPut(FEMB_T('res/'+f),{v:1,at,ct:'1',st:'rej',why});await cloudPut(FEMB_T('pending/'+f),{v:1,at,ct:'0',done:1})}
+async function fembAdminView(box){box.replaceChildren(el('p','muted','Загружаем заявки…'));const inS='background:#14110c;color:#f2e2b8;border:1px solid #5a4a30;border-radius:6px;padding:7px';
+  const pend=Object.entries(await subAll(FEMB_T('pending/'))).filter(([f,d])=>FAC[f]&&!d.done&&fembOkUrl(d.img));await fembLoad();box.replaceChildren();
+  if(!NEWS.priv){const r=el('div','startrow');const ci=document.createElement('input');ci.type='password';ci.placeholder='Код администратора';ci.autocomplete='off';ci.style.cssText=inS;r.append(ci,btn('Подтвердить',async()=>{try{await newsKey(ci.value);log('Код принят.','good');fembAdminView(box)}catch(e){log(e.message==='code'?'Неверный код администратора.':'Не удалось: '+((e&&e.message)||'нет связи с облаком'),'bad')}},'btn primary'));
+    box.append(el('p','muted small','Чтобы одобрять и менять эмблемы, подтвердите код администратора (один раз за сессию).'),r)}
+  const act=async(fn,ok)=>{try{await fn();log(ok,'good');fembAdminView(box)}catch(e){log(e.message==='nokey'?'Сначала подтвердите код администратора.':'Не удалось: '+((e&&e.message)||'нет связи с облаком'),'bad')}};
+  box.append(el('div','sec','Заявки лидеров'));if(!pend.length)box.append(el('p','muted small','Новых заявок нет.'));
+  const l=el('div','list');for(const [f,d] of pend){let img=d.img;const r=el('div','row');r.style.alignItems='center';const pv=el('span');const draw=()=>pv.replaceChildren(facBadge(f,44),el('span','muted',' → '),fembPrev(f,img,44));draw();
+    const gw=el('div','grow');const sub=el('div','s','');const subT=()=>sub.textContent='от '+(d.by||'лидера')+' · '+new Date(d.at||0).toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+(img!==d.img?' · заменена вами':'');subT();gw.append(el('div','t',FAC[f].n),sub);
+    const sel=document.createElement('select');sel.style.cssText=inS+';font-size:11px;padding:4px';AVA_REASONS.forEach((t,i)=>{const o=document.createElement('option');o.value=i;o.textContent=t;sel.append(o)});
+    r.append(pv,gw,btn('✅ Одобрить',()=>act(()=>fembApprove(f,img),'Эмблема «'+FAC[f].n+'» одобрена.'),'btn primary'),btn('🔁 Заменить своей',()=>fembPick(u=>{img=u;draw();subT()})),sel,btn('❌ Отклонить',()=>act(()=>fembReject(f,AVA_REASONS[+sel.value]||AVA_REASONS[0]),'Заявка «'+FAC[f].n+'» отклонена.')));l.append(r)}box.append(l);
+  box.append(el('div','sec','Поставить эмблему без заявки'));const l2=el('div','list');
+  for(const f of Object.keys(FAC)){const r=el('div','row');r.style.alignItems='center';r.append(facBadge(f,40));const gw=el('div','grow');gw.append(el('div','t',FAC[f].n),el('div','s',FEMBI.img[f]?'своя картинка':'стандартная эмблема'));r.append(gw,btn('🖼 Поставить картинку',()=>fembPick(u=>act(()=>fembApprove(f,u),'Эмблема «'+FAC[f].n+'» заменена.'))));
+    if(FEMBI.img[f])r.append(btn('↩ Вернуть стандартную',()=>{if(confirm('Вернуть стандартную эмблему «'+FAC[f].n+'»?'))act(()=>fembReset(f),'Эмблема «'+FAC[f].n+'» сброшена.')}));l2.append(r)}box.append(l2,el('p','muted small','Файл до 30 КБ, эмблема не больше 64×64.'))}
+if(typeof TABVIEW.admin==='function'){const _av=TABVIEW.admin;TABVIEW.admin=b=>{const sec=el('div');sec.append(el('div','sec','🛡 Эмблемы группировок'));const q=el('div');sec.append(btn('Открыть',()=>fembAdminView(q),'btn primary'),q);b.append(sec);_av(b)}}
+
+// ================= v52: ПЕРСОНАЖИ В СТИЛЕ 3D-МУЛЬТФИЛЬМА — МУЖСКИЕ И ЖЕНСКИЕ =================
+// Голова крупнее, большие глаза, мягкий объём без жёстких контуров. Рубашка с воротником, карманами и закатанными
+// рукавами, подтяжки, ремень с пряжкой, джинсы с подвёрнутыми штанинами, коричневые туфли.
+// У женских персонажей своя фигура (уже плечи и талия, шире бёдра), ресницы, губы и рубашка с узлом на поясе.
+// Броня, куртки, снаряжение группировок, головные уборы, маски, оружие и анимации — как раньше.
+const HKT=.86,OLT='rgba(26,17,10,.5)';
+const strokeT=(c,w)=>{c.strokeStyle=OLT;c.lineWidth=w||.55;c.stroke()};
+function limbT(c,x0,y0,x1,y1,w0,w1,col){const a=Math.atan2(y1-y0,x1-x0),nx=-Math.sin(a),ny=Math.cos(a);const p=new Path2D();
+  p.moveTo(x0+nx*w0/2,y0+ny*w0/2);p.lineTo(x1+nx*w1/2,y1+ny*w1/2);p.arc(x1,y1,w1/2,a+Math.PI/2,a-Math.PI/2,true);p.lineTo(x0-nx*w0/2,y0-ny*w0/2);p.arc(x0,y0,w0/2,a-Math.PI/2,a+Math.PI/2,true);p.closePath();
+  const g=c.createLinearGradient(x0-nx*w0*.6,y0-ny*w0*.6,x0+nx*w0*.6,y0+ny*w0*.6);g.addColorStop(0,shade(col,.28));g.addColorStop(.42,shade(col,.06));g.addColorStop(1,shade(col,-.34));c.fillStyle=g;c.fill(p);c.strokeStyle=OLT;c.lineWidth=.5;c.stroke(p);return p}
+// закатанный рукав / подвёрнутая штанина — светлый валик поперёк
+function cuffT(c,x,y,a,w,col){c.save();c.translate(x,y);c.rotate(a);const g=c.createLinearGradient(0,-1.2,0,1.2);g.addColorStop(0,shade(col,.4));g.addColorStop(1,shade(col,-.05));c.fillStyle=g;rrp(c,-1.1,-w/2-.35,2.2,w+.7,1);c.fill();strokeT(c,.45);
+  c.strokeStyle='rgba(0,0,0,.18)';c.lineWidth=.35;c.beginPath();c.moveTo(0,-w/2);c.lineTo(0,w/2);c.stroke();c.restore()}
+function handT(c,hx,hy,ang,col,flip){c.save();c.translate(hx,hy);c.rotate(ang);c.scale(1.12,(flip||1)*1.12);const g=c.createRadialGradient(-.4,-.8,.2,0,0,2.6);g.addColorStop(0,shade(col,.22));g.addColorStop(1,shade(col,-.22));c.fillStyle=g;
+  c.beginPath();c.moveTo(-1.3,-1.5);c.quadraticCurveTo(1.7,-1.9,2.4,-.6);c.quadraticCurveTo(2.7,.7,1.8,1.4);c.lineTo(-1.3,1.4);c.closePath();c.fill();strokeT(c,.45);
+  c.beginPath();c.ellipse(.3,-1.6,1.05,.6,-.5,0,7);c.fill();strokeT(c,.4);c.strokeStyle='rgba(0,0,0,.16)';c.lineWidth=.3;for(const yy of [-.5,.3]){c.beginPath();c.moveTo(1,yy);c.lineTo(2.2,yy+.1);c.stroke()}c.restore()}
+// туфли: гладкая коричневая кожа, рант, блик
+function shoeT(c,bx,by,view,dark,raider){const top=raider?'#2a2420':dark?'#5a3418':'#7c4a24',bot=raider?'#0e0c0a':dark?'#2a160a':'#3c2210';
+  const g=c.createLinearGradient(0,by-2.8,0,by+1.4);g.addColorStop(0,shade(top,.12));g.addColorStop(1,bot);c.fillStyle=g;
+  if(view===0){c.beginPath();c.moveTo(bx-2.3,by-2.6);c.lineTo(bx+2.3,by-2.6);c.quadraticCurveTo(bx+3,by-.6,bx+2.9,by+.6);c.quadraticCurveTo(bx,by+1.6,bx-2.9,by+.6);c.quadraticCurveTo(bx-3,by-.6,bx-2.3,by-2.6);c.closePath();c.fill();strokeT(c,.5);
+    c.fillStyle='#1c120a';c.beginPath();c.ellipse(bx,by+.95,3,.65,0,0,7);c.fill();c.fillStyle='rgba(0,0,0,.35)';c.fillRect(bx-.9,by-2.4,1.8,.9);c.fillStyle='rgba(255,236,210,.35)';ellp(c,bx-1,by-.6,1,.45);c.fill()}
+  else{c.beginPath();c.moveTo(bx-2.2,by-2.6);c.lineTo(bx+1.4,by-2.4);c.quadraticCurveTo(bx+4.6,by-1.6,bx+4.6,by+.6);c.lineTo(bx-2.4,by+.6);c.closePath();c.fill();strokeT(c,.5);
+    c.fillStyle='#1c120a';c.fillRect(bx-2.5,by+.4,7.2,.85);c.fillStyle='rgba(255,236,210,.32)';ellp(c,bx+2.4,by-1.3,1.2,.45);c.fill()}}
+// лицо: большие глаза с бликами, густые брови, округлый нос, лёгкий румянец
+function drawFaceToon(c,x,hy,view,lk,skin){
+  const fem=lk.g==='f',hc=(HCOL[lk.hc]||HCOL.black)[1],eye=(EYES[lk.eye|0]||EYES[0])[1],skD=shade(skin,-.25);
+  const eyeT=(ex,ey,rx,ry,dx)=>{c.fillStyle='#fbf6ee';ellp(c,ex,ey,rx,ry);c.fill();c.save();c.beginPath();c.ellipse(ex,ey,rx,ry,0,0,7);c.clip();
+    c.fillStyle='rgba(120,90,70,.25)';c.fillRect(ex-rx,ey-ry,rx*2,ry*.55);c.fillStyle=eye;circ(c,ex+dx,ey+.15,ry*.66);c.fillStyle='#120c08';circ(c,ex+dx,ey+.2,ry*.36);c.restore();
+    c.fillStyle='#fff';circ(c,ex+dx-.38,ey-.4,.34);circ(c,ex+dx+.3,ey+.45,.15);
+    c.strokeStyle='#2a1a10';c.lineWidth=fem?.75:.6;c.beginPath();c.ellipse(ex,ey,rx,ry,0,Math.PI*1.08,Math.PI*1.92);c.stroke()};
+  if(view===0){
+    for(const s of[-1,1]){const ex=x+s*2.55,ey=hy+.4;eyeT(ex,ey,1.45,1.8,s*.12);
+      if(fem){c.strokeStyle='#1a100a';c.lineWidth=.45;for(const k of [0,1]){c.beginPath();c.moveTo(ex+s*(1.05+k*.35),ey-1.25+k*.35);c.lineTo(ex+s*(1.7+k*.4),ey-1.75+k*.4);c.stroke()}}
+      c.strokeStyle=shade(hc,-.12);c.lineWidth=fem?.7:1.15;c.lineCap='round';c.beginPath();c.moveTo(x+s*1.2,hy-2.2);c.quadraticCurveTo(x+s*2.7,hy-3.2,x+s*4.1,hy-2.3);c.stroke();c.lineCap='butt'}
+    // нос
+    c.fillStyle='rgba(0,0,0,.14)';ellp(c,x+.35,hy+2.85,1.25,.7);c.fill();c.fillStyle=shade(skin,.05);ellp(c,x,hy+2.35,1.05,.95);c.fill();c.fillStyle='rgba(255,245,230,.4)';circ(c,x-.3,hy+1.95,.35);
+    // рот
+    if(fem){c.fillStyle='#b9524a';c.beginPath();c.moveTo(x-1.6,hy+4.5);c.quadraticCurveTo(x,hy+4,x+1.6,hy+4.5);c.quadraticCurveTo(x,hy+5.6,x-1.6,hy+4.5);c.fill();c.fillStyle='rgba(255,220,210,.4)';ellp(c,x-.4,hy+4.85,.5,.2);c.fill()}
+    else{c.strokeStyle=shade(skin,-.5);c.lineWidth=.55;c.lineCap='round';c.beginPath();c.moveTo(x-1.5,hy+4.5);c.quadraticCurveTo(x,hy+5.2,x+1.5,hy+4.4);c.stroke();c.lineCap='butt'}
+    for(const s of[-1,1]){c.fillStyle=rg(c,x+s*3.9,hy+2.6,0,1.9,fem?'rgba(230,110,100,.24)':'rgba(220,110,90,.12)','rgba(220,100,90,0)');c.fillRect(x+s*3.9-2,hy+.6,4,4)}
+  }else{
+    eyeT(x+3.1,hy+.4,1.15,1.7,.35);if(fem){c.strokeStyle='#1a100a';c.lineWidth=.45;c.beginPath();c.moveTo(x+4.1,hy-.9);c.lineTo(x+4.8,hy-1.5);c.stroke()}
+    c.strokeStyle=shade(hc,-.12);c.lineWidth=fem?.7:1.1;c.lineCap='round';c.beginPath();c.moveTo(x+1.8,hy-2.2);c.quadraticCurveTo(x+3.2,hy-3.1,x+4.6,hy-2.3);c.stroke();c.lineCap='butt';
+    c.fillStyle=skin;c.beginPath();c.moveTo(x+5.5,hy-.2);c.quadraticCurveTo(x+8,hy+1.9,x+5.8,hy+3);c.fill();c.strokeStyle=OLT;c.lineWidth=.45;c.stroke();
+    c.fillStyle=fem?'#b9524a':shade(skin,-.45);ellp(c,x+4.6,hy+4.6,1.2,.45);c.fill();
+    c.fillStyle=skD;ellp(c,x-.6,hy+.7,1.4,2.1);c.fill();c.strokeStyle='rgba(0,0,0,.22)';c.lineWidth=.5;ellp(c,x-.6,hy+.7,.65,1.15);c.stroke()}
+  if(!fem&&lk.beard&&lk.beard!=='none'){const bc=shade(hc,-.05);
+    if(lk.beard==='stubble'){c.save();c.beginPath();c.ellipse(x+(view?2.5:0),hy+3.8,view?3.6:5,3.4,0,0,7);c.clip();c.fillStyle=bc;c.globalAlpha=.2;c.fillRect(x-7,hy+1.5,14,9);c.restore();c.globalAlpha=1}
+    if(lk.beard==='mustache'||lk.beard==='beard'){c.fillStyle=bc;c.beginPath();if(view){c.ellipse(x+4.4,hy+3.8,2,1,0,0,7)}else{c.moveTo(x-3,hy+4.3);c.quadraticCurveTo(x,hy+2.9,x+3,hy+4.3);c.quadraticCurveTo(x,hy+3.8,x-3,hy+4.3)}c.fill()}
+    if(lk.beard==='beard'){c.fillStyle=lg(c,0,hy+2,0,hy+9,shade(bc,.12),shade(bc,-.25));c.beginPath();if(view){c.moveTo(x-1,hy+2);c.quadraticCurveTo(x+1,hy+8,x+4,hy+8);c.quadraticCurveTo(x+6.5,hy+6.5,x+6,hy+4.6);c.lineTo(x+3,hy+5.2);c.closePath()}else{c.moveTo(x-6,hy+1);c.quadraticCurveTo(x-5.5,hy+8,x,hy+9.4);c.quadraticCurveTo(x+5.5,hy+8,x+6,hy+1);c.lineTo(x+3.5,hy+3.6);c.quadraticCurveTo(x,hy+6.2,x-3.5,hy+3.6);c.closePath()}c.fill();strokeT(c,.45)}}}
+drawFace=drawFaceToon;
+
+function drawHumanToon(c,x,y,o){
+  const lk=o.lk||{},eq=o.eq||{},view=o.view|0,side=view===1?-1:view===2?1:0,fem=lk.g==='f',raider=!!o.raider;
+  const skin=o.skinCol||SKINS[lk.skin|0]||SKINS[1],skD=shade(skin,-.2),skL=shade(skin,.16);
+  const body=bodyCol(eq,lk,raider),bodyD=shade(body,-.32),bodyL=shade(body,.24);
+  const plain=!eq.body&&!raider; // своя одежда: рубашка с закатанными рукавами
+  const setN=ITEMS[eq.body]?.set||0;const pants=raider?'#26231f':setN?SETS[setN].pants:eq.body==='mil_vest'?'#3a4626':eq.body==='ren_jacket'?'#15130e':eq.body==='mil_vest'?'#3a4626':eq.body==='ren_jacket'?'#15130e':eq.body==='ozk'?'#4a5a36':PANTS[lk.outfit|0]||PANTS[0],pantsD=shade(pants,-.3);
+  const glove=eq.hands==='rgloves'?'#a8862a':eq.hands==='tgloves'?'#25261f':eq.hands==='mitts'?'#3d3024':null;const handCol=glove||skin;
+  const foreN=plain?skin:shade(body,-.12),foreF=plain?skD:shade(body,-.28);
+  const mv=o.moving?1:0,ph=o.phase||0,s1=Math.sin(ph)*mv,breath=Math.sin(now/650)*.3;const bob=-Math.abs(Math.sin(ph))*1.1*mv;
+  const aim=o.aim??Math.PI/2,w=o.weapon||null,wi=ITEMS[w],melee=!w||wi?.cls==='melee';
+  const footY=y+15.2,hipY=y-1.2+bob,waist=y-5+bob,top=y-13+bob+breath*.3,hy=y-20.4+bob+breath*.2;
+  const sw=fem?5.8:7,ww=fem?3.8:5.3,hw=fem?6.2:5.4;const hcol=(HCOL[lk.hc]||HCOL.black)[1];
+  const strap='#6a3e1e';
+  const sg=c.createRadialGradient(x,y+16,.5,x,y+16,10);sg.addColorStop(0,'rgba(0,0,0,.45)');sg.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=sg;ellp(c,x,y+16,10,3.6);c.fill();
+  const aimUp=Math.sin(aim)<-.35;
+  const head=fn=>{c.save();c.translate(x,hy);c.scale(HKT,HKT);c.translate(-x,-hy);try{fn()}finally{c.restore()}};
+  // рука: плечо (рукав) → локоть (валик рукава) → предплечье (кожа у рубашки)
+  const arm=(sx,sy,ex,ey,hx,hy2,near)=>{limbT(c,sx,sy,ex,ey,near?3.7:3.5,3.1,near?body:bodyD);limbT(c,ex,ey,hx,hy2,plain?2.5:3,plain?2.1:2.4,near?foreN:foreF);
+    if(plain)cuffT(c,ex,ey,Math.atan2(ey-sy,ex-sx),3.4,near?body:bodyD)};
+  // хват: всегда правша — правая рука на рукоятке, левая на цевье; локти наружу (сбоку — вниз); сбоку видна одна рука
+  const ik2=(sx,sy,tx,ty,l1,l2,mode)=>{const d=Math.hypot(tx-sx,ty-sy)||.01,D=Math.min(d,(l1+l2)*.98),th=Math.atan2(ty-sy,tx-sx);const a=Math.acos(Math.max(-1,Math.min(1,(l1*l1+D*D-l2*l2)/(2*l1*D))));
+    const c1=[sx+Math.cos(th+a)*l1,sy+Math.sin(th+a)*l1],c2=[sx+Math.cos(th-a)*l1,sy+Math.sin(th-a)*l1];if(mode==='down')return c1[1]>=c2[1]?c1:c2;const o=Math.sign(sx-x)||1;return (c1[0]-x)*o>=(c2[0]-x)*o?c1:c2};
+  const drawArms=()=>{const ca=Math.cos(aim),sa=Math.sin(aim);const back=view===3;
+    const R={x:x+(side?side*1.6:(back?1:-1)*(sw-1.2)),y:top+1.8},Lf={x:x+(side?side*1.2:(back?-1:1)*(sw-1.2)),y:top+1.8};
+    const visR=!side||side===1,visL=!side||side===-1,mode=side?'down':'out';
+    if(!melee&&wi){const g=PX[w]||PX.pm;const flip=ca<0?-1:1;const rec=(o.recoil||0)*2.5;const pv={x:x+ca*3,y:top+6+sa*2.4};
+      const L=(lx,ly)=>({x:pv.x+ca*(lx-rec)-sa*ly*flip,y:pv.y+sa*(lx-rec)+ca*ly*flip});const gm=L(g.g[0],g.g[1]),gs=L(g.s[0],g.s[1]);
+      const eR=ik2(R.x,R.y,gm.x,gm.y,6.4,6.2,mode),eL=ik2(Lf.x,Lf.y,gs.x,gs.y,6.4,6.2,mode);
+      if(visL)arm(Lf.x,Lf.y,eL[0],eL[1],gs.x,gs.y,!!side);else handT(c,gs.x,gs.y,aim,shade(handCol,-.15),flip);
+      if(!visR)handT(c,gm.x,gm.y,aim,shade(handCol,-.15),flip);
+      c.save();c.translate(pv.x,pv.y);c.rotate(aim);c.scale(1,flip);c.translate(-rec,0);drawGun(c,w);
+      if(o.flashT&&now-o.flashT<60){const mz=g.mz+2;c.fillStyle='rgba(255,220,120,.95)';c.beginPath();c.moveTo(mz-1,0);c.lineTo(mz+6+Math.random()*3,-1.6);c.lineTo(mz+8+Math.random()*4,0);c.lineTo(mz+6+Math.random()*3,1.6);c.closePath();c.fill();c.fillStyle='rgba(255,255,230,.95)';circ(c,mz+1.5,0,1.6)}c.restore();
+      if(visR)arm(R.x,R.y,eR[0],eR[1],gm.x,gm.y,true);
+      if(visL)handT(c,gs.x,gs.y,aim,handCol,flip);if(visR)handT(c,gm.x,gm.y,aim,handCol,flip)}
+    else if(!w&&!(o.swing>0)){for(const [sh,vis,k] of [[Lf,visL,-1],[R,visR,1]]){if(!vis)continue;const sx=side?0:Math.sign(sh.x-x);const st=s1*2*k*(side||1);const hx=sh.x+sx*1.2+st,hy2=sh.y+12.6;const ex=(sh.x+hx)/2+sx*.8,ey=(sh.y+hy2)/2;arm(sh.x,sh.y,ex,ey,hx,hy2,true);handT(c,hx,hy2,Math.PI/2,handCol,sx<0?-1:1)}}
+    else{const H=side?(visR?R:Lf):R,O=side?null:Lf;const sw2=o.swing||0;const swingA=sw2?(-1.4+(1-sw2)*2.8):0;const a2=aim+swingA*(ca>=0?1:-1);
+      const hand={x:H.x+Math.cos(a2)*10,y:H.y+Math.sin(a2)*10+2};const e=ik2(H.x,H.y,hand.x,hand.y,6.2,6,mode);
+      if(O){const sx=Math.sign(O.x-x);const fh={x:O.x+sx*1.2-s1*2.2,y:O.y+12};arm(O.x,O.y,(O.x+fh.x)/2+sx*.8,(O.y+fh.y)/2,fh.x,fh.y,false);handT(c,fh.x,fh.y,Math.PI/2,handCol)}
+      if(w){c.save();c.translate(hand.x,hand.y);c.rotate(a2);c.scale(1,ca>=0?1:-1);drawMelee(c,w);c.restore()}
+      arm(H.x,H.y,e[0],e[1],hand.x,hand.y,true);handT(c,hand.x,hand.y,a2,handCol,ca>=0?1:-1);
+      if(sw2>.2){c.strokeStyle='rgba(255,240,200,'+(sw2*.5)+')';c.lineWidth=2;c.beginPath();c.arc(H.x,H.y,15,aim-1.2*(1-sw2)-.3,aim+1.2*(1-sw2)+.3);c.stroke()}}};
+  const backItem=()=>{if(eq.back==='cloak'){c.fillStyle=lg(c,0,top,0,y+12,'#56603e','#343c26');c.beginPath();c.moveTo(x-sw-1,top+1);c.lineTo(x+sw+1,top+1);c.lineTo(x+sw+3,y+11);c.quadraticCurveTo(x,y+13,x-sw-3,y+11);c.closePath();c.fill();strokeT(c,.6)}
+    else{const big=['backpack','pack30','pack60','ermak','sack'].includes(eq.back);const bw=big?12:9.6,bh=big?12:9;c.fillStyle=lg(c,x-bw/2,0,x+bw/2,0,big?'#6a6040':'#5a4a33',big?'#3e3824':'#3a2e20');rrp(c,x-bw/2,top+(big?0:1),bw,bh,2.5);c.fill();strokeT(c,.6);
+      c.fillStyle=big?'#7a2e22':'#7a6440';rrp(c,x-bw/2-.5,top-(big?3:1.5),bw+1,big?3.6:3,1.6);c.fill();strokeT(c,.5);c.fillStyle='rgba(0,0,0,.3)';c.fillRect(x-.5,top+2,1,bh-3);c.fillStyle='#c9a640';c.fillRect(x-1,top+bh/2,2,1.2)}};
+  if(view===3&&eq.back==='cloak')backItem();
+  else if(side&&eq.back!=='cloak'&&eq.back){const bw=eq.back==='backpack'?6:4.5;c.fillStyle=lg(c,0,top,0,top+11,'#5a4a33','#2e2416');rrp(c,x-side*7-bw/2,top,bw,11,2);c.fill();strokeT(c,.6)}
+  if(view===0&&eq.back==='cloak'){c.fillStyle='#3e4630';c.beginPath();c.moveTo(x-sw-1,top+1);c.lineTo(x-sw-3,y+11);c.lineTo(x-sw+1,y+10);c.closePath();c.fill();c.beginPath();c.moveTo(x+sw+1,top+1);c.lineTo(x+sw+3,y+11);c.lineTo(x+sw-1,y+10);c.closePath();c.fill()}
+  if(!HIDE_HAIR.has(eq.head))head(()=>{const bp=hairPath(lk.hair,x,hy,view,true);if(bp){if(side){c.save();c.translate(x,0);c.scale(side,1);c.translate(-x,0)}paintHair(c,bp,hcol,x,hy);if(side)c.restore()}});
+  if(aimUp)drawArms();
+  // ноги: джинсы с подвёрнутыми штанинами, туфли
+  if(side){c.save();c.translate(x,0);c.scale(side,1);c.translate(-x,0);
+    for(const k of[-1,1]){const a=s1*.6*k;const kx=x+Math.sin(a)*8.4,ky=hipY+Math.cos(a)*8.4;const bend=Math.max(0,-a)*.9;const ax=kx+Math.sin(a-bend)*8.4,ay=ky+Math.cos(a-bend)*8.2;
+      const col=k<0?pantsD:pants;limbT(c,x,hipY,kx,ky,fem?5:4.8,4,col);limbT(c,kx,ky,ax,ay-1,4,3.6,col);if(plain||fem)cuffT(c,ax,ay-1.9,Math.atan2(ay-ky,ax-kx),3.8,col);shoeT(c,ax,ay,1,k<0,raider)}c.restore()}
+  else{for(const k of[-1,1]){const lift=Math.max(0,s1*k)*2.8;const lx=x+k*(fem?2.8:2.7),ky=hipY+8.4-lift*.5,fy=footY-lift;
+      limbT(c,lx,hipY,lx+k*.25,ky,fem?5.2:5,4.2,pants);limbT(c,lx+k*.25,ky,lx,fy-1.8,4.2,3.8,pants);
+      c.strokeStyle='rgba(0,0,0,.22)';c.lineWidth=.45;c.beginPath();c.moveTo(lx-1.5,ky-.4);c.quadraticCurveTo(lx,ky+.6,lx+1.5,ky-.2);c.stroke();
+      if(setN>=5){c.fillStyle=setN===6?'#5a6068':'#22251f';rrp(c,lx-2.4,ky-1.8,4.8,3.4,1.2);c.fill();strokeT(c,.45);if(setN===6){c.fillStyle='#e0782a';c.fillRect(lx-1.5,ky-.3,3,.7)}}
+      if(plain||fem)cuffT(c,lx,fy-2.5,Math.PI/2,4.2,pants);shoeT(c,lx,fy,0,false,raider)}}
+  // таз
+  const pg=c.createLinearGradient(x-hw,0,x+hw,0);pg.addColorStop(0,shade(pants,.16));pg.addColorStop(1,pantsD);c.fillStyle=pg;rrp(c,x-hw,waist,hw*2,hipY-waist+2.6,2);c.fill();strokeT(c,.6);
+  // туловище
+  if(side){c.save();c.translate(x,0);c.scale(side,1);c.translate(-x,0);
+    const p=new Path2D();p.moveTo(x-4.4,top+1);p.quadraticCurveTo(x-1,top-1,x+3,top+.5);p.quadraticCurveTo(x+(fem?5.8:5.4),top+(fem?4.4:3.5),x+(fem?3.8:4.4),waist);p.lineTo(x+(fem?4.6:4),hipY);p.lineTo(x-4,hipY);p.lineTo(x-4.4,waist);p.quadraticCurveTo(x-5.2,top+4.5,x-4.4,top+1);p.closePath();
+    c.fillStyle=lg(c,x-5,0,x+5,0,bodyL,bodyD);c.fill(p);c.save();c.clip(p);c.strokeStyle='rgba(0,0,0,.14)';c.lineWidth=.45;for(let i=0;i<2;i++){c.beginPath();c.moveTo(x-3,top+6+i*2.6);c.quadraticCurveTo(x,top+7+i*2.6,x+3,top+5.6+i*2.6);c.stroke()}c.restore();c.strokeStyle=OLT;c.lineWidth=.7;c.stroke(p);
+    if(plain&&!fem){c.fillStyle=strap;c.fillRect(x-.6,top+.3,1.5,hipY-top-2.4)}
+    if(plain){c.fillStyle=shade(body,.32);c.beginPath();c.moveTo(x-1.2,top);c.lineTo(x+2.8,top+.2);c.lineTo(x+1.4,top+2.4);c.closePath();c.fill()}
+    if(eq.body==='vest'){c.fillStyle='#46503f';rrp(c,x-3.4,top+1.5,7.6,waist-top,1.5);c.fill();strokeT(c,.5)}if(eq.body==='plate'){c.fillStyle='#d6b23a';c.fillRect(x-3.8,top+4,8.2,1.4)}if(eq.body==='jacket'){c.fillStyle='#cdb892';rrp(c,x-3.8,top-1,6.6,2.4,1.2);c.fill()}
+    if(setN===5||setN===6){c.fillStyle=setN===6?'#5a626c':'#2e322b';rrp(c,x-3.6,top+1,8.2,waist-top+1,1.5);c.fill();strokeT(c,.5);if(setN===6){c.fillStyle='#e0782a';c.fillRect(x-3.4,top+5,7.8,.8)}}
+    if(raider){c.fillStyle='#111';for(let i=0;i<3;i++){c.beginPath();c.ellipse(x-3+i,top-1-i*.6,.9,4,-.4,0,7);c.fill()}}
+    c.fillStyle='#4a2c16';c.fillRect(x-4.4,hipY-2.6,8.8,1.9);c.restore()}
+  else{const tp=torsoPath(x,top,waist,hipY-.5,sw,ww,hw);c.fillStyle=lg(c,x-sw,top,x+sw,hipY,bodyL,bodyD);c.fill(tp);if(typeof camoFill==='function')camoFill(c,tp,eq.body,x,top);if(typeof camoFill==='function')camoFill(c,tp,eq.body,x,top);
+    c.save();c.clip(tp);if(setN===3&&!raider)camo(c,x,top,hipY,sw);
+      // мягкий объём: свет слева сверху, тень справа
+      c.fillStyle=lg(c,x-sw,0,x+sw,0,'rgba(255,248,235,.14)','rgba(0,0,0,.26)');c.fillRect(x-sw-2,top-2,sw*2+4,hipY-top+4);
+      const rg2=c.createRadialGradient(x-sw*.35,top+3,.5,x-sw*.35,top+3,sw*1.2);rg2.addColorStop(0,'rgba(255,250,240,.16)');rg2.addColorStop(1,'rgba(255,250,240,0)');c.fillStyle=rg2;c.fillRect(x-sw-2,top-2,sw*2+4,hipY-top+4);
+      c.strokeStyle='rgba(0,0,0,.16)';c.lineWidth=.45;for(const s of [-1,1]){c.beginPath();c.moveTo(x+s*1.2,waist-1.2);c.quadraticCurveTo(x+s*3,waist-2.6,x+s*(ww-.6),waist-1.4);c.stroke()}
+      if(plain&&view===0){
+        // планка с пуговицами
+        c.strokeStyle='rgba(0,0,0,.22)';c.lineWidth=.45;c.beginPath();c.moveTo(x+.5,top+1.6);c.lineTo(x+.5,hipY-2.4);c.stroke();c.fillStyle=shade(body,.45);for(let i=0;i<3;i++)circ(c,x,top+3.4+i*2.5,.38);
+        if(!fem){for(const s of [-1,1]){const px=x+s*3.6;c.fillStyle=shade(body,-.08);rrp(c,px-1.7,top+2.6,3.4,3.2,.7);c.fill();c.strokeStyle='rgba(0,0,0,.24)';c.lineWidth=.35;c.stroke();c.fillStyle=shade(body,.2);rrp(c,px-1.8,top+2.3,3.6,1.3,.5);c.fill();c.fillStyle=shade(body,.5);circ(c,px,top+3.1,.3)}}
+        else{c.strokeStyle='rgba(0,0,0,.16)';c.lineWidth=.55;c.beginPath();c.arc(x-2.2,top+3.8,2.2,.35,Math.PI-.35);c.moveTo(x+4.3,top+4.2);c.arc(x+2.2,top+3.8,2.2,.35,Math.PI-.35);c.stroke()}}
+      if(plain&&view===3){c.strokeStyle='rgba(0,0,0,.16)';c.lineWidth=.45;c.beginPath();c.moveTo(x-sw+1.6,top+2.6);c.quadraticCurveTo(x,top+3.6,x+sw-1.6,top+2.6);c.stroke()}
+      if(!plain&&fem&&view===0&&eq.body!=='vest'&&eq.body!=='plate'){c.strokeStyle='rgba(0,0,0,.16)';c.lineWidth=.55;c.beginPath();c.arc(x-2.2,top+3.8,2.2,.35,Math.PI-.35);c.moveTo(x+4.3,top+4.2);c.arc(x+2.2,top+3.8,2.2,.35,Math.PI-.35);c.stroke()}
+    c.restore();c.strokeStyle=OLT;c.lineWidth=.7;c.stroke(tp);
+    if(plain){
+      // воротник
+      if(view===0){c.fillStyle=lg(c,0,top-1,0,top+3,shade(body,.38),shade(body,.05));for(const s of [-1,1]){c.beginPath();c.moveTo(x+s*.2,top+2.6);c.lineTo(x+s*3.4,top-.4);c.lineTo(x+s*1.4,top-.6);c.closePath();c.fill();strokeT(c,.4)}}
+      else if(view===3){c.fillStyle=shade(body,.3);rrp(c,x-2.6,top-1,5.2,1.8,.8);c.fill();strokeT(c,.4)}
+      // подтяжки (мужская рубашка) или узел на поясе (женская)
+      if(!fem){c.strokeStyle=strap;c.lineWidth=1.3;c.lineCap='round';
+        if(view===0){for(const s of [-1,1]){c.beginPath();c.moveTo(x+s*(sw-2.6),top+.3);c.quadraticCurveTo(x+s*(sw-2.9),top+5,x+s*2.8,hipY-2.6);c.stroke()}c.fillStyle='#c9b27a';for(const s of [-1,1])c.fillRect(x+s*2.9-.6,hipY-3.6,1.2,.9)}
+        else if(view===3){c.beginPath();c.moveTo(x-sw+2.4,top+.3);c.lineTo(x+2.6,hipY-2.6);c.moveTo(x+sw-2.4,top+.3);c.lineTo(x-2.6,hipY-2.6);c.stroke();c.fillStyle='#4a2a14';circ(c,x,top+5.4,.9)}
+        c.lineCap='butt';c.strokeStyle='rgba(255,220,180,.18)';c.lineWidth=.35;if(view===0)for(const s of [-1,1]){c.beginPath();c.moveTo(x+s*(sw-2.9),top+.6);c.quadraticCurveTo(x+s*(sw-3.2),top+5,x+s*3,hipY-3);c.stroke()}}
+      else if(view===0){c.fillStyle=shade(body,-.05);c.beginPath();c.moveTo(x-1.4,hipY-3.4);c.lineTo(x+1.6,hipY-3.6);c.lineTo(x+2.6,hipY-.4);c.lineTo(x+.6,hipY-1.4);c.lineTo(x-1.2,hipY+.2);c.closePath();c.fill();strokeT(c,.4);c.fillStyle=shade(body,.18);circ(c,x+.2,hipY-3.3,1.1);c.fill()}}
+    else bodyDetails(c,x,top,waist,hipY,sw,ww,view,eq,body,raider);
+    // ремень с большой пряжкой
+    const bl=c.createLinearGradient(0,hipY-2.8,0,hipY-.6);bl.addColorStop(0,'#6a4224');bl.addColorStop(1,'#3a2210');c.fillStyle=bl;c.fillRect(x-hw+.3,hipY-2.8,hw*2-.6,2.2);
+    if(view===0){const bg=c.createLinearGradient(0,hipY-3.1,0,hipY-.2);bg.addColorStop(0,'#d8d0bc');bg.addColorStop(1,'#7c7462');c.fillStyle=bg;rrp(c,x-1.6,hipY-3.1,3.2,2.7,.5);c.fill();c.fillStyle='#4a2c16';c.fillRect(x-.9,hipY-2.4,1.8,1.3);
+      if(!plain){c.fillStyle='#3a2a1c';for(const s of [-1,1])rrp(c,x+s*(hw-2)-1.2,hipY-2.6,2.4,2.8,.5),c.fill()}}
+    if(view===0&&!melee&&wi&&wi.cls==='pistol'){c.fillStyle='#3a2a1c';rrp(c,x+hw-3.5,hipY-2,3,4,.6);c.fill()}
+    if(view===3&&eq.back&&eq.back!=='cloak')backItem()}
+  // шея
+  const ng=c.createLinearGradient(x-1.7,0,x+1.7,0);ng.addColorStop(0,skL);ng.addColorStop(1,skD);c.fillStyle=ng;c.fillRect(x-1.7+(side?side*.5:0),hy+4,3.4,Math.max(1,top-hy-3.4));c.fillStyle='rgba(0,0,0,.2)';c.fillRect(x-1.7+(side?side*.5:0),top-1.2,3.4,1);
+  if(!aimUp&&view!==3)drawArms();
+  head(()=>{if(side){c.save();c.translate(x,0);c.scale(side,1);c.translate(-x,0)}
+    const hp=headPath(x,hy,side,fem);c.fillStyle=rg(c,x-2.2,hy-3.2,1,10.5,shade(skin,.2),shade(skin,-.24));c.fill(hp);c.save();c.clip(hp);c.fillStyle=lg(c,x-6,0,x+6.5,0,'rgba(0,0,0,0)','rgba(0,0,0,.14)');c.fillRect(x-8,hy-9,16,18);c.fillStyle='rgba(255,244,228,.16)';ellp(c,x-2.4,hy-3.6,2.8,1.7);c.fill();c.restore();c.strokeStyle=OLT;c.lineWidth=.7;c.stroke(hp);
+    if(view===0){for(const s of[-1,1]){c.fillStyle=skin;ellp(c,x+s*6.4,hy+.8,1.5,2.2);c.fill();strokeT(c,.4);c.fillStyle=skD;ellp(c,x+s*6.4,hy+.8,.7,1.2);c.fill()}}
+    if(eq.head==='s4h')SETHEAD.s4h(c,x,hy,view,side);
+    if(view!==3&&eq.head!=='s6h'&&eq.head!=='s4h')drawFace(c,x,hy,view,lk,skin);
+    if((eq.face||eq.head==='s4h')&&view!==3)facegear(c,eq.head==='s4h'?'gasmask':eq.face,x,hy,view);
+    if(raider&&view!==3)facegear(c,'raidermask',x,hy,view);
+    if(!HIDE_HAIR.has(eq.head))paintHair(c,hairPath(lk.hair,x,hy,view,false),hcol,x,hy);
+    if(lk.hair==='mohawk'||lk.hair==='undercut'||lk.hair==='bald'){c.save();c.clip(hp);c.fillStyle=hcol;c.globalAlpha=lk.hair==='bald'?.08:.25;ellp(c,x,hy-3,6.4,4.6);c.fill();c.restore();c.globalAlpha=1;if(lk.hair==='bald'){c.fillStyle='rgba(255,255,255,.22)';ellp(c,x-2,hy-4,2,1.1);c.fill()}}
+    if(eq.face==='gasmask'&&view!==3){c.fillStyle='#2b2d2e';c.fillRect(x-6.4,hy-3.4,12.8,1.2)}
+    if(eq.head&&eq.head!=='s4h')headgear(c,eq.head,x,hy,view);
+    if(side)c.restore()});
+  if(o.flash){c.fillStyle='rgba(255,255,255,.35)';ellp(c,x,y-3,10,17);c.fill()}
+  if(o.reload){c.strokeStyle='rgba(242,182,92,.9)';c.lineWidth=1.5;c.beginPath();c.arc(x,y-30,3.5,-Math.PI/2,-Math.PI/2+Math.PI*2*o.reload);c.stroke()}}
+drawHumanHD=drawHumanToon;
+// причёски — объёмнее, с мягким бликом, как у мультяшных моделей
+{const _ph=paintHair;paintHair=function(c,p,col,x,hy){if(!p)return;_ph(c,p,col,x,hy);c.save();c.clip(p);const g=c.createRadialGradient(x-2,hy-5,.5,x-2,hy-5,6.5);g.addColorStop(0,'rgba(255,255,255,.26)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(x-10,hy-12,20,16);
+  c.fillStyle='rgba(0,0,0,.18)';c.fillRect(x-10,hy+1,20,12);c.restore()}}
+
+// ================= v53: МЕДИКИ ГРУППИРОВОК — ЛЕЧЕНИЕ СОЮЗНИКОВ НА ХОДУ =================
+// Новое звание «медик». Вокруг медика — круг лечения: раз в несколько минут все раненые бойцы его группировки
+// внутри круга получают +50 ХП. Себя медик не лечит, чужих — тоже. Навык «Полевая медицина» растёт от вылеченного:
+// ур. 1 — раз в 3 мин, радиус 3 клетки … ур. 5 — раз в 1 мин, радиус 5 клеток.
+RANKS_F.splice(RANKS_F.indexOf('storekeeper'),0,'medic');RANKLIM.medic=3;
+RANKNF.ren.medic='Лепила';RANKNF.mil.medic='Санинструктор';RANK_GEN.medic='Медик';for(const f of Object.keys(RANKNF))if(!RANKNF[f].medic)RANKNF[f].medic='Медик';
+const MED_HP=50,MEDLV=[0,500,1500,3500,7000];
+const MED={pulse:0,seen:new Map(),fx:[]};
+const medLv=()=>{let l=1;for(let i=1;i<MEDLV.length;i++)if(((S&&S.medXp)|0)>=MEDLV[i])l=i+1;return l};
+const medCd=l=>(180-(l-1)*30)*1000,medR=l=>3+(l-1)*.5;
+const isMedic=()=>!!(S&&myFac()&&myRank()==='medic');
+const medPres=()=>isMedic()?{t:MED.pulse,r:medR(medLv())}:0;
+function medPeers(){const out=[];if(!room||!M)return out;for(const p of room.peers()){const pr=p.presence||{};if(pr.m===M.id&&pr.pid&&pr.pid!==S.pid&&typeof pr.x==='number')out.push(pr)}return out}
+// медик: импульс лечения, если рядом есть раненые свои
+setInterval(()=>{try{if(!S||!M||!isMedic()||S.hp<=0||S.hosp)return;const l=medLv();if(Date.now()-MED.pulse<medCd(l))return;const r=medR(l);
+  const hurt=medPeers().filter(pr=>pr.fc===myFac()&&(pr.hp|0)<100&&Math.hypot(pr.x-P.x,pr.y-P.y)<=r);if(!hurt.length)return;
+  MED.pulse=Date.now();MED.fx.push({x:P.x,y:P.y,r,t:now});const l0=l;S.medXp=(S.medXp|0)+hurt.length*MED_HP;dirty=true;sendPresence();
+  log('✚ Полевое лечение: +'+MED_HP+' ХП — '+hurt.map(p=>p.n).join(', ')+'.','good');if(medLv()>l0)log('✚ Полевая медицина — уровень '+medLv()+'! Лечите чаще и дальше.','good')}catch(e){}},1000);
+// боец: принимает лечение от медика своей группировки, если стоит в его круге
+setInterval(()=>{try{if(!S||!M||!myFac())return;for(const pr of medPeers()){const md=pr.md;if(!md||!md.t)continue;const key=pr.pid,last=MED.seen.get(key);if(last===md.t)continue;MED.seen.set(key,md.t);
+  if(last===undefined)continue; // первый раз видим медика — старый импульс не считается
+  if(pr.fc!==myFac()||S.hp<=0||S.hosp)continue;MED.fx.push({x:pr.x,y:pr.y,r:Math.min(5,+md.r||3),t:now});if(Math.hypot(pr.x-P.x,pr.y-P.y)>Math.min(5,+md.r||3)+.3)continue;
+  const mx=effMax();if(S.hp>=mx)continue;const add=Math.min(MED_HP,mx-S.hp);S.hp+=add;dirty=true;updateHud();floatText(P.x,P.y-1.2,'+'+Math.round(add)+' ХП','#7fe08a',true);log('✚ '+pr.n+' подлатал(а) вас: +'+Math.round(add)+' ХП.','good')}}catch(e){}},700);
+// мировые координаты кадра берём в момент рисования людей (после кадра холст уже в экранных); в 3D круг не рисуется
+{const _dh=drawHuman;drawHuman=function(c,x,y,o){if(c===ctx)MED.m=c.getTransform();return _dh(c,x,y,o)}}
+// круг лечения: у себя — всегда, у медиков своей группировки — тоже; вспышка при импульсе
+{const _rd=render;render=function(t){_rd(t);const wm=MED.m;MED.m=null;if(!M||!S||!wm||(typeof V3!=='undefined'&&V3.on))return;const c=ctx;c.save();c.setTransform(wm);try{
+  const ring=(x,y,r,a,own)=>{c.save();c.strokeStyle='rgba(120,230,140,'+a+')';c.lineWidth=own?1.4:1;c.setLineDash([5,4]);c.lineDashOffset=-now/80;c.beginPath();c.ellipse(x*T,y*T+4,r*T,r*T*.62,0,0,7);c.stroke();c.setLineDash([]);
+    c.fillStyle='rgba(120,230,140,'+(a*.12)+')';c.fill();c.restore()};
+  if(isMedic()){const l=medLv(),left=Math.max(0,medCd(l)-(Date.now()-MED.pulse));ring(P.x,P.y,medR(l),.55,true);
+    c.save();c.strokeStyle='rgba(120,230,140,.9)';c.lineWidth=2;c.beginPath();c.arc(P.x*T,P.y*T-34,4,-Math.PI/2,-Math.PI/2+Math.PI*2*(1-left/medCd(l)));c.stroke();c.fillStyle='#7fe08a';c.font='bold 7px sans-serif';c.textAlign='center';c.fillText('✚',P.x*T,P.y*T-31.5);c.restore()}
+  if(myFac())for(const pr of medPeers())if(pr.md&&pr.fc===myFac())ring(pr.x,pr.y,Math.min(5,+pr.md.r||3),.35,false);
+  MED.fx=MED.fx.filter(f=>now-f.t<900);for(const f of MED.fx){const k=(now-f.t)/900;c.strokeStyle='rgba(140,255,160,'+(1-k)+')';c.lineWidth=3*(1-k)+.5;c.beginPath();c.ellipse(f.x*T,f.y*T+4,f.r*T*k,f.r*T*k*.62,0,0,7);c.stroke()}}catch(e){}c.restore()}}
+// в штабе (вкладка «Управление»): навык медика
+{const _hq=hqWin;hqWin=async function(f){await _hq(f);if(['roster','apps','reqs','log','fund','bots'].includes(hqTab))return;const b=ov.querySelector('.win .body');if(!b||myFac()!==f)return;
+  const box=el('div');box.append(el('div','sec','✚ Полевая медицина'));const l=medLv(),xp=(S.medXp|0),nx=MEDLV[l];
+  if(isMedic())box.append(el('p','small','Уровень '+l+' из 5 · лечит своих на +'+MED_HP+' ХП раз в '+(medCd(l)/60000).toFixed(1).replace('.0','')+' мин в радиусе '+String(medR(l)).replace('.',',')+' кл.'),el('p','muted small',nx?'Опыт навыка: '+xp+' / '+nx+' (растёт от вылеченных ХП).':'Навык прокачан полностью.'));
+  else box.append(el('p','muted small','Звание «'+rn(f,'medic')+'» назначают '+rn(f,'leader')+' и '+rn(f,'deputy')+'. Медик лечит раненых бойцов своей группировки вокруг себя прямо на ходу; навык растёт от вылеченного.'));
+  b.append(box)}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
