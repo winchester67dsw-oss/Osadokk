@@ -14,6 +14,37 @@
   if(!window.ResizeObserver)window.ResizeObserver=function(cb){var self=this;this.observe=function(){setTimeout(function(){cb([],self)},0);addEventListener('resize',function(){cb([],self)})};this.unobserve=this.disconnect=function(){}};
 })();
 </script></head><body><title>Осадок</title>
+<script>
+// Запасное шифрование для сайтов без https: там браузер прячет crypto.subtle, и без него не работают аккаунты.
+// Подменяем ровно то, чем пользуется игра (SHA-256, PBKDF2, AES-GCM, ECDSA P-256), на библиотеки noble — результат тот же, аккаунты совместимы.
+(function(){if(!window.crypto||crypto.subtle)return;
+  const CDN='https://cdn.jsdelivr.net/npm/';let libs=null;
+  const load=()=>libs||(libs=Promise.all([import(CDN+'@noble/hashes@1.8.0/sha2/+esm'),import(CDN+'@noble/hashes@1.8.0/pbkdf2/+esm'),import(CDN+'@noble/ciphers@1.3.0/aes/+esm'),import(CDN+'@noble/curves@1.9.1/p256/+esm')]).then(([h,k,a,c])=>({sha256:h.sha256,pbkdf2Async:k.pbkdf2Async,gcm:a.gcm,p256:c.p256})).catch(e=>{libs=null;throw e}));
+  const u8=d=>d instanceof Uint8Array?d:ArrayBuffer.isView(d)?new Uint8Array(d.buffer,d.byteOffset,d.byteLength):new Uint8Array(d);
+  const out=a=>a.slice().buffer;
+  const b64u=a=>btoa(String.fromCharCode.apply(null,a)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  const unb64u=s=>Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')),ch=>ch.charCodeAt(0));
+  const nm=a=>(typeof a==='string'?a:a.name).toUpperCase();
+  const ecPub=async d=>(await load()).p256.getPublicKey(d,false);
+  const subtle={
+    async digest(alg,data){const L=await load();return out(L.sha256(u8(data)))},
+    async importKey(fmt,data,alg){const n=nm(alg);
+      if(fmt==='raw'&&n==='PBKDF2')return {t:'pbkdf2',raw:u8(data).slice()};
+      if(fmt==='raw'&&n==='AES-GCM')return {t:'aes',raw:u8(data).slice()};
+      if(fmt==='jwk'&&n==='ECDSA'){if(data.d)return {t:'ecpriv',d:unb64u(data.d)};const p=new Uint8Array(65);p[0]=4;p.set(unb64u(data.x),1);p.set(unb64u(data.y),33);return {t:'ecpub',pub:p}}
+      throw new Error('subtle shim: '+fmt+'/'+n)},
+    async deriveBits(alg,key,bits){const L=await load();return out(await L.pbkdf2Async(L.sha256,key.raw,u8(alg.salt),{c:alg.iterations,dkLen:bits/8}))},
+    async encrypt(alg,key,data){const L=await load();return out(L.gcm(key.raw,u8(alg.iv)).encrypt(u8(data)))},
+    async decrypt(alg,key,data){const L=await load();try{return out(L.gcm(key.raw,u8(alg.iv)).decrypt(u8(data)))}catch(e){throw new DOMException('decrypt failed','OperationError')}},
+    async generateKey(){const L=await load();const d=L.p256.utils.randomPrivateKey();return {privateKey:{t:'ecpriv',d},publicKey:{t:'ecpub',pub:await ecPub(d)}}},
+    async exportKey(fmt,key){if(fmt!=='jwk')throw new Error('subtle shim: export '+fmt);const pub=key.t==='ecpriv'?await ecPub(key.d):key.pub;
+      const j={kty:'EC',crv:'P-256',x:b64u(pub.subarray(1,33)),y:b64u(pub.subarray(33,65)),ext:true};if(key.t==='ecpriv'){j.d=b64u(key.d);j.key_ops=['sign']}else j.key_ops=['verify'];return j},
+    async sign(alg,key,data){const L=await load();return out(L.p256.sign(L.sha256(u8(data)),key.d,{lowS:false}).toCompactRawBytes())},
+    async verify(alg,key,sig,data){const L=await load();try{return L.p256.verify(u8(sig),L.sha256(u8(data)),key.pub,{lowS:false,format:'compact'})}catch(e){return false}}
+  };
+  try{Object.defineProperty(crypto,'subtle',{value:subtle,configurable:true})}catch(e){}
+})();
+</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -1690,6 +1721,15 @@ function audioInit(){if(SND.ctx){if(SND.ctx.state==='suspended')SND.ctx.resume()
   try{const c=new AC();SND.ctx=c;const comp=c.createDynamicsCompressor();comp.connect(c.destination);SND.master=c.createGain();SND.master.gain.value=SND.muted?0:SND.vol;SND.master.connect(comp);
     const b=c.createBuffer(1,c.sampleRate,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;SND.noise=b;startAmbient()}catch(e){SND.ctx=null}}
 addEventListener('pointerdown',audioInit,{passive:true});addEventListener('keydown',audioInit);
+
+// ================= ВКОНТАКТЕ (мини-приложение) =================
+// ВК открывает игру с параметрами vk_* в адресе. Тогда подключаем VK Bridge, сообщаем ВК, что игра загрузилась,
+// и глушим звук и рацию, пока окно ВК свёрнуто, — этого требует модерация. Вне ВК ничего не меняется.
+const inVK=/[?&]vk_app_id=/.test(location.search);
+function vkHidden(h){const c=SND.ctx;if(h){vsStop();if(c&&c.state==='running')c.suspend()}else if(c&&c.state==='suspended')c.resume()}
+if(inVK){const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@vkontakte/vk-bridge@2.15.12/dist/browser.min.js';
+  s.onload=()=>{const B=window.vkBridge;if(!B)return;B.subscribe(e=>{const t=e&&e.detail&&e.detail.type;if(t==='VKWebAppViewHide')vkHidden(true);else if(t==='VKWebAppViewRestore')vkHidden(false)});B.send('VKWebAppInit').catch(()=>{})};
+  document.head.appendChild(s);addEventListener('visibilitychange',()=>vkHidden(document.visibilityState==='hidden'))}
 function sndOut(x,y,vol=1){const c=SND.ctx;if(!c||SND.muted||c.state!=='running')return null;let v=vol,pan=0;
   if(x!=null&&S&&M){const dx=x-P.x,dy=y-P.y,d=Math.hypot(dx,dy);if(d>18)return null;v*=Math.max(0,1-d/18);pan=Math.max(-1,Math.min(1,dx/9))}
   const g=c.createGain();g.gain.value=v;if(c.createStereoPanner){const p=c.createStereoPanner();p.pan.value=pan;g.connect(p);p.connect(SND.master)}else g.connect(SND.master);return g}
@@ -1773,10 +1813,10 @@ addEventListener('resize',checkRotate);
 // В маленьком окне itch.io на телефоне игру удобнее открыть отдельной вкладкой.
 const inFrame=(()=>{try{return window.top!==window}catch(e){return true}})();
 function openOwnTab(){try{window.top.location.href=location.href}catch(e){location.href=location.href}}
-function addFsBanner(){if(inClaude()||!inFrame||!coarse()||document.getElementById('fsBanner'))return;const box=el('div');box.id='fsBanner';box.style.cssText='display:flex;flex-direction:column;gap:8px;align-items:flex-start;background:#2e2416;border:1px solid var(--accent);border-radius:10px;padding:12px 14px;margin-bottom:14px';
+function addFsBanner(){if(inClaude()||inVK||!inFrame||!coarse()||document.getElementById('fsBanner'))return;const box=el('div');box.id='fsBanner';box.style.cssText='display:flex;flex-direction:column;gap:8px;align-items:flex-start;background:#2e2416;border:1px solid var(--accent);border-radius:10px;padding:12px 14px;margin-bottom:14px';
   const b=el('a','btn primary','▶  Открыть игру на весь экран');b.href=location.href;b.target='_top';b.addEventListener('click',e=>{e.preventDefault();openOwnTab()});b.style.cssText='font-size:16px;padding:12px 18px;text-decoration:none';
   box.append(b,el('div','small muted','Игра откроется на весь экран вместо этой страницы. Аккаунт и прогресс сохранятся.'));document.querySelector('#title .inner').prepend(box)}
-function goFullscreen(){if(inFrame&&!inClaude()&&coarse()){openOwnTab();return}const d=document.documentElement;const req=d.requestFullscreen||d.webkitRequestFullscreen;if(!req){log('Полноэкранный режим недоступен в этом браузере. На itch.io нажмите кнопку «на весь экран» под игрой.');return}
+function goFullscreen(){if(inFrame&&!inClaude()&&!inVK&&coarse()){openOwnTab();return}const d=document.documentElement;const req=d.requestFullscreen||d.webkitRequestFullscreen;if(!req){log('Полноэкранный режим недоступен в этом браузере. На itch.io нажмите кнопку «на весь экран» под игрой.');return}
   Promise.resolve(req.call(d)).then(()=>{try{screen.orientation.lock('landscape').catch(()=>{})}catch(e){}}).catch(()=>log('Браузер не разрешил полный экран. На itch.io используйте кнопку под игрой.'))}
 
 // ================= АККАУНТЫ (вне Claude) =================
