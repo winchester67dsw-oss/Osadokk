@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793260849";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793261434";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -7303,6 +7303,101 @@ if(typeof TC!=='undefined')TC.chunks.clear();
   // платит больше всех: на 15% выше лучшей цены у других жителей
   const best=k=>Math.max(.5,...Object.entries(BUY).filter(([id,b])=>id!=='bolotnik'&&b.cats.includes(k)).map(([,b])=>b.k[k]||b.k.def));
   BUY.bolotnik={cats:['trophy','art'],k:{trophy:Math.round((best('trophy')+.15)*100)/100,art:Math.max(.8,Math.round((best('art')+.15)*100)/100),def:1}}}}
+// ================= v46: ЗАЩИЩЁННЫЙ ОБМЕН И АУКЦИОН =================
+
+// ---------- Обмен: оба подтвердили → 5 секунд отсчёта; любое изменение или «Отменить» — обмен отменяется ----------
+const TR_CD=5000;
+{const _tf=tryFinish;tryFinish=function(){const tr=TR;if(!tr||!tr.myReady||!tr.theirReady||tr.theirReady!==readyHash(tr.theirs,tr.mine))return;
+  const sig=readyHash(tr.mine,tr.theirs)+'|'+readyHash(tr.theirs,tr.mine);
+  if(!tr.cdAt){tr.cdAt=Date.now()+TR_CD;tr.cdSig=sig;sfx.click&&sfx.click();trCdTick();return}
+  if(Date.now()<tr.cdAt)return;if(sig!==tr.cdSig){trAbort('Предложение изменилось во время отсчёта — обмен отменён.');return}_tf()}}
+function trAbort(why){if(!TR)return;log('⚠ '+why,'bad');cancelTrade(true)}
+function trCdTick(){const tr=TR;if(!tr||!tr.cdAt)return;const left=tr.cdAt-Date.now();const b=document.getElementById('trCd');
+  if(b)b.textContent='⏳ Обмен через '+Math.max(0,Math.ceil(left/1000))+' с. Если партнёр что-то изменит — обмен отменится. Можно отменить вручную.';
+  if(left<=0){tryFinish();return}setTimeout(trCdTick,250)}
+// изменение своего предложения во время отсчёта — отмена
+{const _oc=offerChanged;offerChanged=function(){if(TR&&TR.cdAt){trAbort('Вы изменили предложение во время отсчёта — обмен отменён.');return}_oc()}}
+// партнёр поменял вещи или снял подтверждение во время отсчёта — отмена
+{const _od=onDeal;onDeal=function(msg){const d=msg.data;if(d&&TR&&TR.cdAt&&msg.peer===TR.peer&&d.to===myPeerId()&&(d.t==='offer'||(d.t==='ready'&&d.h!==TR.theirReady))){const nm=TR.name;_od(msg);if(TR)trAbort(nm+' изменил предложение во время отсчёта — обмен отменён.');else log('⚠ '+nm+' изменил предложение — обмен отменён.','bad');return}_od(msg)}}
+// в окне обмена: баннер отсчёта и блокировка правок
+{const _ot=openTrade;openTrade=function(){_ot();const tr=TR;if(!tr||!tr.cdAt)return;const w=ov.querySelector('.win .body');if(!w)return;const b=el('div');b.id='trCd';b.style.cssText='margin:0 0 10px;padding:10px 12px;border:1px solid #c8a048;border-radius:10px;background:rgba(80,60,20,.55);color:#ffe2a0;font:600 13px var(--mono)';w.insertBefore(b,w.firstChild);
+  for(const x of w.querySelectorAll('button'))if(/^[+−]|^\+\d|^0$/.test(x.textContent.trim()))x.disabled=true;trCdTick()}}
+
+// ---------- Аукцион: NPC в Ржавом Колоколе ----------
+// До 5 лотов на игрока; в одном лоте — один вид предметов, до 10 штук. Продажа за крышки и/или обмен по предложениям.
+// Выставленные вещи сразу уходят на хранение; кто первым нажал «Купить» — тот и купил; деньги продавец получает при входе.
+const AUC_T=k=>'osadok/'+(TESTROOM?'t_'+TESTROOM:'v1')+'/auc/'+k;
+const AUC_MAX=5,AUC_STACK=10,AUC_LIFE=3*864e5;
+const AUC={lots:{},t:0,busy:false};
+const aucOpenLot=d=>d&&d.st==='open'&&Date.now()-d.at<AUC_LIFE;
+const aucId=()=>(S.pid||'x')+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+async function aucLoad(){const f=await subAll(AUC_T('lot/'),4000);const old=AUC.lots;AUC.lots={};for(const [id,d] of Object.entries(f))if(d&&d.id&&ITEMS[d.id]&&d.st)AUC.lots[id]=d;for(const [id,d] of Object.entries(old))if(!AUC.lots[id]&&Date.now()-(d.u||d.at||0)<120000)AUC.lots[id]=d;else if(AUC.lots[id]&&(d.u||0)>(AUC.lots[id].u||0))AUC.lots[id]=d;AUC.t=Date.now();await aucSettle();return AUC.lots}
+async function aucPut(id,d){d.v=1;d.at=d.at||Date.now();d.ct='1';d.u=Date.now();await cloudPut(AUC_T('lot/'+id),d);AUC.lots[id]=d}
+// расчёты при каждом открытии аукциона: продавцу — выручка, покупателю по обмену — вещь, отклонённым — возврат
+async function aucSettle(){if(!S||!S.pid)return;S.aucEsc=S.aucEsc||{};S.aucOff=S.aucOff||{};S.aucDone=S.aucDone||{};let msg=[];
+  for(const [lid,d] of Object.entries(AUC.lots)){
+    if(d.sp===S.pid&&d.st==='sold'&&!S.aucDone['s'+lid]){S.aucDone['s'+lid]=1;delete S.aucEsc[lid];if(d.how==='buy'){S.caps+=d.pr|0;msg.push(ITEMS[d.id].n+' продан'+(d.bn?' ('+d.bn+')':'')+': +'+(d.pr|0)+' крышек')}
+      else if(d.off){for(const [i,q] of Object.entries(d.off.i||{}))if(ITEMS[i])add(i,Math.min(999,q|0));S.caps+=d.off.c|0;msg.push(ITEMS[d.id].n+' обменян'+(d.bn?' с '+d.bn:'')+': получено '+offerText(d.off))}}
+    if(d.sp===S.pid&&d.st==='open'&&!aucOpenLot(d)&&S.aucEsc[lid]){add(d.id,d.q);delete S.aucEsc[lid];d.st='back';await aucPut(lid,d).catch(()=>{});msg.push('Срок лота «'+ITEMS[d.id].n+'» истёк — вещь вернулась')}
+    if(d.bp===S.pid&&d.st==='sold'&&d.how==='swap'&&!S.aucDone['b'+lid]){S.aucDone['b'+lid]=1;add(d.id,d.q);delete S.aucOff[lid];msg.push('Ваш обмен принят: получено '+ITEMS[d.id].n+(d.q>1?' ×'+d.q:''))}}
+  for(const [lid,o] of Object.entries(S.aucOff)){const d=AUC.lots[lid];if(d&&d.st==='open')continue;if(d&&d.st==='sold'&&d.bp===S.pid&&d.how==='swap')continue;
+    if(!d&&Date.now()-o.at<AUC_LIFE+864e5)continue;for(const [i,q] of Object.entries(o.i||{}))add(i,q);S.caps+=o.c|0;delete S.aucOff[lid];msg.push('Предложение по лоту не принято — ваши вещи вернулись')}
+  if(msg.length){dirty=true;updateHud();for(const m of msg)log('🔨 '+m,'good');saveLocal()}}
+// кто первым нажал — тот купил: заявки сравниваются по времени
+async function aucClaim(lid){const me=S.pid;await cloudPut(AUC_T('claim/'+lid+'/'+me),{v:1,at:Date.now(),ct:'1'});await new Promise(r=>setTimeout(r,2500));
+  const cl=await subAll(AUC_T('claim/'+lid+'/'),2500);const win=Object.entries(cl).sort((a,b)=>(a[1].at-b[1].at)||(a[0]<b[0]?-1:1))[0];return !!(win&&win[0]===me)}
+async function aucFresh(lid){const f=await cloudGet(AUC_T('lot/'+lid),4000);if(f&&f.id)AUC.lots[lid]=f;return f}
+async function aucBuy(lid){if(AUC.busy)return;const d=AUC.lots[lid];if(!d||!aucOpenLot(d)||!d.pr)return;if(d.sp===S.pid){log('Это ваш лот.','bad');return}if(S.caps<d.pr){log('Не хватает крышек.','bad');return}
+  AUC.busy=true;log('🔨 Покупаем «'+ITEMS[d.id].n+'»…');try{const f=await aucFresh(lid);if(!aucOpenLot(f)){log('Лот уже продан или снят.','bad');return}
+    if(!(await aucClaim(lid))){log('Кто-то успел купить раньше вас.','bad');return}const g=await aucFresh(lid);if(!aucOpenLot(g)){log('Лот уже продан.','bad');return}if(S.caps<g.pr){log('Не хватает крышек.','bad');return}
+    S.caps-=g.pr;add(g.id,g.q);refItem(g.id,g.q);S.aucDone=S.aucDone||{};S.aucDone['b'+lid]=1;Object.assign(g,{st:'sold',how:'buy',bp:S.pid,bn:S.name.slice(0,16)});await aucPut(lid,g);updateHud();dirty=true;saveLocal();sfx.pickup();log('🔨 Куплено: '+ITEMS[g.id].n+(g.q>1?' ×'+g.q:'')+' за '+g.pr+' крышек.','good')}
+  catch(e){log('Нет связи с облаком — покупка не прошла.','bad')}finally{AUC.busy=false;if(ov.querySelector('[data-auc]'))aucWin('all')}}
+async function aucList(id,q,pr,sw){const mine=Object.values(AUC.lots).filter(d=>d.sp===S.pid&&aucOpenLot(d));if(mine.length>=AUC_MAX){log('Можно выставить не больше '+AUC_MAX+' лотов.','bad');return}
+  if(mine.some(d=>d.id===id)){log('Этот предмет уже выставлен — снимите лот и выставьте заново с нужным количеством.','bad');return}q=Math.max(1,Math.min(AUC_STACK,q|0,freeQty(id)));pr=Math.max(0,Math.min(1e7,pr|0));if(!pr&&!sw){log('Укажите цену или разрешите обмен.','bad');return}
+  const lid=aucId();take(id,q);S.aucEsc=S.aucEsc||{};S.aucEsc[lid]={id,q};dirty=true;
+  try{await aucPut(lid,{sp:S.pid,sn:S.name.slice(0,16),id,q,pr,sw:sw?1:0,st:'open',at:Date.now()});saveLocal();log('🔨 Лот выставлен: '+ITEMS[id].n+(q>1?' ×'+q:'')+(pr?' за '+pr+' крышек':'')+(sw?' · можно предложить обмен':''),'good')}
+  catch(e){add(id,q);delete S.aucEsc[lid];log('Нет связи с облаком — лот не выставлен.','bad')}aucWin('mine')}
+async function aucCancel(lid){const f=await aucFresh(lid).catch(()=>null);if(!f||f.sp!==S.pid)return;if(f.st!=='open'){await aucSettle();aucWin('mine');return}f.st='back';try{await aucPut(lid,f);add(f.id,f.q);delete (S.aucEsc||{})[lid];dirty=true;saveLocal();log('Лот снят, вещь вернулась в рюкзак.','good')}catch(e){log('Нет связи с облаком.','bad')}aucWin('mine')}
+async function aucOffer(lid,oi,oc){const d=AUC.lots[lid];if(!d||!aucOpenLot(d)||!d.sw)return;S.aucOff=S.aucOff||{};if(S.aucOff[lid]){log('Вы уже сделали предложение по этому лоту.','bad');return}
+  for(const [i,q] of Object.entries(oi))if(freeQty(i)<q){log('Не хватает: '+ITEMS[i].n,'bad');return}if(S.caps<oc){log('Не хватает крышек.','bad');return}if(!Object.keys(oi).length&&!oc){log('Добавьте вещи или крышки.','bad');return}
+  for(const [i,q] of Object.entries(oi))take(i,q);S.caps-=oc;S.aucOff[lid]={i:oi,c:oc,at:Date.now()};dirty=true;
+  try{await cloudPut(AUC_T('off/'+lid+'/'+S.pid),{v:1,at:Date.now(),ct:'1',bn:S.name.slice(0,16),i:oi,c:oc,st:'open'});saveLocal();updateHud();log('🔨 Предложение отправлено продавцу. Вещи на хранении, пока он не ответит.','good')}
+  catch(e){for(const [i,q] of Object.entries(oi))add(i,q);S.caps+=oc;delete S.aucOff[lid];log('Нет связи с облаком.','bad')}aucWin('all')}
+async function aucOfferBack(lid){const o=(S.aucOff||{})[lid];if(!o)return;const d=await aucFresh(lid).catch(()=>null);if(d&&d.st==='sold'&&d.bp===S.pid){await aucSettle();aucWin('all');return}
+  try{await cloudPut(AUC_T('off/'+lid+'/'+S.pid),{v:1,at:Date.now(),ct:'1',bn:S.name.slice(0,16),st:'back'})}catch(e){}for(const [i,q] of Object.entries(o.i||{}))add(i,q);S.caps+=o.c|0;delete S.aucOff[lid];dirty=true;saveLocal();updateHud();log('Предложение отозвано, вещи вернулись.','good');aucWin('all')}
+async function aucAccept(lid,bp,o){const f=await aucFresh(lid).catch(()=>null);if(!f||f.sp!==S.pid||!aucOpenLot(f)){log('Лот уже закрыт.','bad');return}
+  Object.assign(f,{st:'sold',how:'swap',bp,bn:o.bn,off:{i:o.i||{},c:o.c|0}});try{await aucPut(lid,f);await aucSettle();log('🔨 Обмен принят.','good')}catch(e){log('Нет связи с облаком.','bad')}aucWin('mine')}
+// окно аукциона
+function aucWin(tab='all'){openWin('Аукцион Лёвы',async b=>{const w=ov.querySelector('.win');if(w)w.setAttribute('data-auc','1');
+  const tabs=el('div','cats');for(const [k,n] of [['all','Лоты'],['mine','Мои лоты'],['new','Выставить']]){const x=el('button',null,n);x.setAttribute('aria-pressed',tab===k);x.onclick=()=>aucWin(k);tabs.append(x)}b.append(tabs);
+  const box=el('div');b.append(box);box.append(el('p','muted','Загружаем лоты…'));if(Date.now()-AUC.t>4000)await aucLoad().catch(()=>{});box.replaceChildren();
+  const lots=Object.entries(AUC.lots).filter(([,d])=>aucOpenLot(d)).sort((a,b)=>b[1].at-a[1].at);
+  if(tab==='all'){const l=el('div','list');const L=lots.filter(([,d])=>d.sp!==S.pid);if(!L.length)l.append(el('p','muted','Сейчас лотов нет. Будьте первым — выставьте что-нибудь.'));
+    for(const [lid,d] of L){const r=el('div','row');r.append(iconCanvas(d.id,40));const gw=el('div','grow');gw.append(el('div','t',ITEMS[d.id].n+(d.q>1?' ×'+d.q:'')),el('div','s','Продавец: '+d.sn+(d.pr?' · цена '+d.pr+' крышек':'')+(d.sw?' · можно обмен':'')));r.append(gw);
+      if(d.pr)r.append(btn('Купить · '+d.pr,()=>aucBuy(lid),'btn primary',S.caps<d.pr||AUC.busy));if(d.sw)r.append((S.aucOff||{})[lid]?btn('Отозвать предложение',()=>aucOfferBack(lid)):btn('Предложить обмен',()=>aucOfferWin(lid)));l.append(r)}box.append(l)}
+  else if(tab==='mine'){const L=lots.filter(([,d])=>d.sp===S.pid);box.append(el('p','small','Выставлено '+L.length+' из '+AUC_MAX+' лотов. Лот живёт 3 дня, потом вещь возвращается.'));const l=el('div','list');
+    for(const [lid,d] of L){const r=el('div','row');r.append(iconCanvas(d.id,40));const gw=el('div','grow');gw.append(el('div','t',ITEMS[d.id].n+(d.q>1?' ×'+d.q:'')),el('div','s',(d.pr?'цена '+d.pr+' крышек':'только обмен')+(d.sw&&d.pr?' · или обмен':'')));r.append(gw,btn('Снять',()=>aucCancel(lid)));l.append(r);
+      if(d.sw){const offs=await subAll(AUC_T('off/'+lid+'/'),2500).catch(()=>({}));for(const [bp,o] of Object.entries(offs)){if(o.st!=='open')continue;const rr=el('div','row');rr.style.marginLeft='46px';const g2=el('div','grow');g2.append(el('div','t','Предложение от '+(o.bn||'игрока')),el('div','s',offerText({i:o.i||{},c:o.c|0})));rr.append(g2,btn('Принять',()=>aucAccept(lid,bp,o),'btn primary'));l.append(rr)}}}
+    if(!L.length)l.append(el('p','muted','У вас нет выставленных лотов.'));box.append(l);const off=Object.keys(S.aucOff||{});if(off.length)box.append(el('p','muted small','Ваших предложений на рассмотрении: '+off.length+'.'))}
+  else{const mine=lots.filter(([,d])=>d.sp===S.pid);if(mine.length>=AUC_MAX){box.append(el('p','muted','Уже выставлено '+AUC_MAX+' лотов — это максимум. Снимите какой-нибудь, чтобы выставить новый.'));return}
+    box.append(el('p','small','Выберите вещь. Одинаковых можно выставить до 10 штук — это один лот. Всего лотов — до '+AUC_MAX+'.'));const l=el('div','list');
+    for(const id of Object.keys(S.inv).filter(id=>ITEMS[id]&&ITEMS[id].k!=='quest'&&freeQty(id)>0)){const r=el('div','row');r.append(iconCanvas(id,36));const gw=el('div','grow');gw.append(el('div','t',ITEMS[id].n),el('div','s','есть свободно: '+freeQty(id)));r.append(gw,btn('Выставить',()=>aucNewWin(id),'btn primary'));l.append(r)}box.append(l)}})}
+function aucNewWin(id){openWin('Выставить: '+ITEMS[id].n,b=>{const inS='background:#14110c;color:#f2e2b8;border:1px solid #5a4a30;border-radius:6px;padding:8px;width:110px';const mx=Math.min(AUC_STACK,freeQty(id));
+  const q=document.createElement('input');q.type='number';q.min=1;q.max=mx;q.value=1;q.style.cssText=inS;const pr=document.createElement('input');pr.type='number';pr.min=0;pr.placeholder='крышек';pr.value=String(Math.max(1,ITEMS[id].p|0));pr.style.cssText=inS;
+  const sw=document.createElement('input');sw.type='checkbox';const lab=el('label','toggle');lab.append(sw,el('span',null,' Можно предложить обмен'));
+  b.append(iconCanvas(id,64),el('p','small','Количество (до '+mx+'):'),q,el('p','small','Цена за весь лот (0 — только обмен):'),pr,lab);const o=el('div','startrow');o.style.marginTop='12px';o.append(btn('Выставить',()=>aucList(id,+q.value,+pr.value,sw.checked),'btn primary'),btn('Назад',()=>aucWin('new')));b.append(o)})}
+function aucOfferWin(lid){const d=AUC.lots[lid];if(!d)return;const off={i:{},c:0};const draw=()=>openWin('Обмен на '+ITEMS[d.id].n,b=>{b.append(el('p','small','Предложите вещи и/или крышки за «'+ITEMS[d.id].n+(d.q>1?' ×'+d.q:'')+'». Они уйдут на хранение и вернутся, если продавец выберет другое предложение или снимет лот.'));
+  b.append(el('p',null,'Ваше предложение: '+(offerText(off)||'пусто')));const cr=el('div','startrow');for(const c of [10,50,100,500])cr.append(btn('+'+c+' крыш.',()=>{if(S.caps-off.c<c)return;off.c+=c;draw()},'btn',S.caps-off.c<c));cr.append(btn('0',()=>{off.c=0;draw()}));b.append(cr);
+  const l=el('div','list');for(const id of Object.keys(S.inv).filter(id=>ITEMS[id]&&ITEMS[id].k!=='quest'&&freeQty(id)-(off.i[id]||0)>0)){const r=el('div','row');r.append(iconCanvas(id,32));const gw=el('div','grow');gw.append(el('div','t',ITEMS[id].n),el('div','s','свободно: '+(freeQty(id)-(off.i[id]||0))));r.append(gw,btn('+1',()=>{off.i[id]=(off.i[id]||0)+1;draw()}));l.append(r)}b.append(l);
+  const o=el('div','startrow');o.style.marginTop='10px';o.append(btn('Отправить предложение',()=>aucOffer(lid,off.i,off.c),'btn primary'),btn('Назад',()=>aucWin('all')));b.append(o)});draw()}
+// сам аукционист
+NPCS.push({id:'auction',map:'hub',x:28,y:16,a:Math.PI/2,n:'Аукционист Лёва',role:'Аукцион между выжившими',lk:{g:'m',skin:0,hair:'short',hc:'black',outfit:3,beard:'stubble',eye:0},eq:{body:'autumncoat',head:'beret'},
+  lines:['Кто больше? Выставляй хабар — покупатели найдутся.','Пять лотов на брата, не больше. Порядок есть порядок.','Хочешь обмен вместо крышек? Пусть предлагают — выберешь лучшее.','Вещь у меня на хранении, пока не продадут. Обмануть не выйдет.']});
+{const _nd=npcDialog;npcDialog=function(n){_nd(n);if(n.id!=='auction')return;const o=ov.querySelector('.opts');if(!o)return;o.insertBefore(btn('🔨 Открыть аукцион',()=>aucWin('all'),'btn primary'),o.lastElementChild)}}
+// расчёты при входе в игру и раз в 5 минут (выручка за проданные лоты, возвраты)
+setInterval(()=>{if(S&&S.pid&&!document.hidden)aucLoad().catch(()=>{})},300000);
+{const _as=afterStart;afterStart=async function(){const r=await _as();setTimeout(()=>aucLoad().catch(()=>{}),12000);return r}}
+
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
