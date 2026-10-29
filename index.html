@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793297364";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793306095";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -1836,8 +1836,8 @@ function authScreen(mode='login'){
         go.textContent='Входим…';
         if(accs[key]){const a=accs[key];const kb=await deriveKey(pass,a.salt);if(await sha(kb)!==a.ver){err.textContent='Неверный пароль.';go.disabled=false;go.textContent='Войти';return}
           await useAccount(a.login,kb,a.salt,cb.checked);renderTitle();cloudCheckNewer();return}
-        const pkt=await cloudGet(await accTopic(login),5000);
-        if(!pkt){err.textContent='Аккаунт не найден. Проверьте логин или создайте новый.';go.disabled=false;go.textContent='Войти';return}
+        go.textContent='Ищем аккаунт…';const pr=await accFind(login);const pkt=pr.pkt;
+        if(!pkt){err.textContent=pr.sure?'Аккаунт не найден. Проверьте логин или создайте новый.':ACC_NONET;go.disabled=false;go.textContent='Войти';return}
         const kb=await deriveKey(pass,pkt.salt);let s;try{s=migrate(await decryptSave(pkt,kb))}catch(e){err.textContent='Неверный пароль.';go.disabled=false;go.textContent='Войти';return}
         accs[key]={login,salt:pkt.salt,ver:await sha(kb),at:Date.now()};setAccounts(accs);await useAccount(login,kb,pkt.salt,cb.checked);
         if(s){try{localStorage.setItem('osadok_save_'+key,JSON.stringify(s))}catch(e){}}renderTitle();
@@ -2907,7 +2907,7 @@ authScreen=function(mode='login'){
       else{go.textContent='Входим…';
         if(accs[key]){const a=accs[key];const kb=await deriveKey(pass,a.salt);if(await sha(kb)!==a.ver){if(rem&&rem.login.toLowerCase()===key){await useAccount(rem.login,rem.key,rem.salt,true);renderTitle();cloudCheckNewer();return}err.textContent='Неверный пароль. Если браузер сам подставил пароль — сотрите его и введите свой.';go.disabled=false;go.textContent=txt;return}
           await useAccount(a.login,kb,a.salt,cb.checked);storeCred(a.login,pass);renderTitle();cloudCheckNewer();return}
-        const pkt=await cloudGet(await accTopic(login),5000);if(!pkt){err.textContent='Аккаунт не найден. Проверьте логин или зарегистрируйтесь.';go.disabled=false;go.textContent=txt;return}
+        go.textContent='Ищем аккаунт…';const pr=await accFind(login);const pkt=pr.pkt;if(!pkt){err.textContent=pr.sure?'Аккаунт не найден. Проверьте логин или зарегистрируйтесь.':ACC_NONET;go.disabled=false;go.textContent=txt;return}
         const kb=await deriveKey(pass,pkt.salt);let s;try{s=migrate(await decryptSave(pkt,kb))}catch(x){err.textContent='Неверный пароль.';go.disabled=false;go.textContent=txt;return}
         accs[key]={login,salt:pkt.salt,ver:await sha(kb),at:Date.now()};setAccounts(accs);await useAccount(login,kb,pkt.salt,cb.checked);
         if(s){try{localStorage.setItem('osadok_save_'+key,JSON.stringify(s))}catch(x){}}storeCred(login,pass);renderTitle()}
@@ -8299,6 +8299,15 @@ const c3IconQ=(id,c)=>{C3IQ.push([id,c]);if(!C3.pump){C3.pump=1;setTimeout(c3Ico
 {const _cs=c3Setup;c3Setup=function(){_cs();setTimeout(()=>{for(const id of Object.keys(ITEMS))if(!C3.icons.has(id))c3IconQ(id,null)},4000)}}// загрузка 3D сразу при входе в игру (и на телефонах)
 {const _as=afterStart;afterStart=async function(){c3Load();return _as()}}
 setTimeout(c3Load,1500);
+
+// ================= v55: ВХОД С НОВОГО УСТРОЙСТВА =================
+// На новом устройстве аккаунт скачивается из облака. Раньше игра ждала 5 секунд и при медленном первом подключении
+// писала «Аккаунт не найден», хотя он есть. Теперь ждём до 15 секунд (и ещё раз, если связь не успела подняться),
+// а «не найден» пишем только когда сервер точно ответил, что такого аккаунта нет.
+const ACC_NONET='Сервер долго не отвечает — проверьте интернет и нажмите «Войти» ещё раз. Аккаунт никуда не делся.';
+async function accFind(login){const topic=await accTopic(login);let r={pkt:null,sure:false};
+  for(let i=0;i<2&&!r.pkt&&!r.sure;i++){try{r=await cloudProbe(topic,15000)}catch(e){r={pkt:null,sure:false}}}
+  if(!r.pkt&&r.sure){try{const p=await cloudGet(topic,3000);if(p)r={pkt:p,sure:true}}catch(e){}}return r}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
