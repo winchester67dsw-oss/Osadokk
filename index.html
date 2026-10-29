@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793259690";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793260849";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -4711,7 +4711,7 @@ const IOS=/iphone|ipod/i.test(navigator.userAgent);
 const IOS_ANY=IOS||/ipad/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 const ROTL={mode:'auto',on:false};
 try{const v=localStorage.getItem('osadok_rotl');if(v==='on'||v==='off'||v==='auto')ROTL.mode=v}catch(e){}
-const rotlWanted=()=>ROTL.mode==='on'||(ROTL.mode==='auto'&&IOS);
+const rotlWanted=()=>ROTL.mode==='on'||(ROTL.mode==='auto'&&(IOS||/android/i.test(navigator.userAgent)));
 {const st=document.createElement('style');st.textContent=`
 html.rotl,html.rotl body{overflow:hidden;overscroll-behavior:none}
 html.rotl body{position:fixed;top:0;left:0;margin:0;width:var(--rw);height:var(--rh);transform-origin:top left;transform:rotate(90deg) translateY(-100%)}
@@ -6165,11 +6165,11 @@ async function avaApprove(pid,canvas){if(!NEWS.priv)throw new Error('nokey');con
 async function avaReject(pid,why){const at=Date.now();await cloudPut(AVA_T('res/'+pid),{v:1,at,ct:'1',st:'rej',why});await cloudPut(AVA_T('pending/'+pid),{v:1,at,ct:'0',done:1})}
 let AVQ=null;
 async function avaQueueView(box){box.replaceChildren(el('p','muted','Загружаем очередь…'));const f=await subAll(AVA_T('pending/'));AVQ=Object.entries(f).filter(([,d])=>!d.done&&typeof d.f==='string');box.replaceChildren();
-  if(!NEWS.priv){const r=el('div','startrow');const ci=document.createElement('input');ci.type='password';ci.placeholder='Код администратора';ci.autocomplete='off';r.append(ci,btn('Подтвердить',async()=>{try{await newsKey(ci.value);log('Код принят.','good');avaQueueView(box)}catch(e){log(e.message==='code'?'Неверный код администратора.':'Нет связи с облаком.','bad')}},'btn primary'));box.append(el('p','muted small','Чтобы одобрять аватарки, подтвердите код администратора (один раз за сессию).'),r)}
+  if(!NEWS.priv){const r=el('div','startrow');const ci=document.createElement('input');ci.type='password';ci.placeholder='Код администратора';ci.autocomplete='off';r.append(ci,btn('Подтвердить',async()=>{try{await newsKey(ci.value);log('Код принят.','good');avaQueueView(box)}catch(e){log(e.message==='code'?'Неверный код администратора.':'Не удалось: '+((e&&e.message)||'нет связи с облаком'),'bad')}},'btn primary'));box.append(el('p','muted small','Чтобы одобрять аватарки, подтвердите код администратора (один раз за сессию).'),r)}
   if(!AVQ.length){box.append(el('p','muted','Новых аватарок на проверке нет.'));return}const g=el('div','avaq');
   for(const [pid,d] of AVQ){const it=el('div','it');const img=await loadImg(d.f).catch(()=>null);if(!img)continue;let st={zoom:1,rot:0,gray:false,blur:false,pix:false,preset:-1};const cv=document.createElement('canvas');cv.width=cv.height=256;
     const redraw=()=>{const x=cv.getContext('2d');x.setTransform(1,0,0,1,0,0);if(st.preset>=0){x.drawImage(avaPreset(st.preset),0,0);return}const base=avaCanvas(img,256,st.zoom,st.rot);x.filter=(st.gray?'grayscale(1) ':'')+(st.blur?'blur(6px)':'')||'none';x.drawImage(base,0,0);x.filter='none';if(st.pix){const s=document.createElement('canvas');s.width=s.height=24;s.getContext('2d').drawImage(cv,0,0,24,24);x.imageSmoothingEnabled=false;x.drawImage(s,0,0,256,256);x.imageSmoothingEnabled=true}};redraw();
-    const bt=el('div','bt');const tools=el('div','bt');tools.hidden=true;const act=async(fn,ok)=>{try{await fn();log(ok,'good');it.remove()}catch(e){log(e.message==='nokey'?'Сначала подтвердите код администратора.':'Не удалось: нет связи с облаком.','bad')}};
+    const bt=el('div','bt');const tools=el('div','bt');tools.hidden=true;const act=async(fn,ok)=>{try{await fn();log(ok,'good');it.remove()}catch(e){log(e.message==='nokey'?'Сначала подтвердите код администратора.':'Не удалось: '+((e&&e.message)||'нет связи с облаком'),'bad')}};
     bt.append(btn('✅ Одобрить',()=>act(()=>avaApprove(pid,cv),'Аватарка «'+d.n+'» одобрена.'),'btn primary'),btn('🛠 Обработать',()=>{tools.hidden=!tools.hidden}),btn('🔁 Заменить',()=>{st.preset=(st.preset+1)%6;redraw()}),btn('❌ Отклонить',()=>{const why=AVA_REASONS[+sel.value]||AVA_REASONS[0];act(()=>avaReject(pid,why),'Аватарка «'+d.n+'» отклонена.')}));
     const sel=document.createElement('select');AVA_REASONS.forEach((r,i)=>{const o=document.createElement('option');o.value=i;o.textContent=r;sel.append(o)});sel.style.cssText='width:100%;margin-top:4px;font-size:11px;background:#14110c;color:#f2e2b8;border:1px solid #5a4a30;border-radius:6px';
     for(const [lab,fn] of [['Ч/Б',()=>st.gray=!st.gray],['Размыть',()=>st.blur=!st.blur],['Пиксели',()=>st.pix=!st.pix],['Повернуть',()=>st.rot=(st.rot+1)%4],['Ближе',()=>st.zoom=Math.min(2.5,st.zoom*1.2)],['Дальше',()=>st.zoom=Math.max(1,st.zoom/1.2)],['Сброс',()=>st={zoom:1,rot:0,gray:false,blur:false,pix:false,preset:-1}]])tools.append(btn(lab,()=>{fn();redraw()}));
@@ -6193,7 +6193,7 @@ setInterval(()=>{if(S&&!document.hidden)refaCheck().catch(()=>{})},600000);
 async function refaAssign(pid,pn,by,bn){if(!NEWS.priv)throw new Error('nokey');const at=Date.now();const sig=b64(await crypto.subtle.sign(ECS,NEWS.priv,refaMsg(pid,by,at)));await cloudPut(REFA_T(pid),{v:1,at,ct:'1',by,n:String(pn||'').slice(0,16),bn:String(bn||'').slice(0,16),sig})}
 // раздел во вкладке «Админ»
 function refaView(box){box.replaceChildren();const pool=adminPlayerPool().sort((a,b)=>b.on-a.on||b.lv-a.lv);const name=pid=>{const p=pool.find(x=>x.pid===pid);return p?p.n:pid};
-  if(!NEWS.priv){const r=el('div','startrow');const ci=document.createElement('input');ci.type='password';ci.placeholder='Код администратора';ci.autocomplete='off';r.append(ci,btn('Подтвердить',async()=>{try{await newsKey(ci.value);log('Код принят.','good');refaView(box)}catch(e){log(e.message==='code'?'Неверный код администратора.':'Нет связи с облаком.','bad')}},'btn primary'));box.append(el('p','muted small','Назначения подписываются ключом администратора. Подтвердите код один раз за сессию.'),r)}
+  if(!NEWS.priv){const r=el('div','startrow');const ci=document.createElement('input');ci.type='password';ci.placeholder='Код администратора';ci.autocomplete='off';r.append(ci,btn('Подтвердить',async()=>{try{await newsKey(ci.value);log('Код принят.','good');refaView(box)}catch(e){log(e.message==='code'?'Неверный код администратора.':'Не удалось: '+((e&&e.message)||'нет связи с облаком'),'bad')}},'btn primary'));box.append(el('p','muted small','Назначения подписываются ключом администратора. Подтвердите код один раз за сессию.'),r)}
   if(!pool.length){box.append(el('p','muted','Список игроков пуст — подождите, пока загрузится рейтинг.'));return}
   const mkSel=(ph)=>{const s=document.createElement('select');s.style.cssText='min-width:180px;background:#14110c;color:#f2e2b8;border:1px solid #5a4a30;border-radius:6px;padding:6px';const o0=document.createElement('option');o0.value='';o0.textContent=ph;s.append(o0);for(const p of pool){const o=document.createElement('option');o.value=p.pid;o.textContent=p.n+' · ур. '+(p.lv|0)+(p.on?' · в сети':'');s.append(o)}return s};
   const who=mkSel('— приглашённый игрок —'),by=mkSel('— кто пригласил —');const row=el('div','startrow');row.append(who,el('span',null,'приглашён игроком'),by);box.append(row);
@@ -7175,6 +7175,134 @@ const QUESTDEF={
   labnote1:c=>gDoc(c,{stamp:'Х-9',head:'ОТЧЁТ №1',rot:-.12}),labnote2:c=>gDoc(c,{stamp:'Х-9',head:'ОТЧЁТ №2',rot:.04,short:1}),labnote3:c=>gDoc(c,{stamp:'Х-9',head:'ОТЧЁТ №3',rot:-.04,clip:1})};
 Object.assign(GDEF,RESDEF,JUNKDEF,TROPHYDEF,QUESTDEF);
 
+// ================= v45: АВАТАРКИ, АЛЬБОМНЫЙ РЕЖИМ, ДЕТАЛЬНАЯ ПРИРОДА И КОСТРЫ =================
+
+// ---------- Аватарки: ключ администратора больше не пересоздаётся из-за медленного облака ----------
+// Раньше, если облако не ответило за 4 секунды, игра создавала НОВЫЙ ключ и записывала его поверх старого —
+// после этого одобрения переставали засчитываться. Теперь — три попытки, а новый ключ только если его точно нет.
+newsKey=async function(code){code=code.trim().toUpperCase();if(await shaHex(code)!==ADMIN_HASH)throw new Error('code');
+  let k=null;for(let i=0;i<3&&!k;i++){try{k=await cloudGet(NEWSK_T,6000)}catch(e){}}
+  if(k&&k.salt){try{const jwk=await decryptSave(k,await deriveKey('news:'+code,k.salt));NEWS.priv=await crypto.subtle.importKey('jwk',jwk,ECP,false,['sign']);NEWS.code=code;return}catch(e){throw new Error('ключ в облаке не расшифровался')}}
+  const r=await facProbe(NEWSK_T);if(r&&r.pkt)throw new Error('облако ответило не сразу — попробуйте ещё раз');if(!r||!r.sure)throw new Error('нет связи с облаком');
+  const kp=await crypto.subtle.generateKey(ECP,true,['sign','verify']);const jwk=await crypto.subtle.exportKey('jwk',kp.privateKey);const pub=await crypto.subtle.exportKey('jwk',kp.publicKey);
+  const salt=b64(crypto.getRandomValues(new Uint8Array(16)));const raw=await deriveKey('news:'+code,salt);const iv=crypto.getRandomValues(new Uint8Array(12));
+  const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},await aesKey(raw),enc.encode(JSON.stringify(jwk)));
+  await cloudPut(NEWSK_T,{v:1,at:Date.now(),salt,iv:b64(iv),ct:b64(ct),pub:{kty:pub.kty,crv:pub.crv,x:pub.x,y:pub.y}});NEWS.priv=kp.privateKey;NEWS.code=code};
+// одобрение: до трёх попыток, после записи проверяем, что подпись читается
+{const _ap=avaApprove;avaApprove=async function(pid,canvas){if(!NEWS.priv)throw new Error('nokey');let last=null;
+  for(let i=0;i<3;i++){try{await _ap(pid,canvas);const ok=await cloudGet(AVA_T('ok/'+pid),5000);if(ok&&await avaVerify(pid,ok))return;last=new Error('подпись не прошла проверку')}catch(e){last=e}await new Promise(r=>setTimeout(r,800))}
+  throw last||new Error('нет связи с облаком')}}
+
+// ---------- Альбомный режим только в игре (Android и iPhone); главное меню — вертикально ----------
+setInterval(()=>{const inGame=!!(S&&typeof titleEl!=='undefined'&&titleEl.hidden);if(inGame||!screen.orientation||!screen.orientation.unlock)return;try{if(document.fullscreenElement&&IS_ANDROID)document.exitFullscreen().catch(()=>{});screen.orientation.unlock()}catch(e){}},1500);
+
+// ---------- Листья: настоящий кленовый лист с прожилками ----------
+const LEAFS={};
+function leafSpr(col){if(LEAFS[col])return LEAFS[col];const s=40,c=document.createElement('canvas');c.width=c.height=s;const x=c.getContext('2d');x.translate(s/2,s/2);
+  x.beginPath();for(let i=0;i<=60;i++){const a=i/60*Math.PI*2-Math.PI/2;const lobe=Math.pow(Math.abs(Math.cos(a*2.5)),.55);const r=(.42+.58*lobe)*15*(a>Math.PI*.35&&a<Math.PI*.65?.55:1);x.lineTo(Math.cos(a)*r,Math.sin(a)*r)}x.closePath();
+  const g=x.createLinearGradient(-12,-12,12,12);g.addColorStop(0,shade(col,.35));g.addColorStop(.55,col);g.addColorStop(1,shade(col,-.4));x.fillStyle=g;x.fill();x.strokeStyle=shade(col,-.55);x.lineWidth=.8;x.stroke();
+  x.strokeStyle=shade(col,-.45);x.lineWidth=.9;for(const a of [-Math.PI/2,-Math.PI/2-1.25,-Math.PI/2+1.25,-Math.PI/2-2.4,-Math.PI/2+2.4]){x.beginPath();x.moveTo(0,3);x.lineTo(Math.cos(a)*12,Math.sin(a)*12);x.stroke()}x.lineWidth=1.3;x.beginPath();x.moveTo(0,3);x.lineTo(0,15);x.stroke();
+  x.fillStyle='rgba(60,30,10,.25)';for(let i=0;i<4;i++){x.beginPath();x.arc((hash2(i,col.length)-.5)*14,(hash2(col.length,i)-.5)*14,1.2,0,7);x.fill()}return LEAFS[col]=c}
+leafShape=function(c,x,y,s,rot,col){c.save();c.translate(x,y);c.rotate(rot);const k=s*1.25;c.drawImage(leafSpr(col),-k,-k,k*2,k*2);c.restore()};
+
+// ---------- Трава: тонкие пучки с метёлками ----------
+tuft=function(c,x,y,mid,r){const base=mid==='swamp'?['#4a4a20','#7a7030','#a89848']:mid==='hub'?['#5a4a20','#9a8038','#d0b060']:mid==='chem'?['#4a4628','#6e6a3a','#8a8650']:['#4e4a24','#857a3a','#b8a858'];
+  const n=6+Math.floor(r*4);for(let i=0;i<n;i++){const t=(i/(n-1))-.5,h=5+(1-Math.abs(t))*5+hash2(i,r*99)*2,lean=t*5+(r-.5)*2.5;const col=base[i%3];
+    c.fillStyle=col;c.beginPath();c.moveTo(x+t*3-.55,y);c.quadraticCurveTo(x+t*3+lean*.4,y-h*.6,x+t*3+lean,y-h);c.quadraticCurveTo(x+t*3+lean*.4+.3,y-h*.6,x+t*3+.55,y);c.closePath();c.fill()}
+  if(r>.6){c.fillStyle=base[2];for(let i=0;i<2;i++){c.beginPath();c.ellipse(x-2+i*4+(r-.5)*4,y-10-i,1,2.2,(i-.5)*.6,0,7);c.fill()}}
+  c.fillStyle='rgba(0,0,0,.18)';c.beginPath();c.ellipse(x,y+.5,4,1.1,0,0,7);c.fill()};
+
+// ---------- Деревья: кора, корни, ветки и многослойная крона; рисуются один раз и берутся готовыми ----------
+const TREEP=[['#c86a28','#e08a30','#a8481e','#f2a848'],['#d8a838','#ecc650','#b88a28','#f8e070'],['#a83226','#c8442e','#8a2a1e','#e05a3a'],['#9a7a2a','#c09a38','#7a5a1e','#d0b050'],['#6a7a2a','#8a9a38','#4a5a1e','#c0b040']];
+const TREES={map:null,c:{}};
+function treeArt(c,st,v,pal,leafy){const R=rng(v*7919+st.length*131+(leafy?7:0));const bx=56,by=104;
+  // тень
+  const sg=c.createRadialGradient(bx+8,by,2,bx+8,by,40);sg.addColorStop(0,'rgba(0,0,0,.38)');sg.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=sg;c.beginPath();c.ellipse(bx+8,by,40,13,0,0,7);c.fill();
+  const bark=st==='swamp'?['#5a5038','#3a3426','#1e1a12']:st==='chem'?['#5a5650','#3a3834','#1a1a18']:['#6a5240','#46352a','#221a12'];
+  const trunkTop=leafy?58:48,tw=leafy?5:4;
+  // корни
+  for(const [dx,ex] of [[-1,-14],[1,13],[-.3,-6],[.4,7]]){c.fillStyle=bark[1];c.beginPath();c.moveTo(bx+dx*3,by-6);c.quadraticCurveTo(bx+ex*.6,by-1,bx+ex,by+2);c.quadraticCurveTo(bx+ex*.5,by+1,bx+dx*5,by);c.closePath();c.fill()}
+  // ствол
+  const trunk=()=>{c.beginPath();c.moveTo(bx-9,by+1);c.bezierCurveTo(bx-5,by-10,bx-tw-1,by-30,bx-tw,trunkTop);c.lineTo(bx+tw,trunkTop);c.bezierCurveTo(bx+tw+1,by-30,bx+5,by-10,bx+10,by+1);c.closePath()};
+  c.save();trunk();const tg=c.createLinearGradient(bx-10,0,bx+10,0);tg.addColorStop(0,bark[0]);tg.addColorStop(.45,bark[1]);tg.addColorStop(1,bark[2]);c.fillStyle=tg;c.fill();c.clip();
+  c.strokeStyle='rgba(0,0,0,.35)';c.lineWidth=.7;for(let i=0;i<9;i++){const x0=bx-8+i*2;c.beginPath();c.moveTo(x0,by+2);for(let y=by;y>trunkTop;y-=4)c.lineTo(x0+(R()-.5)*1.6+(x0-bx)*-.12*(1-(y-trunkTop)/(by-trunkTop)),y);c.stroke()}
+  c.strokeStyle='rgba(255,240,210,.12)';c.lineWidth=.6;for(let i=0;i<4;i++){c.beginPath();c.moveTo(bx-6+i,by-4-R()*10);c.lineTo(bx-5+i,trunkTop+8+R()*20);c.stroke()}
+  c.fillStyle='rgba(0,0,0,.45)';c.beginPath();c.ellipse(bx+1,by-24-R()*10,1.6,2.4,0,0,7);c.fill();c.restore();c.save();trunk();c.strokeStyle='rgba(0,0,0,.8)';c.lineWidth=.8;c.stroke();c.restore();
+  if(st==='swamp'){c.fillStyle='rgba(110,140,60,.55)';for(let i=0;i<7;i++){c.beginPath();c.ellipse(bx-5+R()*10,by-8-R()*30,2.2,1.2,R(),0,7);c.fill()}}
+  // ветки
+  c.lineCap='round';const br=(x0,y0,a,len,w,d)=>{if(d>(leafy?3:4)||len<3)return;const x1=x0+Math.cos(a)*len,y1=y0+Math.sin(a)*len;c.strokeStyle=leafy?bark[d>1?2:1]:bark[d>2?1:0];c.lineWidth=w;c.beginPath();c.moveTo(x0,y0);c.quadraticCurveTo((x0+x1)/2+(R()-.5)*3,(y0+y1)/2+(R()-.5)*3,x1,y1);c.stroke();
+    br(x1,y1,a-.45-R()*.45,len*(.62+R()*.15),w*.66,d+1);br(x1,y1,a+.35+R()*.45,len*(.58+R()*.15),w*.62,d+1);if(!leafy&&d<2&&R()<.3)br(x1,y1,a+(R()-.5)*.3,len*.5,w*.5,d+2)};
+  for(const a of leafy?[-Math.PI/2-.55,-Math.PI/2+.1,-Math.PI/2+.65]:[-Math.PI/2-.7,-Math.PI/2-.1,-Math.PI/2+.5,-Math.PI/2+1])br(bx,trunkTop+2,a+(R()-.5)*.3,leafy?16:20,leafy?3.2:2.8,0);c.lineCap='butt';
+  if(!leafy){if(st!=='chem'){for(let i=0;i<6;i++){const ang=R()*6.28,rr=R()*24;c.drawImage(leafSpr(pal[i%3]),bx+Math.cos(ang)*rr-3,trunkTop-16+Math.sin(ang)*rr*.6-3,6,6)}}return}
+  // крона: сначала тёмная глубина, потом кисти листвы от дальних к ближним, сверху — блики
+  const cx=bx,cy=trunkTop-20,rx=34,ry=26;const ao=c.createRadialGradient(cx,cy+6,4,cx,cy+6,rx);ao.addColorStop(0,shade(pal[2],-.45));ao.addColorStop(1,shade(pal[2],-.25));c.fillStyle=ao;c.beginPath();c.ellipse(cx,cy+4,rx*.9,ry*.85,0,0,7);c.fill();
+  const cl=[];for(let i=0;i<46;i++){const a=R()*6.28,rr=Math.sqrt(R());cl.push({x:cx+Math.cos(a)*rx*rr*.92,y:cy+Math.sin(a)*ry*rr*.9,r:6+R()*6})}cl.sort((a,b)=>a.y-b.y);
+  for(const k of cl){const lit=Math.max(0,Math.min(1,.55-(k.y-cy)/ry*.5-(k.x-cx)/rx*.3));const base=pal[Math.floor(R()*3)];const g=c.createRadialGradient(k.x-k.r*.35,k.y-k.r*.45,1,k.x,k.y,k.r*1.1);
+    g.addColorStop(0,shade(base,.15+lit*.35));g.addColorStop(.6,shade(base,-.05+lit*.1));g.addColorStop(1,shade(base,-.4));c.fillStyle=g;c.beginPath();for(let j=0;j<9;j++){const aa=j/9*6.28,r2=k.r*(.78+R()*.3);c.lineTo(k.x+Math.cos(aa)*r2,k.y+Math.sin(aa)*r2*.85)}c.closePath();c.fill();
+    for(let j=0;j<4;j++){const aa=R()*6.28,r2=k.r*(.4+R()*.6);const s=2.2+R()*1.8;c.save();c.translate(k.x+Math.cos(aa)*r2,k.y+Math.sin(aa)*r2*.85);c.rotate(R()*6.28);c.globalAlpha=.85;c.drawImage(leafSpr(lit>.5?pal[3]:base),-s,-s,s*2,s*2);c.restore()}}
+  c.globalAlpha=1;c.globalCompositeOperation='source-atop';const hl=c.createRadialGradient(cx-14,cy-14,2,cx-14,cy-14,rx);hl.addColorStop(0,'rgba(255,236,190,.28)');hl.addColorStop(1,'rgba(255,236,190,0)');c.fillStyle=hl;c.fillRect(cx-rx-6,cy-ry-6,rx*2+12,ry*2+12);const lo=c.createLinearGradient(0,cy,0,cy+ry);lo.addColorStop(0,'rgba(20,10,0,0)');lo.addColorStop(1,'rgba(20,10,0,.3)');c.fillStyle=lo;c.fillRect(cx-rx-6,cy,rx*2+12,ry+8);c.globalCompositeOperation='source-over';
+  for(let i=0;i<4;i++){const s=2.4+R();c.save();c.translate(cx-rx*.6+R()*rx*1.2,cy+ry*.7+R()*6);c.rotate(R()*6);c.drawImage(leafSpr(pal[i%3]),-s,-s,s*2,s*2);c.restore()}
+  if(st==='swamp'){c.strokeStyle='rgba(90,110,50,.75)';c.lineWidth=.8;for(let i=0;i<10;i++){const x0=cx-rx*.8+R()*rx*1.6,y0=cy+ry*.4;c.beginPath();c.moveTo(x0,y0);c.quadraticCurveTo(x0+1,y0+8,x0-1,y0+12+R()*10);c.stroke()}}
+  // павшая листва у корней
+  for(let i=0;i<7;i++){const s=1.8+R()*1.4;c.save();c.translate(bx-20+R()*40,by-4+R()*8);c.rotate(R()*6.28);c.drawImage(leafSpr(pal[i%4]),-s,-s,s*2,s*2);c.restore()}}
+function treeSprite(st,v,pal,leafy){if(TREES.map!==st){TREES.map=st;TREES.c={}}const k=v+'|'+pal+'|'+(leafy?1:0);if(TREES.c[k])return TREES.c[k];const sc=IS_COARSE?2:2.5;
+  const cv=document.createElement('canvas');cv.width=Math.ceil(112*sc);cv.height=Math.ceil(120*sc);const c=cv.getContext('2d');c.scale(sc,sc);try{treeArt(c,st,v,TREEP[pal],leafy)}catch(e){console.error(e)}return TREES.c[k]=cv}
+drawTreeFull=function(c,x,y,mid,t){const st=(M&&M.pal)||mid;const h=hash2(x+(mid==='ruins'?500:mid==='swamp'?900:mid==='chem'?1300:0),y);const leafy=h>.28&&st!=='chem';const v=Math.floor(hs(x,y,470)*5),pal=Math.floor(hs(x,y,460)*TREEP.length);
+  const sp=treeSprite(st,v,pal,leafy);const px=x*T+16,py=y*T+28;if(px<(render.cam?render.cam[0]:-1e9)-80)return;const sway=leafy?Math.sin(t*1.1+x*.7+y)*.012:0;
+  c.save();c.translate(px,py);c.transform(1,0,sway,1,0,0);c.drawImage(sp,-56,-104,112,120);c.restore()};
+
+// ---------- Кусты: густая листва с листьями ----------
+bushSpr=function(v){if(BSPR[v])return BSPR[v];const c=document.createElement('canvas');c.width=c.height=96;const x=c.getContext('2d');const R=rng(v*331+17);
+  const pal=[['#3e5a26','#5a7a32','#2a401a','#8aa04a'],['#a85a22','#d8802e','#7a3a14','#f2b048'],['#7a2a1e','#a8402a','#521a12','#d0603a']][v%3];
+  const sg=x.createRadialGradient(50,74,2,50,74,40);sg.addColorStop(0,'rgba(0,0,0,.4)');sg.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=sg;x.beginPath();x.ellipse(50,74,40,12,0,0,7);x.fill();
+  x.fillStyle=shade(pal[2],-.4);x.beginPath();x.ellipse(48,58,34,18,0,0,7);x.fill();
+  const cl=[];for(let i=0;i<26;i++){const a=R()*6.28,rr=Math.sqrt(R());cl.push({x:48+Math.cos(a)*30*rr,y:54+Math.sin(a)*18*rr-(1-rr)*6,r:6+R()*5})}cl.sort((a,b)=>a.y-b.y);
+  for(const k of cl){const lit=Math.max(0,.6-(k.y-40)/30);const base=pal[Math.floor(R()*3)];const g=x.createRadialGradient(k.x-k.r*.3,k.y-k.r*.4,1,k.x,k.y,k.r);g.addColorStop(0,shade(base,.2+lit*.3));g.addColorStop(1,shade(base,-.35));x.fillStyle=g;x.beginPath();x.arc(k.x,k.y,k.r,0,7);x.fill();
+    for(let j=0;j<3;j++){const s=2+R()*1.6;x.save();x.translate(k.x+(R()-.5)*k.r*1.4,k.y+(R()-.5)*k.r);x.rotate(R()*6.28);x.drawImage(leafSpr(lit>.4?pal[3]:base),-s,-s,s*2,s*2);x.restore()}}
+  return BSPR[v]=c};
+for(const k in BSPR)delete BSPR[k];
+
+// ---------- Костёр: камни, поленья с корой, угли и живое пламя ----------
+const FIREB={};
+function fireBase(sc){if(FIREB[sc])return FIREB[sc];const cv=document.createElement('canvas');cv.width=cv.height=Math.ceil(48*sc);const c=cv.getContext('2d');c.scale(sc,sc);const cx=24,cy=27;
+  const ash=c.createRadialGradient(cx,cy,1,cx,cy,13);ash.addColorStop(0,'#2a2420');ash.addColorStop(.6,'#3a3430');ash.addColorStop(1,'rgba(60,55,50,0)');c.fillStyle=ash;c.beginPath();c.ellipse(cx,cy,14,8,0,0,7);c.fill();
+  for(let i=0;i<10;i++){const a=i/10*Math.PI*2,sx=cx+Math.cos(a)*12,sy=cy+Math.sin(a)*6.5,r=2.6+hash2(i,3)*1.2;const g=c.createRadialGradient(sx-r*.4,sy-r*.5,.3,sx,sy,r*1.2);g.addColorStop(0,'#b0aaa0');g.addColorStop(.6,'#6e6a62');g.addColorStop(1,'#34322e');c.fillStyle=g;c.beginPath();c.ellipse(sx,sy,r*1.2,r*.85,a,0,7);c.fill();c.strokeStyle='rgba(0,0,0,.7)';c.lineWidth=.4;c.stroke();if(hash2(i,9)>.6){c.fillStyle='rgba(90,120,50,.6)';c.beginPath();c.ellipse(sx-r*.3,sy-r*.3,r*.5,r*.3,0,0,7);c.fill()}}
+  for(const [a,l] of [[.45,17],[-.5,16],[1.3,14]]){c.save();c.translate(cx,cy-1);c.rotate(a);const g=c.createLinearGradient(0,-2,0,2);g.addColorStop(0,'#7a5a38');g.addColorStop(.5,'#4a3220');g.addColorStop(1,'#22160c');c.fillStyle=g;c.beginPath();c.roundRect(-l/2,-2,l,4,2);c.fill();c.strokeStyle='rgba(0,0,0,.7)';c.lineWidth=.4;c.stroke();
+    c.strokeStyle='rgba(30,18,8,.6)';c.lineWidth=.3;for(let x=-l/2+1;x<l/2;x+=1.5){c.beginPath();c.moveTo(x,-1.8);c.lineTo(x+.6,1.8);c.stroke()}c.fillStyle='#1a1410';c.beginPath();c.ellipse(l/2-1,0,1.4,2,0,0,7);c.fill();c.fillStyle='rgba(200,150,90,.6)';c.beginPath();c.ellipse(-l/2+.8,0,1,1.8,0,0,7);c.fill();c.restore()}
+  return FIREB[sc]=cv}
+drawFire=function(c,px,py,x,y,t){const cx=px+16,cy=py+19;const fl=.85+Math.sin(t*9+x)*.08+Math.sin(t*23+y)*.05;
+  const gl=c.createRadialGradient(cx,cy,2,cx,cy,30);gl.addColorStop(0,'rgba(255,170,70,'+(.42*fl)+')');gl.addColorStop(1,'rgba(255,120,30,0)');c.fillStyle=gl;c.fillRect(px-14,py-14,T+28,T+28);
+  const sc=IS_COARSE?2:3;c.drawImage(fireBase(sc),cx-24,cy-27+8,48,48);
+  // угли
+  for(let i=0;i<7;i++){const g=.5+Math.sin(t*4+i*1.7)*.5;c.fillStyle='rgba(255,'+(90+g*90|0)+',30,'+(.55+g*.4)+')';c.beginPath();c.arc(cx-6+hash2(i,x)*12,cy+5+hash2(y,i)*3,.8+g*.6,0,7);c.fill()}
+  // пламя: три слоя языков
+  const tongue=(ox,h,w,ph,c0,c1)=>{const f=Math.sin(t*11+ph)*1.4,f2=Math.cos(t*15+ph)*1;const g=c.createLinearGradient(0,cy+4,0,cy+4-h);g.addColorStop(0,c0);g.addColorStop(1,c1);c.fillStyle=g;c.beginPath();c.moveTo(cx+ox-w,cy+4);c.bezierCurveTo(cx+ox-w*1.1,cy+4-h*.45,cx+ox+f-w*.3,cy+4-h*.75,cx+ox+f*1.4,cy+4-h-f2);c.bezierCurveTo(cx+ox+f+w*.3,cy+4-h*.75,cx+ox+w*1.1,cy+4-h*.45,cx+ox+w,cy+4);c.closePath();c.fill()};
+  c.globalCompositeOperation='lighter';
+  for(const [o,h,w,p] of [[-4,13,4,0],[4,12,3.6,2],[0,18*fl,5,4]])tongue(o,h,w,p,'rgba(220,70,20,.85)','rgba(200,40,10,0)');
+  for(const [o,h,w,p] of [[-2,10,3,1],[2.5,9,2.6,3],[0,13*fl,3.4,5]])tongue(o,h,w,p,'rgba(255,150,40,.9)','rgba(255,110,20,0)');
+  tongue(0,8*fl,2.4,6,'rgba(255,240,170,.95)','rgba(255,220,120,0)');c.globalCompositeOperation='source-over';
+  // искры и дымок
+  for(let i=0;i<5;i++){const s=(t*.7+i/5)%1;c.fillStyle='rgba(255,'+(180+i*10)+',90,'+(1-s)+')';c.fillRect(cx+Math.sin(t*2.6+i*2)*6*s,cy-10-s*22,1.1,1.1)}
+  if(QUAL.lvl)for(let i=0;i<3;i++){const s=(t*.25+i/3)%1;c.fillStyle='rgba(120,115,105,'+(.22*(1-s))+')';c.beginPath();c.arc(cx+Math.sin(t*.8+i)*5+s*6,cy-16-s*26,3+s*7,0,7);c.fill()}
+  const fid=(ALLFIRES.find(f=>f.m===M.id&&f.x===x&&f.y===y)||{}).id;if(S&&fid&&S.fires.includes(fid)){c.fillStyle='rgba(242,182,92,.85)';c.beginPath();c.moveTo(cx,py-8);c.lineTo(cx+3,py-4);c.lineTo(cx,py);c.lineTo(cx-3,py-4);c.closePath();c.fill()}};
+// смена карты — сброс готовых плиток, чтобы новая трава и листва появились сразу
+if(typeof TC!=='undefined')TC.chunks.clear();
+
+// ---------- Болотник: скупщик трофеев и артефактов в доме в правом нижнем углу Гнилого болота ----------
+// Вход — дверь в проёме дома. Внутри — отдельное помещение: мутанты и боты между локациями не ходят, а сам дом
+// снаружи закрыт крышей, по которой никто не пройдёт. Платит за трофеи и артефакты больше любого другого жителя.
+{const sw=MAPS.swamp;if(sw&&sw.g[25]&&sw.g[25][38]==='_'){const DX=38,DY=25;
+  for(let y=26;y<=29;y++)for(let x=36;x<=40;x++)sw.g[y][x]='R';sw.g[DY][DX]='D';
+  const _st=solidTile;solidTile=function(x,y){if(M&&M.id==='swamp'&&x>=36&&x<=40&&y>=26&&y<=29)return true;return _st(x,y)};
+  MAPS.swamp_buyer=genRoom('swamp_buyer','Лавка Болотника',14,10,'base',g=>{for(const x of [2,3,10,11])g[1][x]='M';g[3][6]='t';g[3][7]='t';g[7][1]='o';g[7][12]='o';g[4][1]='Z';g[4][12]='M';g[9][7]='D'},[[7,4,1],[3,6,1],[11,6,1]]);
+  MAPS.swamp_buyer.safe=true;MAPS.swamp_buyer.dark=.35;
+  sw.exits.push({x:DX,y:DY,w:1,h:1,to:'swamp_buyer',tx:7,ty:7.7,label:'Лавка Болотника',door:1});
+  MAPS.swamp_buyer.exits.push({x:7,y:9,w:1,h:1,to:'swamp',tx:DX,ty:DY-1,label:'Гнилое болото',door:1});
+  NPCS.push({id:'bolotnik',map:'swamp_buyer',x:7,y:2,a:Math.PI/2,n:'Скупщик Болотник',role:'Скупает части мутантов и артефакты дороже всех',lk:{g:'m',skin:2,hair:'long',hc:'gray',outfit:1,beard:'beard',eye:1},eq:{body:'s4b',face:'respirator',back:'sack'},
+    lines:['Хвосты, когти, железы — неси всё, плачу как никто в Пустоши.','Артефакт с болота? Покажи-ка… О, за такой дам больше, чем в Колоколе.','Сюда мутанты не ходят: дверь тяжёлая, а запах моих зелий им не по нутру.','Торгую честно. Почти.']});
+  // платит больше всех: на 15% выше лучшей цены у других жителей
+  const best=k=>Math.max(.5,...Object.entries(BUY).filter(([id,b])=>id!=='bolotnik'&&b.cats.includes(k)).map(([,b])=>b.k[k]||b.k.def));
+  BUY.bolotnik={cats:['trophy','art'],k:{trophy:Math.round((best('trophy')+.15)*100)/100,art:Math.max(.8,Math.round((best('art')+.15)*100)/100),def:1}}}}
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
