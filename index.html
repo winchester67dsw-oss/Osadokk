@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793261434";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793261725";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style></head><body><title>Осадок</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -5245,7 +5245,7 @@ if(typeof SECT!=='undefined'){
 
 // ================= ЭТАП 1: ЗНАЧКИ, РЕЙТИНГ, ДОСКА, НОЧЬ, ВЫБРОС =================
 // Значок группировки рядом с ником: 🦂 — Ренегаты, 🦇 — Военные (виден над головой в 2D и 3D).
-const facMark=f=>f==='ren'?'🦂 ':f==='mil'?'🦇 ':'';
+const facMark=f=>f==='ren'?'🦂 ':f==='mil'?'🦇 ':(f&&FAC[f]&&FAC[f].emb?FAC[f].emb+' ':'');
 
 // ---------- Рейтинг группировок ----------
 // +100 за каждый удерживаемый сектор за каждые полные 3 часа владения (отобрали — счёт по сектору начинается заново).
@@ -7397,6 +7397,54 @@ NPCS.push({id:'auction',map:'hub',x:28,y:16,a:Math.PI/2,n:'Аукционист 
 // расчёты при входе в игру и раз в 5 минут (выручка за проданные лоты, возвраты)
 setInterval(()=>{if(S&&S.pid&&!document.hidden)aucLoad().catch(()=>{})},300000);
 {const _as=afterStart;afterStart=async function(){const r=await _as();setTimeout(()=>aucLoad().catch(()=>{}),12000);return r}}
+
+// ================= v47: АДМИНИСТРАТОР СОЗДАЁТ НОВЫЕ ГРУППИРОВКИ ПРЯМО В ИГРЕ =================
+// Список новых группировок хранится в облаке и подписан ключом администратора — подделать его нельзя.
+// У новой группировки свои название, буква, цвет и эмблема; есть штаб, склад, общак, звания, журнал и заявки — как у остальных.
+const FREG_T='osadok/'+(TESTROOM?'t_'+TESTROOM:'v1')+'/facreg';
+const FREG={list:[],at:0};
+const RANK_GEN={leader:'Командир',deputy:'Заместитель',commander:'Офицер',master:'Мастер',gunsmith:'Оружейник',storekeeper:'Кладовщик',sergeant:'Сержант',private:'Боец'};
+const FEMB=['⚑','🐺','🦅','☢','💀','⚔','🔥','🐍','🦊','🛡','⭐','🌙','🐻','🦉','⚡','🗡'];
+function fregApply(list){for(const g of list){if(!g||typeof g.id!=='string'||!/^c[a-z0-9]{3,16}$/.test(g.id))continue;if(FAC[g.id]&&!FAC[g.id].custom)continue;
+    FAC[g.id]={id:g.id,n:cleanText(g.n,24)||'Группировка',short:cleanText(g.short||'',2)||(g.n||'?')[0],col:/^#[0-9a-f]{6}$/i.test(g.col)?g.col:'#c8a048',emb:FEMB.includes(g.emb)?g.emb:'⚑',custom:1};RANKNF[g.id]=Object.assign({},RANK_GEN)}
+  for(const f of Object.keys(FAC))if(FAC[f].custom&&!list.some(g=>g.id===f)){delete FAC[f];delete RANKNF[f]}}
+async function fregLoad(){try{const p=await cloudGet(FREG_T,5000);if(!p||!p.ct||!p.sig)return;let ok=false;
+  for(const k of [await newsPub().catch(()=>null),DEV_PUB]){if(!k||ok)continue;try{const key=await crypto.subtle.importKey('jwk',k,ECP,false,['verify']);ok=await crypto.subtle.verify(ECS,key,unb64(p.sig),enc.encode(p.ct))}catch(e){}}
+  if(!ok)return;FREG.list=JSON.parse(p.ct);FREG.at=p.at||0;fregApply(FREG.list)}catch(e){}}
+async function fregSave(list){if(!NEWS.priv)throw new Error('nokey');const ct=JSON.stringify(list);const sig=b64(await crypto.subtle.sign(ECS,NEWS.priv,enc.encode(ct)));await cloudPut(FREG_T,{v:1,at:Date.now(),ct,sig});FREG.list=list;FREG.at=Date.now();fregApply(list)}
+fregLoad();setInterval(()=>{if(!document.hidden)fregLoad()},300000);
+{const _as=afterStart;afterStart=async function(){await fregLoad();return _as()}}
+// эмблема новой группировки: щиток её цвета со значком
+{const _es=emblemSVG;emblemSVG=function(f,sz=48){const F=FAC[f];if(!F||!F.custom)return _es(f,sz);
+  return '<svg viewBox="0 0 100 100" width="'+sz+'" height="'+sz+'" aria-hidden="true"><path d="M50 4L92 17V48C92 74 72 90 50 97C28 90 8 74 8 48V17Z" fill="#1c1a16" stroke="'+F.col+'" stroke-width="5"/><text x="50" y="62" font-size="44" text-anchor="middle" dominant-baseline="middle">'+F.emb+'</text></svg>'}}
+
+// ---------- Админ: создать / удалить группировку ----------
+function fregAdminView(box){box.replaceChildren();const inS='background:#14110c;color:#f2e2b8;border:1px solid #5a4a30;border-radius:6px;padding:7px';
+  if(!NEWS.priv){const r=el('div','startrow');const ci=document.createElement('input');ci.type='password';ci.placeholder='Код администратора';ci.autocomplete='off';ci.style.cssText=inS;r.append(ci,btn('Подтвердить',async()=>{try{await newsKey(ci.value);log('Код принят.','good');fregAdminView(box)}catch(e){log(e.message==='code'?'Неверный код администратора.':'Не удалось: '+e.message,'bad')}},'btn primary'));
+    box.append(el('p','muted small','Чтобы создавать группировки, подтвердите код администратора (один раз за сессию).'),r);return}
+  const nm=document.createElement('input');nm.placeholder='Название (например, «Свобода»)';nm.maxLength=24;nm.style.cssText=inS+';min-width:220px';
+  const sh=document.createElement('input');sh.placeholder='Буква';sh.maxLength=2;sh.style.cssText=inS+';width:70px';
+  const col=document.createElement('input');col.type='color';col.value='#4a90d8';col.style.cssText='width:52px;height:36px;border:0;background:none';
+  let emb=FEMB[1];const er=el('div','startrow');const drawE=()=>{er.replaceChildren();for(const e of FEMB){const x=btn(e,()=>{emb=e;drawE()},e===emb?'btn primary':'btn');x.style.cssText='min-width:40px;font-size:18px';er.append(x)}};drawE();
+  const pool=adminPlayerPool().sort((a,b)=>b.on-a.on||b.lv-a.lv);const ld=document.createElement('select');ld.style.cssText=inS+';min-width:200px';const o0=document.createElement('option');o0.value='';o0.textContent='— лидер (можно позже) —';ld.append(o0);for(const p of pool){const o=document.createElement('option');o.value=p.pid;o.textContent=p.n+' · ур. '+(p.lv|0)+(p.on?' · в сети':'');ld.append(o)}
+  const r1=el('div','startrow');r1.append(nm,sh,col);box.append(el('p','small','Новая группировка: название, буква и цвет щитка, эмблема и (по желанию) лидер.'),r1,el('p','small','Эмблема:'),er,ld);
+  box.append(btn('⚑ Создать группировку',async()=>{const n=cleanText(nm.value,24);if(n.length<2){log('Введите название.','bad');return}if(Object.values(FAC).some(F=>F.n.toLowerCase()===n.toLowerCase())){log('Группировка с таким названием уже есть.','bad');return}
+    const id='c'+Date.now().toString(36);const g={id,n,short:cleanText(sh.value,2)||n[0].toUpperCase(),col:col.value,emb,at:Date.now()};
+    try{await fregLoad();await fregSave([...FREG.list.filter(x=>x.id!==id),g]);if(ld.value){const p=pool.find(x=>x.pid===ld.value);await facMut(id,d=>{d.members[p.pid]={n:p.n,r:'leader',lv:p.lv|0,at:Date.now()};facLog(d,'adminadd',{who:p.n,r:'leader'})})}
+      else await facMut(id,d=>{facLog(d,'created',{who:S.name})});log('⚑ Группировка «'+n+'» создана'+(ld.value?' — лидер назначен':'')+'.','good');zoneMsg('⚑ В Пустоши появилась новая группировка — «'+n+'»!',true);fregAdminView(box)}
+    catch(e){log('Не удалось: '+(e.message==='nokey'?'подтвердите код администратора':e.message),'bad')}},'btn primary'));
+  const L=FREG.list;box.append(el('div','sec','Созданные группировки'));if(!L.length){box.append(el('p','muted small','Пока нет.'));return}const l=el('div','list');
+  for(const g of L){const r=el('div','row');r.append(facBadge(g.id,32));const gw=el('div','grow');gw.append(el('div','t',g.n),el('div','s','создана '+new Date(g.at||0).toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})));
+    r.append(gw,btn('Штаб',()=>{hqTab='apps';hqWin(g.id)}),btn('Удалить',async()=>{if(!confirm('Удалить группировку «'+g.n+'»? Бойцы останутся без группировки.'))return;try{await fregSave(FREG.list.filter(x=>x.id!==g.id));log('Группировка «'+g.n+'» удалена.','good');fregAdminView(box)}catch(e){log('Не удалось: '+e.message,'bad')}}));l.append(r)}box.append(l)}
+if(typeof TABVIEW.admin==='function'){const _av=TABVIEW.admin;TABVIEW.admin=b=>{const sec=el('div');sec.append(el('div','sec','⚑ Новые группировки'));const q=el('div');sec.append(btn('Открыть',()=>fregAdminView(q),'btn primary'),q);b.append(sec);_av(b)}}
+if(typeof LOGTXT==='object')LOGTXT.created='создал(а) группировку';
+
+// ---------- Игрокам: список группировок в профиле — заявка или штаб ----------
+{const _pv=TABVIEW.profile;TABVIEW.profile=b=>{_pv(b);const box=el('div');box.style.marginTop='12px';box.append(el('div','sec','Группировки'));const l=el('div','list');const mf=myFac();
+  for(const f of Object.keys(FAC)){const F=FAC[f];const r=el('div','row');r.append(facBadge(f,30));const gw=el('div','grow');const s=el('div','s',F.custom?'новая группировка':'база: '+(MAPS[F.base]?MAPS[F.base].name:'—'));gw.append(el('div','t',F.n),s);r.append(gw);
+    if(FACD[f])s.textContent+=' · бойцов: '+Object.keys(FACD[f].members||{}).length;
+    if(mf===f)r.append(btn('Штаб',()=>hqWin(f),'btn primary'));else if(!mf){if(S.facApp===f)r.append(el('span','muted small','заявка подана'));else r.append(btn('Подать заявку',()=>facApply(f).then(()=>openTab('profile')),'btn',!!S.facApp))}l.append(r)}
+  box.append(l,el('p','muted small','Заявку рассматривают лидер или заместители группировки.'));b.append(box)}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
