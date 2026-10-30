@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793316315";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793327527";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -1479,7 +1479,7 @@ function render(t){
     else{ctx.globalAlpha=Math.min(1,a*1.5);ctx.fillStyle=p.color;circ(ctx,px,py,p.size*.6)}}
   ctx.globalAlpha=1;drawAutumnFx(ctx);try{postWorld(ctx,ppx,ppy,CX,CY,W,H)}catch(e){}
   if(M.id==='swamp'){for(const f of fog){f.x+=f.v*.016;if(f.x>M.w+6)f.x=-6;ctx.fillStyle=rg(ctx,f.x*T,f.y*T,0,f.r*T,'rgba(170,190,150,.10)','rgba(170,190,150,0)');ctx.fillRect((f.x-f.r)*T,(f.y-f.r)*T,f.r*2*T,f.r*2*T)}}
-  const cyc=timeLock==='day'?.5:timeLock==='night'?0:(typeof realCyc==='function'?realCyc():(Date.now()/1000%5760)/5760);const dark=darkLevel(cyc);drawGrading(ctx,W,H,dark);
+  const cyc=timeLock==='day'?.5:timeLock==='night'?0:(typeof realCyc==='function'?realCyc():(Date.now()/1000%5760)/5760);const dark=darkLevel(cyc)*(typeof nvgK==='function'?nvgK():1);drawGrading(ctx,W,H,dark);
   const toS=(wx,wy)=>[(wx-CX)*ZOOM*DPR,(wy-CY)*ZOOM*DPR];
   if(dark>.03){nctx.setTransform(.5,0,0,.5,0,0);nctx.globalCompositeOperation='source-over';nctx.clearRect(0,0,W,H);nctx.fillStyle='rgba(6,9,22,'+dark+')';nctx.fillRect(0,0,W,H);
     nctx.globalCompositeOperation='destination-out';
@@ -1491,7 +1491,7 @@ function render(t){
     for(const l of fxLights)cut(l.x*T,l.y*T,l.r*T,.9);
     for(const p of r.pickups)if(!p.gone&&p.item==='shroom')cut(p.x*T,p.y*T,22,.6);
     nctx.globalCompositeOperation='source-over';ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(night,0,0,W,H);ctx.restore()}
-  ctx.globalCompositeOperation='lighter';for(const l of fxLights){ctx.fillStyle=rg(ctx,l.x*T,l.y*T,0,l.r*T*.8,l.col==='glow'?'rgba(150,240,80,.35)':'rgba(255,190,90,.3)','rgba(0,0,0,0)');ctx.fillRect(l.x*T-l.r*T,l.y*T-l.r*T,l.r*T*2,l.r*T*2)}ctx.globalCompositeOperation='source-over';
+  if(typeof nvgTint==='function')nvgTint(ctx,W,H);ctx.globalCompositeOperation='lighter';for(const l of fxLights){ctx.fillStyle=rg(ctx,l.x*T,l.y*T,0,l.r*T*.8,l.col==='glow'?'rgba(150,240,80,.35)':'rgba(255,190,90,.3)','rgba(0,0,0,0)');ctx.fillRect(l.x*T-l.r*T,l.y*T-l.r*T,l.r*T*2,l.r*T*2)}ctx.globalCompositeOperation='source-over';
   ctx.save();ctx.setTransform(1,0,0,1,0,0);
   if(M.id==='chem'){ctx.fillStyle='rgba(210,205,195,.5)';for(const a of ash){a.y+=a.v*.0016;a.x+=Math.sin(now/2000+a.s*9)*.0004;if(a.y>1)a.y=0;if(a.x>1)a.x=0;if(a.x<0)a.x=1;ctx.globalAlpha=.35+a.s*.3;ctx.fillRect(a.x*W,a.y*H,a.s*1.6*DPR,a.s*1.6*DPR)}ctx.globalAlpha=1}
   if(weather.rain>.05&&!M.interior){ctx.strokeStyle=M.id==='chem'?'rgba(180,230,120,'+(.35*weather.rain)+')':'rgba(170,190,210,'+(.35*weather.rain)+')';ctx.lineWidth=DPR;ctx.beginPath();const n=Math.floor(160*weather.rain*(QUAL.lvl?1:.4));for(let i=0;i<n;i++){const rx=(hash2(i,Math.floor(now/90))*W),ry=(hash2(i+500,Math.floor(now/90))*H);ctx.moveTo(rx,ry);ctx.lineTo(rx-3*DPR,ry+12*DPR)}ctx.stroke()}
@@ -8323,8 +8323,64 @@ function xpCatch(){if(!S)return 1;const edge=Math.max(xpTop(),S.lvl)*.7;if(edge<
 function xpWeak(base){return Math.max(.1,Math.min(1,40*base/xpFor(S.lvl)))}
 {const _g=gainXp;gainXp=function(n){const k=XPB.k;XPB.k=null;if(k&&S&&n>0){const w=xpWeak(n),c=xpCatch();n=Math.max(1,Math.round(n*w*c));
     if(c>1.05&&!XPB.told){XPB.told=1;log('Бонус новичка: ×'+c.toFixed(1)+' опыта, пока догоняете лучших игроков.','good')}}return _g(n)}}
+// Пересчёт уровней под новую стоимость (один раз на персонажа): весь накопленный опыт сохраняется,
+// уровень считается из него заново. Лишние неистраченные очки навыков снимаются, вложенные навыки остаются.
+const xpOld=l=>l<200?60+l*50:(60+l*50)*2+1500*(l-199);
+function xpMig(s){if(!s||s.xpv===2)return null;s.xpv=2;const L=s.lvl|0;if(L<=1)return null;let tot=Math.max(0,+s.xp||0);for(let l=1;l<L;l++)tot+=xpOld(l);
+  let lv=1;while(lv<MAXLVL&&tot>=xpFor(lv)){tot-=xpFor(lv);lv++}s.lvl=lv;s.xp=Math.floor(tot);const d=L-lv;if(d>0)s.sp=Math.max(0,(s.sp|0)-d);return d>0?[L,lv]:null}
+{const _as=afterStart;afterStart=async function(){try{const r=xpMig(S);if(S&&S.xpv===2){dirty=true;statCache=null;S.hp=Math.min(S.hp,effMax());updateHud();
+    if(r)setTimeout(()=>log('Уровни пересчитаны по новой прокачке: весь ваш опыт сохранён, уровень '+r[0]+' → '+r[1]+'.','good'),1500);pushBoard()}}catch(e){console.warn('xpMig',e)}return _as()}}
 {const _ck=creditKill;creditKill=function(e){XPB.k=e;try{return _ck.apply(this,arguments)}finally{XPB.k=null}}}
 
+// ================= v57: ПРИБОРЫ НОЧНОГО ВИДЕНИЯ =================
+// Три ПНВ — зелёный, красный и синий. Надеваются в слот «Фонарик» вместо фонарика, включаются той же кнопкой / клавишей L.
+// Включённый ПНВ убирает почти всю темноту, и вся локация видна в цвете прибора. Работает от батареек. Надеть — с 50-го уровня.
+const NVG={nvg_g:{c:'#46ff6e',w:'зелёном'},nvg_r:{c:'#ff4a3c',w:'красном'},nvg_b:{c:'#4a8cff',w:'синем'}};
+const NVG_LVL=50,NVG_MIN=20;
+{const d=w=>'Прибор ночного видения. Надевается вместо фонарика (слот «Фонарик»), включается кнопкой 🥽/🔦 или клавишей L (Д): вся локация видна в '+w+' цвете, даже глубокой ночью. Работает от батареек. Надеть можно с '+NVG_LVL+'-го уровня.';
+  Object.assign(ITEMS,{nvg_g:{n:'ПНВ «Изумруд» (зелёный)',k:'light',p:6000,r:3,d:d('зелёном')},nvg_r:{n:'ПНВ «Рубин» (красный)',k:'light',p:6000,r:3,d:d('красном')},nvg_b:{n:'ПНВ «Сапфир» (синий)',k:'light',p:6000,r:3,d:d('синем')}})}
+Object.assign(WT,{nvg_g:.6,nvg_r:.6,nvg_b:.6});
+SELL.kalibr.push(['nvg_g',6500,NVG_LVL]);(SELL.hmury||SELL.kalibr).push(['nvg_r',6800,NVG_LVL],['nvg_b',6800,NVG_LVL]);
+const isNvg=id=>!!NVG[id];
+const myNvg=()=>S&&S.nvOn&&isNvg(S.eq.light)&&(S.inv[S.eq.light]||0)>0?S.eq.light:'';
+const nvgK=()=>myNvg()?.12:1;
+const nvgLow=()=>S.lvl<NVG_LVL&&!S.admin;
+{const _eq=equip;equip=function(id,h){if(S&&isNvg(id)&&S.eq.light!==id&&nvgLow()){log('ПНВ можно надеть только с '+NVG_LVL+'-го уровня.','bad');return}
+  const r=_eq(id,h);if(S){if(!isNvg(S.eq.light))S.nvOn=false;else S.flOn=false;updFlBtn()}return r}}
+{const _t=toggleFl;toggleFl=function(force){if(!S)return;const id=S.eq.light;if(!isNvg(id)||!((S.inv[id]||0)>0)){S.nvOn=false;return _t(force)}
+  if(nvgLow()){log('ПНВ работает только с '+NVG_LVL+'-го уровня.','bad');return}
+  const on=force!=null?force:!S.nvOn;if(on&&flCharge(id)<=0&&!swapCells(id)){log(ITEMS[id].n+' разряжен. Нужны батарейки.','bad');S.nvOn=false;updFlBtn();return}
+  S.flOn=false;S.nvOn=on;sfx.click&&sfx.click();log(on?'🥽 ПНВ включён · заряд '+Math.round(flCharge(id)*100)+'%':'🥽 ПНВ выключен.');sendPresence();updFlBtn();dirty=true}}
+setInterval(()=>{if(!S||paused||!S.nvOn)return;const id=myNvg();if(!id){S.nvOn=false;updFlBtn();return}flCharge(id);S.flc[id]=Math.max(0,S.flc[id]-1/(NVG_MIN*60));
+  if(S.flc[id]<=0&&!swapCells(id)){S.nvOn=false;log('🥽 '+ITEMS[id].n+' сел. Нужны батарейки.','bad')}updFlBtn()},1000);
+{const _u=updFlBtn;updFlBtn=function(){_u();const b=document.getElementById('bLight');if(!b||!S)return;const id=S.eq.light;if(!isNvg(id)){b.style.removeProperty('--nv');return}
+  b.classList.toggle('on',!!S.nvOn);b.textContent=S.nvOn?'🥽'+Math.round(flCharge(id)*100):'🥽';b.style.setProperty('--nv',NVG[id].c)}}
+{const st=document.createElement('style');st.textContent='#acts #bLight.on[style*="--nv"]{border-color:var(--nv);color:var(--nv);box-shadow:0 0 14px var(--nv)}';document.head.append(st)}
+// картинка через прибор: без цвета → в цвет прибора, лёгкая засветка, полосы и тёмные края
+function nvgTint(c,W,H){const id=myNvg();if(!id)return;const col=NVG[id].c;c.save();c.setTransform(1,0,0,1,0,0);
+  c.globalCompositeOperation='saturation';c.globalAlpha=.92;c.fillStyle='#000';c.fillRect(0,0,W,H);
+  c.globalAlpha=1;c.globalCompositeOperation='multiply';c.fillStyle=col;c.fillRect(0,0,W,H);
+  c.globalCompositeOperation='screen';c.globalAlpha=.16;c.fillRect(0,0,W,H);
+  c.globalAlpha=1;c.globalCompositeOperation='source-over';
+  const g=c.createRadialGradient(W/2,H/2,Math.min(W,H)*.35,W/2,H/2,Math.max(W,H)*.75);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.6)');c.fillStyle=g;c.fillRect(0,0,W,H);
+  c.fillStyle='rgba(0,0,0,.09)';const step=Math.max(2,Math.round(3*DPR));for(let y=Math.floor(now/40)%step;y<H;y+=step)c.fillRect(0,y,W,1);
+  c.restore()}
+// значок в 2D
+{const _gi=drawGearIcon;drawGearIcon=function(c,id,x,y){if(!isNvg(id))return _gi(c,id,x,y);c.save();c.translate(x,y);
+  c.fillStyle='#2c2f2c';rrp(c,-9,-4,18,8,2);c.fill();strokeO(c,.6);c.fillStyle='#3a3d40';c.fillRect(-2,-8,4,4);
+  for(const s of [-1,1]){c.fillStyle='#1a1b1a';circ(c,s*5,1,4.2);c.fillStyle=NVG[id].c;circ(c,s*5,1,2.5)}c.restore()}}
+// 3D-модель для иконки: корпус, крепление и два окуляра со светящимися линзами цвета прибора
+{const _cs=c3Setup;c3Setup=function(){try{const T=THREE,{M}=CH3D.H,I=IT3D.I;for(const id of Object.keys(NVG))I[id]=()=>{const g=new T.Group(),body=M('#2c2f2c',.6,.2,'skin'),met=M('#3a3d40',.4,.6,'metal');
+    g.add(new T.Mesh(new T.BoxGeometry(.16,.07,.06),body));const mt=new T.Mesh(new T.BoxGeometry(.04,.05,.03),met);mt.position.set(0,.055,-.01);g.add(mt);
+    for(const s of [-1,1]){const tb=new T.Mesh(new T.CylinderGeometry(.03,.034,.09,18),met);tb.rotation.x=Math.PI/2;tb.position.set(s*.045,-.005,.06);g.add(tb);
+      const ln=new T.Mesh(new T.CylinderGeometry(.025,.025,.004,18),new T.MeshStandardMaterial({color:NVG[id].c,emissive:NVG[id].c,emissiveIntensity:.9,roughness:.2}));ln.rotation.x=Math.PI/2;ln.position.set(s*.045,-.005,.107);g.add(ln)}
+    g.rotation.set(.35,-.5,0);return g}}catch(e){console.warn('nvg3d',e)}return _cs()}}
+// 3D-вид: свет ярче, туман дальше, а сама картинка — в цвете прибора (фильтр на 3D-холсте, интерфейс не окрашивается)
+const NVG_HUE={nvg_g:'hue-rotate(85deg) saturate(4) brightness(1.05)',nvg_r:'hue-rotate(-48deg) saturate(5.6) brightness(.86)',nvg_b:'hue-rotate(180deg) saturate(4) brightness(1.05)'};
+if(typeof lights3==='function'){const _l3=lights3;lights3=function(t){const r=_l3(t);const id=myNvg();const cv3=typeof R3!=='undefined'&&R3&&R3.domElement;
+  if(id){L3.hemi.intensity=Math.max(L3.hemi.intensity,1.1);L3.hemi.color.set('#ffffff');L3.hemi.groundColor.set('#808080');L3.sun.intensity=Math.max(L3.sun.intensity,.35);
+    const fc=new THREE.Color('#1a1a1a');SC.fog.color.copy(fc);SC.background=fc;SC.fog.near=Math.max(SC.fog.near,V3.cam==='top'?24:14);SC.fog.far=Math.max(SC.fog.far,V3.cam==='top'?60:44)}
+  if(cv3){const f=id?'grayscale(1) sepia(1) '+NVG_HUE[id]+' contrast(1.1)':'';if(cv3.style.filter!==f)cv3.style.filter=f}return r}}
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
