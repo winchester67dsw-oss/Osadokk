@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793327527";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793397405";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -4844,7 +4844,7 @@ Object.assign(QUESTS,{
 // пускаем на базу и арену только своих
 let facWarn=0;
 {const _ce=checkExit;checkExit=function(){const tx=Math.floor(P.x),ty=Math.floor(P.y);for(const e of M.exits){if(!(tx>=e.x&&tx<e.x+e.w&&ty>=e.y&&ty<e.y+e.h))continue;const tm=MAPS[e.to];if(tm&&tm.fac&&tm.fac!==myFac()&&!S.admin){
-      if(now>facWarn){facWarn=now+3500;log('Сюда пускают только членов группировки «'+FAC[tm.fac].n+'». Подать заявку можно у вербовщика — он стоит у ворот базы.','bad')}
+      if(now>facWarn){facWarn=now+3500;log('Сюда пускают только членов группировки «'+FAC[tm.fac].n+'». '+(FAC[tm.fac].custom?'Подать заявку можно в профиле, в разделе «Группировки».':'Подать заявку можно у вербовщика — он стоит у ворот базы.'),'bad')}
       for(const [dx,dy] of [[0,-1],[0,1],[1,0],[-1,0],[1,-1],[-1,-1]]){const nx=tx+dx,ny=ty+dy;if(walkable(M.g[ny]?.[nx])&&!M.exits.some(x=>nx>=x.x&&nx<x.x+x.w&&ny>=x.y&&ny<x.y+x.h)){P.x=nx+.5;P.y=ny+.5;break}}return false}}
   return _ce()}}
 if(typeof hideNick==='function'){const _hn=hideNick;hideNick=function(x,y){if(M&&M.train)return false;return _hn(x,y)}}
@@ -7325,7 +7325,7 @@ const FEMB=['⚑','🐺','🦅','☢','💀','⚔','🔥','🐍','🦊','🛡','
 function fregApply(list){for(const g of list){if(!g||typeof g.id!=='string'||!/^c[a-z0-9]{3,16}$/.test(g.id))continue;if(FAC[g.id]&&!FAC[g.id].custom)continue;
     FAC[g.id]={id:g.id,n:cleanText(g.n,24)||'Группировка',short:cleanText(g.short||'',2)||(g.n||'?')[0],col:/^#[0-9a-f]{6}$/i.test(g.col)?g.col:'#c8a048',emb:FEMB.includes(g.emb)?g.emb:'⚑',custom:1};RANKNF[g.id]=Object.assign({},RANK_GEN)}
   for(const f of Object.keys(FAC))if(FAC[f].custom&&!list.some(g=>g.id===f)){delete FAC[f];delete RANKNF[f]}}
-async function fregLoad(){try{const p=await cloudGet(FREG_T,5000);if(!p||!p.ct||!p.sig)return;let ok=false;
+async function fregLoad(){try{const p=await cloudGet(FREG_T,12000);if(!p||!p.ct||!p.sig)return;let ok=false;
   for(const k of [await newsPub().catch(()=>null),DEV_PUB]){if(!k||ok)continue;try{const key=await crypto.subtle.importKey('jwk',k,ECP,false,['verify']);ok=await crypto.subtle.verify(ECS,key,unb64(p.sig),enc.encode(p.ct))}catch(e){}}
   if(!ok)return;FREG.list=JSON.parse(p.ct);FREG.at=p.at||0;fregApply(FREG.list)}catch(e){}}
 async function fregSave(list){if(!NEWS.priv)throw new Error('nokey');const ct=JSON.stringify(list);const sig=b64(await crypto.subtle.sign(ECS,NEWS.priv,enc.encode(ct)));await cloudPut(FREG_T,{v:1,at:Date.now(),ct,sig});FREG.list=list;FREG.at=Date.now();fregApply(list)}
@@ -7782,44 +7782,56 @@ drawHumanHD=drawHumanToon;
 {const _ph=paintHair;paintHair=function(c,p,col,x,hy){if(!p)return;_ph(c,p,col,x,hy);c.save();c.clip(p);const g=c.createRadialGradient(x-2,hy-5,.5,x-2,hy-5,6.5);g.addColorStop(0,'rgba(255,255,255,.26)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(x-10,hy-12,20,16);
   c.fillStyle='rgba(0,0,0,.18)';c.fillRect(x-10,hy+1,20,12);c.restore()}}
 
-// ================= v53: МЕДИКИ ГРУППИРОВОК — ЛЕЧЕНИЕ СОЮЗНИКОВ НА ХОДУ =================
-// Новое звание «медик». Вокруг медика — круг лечения: раз в несколько минут все раненые бойцы его группировки
-// внутри круга получают +50 ХП. Себя медик не лечит, чужих — тоже. Навык «Полевая медицина» растёт от вылеченного:
-// ур. 1 — раз в 3 мин, радиус 3 клетки … ур. 5 — раз в 1 мин, радиус 5 клеток.
+// ================= v53: МЕДИКИ ГРУППИРОВОК — ЛЕЧЕНИЕ СОЮЗНИКОВ ПО КНОПКЕ =================
+// Звание «медик». Медик нажимает кнопку ✚ — на 30 секунд вокруг него появляется круг лечения: раненые бойцы его
+// группировки внутри круга каждые 3 секунды получают ХП. Потом круг пропадает и 5 минут (реального времени) — откат.
+// Себя медик не лечит, чужих — тоже. Навык «Полевая медицина» растёт от вылеченного: ур. 1 — +8 ХП за раз, радиус 3 кл.
+// … ур. 5 — +16 ХП за раз, радиус 5 кл.
 RANKS_F.splice(RANKS_F.indexOf('storekeeper'),0,'medic');RANKLIM.medic=3;
 RANKNF.ren.medic='Лепила';RANKNF.mil.medic='Санинструктор';RANK_GEN.medic='Медик';for(const f of Object.keys(RANKNF))if(!RANKNF[f].medic)RANKNF[f].medic='Медик';
-const MED_HP=50,MEDLV=[0,500,1500,3500,7000];
-const MED={pulse:0,seen:new Map(),fx:[]};
+const MEDLV=[0,500,1500,3500,7000],MED_ON=30000,MED_CD=5*60000,MED_TICK=3000;
+const MED={until:0,ready:0,seen:new Map(),last:0,fx:[]};
 const medLv=()=>{let l=1;for(let i=1;i<MEDLV.length;i++)if(((S&&S.medXp)|0)>=MEDLV[i])l=i+1;return l};
-const medCd=l=>(180-(l-1)*30)*1000,medR=l=>3+(l-1)*.5;
+const medHp=l=>8+(l-1)*2,medR=l=>3+(l-1)*.5;
 const isMedic=()=>!!(S&&myFac()&&myRank()==='medic');
-const medPres=()=>isMedic()?{t:MED.pulse,r:medR(medLv())}:0;
-function medPeers(){const out=[];if(!room||!M)return out;for(const p of room.peers()){const pr=p.presence||{};if(pr.m===M.id&&pr.pid&&pr.pid!==S.pid&&typeof pr.x==='number')out.push(pr)}return out}
-// медик: импульс лечения, если рядом есть раненые свои
-setInterval(()=>{try{if(!S||!M||!isMedic()||S.hp<=0||S.hosp)return;const l=medLv();if(Date.now()-MED.pulse<medCd(l))return;const r=medR(l);
-  const hurt=medPeers().filter(pr=>pr.fc===myFac()&&(pr.hp|0)<100&&Math.hypot(pr.x-P.x,pr.y-P.y)<=r);if(!hurt.length)return;
-  MED.pulse=Date.now();MED.fx.push({x:P.x,y:P.y,r,t:now});const l0=l;S.medXp=(S.medXp|0)+hurt.length*MED_HP;dirty=true;sendPresence();
-  log('✚ Полевое лечение: +'+MED_HP+' ХП — '+hurt.map(p=>p.n).join(', ')+'.','good');if(medLv()>l0)log('✚ Полевая медицина — уровень '+medLv()+'! Лечите чаще и дальше.','good')}catch(e){}},1000);
-// боец: принимает лечение от медика своей группировки, если стоит в его круге
-setInterval(()=>{try{if(!S||!M||!myFac())return;for(const pr of medPeers()){const md=pr.md;if(!md||!md.t)continue;const key=pr.pid,last=MED.seen.get(key);if(last===md.t)continue;MED.seen.set(key,md.t);
-  if(last===undefined)continue; // первый раз видим медика — старый импульс не считается
-  if(pr.fc!==myFac()||S.hp<=0||S.hosp)continue;MED.fx.push({x:pr.x,y:pr.y,r:Math.min(5,+md.r||3),t:now});if(Math.hypot(pr.x-P.x,pr.y-P.y)>Math.min(5,+md.r||3)+.3)continue;
-  const mx=effMax();if(S.hp>=mx)continue;const add=Math.min(MED_HP,mx-S.hp);S.hp+=add;dirty=true;updateHud();floatText(P.x,P.y-1.2,'+'+Math.round(add)+' ХП','#7fe08a',true);log('✚ '+pr.n+' подлатал(а) вас: +'+Math.round(add)+' ХП.','good')}}catch(e){}},700);
+const medActive=()=>isMedic()&&Date.now()<MED.until;
+const medPres=()=>medActive()?{u:MED.until,r:medR(medLv()),h:medHp(medLv())}:0;
+// чужие медики рядом (себя — никогда: ни по pid, ни из соседней вкладки)
+function medPeers(){const out=[];if(!room||!M||!S)return out;for(const p of room.peers()){if(p.isMe||p.sameTab)continue;const pr=p.presence||{};if(pr.m===M.id&&pr.pid&&pr.pid!==S.pid&&typeof pr.x==='number')out.push(pr)}return out}
+// кнопка ✚: видна только медикам
+function medStart(){if(!isMedic()){log('Лечить союзников могут только медики группировки.','bad');return}if(S.hp<=0||S.hosp)return;
+  const t=Date.now();if(t<MED.until){log('✚ Лечение уже идёт.');return}if(t<MED.ready){log('✚ Откат: ещё '+Math.ceil((MED.ready-t)/1000)+' с.','bad');return}
+  MED.until=t+MED_ON;MED.ready=t+MED_ON+MED_CD;S.medReady=MED.ready;dirty=true;MED.fx.push({x:P.x,y:P.y,r:medR(medLv()),t:now});sendPresence();
+  log('✚ Полевое лечение: 30 секунд лечите раненых своих вокруг себя (+'+medHp(medLv())+' ХП каждые 3 с).','good');updMedBtn()}
+function updMedBtn(){const b=document.getElementById('bMed');if(!b)return;const on=isMedic();b.hidden=!on;if(!on)return;const t=Date.now();
+  b.classList.toggle('on',t<MED.until);b.classList.toggle('cd',t>=MED.until&&t<MED.ready);
+  b.textContent=t<MED.until?'✚'+Math.ceil((MED.until-t)/1000):t<MED.ready?(s=>'✚'+Math.floor(s/60)+':'+String(s%60).padStart(2,'0'))(Math.ceil((MED.ready-t)/1000)):'✚'}
+{const a=document.getElementById('acts');if(a){const b=document.createElement('button');b.id='bMed';b.hidden=true;b.textContent='✚';b.setAttribute('aria-label','Лечение союзников');b.onclick=e=>{e.preventDefault();medStart()};a.append(b)}
+  const st=document.createElement('style');st.textContent='#acts #bMed{right:252px;bottom:210px;width:52px;height:52px;font-size:14px;padding:0;color:#7fe08a}#acts #bMed[hidden]{display:none}#acts #bMed.on{border-color:#7fe08a;box-shadow:0 0 14px rgba(127,224,138,.5)}#acts #bMed.cd{opacity:.55}';document.head.append(st)}
+setInterval(()=>{try{if(S&&!MED.ready&&S.medReady)MED.ready=S.medReady;updMedBtn()}catch(e){}},1000);
+// медик: пока лечение идёт — копит опыт навыка за раненых своих в круге; по окончании — круг гаснет
+setInterval(()=>{try{if(!S||!M||!isMedic())return;const t=Date.now();if(t>=MED.until){if(MED.until&&!MED.endSaid){MED.endSaid=1;sendPresence();log('✚ Лечение закончилось. Откат 5 минут.')}return}MED.endSaid=0;
+  const l=medLv(),r=medR(l);const hurt=medPeers().filter(pr=>pr.fc===myFac()&&(pr.hp|0)<100&&Math.hypot(pr.x-P.x,pr.y-P.y)<=r);if(!hurt.length)return;
+  S.medXp=(S.medXp|0)+hurt.length*medHp(l);dirty=true;if(medLv()>l)log('✚ Полевая медицина — уровень '+medLv()+'! Лечите сильнее и дальше.','good')}catch(e){}},MED_TICK);
+// боец: стоит в круге активного медика своей группировки — каждые 3 с получает ХП
+setInterval(()=>{try{if(!S||!M||!myFac()||S.hp<=0||S.hosp)return;const t=Date.now();if(t-MED.last<MED_TICK-100)return;
+  for(const pr of medPeers()){const md=pr.md;if(!md||!md.u||pr.fc!==myFac())continue;const r=Math.min(5,+md.r||3);if(Math.hypot(pr.x-P.x,pr.y-P.y)>r+.3)continue;
+    const mx=effMax();if(S.hp>=mx)return;const add=Math.min(Math.min(16,+md.h||8),mx-S.hp);S.hp+=add;MED.last=t;dirty=true;updateHud();floatText(P.x,P.y-1.2,'+'+Math.round(add)+' ХП','#7fe08a',true);
+    if(!MED.seen.has(pr.pid)||t-MED.seen.get(pr.pid)>MED_ON+5000)log('✚ '+pr.n+' лечит вас.','good');MED.seen.set(pr.pid,t);return}}catch(e){}},500);
 // мировые координаты кадра берём в момент рисования людей (после кадра холст уже в экранных); в 3D круг не рисуется
 {const _dh=drawHuman;drawHuman=function(c,x,y,o){if(c===ctx)MED.m=c.getTransform();return _dh(c,x,y,o)}}
-// круг лечения: у себя — всегда, у медиков своей группировки — тоже; вспышка при импульсе
+// круг лечения — только пока лечение идёт (у себя и у медиков своей группировки)
 {const _rd=render;render=function(t){_rd(t);const wm=MED.m;MED.m=null;if(!M||!S||!wm||(typeof V3!=='undefined'&&V3.on))return;const c=ctx;c.save();c.setTransform(wm);try{
   const ring=(x,y,r,a,own)=>{c.save();c.strokeStyle='rgba(120,230,140,'+a+')';c.lineWidth=own?1.4:1;c.setLineDash([5,4]);c.lineDashOffset=-now/80;c.beginPath();c.ellipse(x*T,y*T+4,r*T,r*T*.62,0,0,7);c.stroke();c.setLineDash([]);
     c.fillStyle='rgba(120,230,140,'+(a*.12)+')';c.fill();c.restore()};
-  if(isMedic()){const l=medLv(),left=Math.max(0,medCd(l)-(Date.now()-MED.pulse));ring(P.x,P.y,medR(l),.55,true);
-    c.save();c.strokeStyle='rgba(120,230,140,.9)';c.lineWidth=2;c.beginPath();c.arc(P.x*T,P.y*T-34,4,-Math.PI/2,-Math.PI/2+Math.PI*2*(1-left/medCd(l)));c.stroke();c.fillStyle='#7fe08a';c.font='bold 7px sans-serif';c.textAlign='center';c.fillText('✚',P.x*T,P.y*T-31.5);c.restore()}
-  if(myFac())for(const pr of medPeers())if(pr.md&&pr.fc===myFac())ring(pr.x,pr.y,Math.min(5,+pr.md.r||3),.35,false);
+  if(medActive())ring(P.x,P.y,medR(medLv()),.6,true);
+  if(myFac())for(const pr of medPeers())if(pr.md&&pr.md.u&&pr.fc===myFac())ring(pr.x,pr.y,Math.min(5,+pr.md.r||3),.4,false);
   MED.fx=MED.fx.filter(f=>now-f.t<900);for(const f of MED.fx){const k=(now-f.t)/900;c.strokeStyle='rgba(140,255,160,'+(1-k)+')';c.lineWidth=3*(1-k)+.5;c.beginPath();c.ellipse(f.x*T,f.y*T+4,f.r*T*k,f.r*T*k*.62,0,0,7);c.stroke()}}catch(e){}c.restore()}}
 // в штабе (вкладка «Управление»): навык медика
 {const _hq=hqWin;hqWin=async function(f){await _hq(f);if(['roster','apps','reqs','log','fund','bots'].includes(hqTab))return;const b=ov.querySelector('.win .body');if(!b||myFac()!==f)return;
   const box=el('div');box.append(el('div','sec','✚ Полевая медицина'));const l=medLv(),xp=(S.medXp|0),nx=MEDLV[l];
-  if(isMedic())box.append(el('p','small','Уровень '+l+' из 5 · лечит своих на +'+MED_HP+' ХП раз в '+(medCd(l)/60000).toFixed(1).replace('.0','')+' мин в радиусе '+String(medR(l)).replace('.',',')+' кл.'),el('p','muted small',nx?'Опыт навыка: '+xp+' / '+nx+' (растёт от вылеченных ХП).':'Навык прокачан полностью.'));
-  else box.append(el('p','muted small','Звание «'+rn(f,'medic')+'» назначают '+rn(f,'leader')+' и '+rn(f,'deputy')+'. Медик лечит раненых бойцов своей группировки вокруг себя прямо на ходу; навык растёт от вылеченного.'));
+  if(isMedic())box.append(el('p','small','Уровень '+l+' из 5 · кнопка ✚: 30 с лечите своих вокруг себя на +'+medHp(l)+' ХП каждые 3 с, радиус '+String(medR(l)).replace('.',',')+' кл. Потом откат 5 минут. Себя не лечите.'),el('p','muted small',nx?'Опыт навыка: '+xp+' / '+nx+' (растёт от вылеченных ХП).':'Навык прокачан полностью.'));
+  else box.append(el('p','muted small','Звание «'+rn(f,'medic')+'» назначают '+rn(f,'leader')+' и '+rn(f,'deputy')+'. Медик по кнопке ✚ 30 секунд лечит раненых бойцов своей группировки вокруг себя, потом 5 минут откат; навык растёт от вылеченного.'));
   b.append(box)}}
 
 // ================= v54a: 3D-модели персонажей, оружия и предметов (создаются после загрузки движка) =================
@@ -8381,6 +8393,77 @@ if(typeof lights3==='function'){const _l3=lights3;lights3=function(t){const r=_l
   if(id){L3.hemi.intensity=Math.max(L3.hemi.intensity,1.1);L3.hemi.color.set('#ffffff');L3.hemi.groundColor.set('#808080');L3.sun.intensity=Math.max(L3.sun.intensity,.35);
     const fc=new THREE.Color('#1a1a1a');SC.fog.color.copy(fc);SC.background=fc;SC.fog.near=Math.max(SC.fog.near,V3.cam==='top'?24:14);SC.fog.far=Math.max(SC.fog.far,V3.cam==='top'?60:44)}
   if(cv3){const f=id?'grayscale(1) sepia(1) '+NVG_HUE[id]+' contrast(1.1)':'';if(cv3.style.filter!==f)cv3.style.filter=f}return r}}
+// ================= v58: БАЗЫ НОВЫХ ГРУППИРОВОК + ПОЛНОЕ УПРАВЛЕНИЕ ГРУППИРОВКАМИ ДЛЯ АДМИНИСТРАТОРА =================
+// У группировки, созданной администратором, может быть своя база: ворота стоят в выбранной локации, за ними — такая же
+// база, как у Ренегатов и Военных (склад, штаб, мастерская, оружейная, костёр, арена). Место хранится в подписанном
+// списке группировок (base:{m,x,y}), поэтому у всех игроков база в одном и том же месте.
+// Администратор может у любой группировки: открыть штаб с правами лидера, телепортироваться на базу, поставить базу
+// там, где стоит сам, убрать её, поменять название/букву/цвет/значок и поставить картинку-эмблему.
+const FBASE={};   // id → {m,x,y,old}: где стоят ворота и что было на этой клетке раньше
+function fbaseOk(m,x,y){const g=m&&m.g;return !!(g&&g[y]&&walkable(g[y][x])&&g[y][x]!=='~'&&g[y][x]!=='W'&&g[y][x]!=='='&&notExit(m,x,y)&&walkable(g[y-1]?.[x])&&!(typeof inSafe==='function'&&inSafe(x+.5,y+.5)))}
+function fbaseRemove(f){const b=FBASE[f];if(!b)return;const src=MAPS[b.m];const id='fb_'+f,aid='fa_'+f;
+  if(src){if(src.g[b.y]&&src.g[b.y][b.x]==='D')src.g[b.y][b.x]=b.old;src.exits=src.exits.filter(e=>e.to!==id)}
+  for(const k of [id,aid]){const i=ALLFIRES.findIndex(x=>x.m===k);if(i>=0)ALLFIRES.splice(i,1);delete MAPS[k];delete FPOI[k];if(typeof RT!=='undefined')delete RT[k]}
+  delete FBASE[f];delete FGATE[f];if(typeof TC!=='undefined'&&M&&src===M)TC.chunks.clear()}
+function fbaseBuild(f,b){const F=FAC[f],src=MAPS[b&&b.m];if(!F||!src||src.interior||!fbaseOk(src,b.x,b.y))return false;
+  const id='fb_'+f,aid='fa_'+f,W=44,H=30;
+  const m=genRoom(id,'База «'+F.n+'»',W,H,'base',g=>{
+    const wallR=(x0,y0,x1,y1,doorX,doorY)=>{for(let x=x0;x<=x1;x++){g[y0][x]='#';g[y1][x]='#'}for(let y=y0;y<=y1;y++){g[y][x0]='#';g[y][x1]='#'}for(let y=y0+1;y<y1;y++)for(let x=x0+1;x<x1;x++)g[y][x]='_';if(doorX!=null)g[doorY][doorX]=':'};
+    wallR(1,1,13,10,7,10);wallR(30,1,42,10,36,10);wallR(1,19,13,28,7,19);wallR(30,19,42,28,36,19);
+    for(let x=2;x<=12;x++){g[2][x]='M';if(x!==7)g[5][x]='M'}for(let x=3;x<=11;x+=2)g[8][x]='o';
+    for(let x=32;x<=40;x++)g[2][x]='n';g[5][35]='n';g[5][36]='n';g[5][37]='n';g[6][34]='h';g[6][38]='h';
+    g[21][3]='K';g[21][4]='K';g[24][11]='K';g[26][3]='P';g[26][4]='P';
+    g[21][32]='K';g[21][33]='K';g[24][40]='K';g[26][40]='M';g[26][39]='M';
+    g[15][22]='f';for(const [x,y] of [[20,14],[24,14],[20,16],[24,16]])g[y][x]='h';
+    for(const [x,y] of [[17,4],[26,4],[17,25],[26,25],[2,14],[41,14]])g[y][x]='o';g[H-1][22]=':';g[0][22]=':'},
+    [[22,15,1],[7,5,1],[36,5,1],[7,24,1],[36,24,1],[22,25,1],[22,4,1]]);
+  m.fac=f;m.dark=.2;m.fires=[{id:'fire_'+f,x:22,y:15,sx:22.5,sy:17.5,n:'Костёр «'+F.n+'»'}];ALLFIRES.push({...m.fires[0],m:id});
+  FPOI[id]={store:[7,4,'Склад'],hq:[36,4,'Штаб'],work:[7,23,'Мастерская'],armory:[36,23,'Оружейная']};MAPS[id]=m;
+  MAPS[aid]=genRoom(aid,'Арена «'+F.n+'»',28,18,'base',g=>{for(const [x,y] of [[8,5],[8,12],[19,5],[19,12],[13,8],[14,9]])g[y][x]='o';for(const [x,y] of [[11,3],[16,14],[5,9],[22,8]])g[y][x]='M';g[17][14]=':'},[[7,8,1],[20,8,1],[14,4,1],[14,13,1]]);
+  Object.assign(MAPS[aid],{safe:false,pvp:true,train:true,fac:f,dark:.15});
+  const link=(a,ax,ay,bb,bx,by,la,lb)=>{const A=MAPS[a],B=MAPS[bb];const ta=arrivalAt(B,bx,by),tb=arrivalAt(A,ax,ay);A.exits.push({x:ax,y:ay,w:1,h:1,to:bb,tx:ta[0],ty:ta[1],label:la,door:1});B.exits.push({x:bx,y:by,w:1,h:1,to:a,tx:tb[0],ty:tb[1],label:lb,door:1})};
+  link(id,22,0,aid,14,17,'Арена группировки','На базу');
+  const old=src.g[b.y][b.x];src.g[b.y][b.x]='D';link(b.m,b.x,b.y,id,22,H-1,'Ворота базы «'+F.n+'»','Выход с базы');
+  FBASE[f]={m:b.m,x:b.x,y:b.y,old};FGATE[f]=[b.x,b.y];Object.assign(F,{base:id,arena:aid,from:b.m});if(typeof TC!=='undefined'&&M&&src===M)TC.chunks.clear();return true}
+// список группировок применился → ставим/переносим/убираем базы новых группировок
+{const _fa=fregApply;fregApply=function(list){_fa(list);
+  for(const f of Object.keys(FBASE))if(!FAC[f]||!FAC[f].custom)fbaseRemove(f);
+  for(const g of list){if(!g||!FAC[g.id]||!FAC[g.id].custom)continue;const b=g.base,cur=FBASE[g.id];
+    if(!b||typeof b.m!=='string'){if(cur)fbaseRemove(g.id);continue}
+    if(cur&&cur.m===b.m&&cur.x===(b.x|0)&&cur.y===(b.y|0)){Object.assign(FAC[g.id],{base:'fb_'+g.id,arena:'fa_'+g.id,from:cur.m});if(MAPS['fb_'+g.id])MAPS['fb_'+g.id].name='База «'+FAC[g.id].n+'»';continue}
+    if(cur&&M&&(M.id==='fb_'+g.id||M.id==='fa_'+g.id)){Object.assign(FAC[g.id],{base:'fb_'+g.id,arena:'fa_'+g.id,from:cur.m});continue}   // игрок сейчас на этой базе — перенесём, когда выйдет
+    if(cur)fbaseRemove(g.id);fbaseBuild(g.id,{m:b.m,x:b.x|0,y:b.y|0})}}}
+
+// ---------- Администратор: группировки ----------
+const ADMF={};
+async function fregEdit(id,fn){await fregLoad();const L=FREG.list.map(x=>({...x}));const g=L.find(x=>x.id===id);if(!g)throw new Error('Группировка не найдена.');if(fn(g)===false)return;await fregSave(L)}
+function fbaseHere(){if(!M||M.interior||M.fac)return null;const x=Math.floor(P.x),y=Math.floor(P.y);
+  for(const [dx,dy] of [[0,0],[1,0],[-1,0],[0,1],[0,-1],[2,0],[-2,0],[0,2],[1,1],[-1,1]])if(fbaseOk(M,x+dx,y+dy))return {m:M.id,x:x+dx,y:y+dy};return null}
+function admGoBase(f){const F=FAC[f];if(!F||!MAPS[F.base]){log('У этой группировки пока нет базы.','bad');return}closeWin();enterMap(F.base,22.5,26.5);log('Вы на базе «'+F.n+'».','sys')}
+function admFacEdit(f,box){const F=FAC[f];if(!F)return;box.replaceChildren();const inS='background:#14110c;color:#f2e2b8;border:1px solid #5a4a30;border-radius:6px;padding:7px';
+  if(F.custom){const nm=document.createElement('input');nm.value=F.n;nm.maxLength=24;nm.style.cssText=inS+';min-width:200px';const sh=document.createElement('input');sh.value=F.short;sh.maxLength=2;sh.style.cssText=inS+';width:60px';
+    const col=document.createElement('input');col.type='color';col.value=F.col;col.style.cssText='width:52px;height:36px;border:0;background:none';
+    let emb=F.emb;const er=el('div','startrow');const drawE=()=>{er.replaceChildren();for(const e of FEMB){const x=btn(e,()=>{emb=e;drawE()},e===emb?'btn primary':'btn');x.style.cssText='min-width:40px;font-size:18px';er.append(x)}};drawE();
+    const r=el('div','startrow');r.append(nm,sh,col);box.append(el('p','small','Название, буква, цвет и значок:'),r,er,btn('Сохранить',async()=>{const n=cleanText(nm.value,24);if(n.length<2){log('Введите название.','bad');return}
+      try{await fregEdit(f,g=>{g.n=n;g.short=cleanText(sh.value,2)||n[0].toUpperCase();g.col=col.value;g.emb=emb});log('Группировка «'+n+'» обновлена.','good');admFacEdit(f,box)}catch(e){log('Не удалось: '+(e.message==='nokey'?'подтвердите код администратора':e.message),'bad')}},'btn primary'))}
+  // картинка-эмблема — у любой группировки
+  const fi=document.createElement('input');fi.type='file';fi.accept='image/png,image/jpeg,image/webp,image/gif';fi.style.cssText='max-width:240px';
+  box.append(el('p','small','Картинка-эмблема (64×64, до 30 КБ) — ставится сразу:'),(()=>{const r=el('div','startrow');r.append(fi,btn('Поставить',async()=>{try{const img=await fembFromFile(fi.files[0]);await fembApprove(f,img);log('Эмблема «'+F.n+'» обновлена.','good')}catch(e){log('Не удалось: '+(e.message==='nokey'?'подтвердите код администратора':e.message),'bad')}},'btn primary'),
+    btn('Убрать картинку',async()=>{try{await fembReset(f);log('Картинка-эмблема убрана.','good')}catch(e){log('Не удалось: '+(e.message==='nokey'?'подтвердите код администратора':e.message),'bad')}}));return r})());
+  // база
+  box.append(el('div','sec','База'));
+  if(!F.custom){box.append(el('p','muted small','База: '+(MAPS[F.base]?MAPS[F.base].name:'—')+' (вход — '+(MAPS[F.from]?MAPS[F.from].name:'—')+'). Эта база встроена в игру и не переносится.'))}
+  else{const b=FBASE[f];box.append(el('p','muted small',b?'Ворота: '+(MAPS[b.m]?MAPS[b.m].name:b.m)+', клетка '+b.x+' · '+b.y+'.':'Базы пока нет.'));
+    const here=fbaseHere();box.append(el('p','muted small',here?'Можно поставить ворота там, где вы стоите: '+MAPS[here.m].name+'.':'Чтобы поставить базу, встаньте на открытой местности (не в здании, не на чужой базе, не в безопасной зоне).'));
+    const r=el('div','startrow');r.append(btn(b?'Перенести базу сюда':'Поставить базу здесь',async()=>{const h=fbaseHere();if(!h){log('Здесь нельзя поставить ворота.','bad');return}
+        try{await fregEdit(f,g=>{g.base=h});log('База «'+F.n+'» стоит: '+MAPS[h.m].name+'.','good');admFacEdit(f,box)}catch(e){log('Не удалось: '+(e.message==='nokey'?'подтвердите код администратора':e.message),'bad')}},'btn primary',!here),
+      btn('Убрать базу',async()=>{if(!b||!confirm('Убрать базу «'+F.n+'»? Склад и общак группировки сохранятся.'))return;try{await fregEdit(f,g=>{delete g.base});log('База убрана.','good');admFacEdit(f,box)}catch(e){log('Не удалось: '+e.message,'bad')}},'btn',!b));box.append(r)}
+  const r2=el('div','startrow');r2.style.marginTop='10px';r2.append(btn('Штаб (права лидера)',()=>{hqTab='roster';hqWin(f)}),btn('Телепорт на базу',()=>admGoBase(f),'btn',!MAPS[F.base]),btn('Склад',()=>storeWin(f)));box.append(r2)}
+function admFacView(box){box.replaceChildren();if(!NEWS.priv){box.append(el('p','muted small','Чтобы менять группировки, подтвердите код администратора в разделе «Новые группировки» или «Новости».'))}
+  const l=el('div','list');for(const f of Object.keys(FAC)){const F=FAC[f];const r=el('div','row');r.append(facBadge(f,30));const gw=el('div','grow');gw.append(el('div','t',F.n),el('div','s',(F.custom?'новая · ':'')+'база: '+(MAPS[F.base]?MAPS[F.base].name:'нет')));r.append(gw);
+    const q=el('div');q.style.cssText='flex-basis:100%';r.style.flexWrap='wrap';r.append(btn('Управлять',()=>{ADMF.open=ADMF.open===f?null:f;admFacView(box)},ADMF.open===f?'btn primary':'btn'),q);if(ADMF.open===f)admFacEdit(f,q);l.append(r)}box.append(l)}
+if(typeof TABVIEW.admin==='function'){const _av=TABVIEW.admin;TABVIEW.admin=b=>{const sec=el('div');sec.append(el('div','sec','🛡 Все группировки: база, эмблема, штаб'));const q=el('div');sec.append(btn('Открыть',()=>{fregLoad().then(()=>admFacView(q))},'btn primary'),q);b.append(sec);_av(b)}}
+
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
