@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793401788";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793402744";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -8463,6 +8463,79 @@ function admFacView(box){box.replaceChildren();if(!NEWS.priv){box.append(el('p',
   const l=el('div','list');for(const f of Object.keys(FAC)){const F=FAC[f];const r=el('div','row');r.append(facBadge(f,30));const gw=el('div','grow');gw.append(el('div','t',F.n),el('div','s',(F.custom?'новая · ':'')+'база: '+(MAPS[F.base]?MAPS[F.base].name:'нет')));r.append(gw);
     const q=el('div');q.style.cssText='flex-basis:100%';r.style.flexWrap='wrap';r.append(btn('Управлять',()=>{ADMF.open=ADMF.open===f?null:f;admFacView(box)},ADMF.open===f?'btn primary':'btn'),q);if(ADMF.open===f)admFacEdit(f,q);l.append(r)}box.append(l)}
 if(typeof TABVIEW.admin==='function'){const _av=TABVIEW.admin;TABVIEW.admin=b=>{const sec=el('div');sec.append(el('div','sec','🛡 Все группировки: база, эмблема, штаб'));const q=el('div');sec.append(btn('Открыть',()=>{fregLoad().then(()=>admFacView(q))},'btn primary'),q);b.append(sec);_av(b)}}
+
+// ================= v59: ИДЕОЛОГИИ, ОПИСАНИЯ И КАРТОЧКИ ГРУППИРОВОК =================
+// У каждой группировки есть идеология — от неё зависят звания (ОПГ — как у Ренегатов, военизированная — как у Военных,
+// анархисты, сектанты, наёмники, учёные, вольные сталкеры). Администратор может переименовать любую группировку,
+// написать ей описание и выбрать идеологию. Всё хранится в подписанном списке группировок (для Ренегатов и Военных —
+// отдельные записи {id,meta:1}). Любой игрок в рейтинге (и на главном экране) нажимает на группировку и видит карточку:
+// эмблема, идеология, описание, состав, база и звания.
+const IDEO={
+  opg:{n:'ОПГ',d:'Братва по понятиям: свои — святое, чужие — добыча. Держат территорию, собирают дань, решают вопросы стволом.',
+    r:{leader:'Батя',deputy:'Вор в законе',commander:'Смотрящий',master:'Портной',gunsmith:'Ствольщик',medic:'Лепила',storekeeper:'Барыга',sergeant:'Бригадир',private:'Пацан'}},
+  mil:{n:'Военизированная',d:'Устав, дисциплина и приказ. Наводят порядок в Пустоши силой оружия и держат периметр.',
+    r:{leader:'Майор',deputy:'Капитан',commander:'Старший лейтенант',master:'Лейтенант',gunsmith:'Младший лейтенант',medic:'Санинструктор',storekeeper:'Прапорщик',sergeant:'Сержант',private:'Рядовой'}},
+  anar:{n:'Анархисты',d:'Свобода превыше всего: никаких хозяев, никаких приказов. Пустошь — для всех, кто не боится в ней жить.',
+    r:{leader:'Вожак',deputy:'Правая рука',commander:'Заводила',master:'Умелец',gunsmith:'Пушкарь',medic:'Знахарь',storekeeper:'Завхоз',sergeant:'Бывалый',private:'Вольный'}},
+  sect:{n:'Сектанты',d:'Верят, что осадок — очищение, а Пустошь — испытание. Служат своему пророку и не знают страха.',
+    r:{leader:'Пророк',deputy:'Апостол',commander:'Жрец',master:'Ткач',gunsmith:'Кузнец веры',medic:'Целитель',storekeeper:'Хранитель',sergeant:'Брат',private:'Неофит'}},
+  merc:{n:'Наёмники',d:'Работают за крышки и ни за что больше. Есть контракт — будет результат, вопросов не задают.',
+    r:{leader:'Босс',deputy:'Контрактор',commander:'Командир группы',master:'Снабженец',gunsmith:'Оружейник',medic:'Полевой медик',storekeeper:'Квартирмейстер',sergeant:'Ветеран',private:'Контрактник'}},
+  sci:{n:'Учёные',d:'Изучают осадок, мутантов и аномалии. Платят за образцы и данные, охрану нанимают сами.',
+    r:{leader:'Профессор',deputy:'Доцент',commander:'Старший научный сотрудник',master:'Инженер',gunsmith:'Техник',medic:'Врач',storekeeper:'Лаборант-хранитель',sergeant:'Научный сотрудник',private:'Лаборант'}},
+  lone:{n:'Вольные сталкеры',d:'Одиночки, которые держатся вместе. Ходят в рейды, делят хабар и выручают своих.',
+    r:{leader:'Старейшина',deputy:'Старожил',commander:'Проводник',master:'Мастер',gunsmith:'Оружейник',medic:'Лекарь',storekeeper:'Барыга',sergeant:'Опытный',private:'Новичок'}}};
+const IDEO_DEF={ren:'opg',mil:'mil'};
+const FAC0={};for(const f of ['ren','mil'])FAC0[f]={n:FAC[f].n,r:Object.assign({},RANKNF[f])};
+const facIdeo=f=>FAC[f]&&IDEO[FAC[f].ideo]?FAC[f].ideo:(IDEO_DEF[f]||'');
+// cleanText режет переносы строк — для описания сохраняем абзацы
+const facDescText=s=>String(s||'').replace(/\r/g,'').split('\n').map(x=>cleanText(x,600)).join('\n').slice(0,600).trim();
+// список группировок применился → названия, описания и идеологии (звания)
+{const _fa=fregApply;fregApply=function(list){_fa(list);
+  for(const f of Object.keys(FAC0)){const m=list.find(g=>g&&g.id===f&&g.meta)||{};const F=FAC[f];
+    F.n=cleanText(m.n||'',24)||FAC0[f].n;F.desc=typeof m.desc==='string'?facDescText(m.desc):'';F.ideo=IDEO[m.ideo]?m.ideo:IDEO_DEF[f];
+    RANKNF[f]=F.ideo===IDEO_DEF[f]?Object.assign({},FAC0[f].r):Object.assign({},IDEO[F.ideo].r)}
+  for(const g of list){if(!g||!FAC[g.id]||!FAC[g.id].custom)continue;const F=FAC[g.id];F.desc=typeof g.desc==='string'?facDescText(g.desc):'';F.ideo=IDEO[g.ideo]?g.ideo:'';
+    RANKNF[g.id]=F.ideo?Object.assign({},IDEO[F.ideo].r):Object.assign({},RANK_GEN)}}}
+async function fregMeta(f,fn){if(FAC[f]&&FAC[f].custom)return fregEdit(f,fn);await fregLoad();const L=FREG.list.map(x=>({...x}));let g=L.find(x=>x.id===f&&x.meta);if(!g){g={id:f,meta:1};L.push(g)}if(fn(g)===false)return;await fregSave(L)}
+// ---------- карточка группировки (для всех игроков) ----------
+// на главном экране окно должно быть поверх заставки
+{const _cw=closeWin;closeWin=function(){ov.style.zIndex='';return _cw.apply(this,arguments)}}
+async function facCard(f){const F=FAC[f];if(!F)return;if(!titleEl.hidden)ov.style.zIndex='40';openWin('Группировка «'+F.n+'»',async b=>{
+  const head=el('div','startrow');head.style.alignItems='center';const bd=facBadge(f,64);head.append(bd);const ht=el('div');const id=facIdeo(f);
+  ht.append(el('b',null,F.n),el('div','muted small',id?'Идеология: '+IDEO[id].n:'Идеология не выбрана'));head.append(ht);b.append(head);
+  if(id)b.append(el('p','small',IDEO[id].d));
+  b.append(el('div','sec','Описание'));const dsc=facDescText(F.desc);const p=el('p',dsc?'':'muted small',dsc||'Описание пока не добавлено.');p.style.whiteSpace='pre-wrap';b.append(p);
+  const info=el('div');b.append(el('div','sec','Состав и база'),info);info.append(el('p','muted small','Загружаем…'));
+  b.append(el('div','sec','Звания'));const rl=el('div','list');for(const r of RANKS_F){const row=el('div','row');row.append(el('div','grow',rn(f,r)));rl.append(row)}b.append(rl);
+  if(S&&!myFac()&&typeof facApply==='function'){const r=el('div','startrow');r.style.marginTop='10px';r.append(btn('Подать заявку в «'+F.n+'»',()=>facApply(f),'btn primary'));b.append(r)}
+  try{await facLoad(f)}catch(e){}if(!info.isConnected)return;const d=FACD[f]||{members:{}};const mem=Object.entries(d.members||{});const lead=mem.find(([,m])=>normR(m.r)==='leader');
+  info.replaceChildren(el('p','small','Бойцов: '+mem.length+(lead?' · '+rn(f,'leader')+': '+lead[1].n:' · лидера нет')+(typeof facRating==='function'?' · рейтинг: '+facRating(f,d):'')),
+    el('p','small','База: '+(MAPS[F.base]?MAPS[F.base].name+(MAPS[F.from]?' (вход — '+MAPS[F.from].name+')':''):'пока нет')))})}
+// рейтинг группировок во вкладке «Рейтинг»: строки нажимаются → карточка
+{const _rv=TABVIEW.rating;TABVIEW.rating=b=>{_rv(b);b.addEventListener('click',e=>{const row=e.target.closest('.row');if(!row||e.target.closest('button'))return;const t=row.querySelector('.t');if(!t)return;const s=t.textContent;
+    const f=Object.keys(FAC).find(k=>s.includes(' '+FAC[k].n+' · рейтинг'));if(f)facCard(f)});
+  const mark=()=>{for(const row of b.querySelectorAll('.list .row')){const t=row.querySelector('.t');if(t&&/ · рейтинг /.test(t.textContent)){row.style.cursor='pointer';row.title='Нажмите — описание группировки'}}};setTimeout(mark,800);setTimeout(mark,3000)}}
+// главный экран: карточка «Группировки» под рейтингом выживших
+function titleFacs(){const side=document.getElementById('titleSide');if(!side)return;let c=document.getElementById('tFacs');if(!c){c=el('div','tcard');c.id='tFacs';const rb=document.getElementById('rulesBox');side.insertBefore(c,rb||null)}
+  c.replaceChildren(el('div','sec','Группировки'));const l=el('div','list');for(const f of Object.keys(FAC)){const F=FAC[f];const row=el('div','row');row.style.cursor='pointer';row.title='Нажмите — описание группировки';row.append(facBadge(f,30));
+    const gw=el('div','grow');const id=facIdeo(f);gw.append(el('div','t',F.n),el('div','s',id?IDEO[id].n:'группировка'));row.append(gw);row.onclick=()=>facCard(f);l.append(row)}c.append(l)}
+{const _rt=renderTitle;renderTitle=function(){_rt();try{titleFacs();fregLoad().then(()=>{if(!titleEl.hidden)titleFacs()})}catch(e){}}}
+// профиль → «Группировки»: кнопка «Подробнее»
+{const _pv=TABVIEW.profile;TABVIEW.profile=b=>{_pv(b);for(const row of b.querySelectorAll('.list .row')){const t=row.querySelector('.t');if(!t)continue;const f=Object.keys(FAC).find(k=>t.textContent.trim()===FAC[k].n);if(f&&!row.querySelector('.facMore')){const x=btn('Подробнее',()=>facCard(f));x.classList.add('facMore');row.append(x)}}}}
+// ---------- админ: название, описание, идеология — у любой группировки ----------
+{const _ae=admFacEdit;admFacEdit=function(f,box){_ae(f,box);const F=FAC[f];if(!F)return;const inS='background:#14110c;color:#f2e2b8;border:1px solid #5a4a30;border-radius:6px;padding:7px';
+  const sec=el('div');sec.append(el('div','sec','Карточка группировки'));
+  let nm=null;if(!F.custom){nm=document.createElement('input');nm.value=F.n;nm.maxLength=24;nm.style.cssText=inS+';min-width:220px';sec.append(el('p','small','Название:'),nm)}
+  const sel=document.createElement('select');sel.style.cssText=inS+';min-width:220px';const o0=document.createElement('option');o0.value='';o0.textContent=F.custom?'— без идеологии (общие звания) —':'— как в игре по умолчанию —';sel.append(o0);
+  for(const [k,v] of Object.entries(IDEO)){const o=document.createElement('option');o.value=k;o.textContent=v.n;sel.append(o)}sel.value=F.custom?(F.ideo||''):(F.ideo&&F.ideo!==IDEO_DEF[f]?F.ideo:'');
+  const prev=el('p','muted small');const showR=()=>{const k=sel.value||(F.custom?'':IDEO_DEF[f]);const r=k?IDEO[k].r:RANK_GEN;prev.textContent='Звания: '+RANKS_F.map(x=>r[x]).filter(Boolean).join(' · ')};sel.onchange=showR;showR();
+  const ta=document.createElement('textarea');ta.maxLength=600;ta.rows=5;ta.value=F.desc||'';ta.placeholder='Кто они, за что воюют, кого принимают…';ta.style.cssText=inS+';width:100%;resize:vertical';
+  sec.append(el('p','small','Идеология (от неё зависят звания):'),sel,prev,el('p','small','Описание (до 600 знаков, видят все игроки):'),ta,
+    (()=>{const r=el('div','startrow');r.style.marginTop='8px';r.append(btn('Сохранить карточку',async()=>{const n=nm?cleanText(nm.value,24):F.n;if(n.length<2){log('Введите название.','bad');return}
+      try{await fregMeta(f,g=>{if(nm)g.n=n===FAC0[f].n?undefined:n;g.desc=facDescText(ta.value);if(sel.value)g.ideo=sel.value;else delete g.ideo;if(g.n===undefined)delete g.n});log('Карточка «'+FAC[f].n+'» сохранена.','good');admFacEdit(f,box)}
+      catch(e){log('Не удалось: '+(e.message==='nokey'?'подтвердите код администратора':e.message),'bad')}},'btn primary'),btn('Посмотреть, как видят игроки',()=>facCard(f)));return r})());
+  box.prepend(sec)}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
