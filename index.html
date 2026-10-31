@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793446367";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793471619";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -9125,7 +9125,7 @@ function dsGo(fn){return ()=>{closeWin();if(!DSS.anim)fn()}}
 {const _nd=npcDialog;npcDialog=function(n){_nd(n);if(!DS_ON||!S)return;const o=ov.querySelector('.opts');if(!o)return;const add=(t,fn,cls)=>o.insertBefore(btn(t,fn,cls||'btn primary'),o.lastElementChild);
   const st=dsSt(),D=S.ds||{};
   if(n.id==='mityai'){
-    if(st===0&&!D.seen&&rrSt()>=7&&S.rr&&S.rr.thx&&Date.now()-S.rr.thx>864e5)add('📜 «Что со Степаном? Сам не свой»',()=>{closeWin();if((S.lvl|0)<DS_LVL){log(mn()+': «Не лезь пока. Подрасти до '+DS_LVL+'-го — там посмотрим. Степановы дела — не для зелёных».','bad');return}
+    if(st===0&&!D.seen&&rrSt()>=7&&S.rr&&S.rr.thx)add('📜 «Что со Степаном? Сам не свой»',()=>{closeWin();if((S.lvl|0)<DS_LVL){log(mn()+': «Не лезь пока. Подрасти до '+DS_LVL+'-го — там посмотрим. Степановы дела — не для зелёных».','bad');return}
       log(mn()+': «Сам не свой, говоришь? Будешь тут сам не свой, когда…» — дверь бара распахивается от пинка.','sys');dsScene()},'btn');
     if(st===25&&!D.mdead)add('🔪 Убрать Митяя',dsGo(dsKillMityai),'btn');
     if(st===34)add('📜 «Шрама больше нет»',()=>{closeWin();dsTalk(MITYAI.n,['— Слыхал, слыхал! Весь Колокол гудит. Книгу Шрама — в огонь! Да половина нашего народа теперь тебе по гроб жизни обязана. Ну, по гроб — это я загнул. До ужина точно.','— Скинулись тут всем миром. И Степан передал — из сундука Шрама, говорит. Тот бы не одобрил. Тем лучше.'],
@@ -9212,6 +9212,197 @@ function rollPose(c,x,y,k,dir){const ease=t=>t*t*(3-2*t);
 {const _sd=suiDie;suiDie=function(kind){const caps=S.caps,inv=JSON.parse(JSON.stringify(S.inv));const _l=log,_ab=addBag;
   log=function(m,c){if(typeof m==='string'&&/рюкзак|Пропало/.test(m))return;return _l.apply(this,arguments)};addBag=function(){};
   try{_sd(kind)}finally{log=_l;addBag=_ab}S.caps=caps;S.inv=inv;statCache=null;updateHud();dirty=true;log('Вещи и крышки при вас — ничего не выпало.','good')}}
+
+// ================= v67: СЮЖЕТНЫЙ КВЕСТ «НОВЫЙ МАРШРУТ» (ТОЛЬКО ТЕСТ) =================
+// После «Долга Степана». Колоколу нужна новая дорога за реку — старую держат Вороны. Степан берётся вести второй грузовик.
+// Игрок разведывает путь (Гнилое болото, Мёртвый город, Чернолесье), добывает для грузовика бензин, колесо и аккумулятор,
+// а потом охраняет грузовик в Чернолесье: он едет сам, на пути три засады. Взорвут грузовик — снова с последней засады.
+// Награда — караванщик в Колоколе с товарами из-за реки. Всё — только у этого игрока.
+// ПОКА ТОЛЬКО В ТЕСТОВЫХ КОМНАТАХ (?room=…): в основном мире его нет, пока администратор не решит.
+const NR_ON=true;
+Object.assign(ITEMS,{
+  nr_fuel:{n:'Канистра бензина',k:'quest',p:0,r:2,d:'Двадцать литров. Пахнет так, что мутанты чихают. Для грузовика Степана.'},
+  nr_wheel:{n:'Колесо от ЗИЛа',k:'quest',p:0,r:2,d:'Почти круглое. Почти целое. Для грузовика Степана.'},
+  nr_batt:{n:'Аккумулятор',k:'quest',p:0,r:2,d:'Ещё держит заряд. В отличие от того, кто его сторожил. Для грузовика Степана.'}});
+WT.nr_fuel=8;WT.nr_wheel=10;WT.nr_batt=6;
+const nrSt=()=>S&&S.nr?S.nr.st|0:0;
+function nrSet(st,msg){S.nr=S.nr||{};Object.assign(S.nr,{st,sp:{}});dirty=true;if(msg)log(msg,'good');nrHud();try{saveLocal()}catch(e){}}
+const NR_STEPS={1:'Поговорите со Степаном в баре.',2:'Разведайте путь: отметьте опасные места на Гнилом болоте, в Мёртвом городе и в Чернолесье.',
+  3:'Добудьте для грузовика бензин (Химкомбинат), колесо (Заречный) и аккумулятор (подвал Мёртвого города).',4:'Отнесите всё Степану в бар.',
+  5:'Грузовик ждёт у въезда в Чернолесье. Охраняйте его до реки — держитесь рядом.',6:'Доехали! Поговорите со Степаном у реки.',99:'Пройден.'};
+// ---------- точки ----------
+const NRP={};
+function nrPos(k){if(NRP[k])return NRP[k];let p=null;
+  if(k==='scout0'){const m=MAPS.swamp;p=rrFree(m,m.w*.3,m.h*.3,0,8)}
+  else if(k==='scout1'){const m=MAPS.ruins;p=rrFree(m,m.w*.25,m.h*.7,0,8)}
+  else if(k==='scout2')p=rrFree(MAPS.wild,60,30,0,8);
+  else if(k==='fuel'){const m=MAPS.chem;p=rrFree(m,m.w*.7,m.h*.6,0,8)}
+  else if(k==='wheel'){const m=MAPS.city;p=rrFree(m,m.w*.3,m.h*.7,0,8)}
+  else if(k==='batt'){const m=MAPS.ruins_b1;p=rrFree(m,m.w*.7,m.h*.5,0,5)}
+  return NRP[k]=p}
+const NR_SCOUT=[['swamp','scout0','трясина и гнездо кровососов — объезжать по краю'],['ruins','scout1','завал и снайперская точка Воронов — проезд узкий'],['wild','scout2','старый мост сгнил — только брод ниже по течению']];
+const NR_PARTS=[['nr_fuel','chem','fuel','⛽ Бензин'],['nr_wheel','city','wheel','🛞 Колесо'],['nr_batt','ruins_b1','batt','🔋 Аккумулятор']];
+// ---------- путь грузовика по Чернолесью: от въезда до брода (поиск пути по клеткам) ----------
+let NR_PATH=null;
+function nrPath(){if(NR_PATH)return NR_PATH;const m=MAPS.wild,W=m.w,H=m.h;const ok=(x,y)=>x>=1&&y>=1&&x<W-1&&y<H-1&&walkable(m.g[y][x]);
+  const s=rrFree(m,75,4,1,5);const prev=new Int32Array(W*H).fill(-1);const q=[s[1]*W+s[0]];prev[q[0]]=q[0];let best=q[0],bd=1e9;
+  for(let i=0;i<q.length;i++){const c=q[i],x=c%W,y=(c/W)|0;const d=Math.hypot(x-W*.5,y-(H-6));if(d<bd){bd=d;best=c}
+    for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){const nx=x+dx,ny=y+dy;if(!ok(nx,ny))continue;const n=ny*W+nx;if(prev[n]!==-1)continue;prev[n]=c;q.push(n)}}
+  const path=[];for(let c=best;;c=prev[c]){path.push([c%W+.5,((c/W)|0)+.5]);if(prev[c]===c)break}path.reverse();
+  // сглаживание: не дёргаться по каждой клетке
+  const sm=[path[0]];for(let i=1;i<path.length;i++){const a=sm[sm.length-1],b=path[i];if(Math.hypot(b[0]-a[0],b[1]-a[1])>=1.9||i===path.length-1)sm.push(b)}
+  return NR_PATH=sm}
+const NR_AMB=[.28,.58,.86];
+// ---------- NPC: караванщик (награда) ----------
+const NR_TRADER={id:'nr_trader',map:'-',x:0,y:0,a:Math.PI/2,n:'Караванщик Гоша',role:'Возит товар из-за реки',lk:LK('m',1,'short','brown',2,'beard',1),eq:{body:'s2b',back:'backpack'},
+  lines:['Из-за реки, свежее! Ну как свежее — пережило переправу.','Цены? Цены честные. Река — она дорогая.','Степан передаёт привет. И просит не стрелять по колёсам.']};
+NPCS.push(NR_TRADER);
+SELL.nr_trader=[['seva',1050],['mosin',820],['val',1900,30],['bizon',600],['stim',80],['medkit',65],['water',7],['can',8]];
+setInterval(()=>{try{if(!NR_ON||!S){NR_TRADER.map='-';return}if(S.nr&&S.nr.trader){const p=NRP.trader||(NRP.trader=rrFree(MAPS.hub,24,10,1,5));Object.assign(NR_TRADER,{map:'hub',x:p[0],y:p[1]})}else NR_TRADER.map='-';
+  if(nrSt()>=1&&nrSt()<99&&rrSt()>=7)RR_STEPAN.lines=['Новая дорога — новая жизнь. Или новая могила. Посмотрим.','Грузовик — зверь. Если найдёшь, чем его накормить.']}catch(e){}},700);
+// ---------- подсказка ----------
+function nrMark(st){const D=S.nr||{};
+  if(st===1||st===4)return ['bar',rrPos('stepan'),'Степан'];
+  if(st===2){const i=[0,1,2].find(i=>!(D.sc||[])[i]);if(i==null)return null;const [m,k]=NR_SCOUT[i];return [m,nrPos(k),'📍 Разведка']}
+  if(st===3){const left=NR_PARTS.filter(([id])=>!has(id));const here=left.find(([,m])=>M&&m===M.id)||left[0];if(!here)return null;return [here[1],nrPos(here[2]),here[3]]}
+  if(st===5){if(M&&M.id==='wild'&&D.tk)return ['wild',[D.tk.x-.5,D.tk.y-.5],'🚚 Грузовик'];return ['wild',nrPath()[0].map(v=>v-.5),'🚚 Грузовик']}
+  if(st===6){const e=nrPath()[nrPath().length-1];return ['wild',[e[0]-.5,e[1]-.5],'Степан']}return null}
+function nrHud(){let h=document.getElementById('nrHud');const st=nrSt();if(!NR_ON||!S||st<1||st>=99||!titleEl.hidden){if(h)h.hidden=true;return}
+  if(!h){h=document.createElement('div');h.id='nrHud';h.style.cssText='position:fixed;left:50%;top:58px;transform:translateX(-50%);z-index:15;background:rgba(20,16,10,.85);border:1px solid #6a5034;border-radius:10px;padding:6px 12px;font:12px var(--mono,monospace);color:#f2d28a;max-width:min(560px,92vw);text-align:center;pointer-events:none';document.body.append(h)}
+  h.hidden=false;const D=S.nr;let s='📜 Новый маршрут · '+NR_STEPS[st];if(st===2)s+=' ('+(D.sc||[]).filter(Boolean).length+'/3)';if(st===3)s+=' ('+NR_PARTS.filter(([id])=>has(id)).length+'/3)';
+  if(st===5&&D.tk){const L=nrPath().length-1;s+=' · путь '+Math.round(D.tk.i/L*100)+'% · грузовик '+Math.round(D.tk.hp)+'%'+(D.tk.wait?' · '+D.tk.wait:'')}
+  const f=nrMark(st);if(f&&M){const [m,p]=f;if(m===M.id&&p){const dx=p[0]+.5-P.x,dy=p[1]+.5-P.y;const d=Math.round(Math.hypot(dx,dy));const ar='→↘↓↙←↖↑↗'[((Math.round(Math.atan2(dy,dx)/(Math.PI/4))%8)+8)%8];s+=' · '+ar+' '+d+' м'}else if(MAPS[m])s+=' · локация: '+MAPS[m].name}
+  h.textContent=s}
+setInterval(()=>{try{nrHud()}catch(e){}},500);
+setInterval(()=>{if(!NR_ON||!S||!M||paused)return;const f=nrMark(nrSt());if(!f)return;const [m,p,n]=f;if(m!==M.id||!p)return;if(Math.hypot(P.x-p[0]-.5,P.y-p[1]-.5)<18)floatText(p[0]+.5,p[1]-.3,n,'#f2d28a')},2000);
+// ---------- враги ----------
+const nrHpK=()=>.55+(S.lvl|0)*.05;
+function nrSpawn(type,x,y,tag,mul){const e=rrSpawn(type,x,y,mul);e.nr=tag;return e}
+function nrRing(types,cx,cy,r0,r1,tag,mul){types.forEach((t,i)=>{const a=i/types.length*Math.PI*2;const q=rrFree(M,cx+Math.cos(a)*(r0+r1)/2,cy+Math.sin(a)*(r0+r1)/2,0,3);nrSpawn(t,q[0],q[1],tag,mul)})}
+function nrCheck(id){if(!NR_ON||!S||!S.nr||!M||M.id!==id)return;const st=nrSt(),D=S.nr;D.sp=D.sp||{};
+  // разведка: дошёл до точки — отметил (в Мёртвом городе на точке ждут псы)
+  if(st===2){D.sc=D.sc||[];NR_SCOUT.forEach(([m,k,txt],i)=>{if(m!==id||D.sc[i])return;const p=nrPos(k);
+    if(id==='ruins'&&!D.sp.dogs&&Math.hypot(P.x-p[0]-.5,P.y-p[1]-.5)<14){D.sp.dogs=1;nrRing(['dog','dog','dog'],p[0],p[1],3,5,'scout',nrHpK());log('У завала — стая слепых псов. Видимо, тоже разведчики.','bad')}
+    if(Math.hypot(P.x-p[0]-.5,P.y-p[1]-.5)<2.2){D.sc[i]=1;dirty=true;floatText(P.x,P.y-1.2,'📍 Отмечено','#f2d28a',true);log('📍 Разведка: '+MAPS[m].name+' — '+txt+'.','good');
+      if(D.sc.filter(Boolean).length>=3)nrSet(3,'Путь разведан. Степан: «Теперь грузовик. Ему нужны бензин, колесо и аккумулятор. Без них он просто очень тяжёлая лавочка».')}})}
+  // детали: лежат под охраной
+  if(st===3)for(const [item,m,k] of NR_PARTS){if(m!==id||has(item))continue;const r=rtFor(id);const p=nrPos(k);
+    if(!r.pickups.some(q=>q.nr===item&&!q.gone))r.pickups.push({item,q:1,x:p[0]+.5,y:p[1]+.5,gone:0,quest:1,nr:item});
+    if(!D.sp[item]){D.sp[item]=1;const k2=nrHpK();if(item==='nr_fuel'){nrRing(['cleaner','cleaner','cleaner'],p[0],p[1],3,5,'part',k2);log('Бензин сторожат Чистильщики. Они бензин не пьют — но и не отдают.','bad')}
+      else if(item==='nr_wheel'){nrRing(['raider','raider','raider','gunner'],p[0],p[1],3,6,'part',k2);log('Колесо у Воронов. Они на нём, кажется, сидят — вместо стула.','bad')}
+      else{nrRing(['ghoul','ghoul','ghoul','ghoul'],p[0],p[1],2,4,'part',k2);log('В подвале что-то шевелится. Аккумулятор, к сожалению, не единственное, что тут заряжено.','bad')}}}
+  // конвой
+  if(st===5&&id==='wild')nrTruckInit()}
+{const _em=enterMap;enterMap=function(id,x,y){const r=_em.apply(this,arguments);try{nrCheck(id);nrHud()}catch(e){}return r}}
+setInterval(()=>{try{if(M&&!paused)nrCheck(M.id)}catch(e){}},700);
+// подобранные детали — убрать с карты; все три — к Степану
+setInterval(()=>{if(!NR_ON||!S||nrSt()!==3)return;for(const r of Object.values(RT))r.pickups=r.pickups.filter(p=>!(p.nr&&(p.gone||has(p.nr))));
+  if(NR_PARTS.every(([id])=>has(id)))nrSet(4,'Бензин, колесо, аккумулятор — всё у вас. Несите Степану в бар.')},800);
+// ---------- грузовик ----------
+function nrTruckInit(){const D=S.nr;if(D.tk)return;const p=nrPath()[0];D.tk={i:D.cp||0,hp:100,amb:D.ambDone||0,wait:''};const q=nrPath()[Math.floor(D.tk.i)];D.tk.x=q[0];D.tk.y=q[1];D.tk.a=Math.PI/2;
+  log('🚚 Степан: «Заводи шарманку! Держись рядом — без охраны я дальше куста не поеду».','good')}
+function nrTruckBoom(){const D=S.nr;const tk=D.tk;try{explodeFx(tk.x,tk.y)}catch(e){}shake=Math.max(shake,1);floatText(tk.x,tk.y-1.5,'БАБАХ!','#ff6a3a',true);
+  for(const r of Object.values(RT))r.enemies=r.enemies.filter(e=>e.nr!=='amb');D.tk=null;
+  log('🚚 Грузовик взорвали! Степан успел выпрыгнуть: «Второй раз за неделю! Я так скоро летать научусь». Начинаем с последней засады.','bad');dirty=true;setTimeout(()=>{if(M&&M.id==='wild'&&nrSt()===5)nrTruckInit()},2500)}
+function nrAmbush(n){const D=S.nr,tk=D.tk,path=nrPath();const ahead=path[Math.min(path.length-1,Math.floor(tk.i)+10)];const k=nrHpK();
+  const sets=[['raider','raider','raider','dog'],['raider','raider','gunner','gunner'],['gunner','gunner','gunner','raider','raider']];
+  nrRing(sets[n],ahead[0],ahead[1],2,5,'amb',k);tk.amb=n+1;D.cp=Math.floor(tk.i);D.ambDone=n;
+  const L=['Засада! Вороны! Я торможу — разберись с ними!','Опять они! У них что, абонемент на эту дорогу?!','Последние! Река уже видна — не подведи!'];floatText(tk.x,tk.y-1.6,L[n],'#ec7a62',true);log('⚠ Степан: «'+L[n]+'»','bad')}
+setInterval(()=>{if(!NR_ON||!S||!M||paused||nrSt()!==5||M.id!=='wild')return;const D=S.nr,tk=D.tk;if(!tk)return;const path=nrPath(),L=path.length-1;const dt=.1;
+  const foes=rtFor('wild').enemies.filter(e=>e.nr==='amb'&&e.alive&&!e.dying&&e.hp>0);
+  // враги рядом бьют по грузовику
+  let dmg=0;for(const e of rtFor('wild').enemies){if(!e.alive||e.dying||e.hp<=0)continue;if(Math.hypot(e.x-tk.x,e.y-tk.y)<2)dmg+=(EN[e.type]?.dmg||8)*.06}
+  if(dmg){tk.hp=Math.max(0,tk.hp-dmg);if(Math.random()<.15)floatText(tk.x,tk.y-1,'-'+Math.round(dmg*10),'#ec7a62');if(tk.hp<=0){nrTruckBoom();return}}
+  const far=Math.hypot(P.x-tk.x,P.y-tk.y)>9;
+  // засада на отметке пути
+  const nextA=NR_AMB[tk.amb];if(nextA!=null&&tk.i>=nextA*L&&!foes.length){nrAmbush(tk.amb);return}
+  tk.wait=foes.length?'засада':far?'ждёт вас':'';if(foes.length||far){if(far&&Math.random()<.02)floatText(tk.x,tk.y-1.5,'Без охраны не поеду!','#f2d28a',true);return}
+  if(tk.i>=L){nrSet(6);S.nr.tk=null;log('🚚 Брод! Степан: «Переехали! Ты понимаешь, что это значит? Колокол больше не на привязи у Воронов!» Поговорите со Степаном.','good');return}
+  const sp=1.7*dt;let rem=sp;while(rem>0&&tk.i<L){const a=path[Math.floor(tk.i)],b=path[Math.min(L,Math.floor(tk.i)+1)];const seg=Math.hypot(b[0]-a[0],b[1]-a[1])||1;const f=tk.i-Math.floor(tk.i);const left=seg*(1-f);
+    if(rem>=left){tk.i=Math.floor(tk.i)+1;rem-=left}else{tk.i+=rem/seg;rem=0}}
+  const a=path[Math.floor(tk.i)],b=path[Math.min(L,Math.floor(tk.i)+1)],f=tk.i-Math.floor(tk.i);tk.x=a[0]+(b[0]-a[0])*f;tk.y=a[1]+(b[1]-a[1])*f;const ang=Math.atan2(b[1]-a[1],b[0]-a[0]);if(b!==a)tk.a=ang;
+  if(Math.random()<.004)floatText(tk.x,tk.y-1.5,['Хорошо идём!','Слышишь, как мотор поёт? Это он матерится.','Не отставай!'][Math.floor(Math.random()*3)],'#f2d28a',true)},100);
+// грузовик в 2D (едет, с Степаном в кабине) и Степан у брода
+{const _dt=drawTilesCached;drawTilesCached=function(c,x0,y0,x1,y1,t){_dt(c,x0,y0,x1,y1,t);try{if(!NR_ON||!M||M.id!=='wild'||nrSt()!==5||!S.nr.tk)return;const tk=S.nr.tk;
+  c.save();c.translate(tk.x*T,tk.y*T);c.rotate(tk.a||0);c.fillStyle='rgba(0,0,0,.35)';c.fillRect(-36,-12,76,30);c.fillStyle='#4a5236';c.fillRect(-40,-15,52,30);c.fillStyle='#5a6242';c.fillRect(-40,-15,52,4);
+  c.fillStyle='#3a4029';c.fillRect(12,-13,26,26);c.fillStyle='#8aa0b0';c.fillRect(30,-9,7,18);c.fillStyle='#f2e8a0';c.fillRect(37,-11,3,4);c.fillRect(37,7,3,4);
+  c.fillStyle='#111';for(const wx of [-30,-12,24]){c.fillRect(wx-5,-17,10,4);c.fillRect(wx-5,13,10,4)}c.fillStyle='#6a5a3a';for(const bx of [-36,-24,-12])c.fillRect(bx,-9,9,18);c.restore();
+  const w=40;c.fillStyle='rgba(0,0,0,.6)';c.fillRect(tk.x*T-w/2,tk.y*T-34,w,5);c.fillStyle=tk.hp>50?'#7fe08a':tk.hp>25?'#f2b65c':'#ec7a62';c.fillRect(tk.x*T-w/2,tk.y*T-34,w*tk.hp/100,5)}catch(e){}}}
+// ---------- смерть ----------
+{const _die=die;die=function(){const r=_die.apply(this,arguments);try{if(!NR_ON||!S.nr)return r;const st=nrSt(),D=S.nr;if(st<1||st>=99)return r;
+  for(const q of Object.values(RT))q.enemies=q.enemies.filter(e=>!e.nr);D.sp={};if(st===5)D.tk=null;log('📜 «Новый маршрут»: вы погибли — этот шаг продолжится с того же места'+(st===5?' (грузовик ждёт у последней засады)':'')+'.','bad')}catch(e){}return r}}
+// ---------- разговоры ----------
+function nrTalk(t,p,b){openWin(t,x=>{for(const s of p)x.append(el('p','small',s));const r=el('div');r.style.cssText='display:flex;flex-direction:column;gap:6px;margin-top:8px';for(const q of b)r.append(q);x.append(r)})}
+function nrCancel(){if(!confirm('Отменить «Новый маршрут»? Всё по квесту сбросится.'))return;for(const q of Object.values(RT)){q.enemies=q.enemies.filter(e=>!e.nr);q.pickups=q.pickups.filter(p=>!p.nr)}for(const [id] of NR_PARTS)if(S.inv[id])take(id,S.inv[id]);S.nr={};dirty=true;if(!ov.hidden)closeWin();nrHud();log('📜 «Новый маршрут» отменён.','sys')}
+{const _nd=npcDialog;npcDialog=function(n){_nd(n);if(!NR_ON||!S)return;const o=ov.querySelector('.opts');if(!o)return;const add=(t,fn,cls)=>o.insertBefore(btn(t,fn,cls||'btn primary'),o.lastElementChild);const st=nrSt(),D=S.nr||{};
+  if(n.id==='rr_stepan'){
+    if(st===0&&typeof dsSt==='function'&&dsSt()>=99)add('📜 «Чем займёмся, Степан?»',()=>{closeWin();nrTalk('Водитель Степан',['— Пока Вороны держат старую дорогу, Колокол у них на поводке. Каждая банка тушёнки — через их таможню.','— Есть другая дорога. Через болото, город и Чернолесье — к броду. Никто по ней не ездил. Ну, кто ездил — не рассказывал.','— Второй грузовик у меня есть. Ржавый, злой, без колеса. Поведу его сам. А ты — охраняй. Ну что, проложим маршрут?'],
+      [btn('Проложим',()=>{closeWin();S.nr={st:0};nrSet(2,'Сначала разведка: Гнилое болото, Мёртвый город и Чернолесье. Отметьте опасные места.')},'btn primary'),btn('Не сейчас',()=>closeWin())])});
+    if(st===4&&NR_PARTS.every(([id])=>has(id)))add('🔧 Отдать бензин, колесо и аккумулятор',()=>{closeWin();for(const [id] of NR_PARTS)take(id,1);nrSet(5,'Степан: «Ну, зверь, просыпайся!» Грузовик ждёт у въезда в Чернолесье (со стороны Гнилого болота).');
+      log('Степан ковыряется в моторе. Мотор кашляет, чихает — и рычит. Степан тоже.','sys')});
+    if(st>=1&&st<99)add('✖ Отменить квест «Новый маршрут»',()=>{closeWin();nrCancel()},'btn')}
+  if(n.id==='mityai'&&TESTROOM){add('🧪 Тест: начать «Новый маршрут»',()=>{closeWin();S.ds=Object.assign(S.ds||{},{st:99,end:(S.ds&&S.ds.end)||'pay'});S.rr=Object.assign(S.rr||{},{st:7,seen:1,thx:Date.now()-2*864e5});S.nr={};dirty=true;log('Тест: «Долг Степана» отмечен пройденным. Поговорите со Степаном.','sys')},'btn');
+    add('🧪 Тест: сразу к конвою',()=>{closeWin();S.nr={st:5,sc:[1,1,1],sp:{}};dirty=true;nrHud();log('Тест: грузовик ждёт у въезда в Чернолесье.','sys')},'btn');
+    add('🧪 Тест: сбросить «Новый маршрут»',()=>{closeWin();for(const q of Object.values(RT)){q.enemies=q.enemies.filter(e=>!e.nr);q.pickups=q.pickups.filter(p=>!p.nr)}for(const [id] of NR_PARTS)if(S.inv[id])take(id,S.inv[id]);S.nr={};dirty=true;nrHud();log('Тест: «Новый маршрут» сброшен.','sys')},'btn')}}}
+// у брода — разговор со Степаном (он стоит у грузовика)
+const NR_STEP2={id:'nr_stepan',map:'-',x:0,y:0,a:-Math.PI/2,n:'Водитель Степан',role:'Довёл грузовик до брода',lk:RR_STEPAN.lk,eq:RR_STEPAN.eq,lines:['Переехали! Я до сих пор не верю.']};NPCS.push(NR_STEP2);
+setInterval(()=>{try{if(NR_ON&&S&&nrSt()===6){const e=nrPath()[nrPath().length-1];const p=rrFree(MAPS.wild,e[0],e[1],1,3);Object.assign(NR_STEP2,{map:'wild',x:p[0],y:p[1]})}else NR_STEP2.map='-'}catch(x){}},700);
+{const _nd=npcDialog;npcDialog=function(n){_nd(n);if(!NR_ON||!S||n.id!=='nr_stepan'||nrSt()!==6)return;const o=ov.querySelector('.opts');if(!o)return;
+  o.insertBefore(btn('📜 «Доехали»',()=>{closeWin();nrTalk('Водитель Степан',['— Доехали… — Степан гладит капот, как собаку. — Знаешь, сколько лет Колокол ждал эту дорогу? Вот и я не знаю. Много.','— За рекой ждут наши. Теперь у Колокола будет свой караван. Гоша — мой кум — будет возить товар прямо к нам. Мимо Воронов. Пусть подавятся.'],
+    [btn('Отлично',()=>{closeWin();gainXp(6000);S.caps+=3000;S.nr.trader=1;nrSet(99,'«Новый маршрут» пройден! Награда: 6000 опыта, 3000 крышек. В Ржавом Колоколе теперь торгует Караванщик Гоша — товары из-за реки.');updateHud()},'btn primary')])},'btn primary'),o.lastElementChild)}}
+// ---------- вкладка «Задания» ----------
+{const _qv=TABVIEW.quests;TABVIEW.quests=function(b){_qv(b);if(!NR_ON)return;const st=nrSt();if(st<1)return;const box=el('div');box.append(el('div','sec','📜 Сюжет: «Новый маршрут»'),el('p','small',NR_STEPS[st]));if(st<99)box.append(btn('✖ Отменить квест',()=>nrCancel(),'btn'));b.prepend(box)}}
+
+// ================= v68: ОДИН АККАУНТ — ОДНО УСТРОЙСТВО =================
+// Пока аккаунт открыт в игре на одном устройстве, войти в него с другого нельзя — «Вы уже зашли в этот аккаунт».
+// Если первое устройство закрыли или оно уснуло (телефон в кармане) — заходить можно; уснувшее при пробуждении
+// останавливается и ничего не перезаписывает. При входе берётся самое свежее сохранение (облако или это устройство).
+const ODV={sid:Math.random().toString(36).slice(2,12),gen:0,ok:false,kicked:false,busy:false,need:false,topic:null,last:null,pong:{},hidAt:0};
+function odvSend(o,ret){if(!ODV.topic)return Promise.resolve();return cloud().then(cs=>Promise.all(cs.map(c=>new Promise(r=>{const go=()=>c.publish(ODV.topic,JSON.stringify(o),{retain:!!ret,qos:1},()=>r());
+  if(c.connected)go();else{const t=setTimeout(r,4000);c.once('connect',()=>{clearTimeout(t);go()})}})))).catch(()=>{})}
+function odvMsg(tp,buf){if(tp!==ODV.topic)return;let d;try{d=JSON.parse(dec.decode(buf))}catch(e){return}if(!d||!d.sid||d.sid===ODV.sid)return;
+  if(d.t==='pong'&&ODV.pong[d.n])ODV.pong[d.n]();
+  if(!ODV.ok){if(d.t==='hb'||d.t==='off')ODV.last=d;return}
+  if(d.t==='ping'){odvSend({t:'pong',n:d.n,sid:ODV.sid,gen:ODV.gen});return}
+  if((d.t==='hb'||d.t==='pong')&&((d.gen|0)>ODV.gen||((d.gen|0)===ODV.gen&&d.sid>ODV.sid)))odvKick()}
+async function odvSub(){const t=ACC.topic+'/live';if(ODV.topic!==t){ODV.topic=t;ODV.last=null}const cs=await cloud();
+  await Promise.race([new Promise(r=>{if(cs.some(c=>c.connected))r();else cs.forEach(c=>c.once('connect',r))}),new Promise(r=>setTimeout(r,6000))]);
+  for(const c of cs){if(!c.__odv){c.__odv=1;c.on('message',odvMsg);c.on('connect',()=>{if(ODV.ok)ODV.need=true})}const sub=()=>c.subscribe(ODV.topic,{qos:1});c.connected?sub():c.once('connect',sub)}}
+// занять аккаунт: если на другом устройстве игра открыта и отвечает — нельзя
+async function odvClaim(){await odvSub();await new Promise(r=>setTimeout(r,2000));const L=ODV.last;
+  if(L&&L.t==='hb'){const n=Math.random().toString(36).slice(2,10);const alive=await new Promise(r=>{const tm=setTimeout(()=>{delete ODV.pong[n];r(false)},3500);ODV.pong[n]=()=>{clearTimeout(tm);delete ODV.pong[n];r(true)};odvSend({t:'ping',n,sid:ODV.sid})});
+    if(alive)return false}
+  ODV.gen=((L&&L.gen)|0)+1;ODV.ok=true;ODV.need=false;odvSend({t:'hb',sid:ODV.sid,gen:ODV.gen},true);return true}
+setInterval(()=>{if(ODV.ok&&!ODV.kicked&&document.visibilityState!=='hidden')odvSend({t:'hb',sid:ODV.sid,gen:ODV.gen},true)},30000);
+// после сна/обрыва связи сначала проверяем, не зашли ли в аккаунт с другого устройства, и только потом сохраняем в облако
+async function odvVerify(){ODV.need=false;try{const cs=await cloud();for(const c of cs)if(c.connected)c.unsubscribe(ODV.topic,()=>c.subscribe(ODV.topic,{qos:1}))}catch(e){}await new Promise(r=>setTimeout(r,2000))}
+addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')ODV.hidAt=Date.now();else if(ODV.ok&&ODV.hidAt&&Date.now()-ODV.hidAt>10000)ODV.need=true});
+function odvKick(){if(ODV.kicked)return;ODV.kicked=true;ODV.ok=false;paused=true;try{keys.clear();firing=false}catch(e){}
+  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(10,8,5,.95);display:flex;align-items:center;justify-content:center;padding:16px';
+  const b=el('div');b.style.cssText='max-width:420px;background:#1b160f;border:1px solid #5a4a30;border-radius:10px;padding:18px;color:#f2e2b8';
+  b.append(el('div','sec','Аккаунт открыт на другом устройстве'),el('p',null,'В аккаунт '+(ACC.login||'')+' зашли с другого устройства, поэтому здесь игра остановлена. Весь прогресс — там, где вы играете сейчас.'),btn('Понятно',()=>location.reload(),'btn primary'));
+  d.append(b);document.body.append(d)}
+function odvRelease(){if(ODV.ok&&!ODV.kicked)odvSend({t:'off',sid:ODV.sid,gen:ODV.gen},true)}
+addEventListener('pagehide',odvRelease);
+{const _lo=logout;logout=function(){odvRelease();return _lo.apply(this,arguments)}}
+{const _sl=saveLocal;saveLocal=function(){if(ODV.kicked)return;return _sl.apply(this,arguments)}}
+{const _pc=pushCloud;pushCloud=async function(force){if(ODV.kicked)return;if(ODV.ok&&ODV.need){await odvVerify();if(ODV.kicked)return}return _pc.apply(this,arguments)}}
+function odvNote(t,bad){let n=document.getElementById('odvNote');if(!t){if(n)n.remove();return}if(!n){n=el('div');n.id='odvNote';n.style.cssText='margin:8px 0;font-weight:600';titleBody.prepend(n)}n.className=bad?'err':'note';n.textContent=t}
+{const _sg=startGame;startGame=function(save,fresh){if(ODV.ok||ODV.kicked||!ACC.login||!ACC.topic||inClaude())return _sg.apply(this,arguments);if(ODV.busy)return;ODV.busy=true;
+  odvNote('Проверяем, не открыт ли аккаунт на другом устройстве…');
+  (async()=>{let ok=true;try{ok=await odvClaim()}catch(e){ok=true;ODV.ok=true}
+    if(!ok){ODV.busy=false;odvNote('Вы уже зашли в этот аккаунт на другом устройстве. Сначала выйдите из игры там — тогда сможете войти здесь.',true);return}
+    if(!fresh){try{const pkt=await cloudGet(ACC.topic,3000);if(pkt&&(pkt.at||0)>(save.at||0)){const s=migrate(await decryptSave(pkt,ACC.keyB64));if(s)save=s}}catch(e){}}
+    ODV.busy=false;odvNote(null);_sg(save,fresh)})()}}
+
+// ================= v68: ПОДСКАЗКА О СЛЕДУЮЩЕМ СЮЖЕТЕ =================
+// После «Последнего рейса» во вкладке «Задания» видно, куда идти дальше: к Степану за благодарностью, потом к Митяю
+// («Долг Степана», с 20-го уровня), после «Долга» — снова к Степану («Новый маршрут»).
+{const _qv=TABVIEW.quests;TABVIEW.quests=function(b){_qv(b);try{if(!S||rrSt()<7)return;let t=null;
+  if(!S.rr.thx)t='Подойдите к водителю Степану в баре — расскажите, что Лида жива и ящики у Бабки Зои.';
+  else if(dsSt()<1)t=(S.lvl|0)<DS_LVL?'Следующий сюжет — «Долг Степана», откроется с '+DS_LVL+'-го уровня. Тогда спросите Митяя в баре, что со Степаном.':'Новый сюжет «Долг Степана»: спросите Митяя в баре, что со Степаном — он сам не свой.';
+  else if(dsSt()>=99&&NR_ON&&nrSt()<1)t='Новый сюжет «Новый маршрут»: поговорите со Степаном в баре — у него новое дело.';
+  if(!t)return;const box=el('div');box.append(el('div','sec','📜 Дальше по сюжету'),el('p','small',t));b.prepend(box)}catch(e){}}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
