@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793432271";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793442919";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -827,7 +827,7 @@ function updateProjs(dt){
       if(c===undefined||(SOLID.has(c)&&!(LOW.has(c)&&p.from==='p'&&Math.random()<.5))){p.life=0;
         emit(p.kind==='acid'?6:4,{x:p.x-p.vx*.01,y:p.y-p.vy*.01,a:Math.atan2(-p.vy,-p.vx),spread:1.6,v:2.5,life:.25,size:1.6,color:p.kind==='acid'?'#b8f04a':'#e8d6a0',type:'spark'});
         emit(2,{x:p.x,y:p.y,v:.5,life:.6,size:3,color:'rgba(160,150,130,.35)',type:'smoke'});break}
-      if(p.from==='p'){for(const e of r.enemies){if(!e.alive||e.dying||p.hit.has(e))continue;const d=EN[e.type];if((e.x-p.x)**2+(e.y-.2-p.y)**2<(d.r+.12)**2){p.hit.add(e);damageEnemy(e,p.dmg,Math.atan2(p.vy,p.vx),p.crit);if(p.pierce>0){p.pierce--;p.dmg*=.75}else p.life=0;break}}
+      if(p.from==='p'){for(const e of r.enemies){if(!e.alive||e.dying||p.hit.has(e))continue;if(typeof dsHide==='function'&&dsHide(e))continue;const d=EN[e.type];if((e.x-p.x)**2+(e.y-.2-p.y)**2<(d.r+.12)**2){p.hit.add(e);damageEnemy(e,p.dmg,Math.atan2(p.vy,p.vx),p.crit);if(p.pierce>0){p.pierce--;p.dmg*=.75}else p.life=0;break}}
         if(p.life>0&&M.pvp)for(const pe of peerList()){if(!p.hit.has(pe.peer)&&(pe.x-p.x)**2+(pe.y-.2-p.y)**2<.16){p.hit.add(pe.peer);pvpHit(pe,p.dmg);p.life=0;break}}}
       else if((P.x-p.x)**2+(P.y-.2-p.y)**2<(P.prone?.05:.13)&&!(P.rollT>now)&&!(p.fac&&typeof myFac==='function'&&p.fac===myFac())){p.life=0;hurt(p.dmg,p.src);if(p.kind==='acid'){addRad(4);emit(8,{x:P.x,y:P.y,v:2,life:.5,size:2,color:'#b8f04a',type:'spark'})}}
     }
@@ -1558,14 +1558,14 @@ function render(t){
   const ents=[];
   for(const n of npcsHere()){const x=(n.x+.5)*T,y=(n.y+.5)*T;if(x<CX-80||x>CX+VW+80||y<CY-80||y>CY+VH+90)continue;const near=Math.hypot(P.x-n.x-.5,P.y-n.y-.5)<3.5;const lookA=near?Math.atan2(P.y-n.y-.5,P.x-n.x-.5):n.a;
     ents.push({y:n.y+.5,f:()=>n.dog?drawDog(ctx,x,y+2,0,0):drawHuman(ctx,x,y-2,{lk:n.lk,eq:n.eq,view:viewOf(lookA),aim:n.eq.w1?lookA+.9:lookA,weapon:n.eq.w1}),lab:()=>label(ctx,x,y-32,n.n,n.dog?'#ebe1cc':'#f2b65c')})}
-  for(const e of r.enemies){if(!e.alive)continue;const x=e.x*T,y=e.y*T;if(x<CX-80||x>CX+VW+80||y<CY-80||y>CY+VH+90)continue;if(seeHid(e,e.x,e.y,0))continue;ents.push({y:e.y,f:()=>drawEnemy(ctx,e,x,y-4,t),lab:EN[e.type].boss&&!e.dying?()=>label(ctx,x,y-(e.type==='queen'?50:42),EN[e.type].n,'#ec7a62'):null})}
+  for(const e of r.enemies){if(!e.alive)continue;if(typeof dsHide==='function'&&dsHide(e))continue;const x=e.x*T,y=e.y*T;if(x<CX-80||x>CX+VW+80||y<CY-80||y>CY+VH+90)continue;if(seeHid(e,e.x,e.y,0))continue;ents.push({y:e.y,f:()=>drawEnemy(ctx,e,x,y-4,t),lab:EN[e.type].boss&&!e.dying?()=>label(ctx,x,y-(e.type==='queen'?50:42),EN[e.type].n,'#ec7a62'):null})}
   if(room){for(const p of room.peers()){if(p.sameTab||p.kind!=='viewer')continue;const pr=p.presence||{};if(pr.m!==M.id||typeof pr.x!=='number'||typeof pr.y!=='number')continue;
     let pp=peerPos.get(p.peer);if(!pp){pp={x:pr.x,y:pr.y,ph:0,sh:pr.sh,ft:0};peerPos.set(p.peer,pp)}const ox=pp.x,oy=pp.y;pp.x+=(pr.x-pp.x)*.25;pp.y+=(pr.y-pp.y)*.25;const mvd=Math.hypot(pp.x-ox,pp.y-oy);pp.ph+=mvd*7;
     if(pr.sh!==pp.sh){pp.sh=pr.sh;pp.ft=now;sfx.gun(pr.w,pp.x,pp.y)}
     const lk=pr.lk&&typeof pr.lk==='object'?{g:pr.lk.g==='f'?'f':'m',skin:pr.lk.skin|0,hair:HAIRS[pr.lk.hair]?pr.lk.hair:'short',hc:HCOL[pr.lk.hc]?pr.lk.hc:'black',outfit:pr.lk.outfit|0,beard:BEARDS[pr.lk.beard]?pr.lk.beard:'none',eye:pr.lk.eye|0}:{};
     const eq={};if(pr.e&&typeof pr.e==='object')for(const k of GEAR)if(ITEMS[pr.e[k]]&&ITEMS[pr.e[k]].k===k)eq[k]=pr.e[k];
     const wpn=ITEMS[pr.w]&&ITEMS[pr.w].k==='weapon'?pr.w:null;const nm=(typeof pr.n==='string'?cleanText(pr.n,16):'')||'Выживший';const a=typeof pr.a==='number'?pr.a:Math.PI/2;const x=pp.x*T,y=pp.y*T;
-    if(seeHid(pp,pp.x,pp.y,1))continue;ents.push({y:pp.y,f:()=>drawHuman(ctx,x,y-4,{lk,eq,view:viewOf(a),aim:a,weapon:wpn,gm:typeof pr.gm==='string'?pr.gm.slice(0,3):'',rl:pr.rl===1,pn:pr.pn===1,moving:mvd>.005,phase:pp.ph,flashT:pp.ft}),lab:()=>{if(!hideNick(x/T,y/T))label(ctx,x,y-36,(typeof facMark==='function'?facMark(pr.fc):'')+tagPre(nm)+(pr.adm?'★ ':'')+nm+' · '+(pr.lv|0),tagCol(nm)||karmaRank(pr.k|0)[1]);const bb=bubbles.get(p.peer);if(bb&&bb.until>now)bubble(ctx,x,y-42,bb.text)}})}}
+    if(seeHid(pp,pp.x,pp.y,1))continue;ents.push({y:pp.y,f:()=>drawHuman(ctx,x,y-4,{lk,eq,view:viewOf(a),aim:a,weapon:wpn,gm:typeof pr.gm==='string'?pr.gm.slice(0,3):'',rl:pr.rl===1,pn:pr.pn===1,ch:pr.ch===1,moving:mvd>.005,phase:pp.ph,flashT:pp.ft}),lab:()=>{if(!hideNick(x/T,y/T))label(ctx,x,y-36,(typeof facMark==='function'?facMark(pr.fc):'')+tagPre(nm)+(pr.adm?'★ ':'')+nm+' · '+(pr.lv|0),tagCol(nm)||karmaRank(pr.k|0)[1]);const bb=bubbles.get(p.peer);if(bb&&bb.until>now)bubble(ctx,x,y-42,bb.text)}})}}
   ents.push({y:P.y,f:()=>drawHuman(ctx,ppx,ppy-4,{lk:S.lk,eq:S.eq,view:viewOf(P.a),aim:P.a,weapon:curW(),moving:P.moving,phase:P.phase,swing:P.swing,recoil:P.recoil,flash:P.hurt>now,flashT:P.lastShot,reload:P.reloadT>0?1-P.reloadT/P.reloadDur:0}),
     lab:()=>{label(ctx,ppx,ppy-36,(typeof facMark==='function'?facMark(myFac()):'')+(S.admin?'★ ':'')+S.name,karmaRank(S.karma|0)[1]);const bb=bubbles.get('me');if(bb&&bb.until>now)bubble(ctx,ppx,ppy-42,bb.text)}});
   ents.sort((a,b)=>a.y-b.y);for(const en of ents)en.f();
@@ -1691,7 +1691,7 @@ let lastBoard='';
 async function pushBoard(){if(!db||!uid||!S)return;const d={n:S.name.slice(0,16),lv:S.lvl,k:kills(S),q:S.stats.quests,score:S.lvl*10000+S.xp};const js=JSON.stringify(d);if(js===lastBoard)return;lastBoard=js;try{await db.doc('board/'+uid).set(d)}catch(e){}}
 let lastPres='';
 function sendPresence(){if(!room||!S||!M)return;const e={};for(const k of GEAR)if(S.eq[k])e[k]=S.eq[k];
-  const pr={m:M.id,x:Math.round(P.x*100)/100,y:Math.round(P.y*100)/100,a:Math.round(P.a*100)/100,w:curW(),gm:typeof myGm==='function'?myGm(curW()):'',pt:typeof petCode==='function'?petCode():'',inv:typeof adminInv==='function'&&adminInv()?1:0,rl:P.rollT>now?1:0,pn:P.prone?1:0,sh:P.shotN%1000,n:S.name.slice(0,16),lv:S.lvl,k:S.karma|0,adm:S.admin?1:0,v:5,md:typeof medPres==='function'?medPres():0,fl:typeof myFlId==='function'?myFlId():'',fc:typeof myFac==='function'?(myFac()||''):'',pid:S.pid||'',dv:typeof DEVID!=='undefined'?DEVID:'',sq:(typeof SQ!=='undefined'&&SQ.id)||'',hp:Math.round(S.hp/effMax()*100),ag:Math.round((1+stats().aggroPct/100)*(typeof proneK==='function'?proneK():1)*100)/100,lk:{g:S.lk.g,skin:S.lk.skin,hair:S.lk.hair,hc:S.lk.hc,outfit:S.lk.outfit,beard:S.lk.beard||'none',eye:S.lk.eye|0},e};
+  const pr={m:M.id,x:Math.round(P.x*100)/100,y:Math.round(P.y*100)/100,a:Math.round(P.a*100)/100,w:curW(),gm:typeof myGm==='function'?myGm(curW()):'',pt:typeof petCode==='function'?petCode():'',inv:typeof adminInv==='function'&&adminInv()?1:0,rl:P.rollT>now?1:0,pn:P.prone?1:0,ch:P.crouch&&!P.prone?1:0,sh:P.shotN%1000,n:S.name.slice(0,16),lv:S.lvl,k:S.karma|0,adm:S.admin?1:0,v:5,md:typeof medPres==='function'?medPres():0,fl:typeof myFlId==='function'?myFlId():'',fc:typeof myFac==='function'?(myFac()||''):'',pid:S.pid||'',dv:typeof DEVID!=='undefined'?DEVID:'',sq:(typeof SQ!=='undefined'&&SQ.id)||'',hp:Math.round(S.hp/effMax()*100),df:typeof dsFlags==='function'?dsFlags():0,ag:Math.round((1+stats().aggroPct/100)*(typeof proneK==='function'?proneK():1)*100)/100,lk:{g:S.lk.g,skin:S.lk.skin,hair:S.lk.hair,hc:S.lk.hc,outfit:S.lk.outfit,beard:S.lk.beard||'none',eye:S.lk.eye|0},e};
   const js=JSON.stringify(pr);if(js===lastPres)return;lastPres=js;room.presence(pr).catch(()=>{})}
 // Онлайн без Claude (itch.io и любой сайт): все игроки подключаются к общим публичным серверам-посредникам (MQTT),
 // сразу к двум — если один недоступен, связь идёт через второй. Отдаёт тот же набор вызовов, что и комната Claude.
@@ -2618,9 +2618,9 @@ const MOB={heard:{},am:{},hits:[],ev:[],lastSnap:0,lastFlush:0,snapN:0,adoptUnti
 const rid=()=>Math.random().toString(36).slice(2,8);
 const r2=v=>Math.round(v*100)/100;
 function myNetId(){return room&&room.p2p?room.self:'me'}
-function mapPlayers(mid){if(MOB.plT===now&&MOB.plM===mid)return MOB.pl;const out=[{id:myNetId(),x:P.x,y:P.y,me:true,ag:(1+stats().aggroPct/100)*(typeof proneK==='function'?proneK():1),fc:typeof myFac==='function'?myFac():null,inv:typeof adminInv==='function'&&adminInv(),pn:!!P.prone}];
+function mapPlayers(mid){if(MOB.plT===now&&MOB.plM===mid)return MOB.pl;const out=[{id:myNetId(),x:P.x,y:P.y,me:true,ag:(1+stats().aggroPct/100)*(typeof proneK==='function'?proneK():1),fc:typeof myFac==='function'?myFac():null,inv:typeof adminInv==='function'&&adminInv(),pn:!!P.prone,df:typeof dsFlags==='function'?dsFlags():0}];
   if(room&&room.p2p){const t=Date.now();for(const p of room.peers()){if(p.isMe)continue;const pr=p.presence||{};if(pr.m!==mid||typeof pr.x!=='number'||!(pr.v>=5)||t-(p.updatedAt||0)>5000)continue;const pp=peerPos.get(p.peer);
-    out.push({id:p.peer,x:pp?pp.x:pr.x,y:pp?pp.y:pr.y,ag:typeof pr.ag==='number'?Math.max(.3,Math.min(2,pr.ag)):1,fc:pr.fc||null,inv:pr.inv===1&&pr.adm===1,pn:pr.pn===1})}}
+    out.push({id:p.peer,x:pp?pp.x:pr.x,y:pp?pp.y:pr.y,ag:typeof pr.ag==='number'?Math.max(.3,Math.min(2,pr.ag)):1,fc:pr.fc||null,inv:pr.inv===1&&pr.adm===1,pn:pr.pn===1,df:pr.df|0})}}
   MOB.plT=now;MOB.plM=mid;MOB.pl=out;return out}
 function hostId(mid){const me=myNetId();if(!room||!room.p2p)return me;const t=Date.now();const on=new Set(mapPlayers(mid).map(p=>p.id));
   let h=null;for(const [id,ts] of Object.entries(MOB.heard[mid]||{}))if(id!==me&&t-ts<1600&&on.has(id)&&(!h||id<h))h=id;
@@ -2681,7 +2681,7 @@ function aiUpdate(dt){const r=rtFor(M.id);if(!r.pop)populate(M,r);const pl=mapPl
   for(const e of r.enemies){const d=EN[e.type];if(!e.alive)continue;if(e.dying){e.dying-=dt;if(e.dying<=0)e.alive=false;continue}if(e.hp<=0)continue;if(!pl.some(p=>Math.abs(p.x-e.x)<30&&Math.abs(p.y-e.y)<22)){e.moving=false;continue}
     e.cd-=dt;e.rcd-=dt;e.scd-=dt;e.lcd-=dt;e.pcd=(e.pcd??1.5)-dt;e.slcd=(e.slcd??1)-dt;
     if(e.kx||e.ky){moveBody(e,e.kx*dt*8,e.ky*dt*8,d.r);e.kx*=Math.max(0,1-dt*10);e.ky*=Math.max(0,1-dt*10);if(Math.abs(e.kx)+Math.abs(e.ky)<.01)e.kx=e.ky=0}
-    let tg=null,td=1e9;if(!M.safe)for(const p of pl){if(typeof inSafe==='function'&&inSafe(p.x,p.y))continue;if(d.fac&&p.fc===d.fac)continue;if(p.inv)continue;if(p.pn&&typeof coverLow==='function'&&coverLow(e.x,e.y,p.x,p.y))continue;const dd=Math.hypot(p.x-e.x,p.y-e.y);const lim=(e.seen&&e.tg===p.id)?d.aggro*2.2:d.aggro*(p.ag||1);if(dd<lim&&dd<td){td=dd;tg=p}}
+    let tg=null,td=1e9;if(!M.safe)for(const p of pl){if(typeof inSafe==='function'&&inSafe(p.x,p.y))continue;if(d.fac&&p.fc===d.fac)continue;if(p.df&&typeof dsSkip==='function'&&dsSkip(e,p,d,r))continue;if(p.inv)continue;if(p.pn&&typeof coverLow==='function'&&coverLow(e.x,e.y,p.x,p.y))continue;const dd=Math.hypot(p.x-e.x,p.y-e.y);const lim=(e.seen&&e.tg===p.id)?d.aggro*2.2:d.aggro*(p.ag||1);if(dd<lim&&dd<td){td=dd;tg=p}}
     if(tg){if(!e.seen)sfx.voice(e.type,e.x,e.y,'aggro');e.seen=true;e.tg=tg.id}else{e.seen=false;e.tg=''}
     const dx=tg?tg.x-e.x:0,dy=tg?tg.y-e.y:0,dist=tg?Math.hypot(dx,dy):1e9,toP=Math.atan2(dy,dx),tMe=!!(tg&&tg.me);
     let vx=0,vy=0,spd=d.spd;
@@ -8881,6 +8881,330 @@ function rrReset(){const st=rrSt();if(st<1||st>=7||(M&&(M.arena||M.train)))retur
 {const _lp=rrLidaPlace;rrLidaPlace=function(){_lp();if(rrSt()>=7)RR_STEPAN.lines=S&&S.rr&&S.rr.thx?['Нога заживает. Как встану — будет дело.','Не пропадай, сталкер.']:['Ну что там? Лида?..','Ящики дошли?']}}
 // исправление: раньше Бабка Зоя за ящики не выдавала аптечки и бинты — додаём тем, кто уже прошёл
 {const _as=afterStart;afterStart=async function(){const r=await _as.apply(this,arguments);try{if(S&&S.rr&&rrSt()>=7&&!S.rr.zfix){S.rr.zfix=1;add('medkit',3);add('bandage',5);dirty=true;log('Бабка Зоя: «Ой, совсем из головы вылетело — держи, что обещала». Получено: 3 аптечки, 5 бинтов.','good')}}catch(e){}return r}}
+
+// ================= v64: СЮЖЕТНЫЙ КВЕСТ «ДОЛГ СТЕПАНА» =================
+// Продолжение «Последнего рейса» (с 20-го уровня, через сутки после разговора со Степаном). В бар заходит Шрам —
+// главарь Ржавых Воронов: Степан брал у них в долг на тот рейс. Игрок выбирает путь: заплатить, отработать на Воронов
+// или «решить вопрос» силой. Логово Шрама — Дом №9 в Заречном, кабинет на 4 этаже, у входа часовой.
+// Всё — только у этого игрока: NPC, сценки, огонь, враги. Квест можно отменить в любой момент.
+// Тестовые кнопки у Митяя — только в тестовых комнатах (?room=…).
+const DS_ON=true;
+const DS_LVL=20;
+Object.assign(ITEMS,{
+  ds_tag:{n:'Жетон дани',k:'quest',p:0,r:1,d:'Жетон Ржавых Воронов. Пять таких — дань для Шрама.'},
+  ds_pack:{n:'Посылка Шрама',k:'use',p:0,r:2,d:'Тяжёлая, обмотана изолентой. Внутри что-то тикает? Нет, показалось. Наверное. Шрам сказал: не открывать.'},
+  ds_patch:{n:'Нашивка Воронов',k:'quest',p:0,r:3,d:'Знак своего у Ржавых Воронов. Вороны не нападают первыми — пока вы сами никого из них не раните.'}});
+WT.ds_tag=.05;WT.ds_pack=2;WT.ds_patch=.05;
+const dsSt=()=>S&&S.ds?S.ds.st|0:0;
+const dsD=()=>S.ds||(S.ds={});
+function dsSet(st,msg){const D=dsD();Object.assign(D,{st,sp:0,n:0,amb:0,boss:0,fl:{}});dirty=true;if(msg)log(msg,'good');dsHud();try{saveLocal()}catch(e){}}
+const dsIn9=()=>!!(M&&/^cb9_/.test(M.id));
+// сила врагов логова — от уровня игрока: новичку по силам, ветерану — только с тактикой и гранатами
+const dsHpK=()=>.55+(S.lvl|0)*.06,dsDmgK=()=>.5+(S.lvl|0)*.04;
+// ---------- флаги для «ведущего» мобов: 1 — нашивка Воронов, 2 — пропуск в Дом №9 (никто не нападает) ----------
+function dsFlags(){if(!DS_ON||!S||!S.ds)return 0;return (S.ds.crow?1:0)|(S.ds.pass&&dsIn9()?2:0)}
+function dsSkip(e,p,d,r){if(p.df&2)return true;if(!(p.df&1)||d.fac!=='crows')return false;if(e.seen&&e.tg===p.id)return false;if(e.prov)return false;
+  if(e.hp<d.hp){e.prov=1;return false}
+  // раненого Ворона видят соседи — и тоже нападают; кто далеко и не видел — стоит спокойно
+  for(const o of r.enemies)if(o!==e&&o.prov&&o.alive&&Math.hypot(o.x-e.x,o.y-e.y)<d.aggro){e.prov=1;return false}return true}
+// с пропуском в Доме №9 игрок видит только Воронов Шрама: мутантов и чужих врагов для него там нет
+function dsHide(e){return DS_ON&&!!(S&&S.ds&&S.ds.pass)&&dsIn9()&&!e.ds}
+const DS_STEPS={1:'Поговорите со Степаном в баре — он что-то недоговаривает.',
+  11:'Соберите 5000 крышек и отнесите Шраму: Дом №9 в Заречном, 4 этаж. Часовой у входа берёт 500 за проход.',12:'Шрам требует ещё 1000 крышек «процентов».',13:'Долг уплачен. Вернитесь к Степану в бар.',
+  21:'Соберите дань: 5 жетонов с Чистильщиков на Гнилом болоте.',22:'Подожгите склад торговца Жилы в Мёртвом городе.',
+  23:'Зайдите к Шраму (Дом №9, 4 этаж) за посылкой. Часовой берёт 500 за проход.',230:'Отнесите посылку курьеру Воронов в Чернолесье. Не открывайте.',
+  24:'Вернитесь к Шраму (Дом №9, 4 этаж) — у него последнее дело.',25:'Шрам велел убрать Сталкера Митяя. Он в баре «Ржавая кружка».',
+  31:'Разберитесь с часовым у входа в Дом №9: напоите водкой или вырубите.',32:'Допросите Сиплого на 1 этаже Дома №9.',33:'Логово Шрама — 4 этаж Дома №9. Сначала охрана, потом сам Шрам.',
+  34:'Шрама больше нет. Возвращайтесь к Митяю в бар.',99:'Пройден.'};
+const dsStepText=st=>st===23&&has('ds_pack')?DS_STEPS[230]:DS_STEPS[st];
+// ---------- точки ----------
+const DS_DOOR=(MAPS.city.exits.find(e=>e.to==='cb9_1')||{x:112,y:47,w:1,h:1,tx:14,ty:12});
+const DSP={};
+function dsPos(k){if(DSP[k])return DSP[k];let p=null;const m4=MAPS.cb9_4,m1=MAPS.cb9_1;
+  if(k==='guard')p=rrFree(MAPS.city,DS_DOOR.x+1,DS_DOOR.y+1,1,3);
+  else if(k==='swamp'){const m=MAPS.swamp;p=rrFree(m,m.w*.5,m.h*.45,0,8)}
+  else if(k==='store'){const m=MAPS.ruins;p=rrFree(m,m.w*.6,m.h*.4,0,8)}
+  else if(k==='cour')p=rrFree(MAPS.wild,75,40,0,8);
+  else if(k==='office')p=rrFree(m4,m4.w*.82,m4.h*.5,0,4);
+  else if(k==='lair')p=rrFree(m4,m4.w*.5,m4.h*.5,0,4);
+  else if(k==='snitch')p=rrFree(m1,m1.w*.75,m1.h*.4,0,4);
+  else if(k.startsWith('dec')){const [mid,fx,fy]={dec0:['cb9_1',.3,.3],dec1:['cb9_1',.55,.7],dec2:['cb9_2',.4,.4],dec3:['cb9_2',.7,.6],dec4:['cb9_3',.5,.5],dec5:['cb9_4',.65,.3],dec6:['cb9_4',.65,.7]}[k];const m=MAPS[mid];p=rrFree(m,m.w*fx,m.h*fy,0,4)}
+  return DSP[k]=p}
+// ---------- NPC ----------
+const DS_SHRAM={id:'ds_shram',map:'-',x:0,y:0,a:Math.PI,n:'Шрам',role:'Главарь Ржавых Воронов',lk:LK('m',1,'short','ash',1,'beard',1),eq:{body:'vest'},
+  lines:['Долги надо отдавать. Это единственный закон, который у нас остался.','Я не злой. Я бухгалтер. С автоматом.','Чего уставился? Шрам как шрам. Тому, кто его оставил, повезло меньше.']};
+const DS_C1={id:'ds_c1',map:'-',x:0,y:0,a:0,n:'Ржавый Ворон',role:'Человек Шрама',lk:LK('m',0,'short','brown',2,'stubble',0),eq:{body:'jacket'},lines:['Гы.']};
+const DS_C2={id:'ds_c2',map:'-',x:0,y:0,a:0,n:'Ржавый Ворон',role:'Человек Шрама',lk:LK('m',1,'short','rust',3,'none',2),eq:{body:'s1b'},lines:['Гы-гы.']};
+const DS_GUARD={id:'ds_guard',map:'-',x:0,y:0,a:-Math.PI/2,n:'Часовой Воронов',role:'Сторожит вход в Дом №9',lk:LK('m',0,'short','brown',1,'stubble',1),eq:{body:'s3b'},
+  lines:['Проход к Шраму — пятьсот. Выход бесплатно. Пока что.','Восемь часов стою. Хоть бы кто стопку налил.']};
+const DS_SNITCH={id:'ds_snitch',map:'-',x:0,y:0,a:0,n:'Сиплый',role:'Человек Шрама',lk:LK('m',0,'short','ash',2,'stubble',2),eq:{body:'s1b'},lines:['Я ничего не знаю. Я тут вообще мимо проходил. Третий год.']};
+const DS_COUR={id:'ds_cour',map:'-',x:0,y:0,a:0,n:'Курьер Воронов',role:'Ждёт посылку',lk:LK('m',1,'short','ash',0,'none',0),eq:{body:'s2b'},lines:['Ты от Шрама? Не тяни.']};
+const DS_DEC_LINES=[['Шрам на четвёртом. Не шуми.'],['Деньги принёс? Правильно. Ноги целее.'],['Гы.'],['Проходи, проходи. Мы сегодня добрые. По вторникам.'],['Не трогай ничего. Тут всё чьё-то.'],['Шрам занят. Шрам всегда занят. Заходи.'],['Тихо. Он считает.']];
+const DS_DEC=DS_DEC_LINES.map((l,i)=>({id:'ds_dec'+i,map:'-',x:0,y:0,a:i%2?0:Math.PI,n:'Ржавый Ворон',role:'Человек Шрама',lk:LK('m',i%2,'short',['brown','rust','ash'][i%3],i%4,['stubble','none','beard'][i%3],i%3),eq:{body:['jacket','s1b','s3b'][i%3]},lines:l}));
+NPCS.push(DS_SHRAM,DS_C1,DS_C2,DS_GUARD,DS_SNITCH,DS_COUR,...DS_DEC);
+// Митяй: если его убрали — у этого игрока его место (и все его поручения) занимает Сталкер Хрипатый
+const MITYAI=NPCS.find(n=>n.id==='mityai');const MITYAI0=MITYAI&&{n:MITYAI.n,lk:MITYAI.lk,eq:MITYAI.eq,lines:MITYAI.lines,role:MITYAI.role};
+const MITYAI_NEW={n:'Сталкер Хрипатый',lk:LK('m',1,'short','brown',3,'beard',2),eq:{body:'s3b',back:'backpack'},role:'Занял стул Митяя. И его поручения',
+  lines:['Митяй? Не знаю такого. Стул был свободен.','Байки? Могу. Только они у меня все короткие и грустные.','Поручения — ко мне. Митяй бы не возражал. Ему теперь всё равно.']};
+const mn=()=>S&&S.ds&&S.ds.mdead?'Хрипатый':'Митяй';
+function dsMityai(){if(!MITYAI)return;Object.assign(MITYAI,DS_ON&&S&&S.ds&&S.ds.mdead?MITYAI_NEW:MITYAI0)}
+// лежащие и шатающиеся NPC (часовой, Шрам, Митяй в сценках)
+const DS_LIE=new Set(),DS_SWAY=new Set();
+{const _dh=drawHuman;drawHuman=function(c,x,y,o){if(o&&o.lk&&(DS_LIE.has(o.lk)||DS_SWAY.has(o.lk))){c.save();c.translate(x,y+6);c.rotate(DS_LIE.has(o.lk)?-Math.PI/2*.92:Math.sin(Date.now()/260)*.22);const r=_dh(c,0,-6,o);c.restore();return r}return _dh(c,x,y,o)}}
+const DSS={on:false,anim:false};
+function dsPlace(){const st=dsSt();const all=[DS_SHRAM,DS_C1,DS_C2,DS_GUARD,DS_SNITCH,DS_COUR,...DS_DEC];
+  if(!DS_ON||!S){all.forEach(n=>n.map='-');return}dsMityai();if(DSS.on||DSS.anim)return;const D=dsD(),set=(n,m,p)=>{if(p)Object.assign(n,{map:m,x:p[0],y:p[1]})};
+  all.forEach(n=>n.map='-');
+  if([11,12,23,24].includes(st)||(st===33&&!D.boss)||D.sh)set(DS_SHRAM,'cb9_4',D.sh||dsPos('office'));
+  if([11,12,23,24,31].includes(st)||(st===32||st===33)&&D.g)set(DS_GUARD,'city',dsPos('guard'));
+  if(st===32)set(DS_SNITCH,'cb9_1',dsPos('snitch'));
+  if(st===23&&has('ds_pack'))set(DS_COUR,'wild',dsPos('cour'));
+  if(D.pass&&D.p!==3)DS_DEC.forEach((n,i)=>{const mid=['cb9_1','cb9_1','cb9_2','cb9_2','cb9_3','cb9_4','cb9_4'][i];set(n,mid,dsPos('dec'+i))});
+  if(st>=1&&st<99&&rrSt()>=7)RR_STEPAN.lines=['Пять тысяч… Где ж я их возьму…','Шрам слово держит. Это и пугает.'];
+  else if(st===99)RR_STEPAN.lines=D.end==='crow'?['Я у тебя в долгу. Лучше б у них остался.']:['Никому не должен. Даже странно как-то.','Нога заживает. Обе пока на месте — твоими стараниями.']}
+// ---------- общие помощники анимаций ----------
+const dsWait=ms=>new Promise(r=>setTimeout(r,ms));
+const dsSay=(who,t,col)=>floatText(who.x+.5,who.y-.6,t,col||'#f2d28a',true);
+const dsSayMe=(t,col)=>floatText(P.x,P.y-1.1,t,col||'#cfe3ff',true);
+const pos=n=>[n.x+.5,n.y+.5];
+// предмет «летит» от одного к другому
+async function dsFly(icon,from,to,ms){const n=Math.max(4,Math.round(ms/120));for(let i=0;i<=n;i++){const k=i/n;floatText(from[0]+(to[0]-from[0])*k,from[1]+(to[1]-from[1])*k-1,icon,'#f2d28a',false);await dsWait(ms/n)}}
+// игрок сам подходит к точке
+async function dsWalk(x,y,ms){const x0=P.x,y0=P.y,T0=Date.now();P.a=Math.atan2(y-y0,x-x0);while(true){const k=Math.min(1,(Date.now()-T0)/ms);P.x=x0+(x-x0)*k;P.y=y0+(y-y0)*k;if(k>=1)break;await dsWait(30)}}
+// затемнение экрана с надписью
+function dsFade(on,text,ms=700){let f=document.getElementById('dsFade');if(!f){f=document.createElement('div');f.id='dsFade';f.style.cssText='position:fixed;inset:0;z-index:60;background:#000;opacity:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:#e8dcc8;font:16px/1.5 var(--mono,monospace)';document.body.append(f)}
+  f.style.transition='opacity '+ms+'ms';f.textContent=text||'';f.style.pointerEvents=on?'auto':'none';requestAnimationFrame(()=>f.style.opacity=on?'1':'0');return dsWait(ms)}
+// ---------- сценка в баре: приходит Шрам ----------
+function dsScene(){if(DSS.on||!S||!M||M.id!=='bar')return;const bar=MAPS.bar,door=bar.exits[0];const st0=rrFree(bar,door.x,door.y-1,0,2);const sp=rrPos('stepan');
+  const ends=[rrFree(bar,sp[0]-1,sp[1]+1,0,2),rrFree(bar,sp[0]-2,sp[1]+2,0,3),rrFree(bar,sp[0]+1,sp[1]+2,0,3)];const npc=[DS_SHRAM,DS_C1,DS_C2];
+  DSS.on=true;S.ds={mdead:S.ds&&S.ds.mdead,st:0,seen:1};dirty=true;npc.forEach(n=>Object.assign(n,{map:'bar',x:st0[0],y:st0[1]}));
+  const walk=(from,to,ms,done)=>{const T0=Date.now();const iv=setInterval(()=>{if(!M||M.id!=='bar'){clearInterval(iv);finish();return}const k=Math.min(1,(Date.now()-T0)/ms);
+    npc.forEach((n,i)=>{const a=from[i]||from,b=to[i]||to;n.x=a[0]+(b[0]-a[0])*k;n.y=a[1]+(b[1]-a[1])*k;n.a=Math.atan2(b[1]-a[1],b[0]-a[0])});if(k>=1){clearInterval(iv);done&&done()}},50)};
+  let fin=false;function finish(){if(fin)return;fin=true;DSS.on=false;npc.forEach(n=>n.map='-');if(dsSt()<1)dsSet(1);log('Вороны ушли. Степан сидит белый как мел. Поговорите с ним.','good')}
+  log('Дверь бара распахивается от пинка.','sys');
+  walk([st0,st0,st0],ends,3500,()=>{const L=[[0,DS_SHRAM,'Степа-а-ан. А мы к тебе. С гостинцем.'],[2600,MITYAI,mn()==='Митяй'?'Я тут протираю. Пол. Изнутри.':'Я ничего не видел.'],
+      [5200,DS_SHRAM,'Колонна не дошла — значит, долг за тобой. Пять тысяч крышек.'],[7800,DS_SHRAM,'Или ногу. Вторую.'],
+      [10200,RR_STEPAN,'Шрам, я ж отдам… Дай срок…','#ec7a62'],[12800,DS_SHRAM,'А это кто — твой ангел-хранитель?'],[15200,DS_SHRAM,'Ну пусть хранит. До послезавтра.'],[17000,DS_C1,'Гы.']];
+    for(const [t,w,s,c] of L)setTimeout(()=>{if(M&&M.id==='bar')dsSay(w,s,c)},t);
+    setTimeout(()=>walk(ends,[st0,st0,st0],3000,finish),19000)})}
+// ---------- подсказка: шаг и направление ----------
+function dsMark(st){const office=['cb9_4',dsPos('office'),'Шрам'];const door=['city',[DS_DOOR.x,DS_DOOR.y],'Дом №9'];const toShram=()=>M&&M.id==='city'?['city',[DS_DOOR.x,DS_DOOR.y],'Дом №9 · часовой']:office;
+  return {1:['bar',rrPos('stepan'),'Степан'],11:toShram(),12:office,13:['bar',rrPos('stepan'),'Степан'],21:['swamp',dsPos('swamp'),'Чистильщики'],22:['ruins',dsPos('store'),'🏚 Склад Жилы'],
+    23:has('ds_pack')?['wild',dsPos('cour'),'Курьер Воронов']:toShram(),24:toShram(),25:['bar',MITYAI?[MITYAI.x,MITYAI.y]:[17,9],mn()],
+    31:['city',dsPos('guard'),'Часовой'],32:M&&M.id==='city'?door:['cb9_1',dsPos('snitch'),'Сиплый'],33:M&&M.id==='city'?door:['cb9_4',dsPos('lair'),'⚠ Логово'],
+    34:['bar',MITYAI?[MITYAI.x,MITYAI.y]:[17,9],mn()]}[st]}
+function dsHud(){let h=document.getElementById('dsHud');const st=dsSt();if(!DS_ON||!S||st<1||st>=99||!titleEl.hidden){if(h)h.hidden=true;return}
+  if(!h){h=document.createElement('div');h.id='dsHud';h.style.cssText='position:fixed;left:50%;top:58px;transform:translateX(-50%);z-index:15;background:rgba(20,16,10,.85);border:1px solid #6a5034;border-radius:10px;padding:6px 12px;font:12px var(--mono,monospace);color:#f2d28a;max-width:min(560px,92vw);text-align:center;pointer-events:none';document.body.append(h)}
+  h.hidden=false;let s='📜 Долг Степана · '+dsStepText(st);if(st===21)s+=' ('+(S.ds.n|0)+'/5)';
+  const f=dsMark(st);if(f&&M){const [m,p]=f;if(m===M.id&&p){const dx=p[0]+.5-P.x,dy=p[1]+.5-P.y;const d=Math.round(Math.hypot(dx,dy));const ar='→↘↓↙←↖↑↗'[((Math.round(Math.atan2(dy,dx)/(Math.PI/4))%8)+8)%8];s+=' · '+ar+' '+d+' м'}else if(MAPS[m])s+=' · локация: '+MAPS[m].name}
+  h.textContent=s}
+setInterval(()=>{try{dsPlace();dsHud()}catch(e){}},500);
+setInterval(()=>{if(!DS_ON||!S||!M||paused)return;const f=dsMark(dsSt());if(!f)return;const [m,p,n]=f;if(m!==M.id||!p)return;if(Math.hypot(P.x-p[0]-.5,P.y-p[1]-.5)<16)floatText(p[0]+.5,p[1]-.3,n,'#f2d28a')},2000);
+// ---------- враги квеста ----------
+function dsSpawn(type,x,y,tag,mul){const e=rrSpawn(type,x,y,mul);e.ds=tag;return e}
+function dsRing(type,n,cx,cy,r0,r1,tag,mul){const out=[];for(let i=0;i<n;i++){const a=i/n*Math.PI*2;const q=rrFree(M,cx+Math.cos(a)*(r0+r1)/2,cy+Math.sin(a)*(r0+r1)/2,0,3);out.push(dsSpawn(type,q[0],q[1],tag,mul))}return out}
+// Вороны Шрама в Доме №9 бьют сильнее с ростом уровня игрока
+const DS_CROW_N=new Set(['Ржавый Ворон','Ворон-автоматчик']);
+{const _h=hurt;hurt=function(n,src){try{if(DS_ON&&S&&S.ds&&S.ds.p===3&&dsIn9()&&[32,33].includes(dsSt())&&DS_CROW_N.has(src))n*=dsDmgK()}catch(e){}return _h.call(this,n,src)}}
+function dsSpawnCheck(id){if(!DS_ON||!S||!S.ds||!M||M.id!==id)return;const st=dsSt(),D=S.ds;
+  if(id==='city'&&D.pass)D.pass=0;
+  if(st===11&&id==='city'&&S.caps>=5000&&!D.amb){D.amb=1;setTimeout(()=>{if(M.id!=='city')return;dsRing('cleaner',3,P.x,P.y,6,8,'amb');log('Кто-то прослышал, что вы несёте пять тысяч. Чистильщики хотят их «пересчитать».','bad')},3000)}
+  if(st===21&&id==='swamp'&&!D.sp){D.sp=1;const p=dsPos('swamp');dsRing('cleaner',5,p[0],p[1],3,6,'tax');log('Чистильщики на болоте давно не платят Воронам. Объясните им. С каждого — жетон.','bad')}
+  // часового вырубили — Вороны видели в окно: на этажах ждут
+  if(D.p===3&&D.ko&&[32,33].includes(st)&&/^cb9_[123]$/.test(id)&&!(D.fl||{})[id]){D.fl=D.fl||{};D.fl[id]=1;const m=MAPS[id];dsRing(id==='cb9_1'?'raider':'gunner',id==='cb9_1'?2:3,m.w*.5,m.h*.5,2,5,'house',dsHpK());log('Вороны видели в окно, как вы вырубили часового. Встречают!','bad')}
+  // логово: охрана (если её нет — например, после перезахода) и Шрам, если он уже взялся за автомат
+  if(st===33&&id==='cb9_4'&&D.boss&&!D.sh&&Date.now()>(DSS.bT||0)&&!rtFor(id).enemies.some(e=>e.dsBoss)){const p=dsPos('office');const b=dsSpawn('gunner',p[0],p[1],'boss',5*dsHpK());b.dsBoss=1}
+  if(st===33&&id==='cb9_4'&&!D.boss&&!rtFor(id).enemies.some(e=>e.ds==='lair')){D.sp=1;const p=dsPos('lair');const k=dsHpK();dsRing('raider',4,p[0],p[1],2,4,'lair',k);dsRing('gunner',4,p[0],p[1],4,6,'lair',k);
+    setTimeout(()=>{if(M.id==='cb9_4')dsSay(DS_SHRAM,'Ангел пришёл! Мальчики, встречайте. Я пока посижу.','#ec7a62')},800);log('⚠ Логово Шрама. Восемь стволов — и Шрам за их спинами.','bad')}
+  if(id==='city'&&D.war>Date.now()&&Date.now()>(D.warT||0)){D.warT=Date.now()+6e5;setTimeout(()=>{if(M.id!=='city')return;dsRing('raider',3,P.x,P.y,7,9,'war');log('Вороны помнят, кто убрал Шрама. Налетели стаей!','bad')},3000)}}
+{const _em=enterMap;enterMap=function(id,x,y){const r=_em.apply(this,arguments);try{dsSpawnCheck(id);dsPlace();dsHud()}catch(e){}return r}}
+setInterval(()=>{try{if(M&&!paused)dsSpawnCheck(M.id)}catch(e){}},1000);
+{const _lp=rrLidaPlace;rrLidaPlace=function(){_lp();try{dsPlace()}catch(e){}}}
+// Шрам выходит сам, когда охрана перебита
+setInterval(()=>{if(!DS_ON||!S||!M||dsSt()!==33||M.id!=='cb9_4'||!S.ds.sp||S.ds.boss)return;if(rtFor('cb9_4').enemies.some(e=>e.ds==='lair'&&e.alive&&!e.dying&&e.hp>0))return;
+  const D=S.ds;D.boss=1;DSS.bT=Date.now()+4000;const p=dsPos('office');dsSay(DS_SHRAM,'Ну всё, ангел. Сам так сам.','#ec7a62');setTimeout(()=>{if(M.id!=='cb9_4')return;DS_SHRAM.map='-';const b=dsSpawn('gunner',p[0],p[1],'boss',5*dsHpK());b.dsBoss=1;log('⚠ Шрам берётся за автомат!','bad')},1200)},700);
+// ---------- убийства ----------
+{const _ck=creditKill;creditKill=function(e){const r=_ck.apply(this,arguments);try{if(!DS_ON||!e||!e.ds)return r;const st=dsSt(),D=S.ds;
+  if(e.ds==='tax'&&st===21){D.n=(D.n|0)+1;add('ds_tag',1);floatText(e.x,e.y-1,'+ жетон дани','#f2d28a');dirty=true;if(D.n>=5)dsSet(22,'Дань собрана. Теперь склад торговца Жилы в Мёртвом городе — Жила тоже не платит.')}
+  else if(e.dsBoss&&st===33)dsFinish(e)}catch(x){}return r}}
+// ---------- путь 3: Шрам повержен — добить или вырубить, книгу — в огонь ----------
+async function dsFinish(e){const D=S.ds;D.sh=[e.x-.5,e.y-.5];DS_LIE.add(DS_SHRAM.lk);Object.assign(DS_SHRAM,{map:'cb9_4',x:D.sh[0],y:D.sh[1]});await dsWait(900);dsSay(DS_SHRAM,'Кх… Ну давай, ангел…','#ec7a62');await dsWait(900);
+  openWin('Шрам',b=>{b.append(el('p','small','Шрам лежит у стены и ухмыляется окровавленным ртом. — Ну давай. Только быстро. Я не люблю ждать — я же бухгалтер.'),el('p','muted small','На исход квеста это не влияет — только на вашу карму.'));
+    const r=el('div');r.style.cssText='display:flex;flex-direction:column;gap:6px;margin-top:8px';
+    r.append(btn('🔫 Добить',()=>{closeWin();S.karma=(S.karma|0)-3;dsSayMe('БАХ!','#ec7a62');shake=Math.max(shake,.6);setTimeout(()=>dsBook('Шрам больше никому ничего не должен. И ему никто.'),900)},'btn primary'),
+      btn('👊 Вырубить',()=>{closeWin();S.karma=(S.karma|0)+3;dsSayMe('👊 БАМ!');shake=Math.max(shake,.4);setTimeout(()=>{dsSay(DS_SHRAM,'Хррр…','#9fb0c0');dsBook('Шрам очнётся с больной головой и без книги. Неизвестно, что для него хуже.')},900)},'btn'));b.append(r)})}
+async function dsBook(msg){await dsFly('📕',pos(DS_SHRAM),[P.x,P.y],900);dsSayMe('Долговая книга Шрама…');await dsWait(1200);
+  for(let i=0;i<6;i++){floatText(P.x+(Math.random()-.5)*.8,P.y-.6-Math.random()*.6,'🔥','#f2a25c',true);await dsWait(250)}
+  log(msg+' Книга горит хорошо — долги вообще хорошо горят. Половина Колокола теперь никому не должна.','good');dsSet(34,'Возвращайтесь в бар к '+(mn()==='Митяй'?'Митяю':'Хрипатому')+' — Колокол хочет отблагодарить.')}
+// ---------- склад Жилы: поджог, огонь виден только вам и обжигает ----------
+const DSF={t:0,t0:0};
+async function dsBurn(){const p=dsPos('store');const fx=p[0]+.5,fy=p[1]+.5;DSS.anim=true;await dsWalk(fx+1.6,fy+.6,700);dsSayMe('💧 Плеск-плеск…');await dsWait(1300);dsSayMe('Чирк.');await dsWait(700);
+  DSF.t0=Date.now();DSF.t=Date.now()+150000;shake=Math.max(shake,.3);DSS.anim=false;dsRing('cleaner',2,p[0],p[1],5,7,'fire');dsSet(23,'Склад полыхает. Охрана Жилы недовольна. Возвращайтесь к Шраму за посылкой.')}
+{const _dt=drawTilesCached;drawTilesCached=function(c,x0,y0,x1,y1,t){_dt(c,x0,y0,x1,y1,t);try{if(!DS_ON||!M||M.id!=='ruins'||!(DSF.t>Date.now()))return;const p=dsPos('store');const cx=(p[0]+.5)*T,cy=(p[1]+.5)*T;
+  const tt=Date.now()/1000,grow=Math.min(1,(Date.now()-DSF.t0)/3000),fade=Math.min(1,(DSF.t-Date.now())/8000),K=grow*fade;
+  c.save();c.fillStyle='rgba(30,20,10,.55)';c.fillRect(cx-46,cy-34,92,58);c.fillStyle='rgba(60,40,20,.8)';c.fillRect(cx-42,cy-30,84,50);
+  const gl=c.createRadialGradient(cx,cy,4,cx,cy,95*K+1);gl.addColorStop(0,'rgba(255,170,60,'+(.45*K)+')');gl.addColorStop(1,'rgba(255,90,20,0)');c.fillStyle=gl;c.beginPath();c.arc(cx,cy,95*K+1,0,7);c.fill();
+  for(let i=0;i<14;i++){const fx=cx-40+i*6.2+Math.sin(tt*3+i)*3,h=(22+Math.sin(tt*7+i*1.7)*9+((i*37)%11))*K,w=7+((i*13)%5);
+    const g=c.createLinearGradient(fx,cy+18,fx,cy+18-h-14);g.addColorStop(0,'rgba(255,220,120,.95)');g.addColorStop(.45,'rgba(255,120,30,.9)');g.addColorStop(1,'rgba(160,30,10,0)');c.fillStyle=g;
+    c.beginPath();c.moveTo(fx-w,cy+18);c.quadraticCurveTo(fx-w*.6,cy+18-h*.6,fx+Math.sin(tt*5+i)*3,cy+18-h-14);c.quadraticCurveTo(fx+w*.6,cy+18-h*.6,fx+w,cy+18);c.fill()}
+  for(let i=0;i<6;i++){const sy=(tt*22+i*19)%70;c.fillStyle='rgba(40,36,32,'+(.35*(1-sy/70)*K)+')';c.beginPath();c.arc(cx-20+i*8+Math.sin(tt+i)*6,cy-20-sy,6+sy*.15,0,7);c.fill()}
+  c.restore()}catch(e){}}}
+setInterval(()=>{if(!DS_ON||!S||!M||paused||M.id!=='ruins'||!(DSF.t>Date.now()))return;const p=dsPos('store');if(Math.hypot(P.x-p[0]-.5,P.y-p[1]-.5)<2.6){hurt(8,'огонь');floatText(P.x,P.y-1,'🔥 -8','#f2a25c')}},1000);
+// склад и прочие точки: осмотреть (E / кнопка действия)
+{const _in=interact;interact=function(){try{if(DS_ON&&!paused&&!DSS.anim&&S&&M&&dsSt()===22&&M.id==='ruins'){const p=dsPos('store');if(Math.hypot(P.x-p[0]-.5,P.y-p[1]-.5)<2.6){
+  openWin('Склад торговца Жилы',b=>{b.append(el('p','small','Жила отказался платить Воронам. Самого Жилы на складе нет — он, говорят, «в отъезде». Ящики, тряпьё, а у стены канистра бензина. Как будто ждала.'),btn('🔥 Поджечь',dsGo(dsBurn),'btn primary'),btn('Уйти',()=>closeWin()))});return}}}catch(e){}return _in()}}
+// ---------- посылка: открыть — значит взорваться (и всё сначала) ----------
+{const _ui=useItem;useItem=function(id){if(id==='ds_pack'&&has('ds_pack')){if(DSS.anim)return;DSS.anim=true;if(!ov.hidden)closeWin();(async()=>{dsSayMe('Шуршит изолента…');await dsWait(1100);dsSayMe('тик…','#ec7a62');await dsWait(700);dsSayMe('тик…','#ec7a62');await dsWait(600);
+    dsSayMe('…граната без чеки?!','#ec7a62');await dsWait(700);take('ds_pack',1);S.ds.boom=1;floatText(P.x,P.y-1.4,'БАХ!!!','#ff6a3a',true);shake=Math.max(shake,1.2);try{explodeFx(P.x,P.y)}catch(e){}
+    await dsFade(true,'',120);await dsFade(false,'',500);DSS.anim=false;log('Шрам же сказал: не открывать. Сам себе злобный буратино.','bad');hurt(99999,'Посылка Шрама')})();return}return _ui.apply(this,arguments)}}
+// ---------- смерть ----------
+function dsClearEnemies(){for(const r of Object.values(RT))r.enemies=r.enemies.filter(e=>!e.ds)}
+function dsReset(){const st=dsSt();if(!DS_ON||st<1||st>=99||(M&&(M.arena||M.train)))return;const D=S.ds;dsClearEnemies();
+  if(D.boom){const md=D.mdead;S.ds={st:1,seen:1,mdead:md};for(const k of ['ds_tag','ds_pack'])if(S.inv[k])take(k,S.inv[k]);dirty=true;dsHud();
+    log('📜 «Долг Степана»: посылка взорвалась — всё сначала. Поговорите со Степаном и решите заново, как отдавать долг.','bad');return}
+  Object.assign(D,{sp:0,amb:0,pass:0,fl:{}});if(st===33){D.boss=0;D.sh=null;DS_LIE.delete(DS_SHRAM.lk)}
+  if(st===21){const n=S.inv.ds_tag|0;if(n)take('ds_tag',n);D.n=0}
+  dirty=true;log('📜 «Долг Степана»: вы погибли — этот шаг начинается заново.','bad')}
+{const _die=die;die=function(){const r=_die.apply(this,arguments);try{dsReset()}catch(e){}return r}}
+// ---------- отмена квеста ----------
+function dsCancel(){if(!confirm('Отменить «Долг Степана»? Всё по квесту сбросится. Начать заново можно будет в баре.'))return;
+  dsClearEnemies();for(const k of ['ds_tag','ds_pack'])if(S.inv[k])take(k,S.inv[k]);const md=S.ds&&S.ds.mdead;S.ds={mdead:md};DS_LIE.clear();DS_SWAY.clear();DSF.t=0;dirty=true;if(!ov.hidden)closeWin();dsHud();
+  log('📜 «Долг Степана» отменён. Захотите вернуться — '+mn()+' в баре знает, с чего начать.','sys')}
+// ---------- вход в Дом №9: часовой ----------
+function dsNeedGuard(){if(!DS_ON||!S||!S.ds||S.ds.pass)return false;const st=dsSt();return [11,12,24].includes(st)||(st===23&&!has('ds_pack'))||st===31}
+{const _ce=checkExit;checkExit=function(){try{if(M&&M.id==='city'&&dsNeedGuard()){const tx=Math.floor(P.x),ty=Math.floor(P.y),e=DS_DOOR;if(tx>=e.x&&tx<e.x+(e.w||1)&&ty>=e.y&&ty<e.y+(e.h||1)){const g=dsPos('guard');const dx=g[0]+.5-P.x,dy=g[1]+.5-P.y,d=Math.hypot(dx,dy)||1;P.x+=dx/d*.9;P.y+=dy/d*.9;
+    if(Date.now()>(DSS.gT||0)){DSS.gT=Date.now()+3000;dsSay(DS_GUARD,dsSt()===31?'Куда? Тебе сюда нельзя.':'Куда прёшь? Проход — пятьсот. Ко мне.','#ec7a62')}return false}}}catch(x){}return _ce()}}
+async function dsGuardPass(){if(S.caps<500){dsSay(DS_GUARD,'Пятьсот. Не четыреста девяносто. Иди собирай.','#ec7a62');return}
+  DSS.anim=true;S.caps-=500;updateHud();await dsFly('💰',[P.x,P.y],pos(DS_GUARD),700);dsSay(DS_GUARD,'Пятьсот… ровно. Проходи. Ноги вытирай.');await dsWait(900);
+  const g=[DS_GUARD.x,DS_GUARD.y];for(let i=0;i<=10;i++){DS_GUARD.x=g[0]+1.4*i/10;await dsWait(40)}
+  await dsWalk(DS_DOOR.x+.5,DS_DOOR.y+.5,900);S.ds.pass=1;DSS.anim=false;enterMap('cb9_1',DS_DOOR.tx+.5,DS_DOOR.ty+.5);log('Вы в логове Ржавых Воронов. Пока у вас пропуск — здесь вас не тронут. Шрам — на 4 этаже.','good')}
+async function dsGuardDrink(){if(!has('vodka')){dsSay(DS_GUARD,'Чем угощать собрался? Воздухом?','#ec7a62');return}DSS.anim=true;take('vodka',1);
+  await dsFly('🍶',[P.x,P.y],pos(DS_GUARD),700);dsSay(DS_GUARD,'О-о… «Казачья»… Ну, разве что одну…');await dsWait(1800);DS_SWAY.add(DS_GUARD.lk);dsSay(DS_GUARD,'За Шрама!.. И за тебя!.. Ик.');await dsWait(2000);
+  dsSay(DS_GUARD,'Шрам — на четвёртом… А всё знает Сиплый… на первом… ик…');await dsWait(2400);dsSay(DS_GUARD,'Ты… человек!..');await dsWait(1400);
+  DS_SWAY.delete(DS_GUARD.lk);DS_LIE.add(DS_GUARD.lk);dsSay(DS_GUARD,'Хррр…','#9fb0c0');DSS.anim=false;S.ds.g=1;S.ds.ko=0;
+  dsSet(32,'Часовой спит в обнимку с бутылкой. Вход свободен — и никто ничего не видел. Сиплый на 1 этаже.')}
+async function dsGuardKO(){DSS.anim=true;await dsWalk(DS_GUARD.x+.5-.7,DS_GUARD.y+.5+.2,500);dsSayMe('👊 БАМ!','#ec7a62');shake=Math.max(shake,.5);DS_LIE.add(DS_GUARD.lk);await dsWait(600);dsSay(DS_GUARD,'…','#9fb0c0');await dsWait(900);
+  floatText(DS_DOOR.x+.5,DS_DOOR.y-1.5,'(в окне мелькнула тень)','#9fb0c0',true);DSS.anim=false;S.ds.g=1;S.ds.ko=1;
+  dsSet(32,'Часовой отдыхает. Но в окне мелькнула тень — Вороны видели. Внутри будут ждать. Сиплый — на 1 этаже.')}
+async function dsInterrogate(){DSS.anim=true;const sn=pos(DS_SNITCH);await dsWalk(sn[0]-.8,sn[1],600);dsSayMe('Где Шрам?');await dsWait(1300);dsSay(DS_SNITCH,'Я ничего не знаю! Я мимо проходил!');await dsWait(1500);
+  dsSayMe('👊');shake=Math.max(shake,.5);DS_SNITCH.x+=.4;await dsWait(800);dsSay(DS_SNITCH,'Ай! Четвёртый этаж! Кабинет в конце!','#ec7a62');await dsWait(1700);
+  dsSay(DS_SNITCH,'У него восемь стволов! И он не любит, когда без стука!','#ec7a62');await dsWait(1800);dsSayMe('Спасибо. Постучу.');await dsWait(1200);
+  DS_LIE.add(DS_SNITCH.lk);dsSay(DS_SNITCH,'(притворяется мёртвым)','#9fb0c0');DSS.anim=false;dsSet(33,'Логово — 4 этаж. Восемь стволов, Шрам — за их спинами.')}
+// ---------- путь 1: расплата у Шрама ----------
+async function dsPay5000(){if(S.caps<5000){dsSay(DS_SHRAM,'Пять тысяч. Не четыре девятьсот. Я считать умею — до пяти тысяч точно.','#ec7a62');return}DSS.anim=true;S.caps-=5000;updateHud();
+  for(let i=0;i<5;i++){dsFly('💰',[P.x,P.y],pos(DS_SHRAM),700);await dsWait(260)}await dsWait(700);
+  for(const s of ['Тысяча… две…','…три… четыре…','…четыре тысячи девятьсот девяносто девять…','Пять.']){dsSay(DS_SHRAM,s);await dsWait(1300)}
+  dsSay(DS_SHRAM,'А проценты?','#ec7a62');await dsWait(1200);DSS.anim=false;
+  dsTalk('Шрам',['— Какие проценты? — Обычные. Тысяча. Ты думал, Вороны — благотворительность? Мы — банк. Только честнее: сразу говорим, что ограбим.'],[btn('Ясно',()=>closeWin())]);dsSet(12)}
+async function dsPay1000(){if(S.caps<1000){dsSay(DS_SHRAM,'Тысяча. Ты ж не хочешь, чтобы проценты набегали на проценты?','#ec7a62');return}DSS.anim=true;S.caps-=1000;updateHud();
+  await dsFly('💰',[P.x,P.y],pos(DS_SHRAM),700);dsSay(DS_SHRAM,'Приятно иметь дело.');await dsWait(1400);dsSay(DS_SHRAM,'Передай Степану — пусть ходит. Пока обеими.');await dsWait(1600);
+  DSS.anim=false;dsSet(13,'Шрам вас отпустил. Можно спокойно уходить — никто не тронет. Возвращайтесь к Степану.')}
+async function dsThrowOut(line){DSS.anim=true;dsSay(DS_SHRAM,line,'#ec7a62');await dsWait(1500);dsSay(DS_SHRAM,'Выкиньте его.','#ec7a62');await dsWait(900);
+  await dsFade(true,'Вас выводят под руки. Вежливо. Почти.',600);S.ds.pass=0;S.ds.p=3;S.ds.g=0;DS_LIE.clear();DS_SWAY.clear();const g=dsPos('guard');enterMap('city',g[0]+.5,g[1]+2.5);dsSet(31);await dsWait(900);await dsFade(false,'',600);DSS.anim=false;
+  log('Вороны теперь ваши враги. Разберитесь с часовым у Дома №9: напоите водкой или вырубите.','bad')}
+// ---------- путь 2: посылка, курьер, Митяй ----------
+async function dsGivePack(){DSS.anim=true;const t=S.inv.ds_tag|0;if(t){take('ds_tag',t);await dsFly('🪙',[P.x,P.y],pos(DS_SHRAM),600);dsSay(DS_SHRAM,'Дань? Молодец, не всё к рукам прилипло.');await dsWait(1500)}
+  else{dsSay(DS_SHRAM,'Держи. И чтоб без фокусов.');await dsWait(1400)}
+  await dsFly('📦',pos(DS_SHRAM),[P.x,P.y],700);add2('ds_pack');dsSay(DS_SHRAM,'Отнесёшь нашему человеку в Чернолесье.');await dsWait(1600);
+  dsSay(DS_SHRAM,'Не открывай. Последнего, кто открыл, до сих пор по болоту собирают.','#ec7a62');await dsWait(1800);DSS.anim=false;dsHud();log('Получена посылка Шрама. Курьер — в Чернолесье.','good')}
+async function dsCourier(){DSS.anim=true;take('ds_pack',1);await dsFly('📦',[P.x,P.y],pos(DS_COUR),700);dsSay(DS_COUR,'Тяжёленькая… Опять кирпичи? Шучу. Наверное.');await dsWait(1900);
+  dsSay(DS_COUR,'Не открывал? Молодец. Обычно открывают. Один раз.');await dsWait(1900);dsSay(DS_COUR,'Ну, бывай. Ты меня не видел. Я тебя тоже. Я вообще слепой — у меня справка.');await dsWait(1500);
+  const c=[DS_COUR.x,DS_COUR.y];for(let i=0;i<=40;i++){DS_COUR.x=c[0]+6*i/40;DS_COUR.a=0;await dsWait(60)}DSS.anim=false;dsSet(24,'Посылка доставлена. Возвращайтесь к Шраму — у него последнее дело.')}
+async function dsKillMityai(){DSS.anim=true;const m=pos(MITYAI);await dsWalk(m[0]-.9,m[1]+.2,800);dsSay(MITYAI,'А, это ты… Шрам прислал? Я так и думал.');await dsWait(2200);
+  dsSay(MITYAI,'Двадцать лет байки травлю. Хоть одна должна была кончиться плохо.');await dsWait(2400);dsSay(MITYAI,'Только не в лицо, ладно? Я им на жизнь зарабатываю.');await dsWait(2000);
+  await dsFade(true,'Выстрел почти не слышен — в баре играет гитара.',700);DS_LIE.add(MITYAI.lk);await dsWait(1600);await dsFade(false,'',700);dsSay(MITYAI,'…','#9fb0c0');await dsWait(1800);
+  await dsFade(true,'Бармен молча протирает стакан. Тот, из которого пил Митяй.',800);DS_LIE.delete(MITYAI.lk);S.ds.mdead=1;dsMityai();await dsWait(1800);
+  // сразу к Шраму
+  S.ds.pass=1;S.ds.st=26;const o=dsPos('office');enterMap('cb9_4',o[0]-1.2,o[1]+.5);Object.assign(DS_SHRAM,{map:'cb9_4',x:o[0],y:o[1]});P.a=0;await dsWait(500);await dsFade(false,'',700);
+  dsSay(DS_SHRAM,'Слышал уже. Быстро ты. Мне такие нужны.');await dsWait(1800);await dsFly('🪶',pos(DS_SHRAM),[P.x,P.y],700);
+  dsSay(DS_SHRAM,'Долг Степана списан. А это тебе. Носи с гордостью. Или со стыдом — нам без разницы.');await dsWait(1500);DSS.anim=false;
+  gainXp(4000);S.caps+=1500;add2('ds_patch');Object.assign(S.ds,{end:'crow',crow:1});dsSet(99,'«Долг Степана» пройден. Вы теперь свой у Воронов. Награда: 4000 опыта, 1500 крышек, нашивка Воронов — Вороны не нападают первыми, пока вы никого из них не раните.');updateHud()}
+// ---------- разговоры ----------
+function dsTalk(title,paras,btns){openWin(title,b=>{for(const p of paras)b.append(el('p','small',p));const r=el('div');r.style.cssText='display:flex;flex-direction:column;gap:6px;margin-top:8px';for(const x of btns)r.append(x);b.append(r)})}
+function dsGo(fn){return ()=>{closeWin();if(!DSS.anim)fn()}}
+{const _nd=npcDialog;npcDialog=function(n){_nd(n);if(!DS_ON||!S)return;const o=ov.querySelector('.opts');if(!o)return;const add=(t,fn,cls)=>o.insertBefore(btn(t,fn,cls||'btn primary'),o.lastElementChild);
+  const st=dsSt(),D=S.ds||{};
+  if(n.id==='mityai'){
+    if(st===0&&!D.seen&&rrSt()>=7&&S.rr&&S.rr.thx&&Date.now()-S.rr.thx>864e5)add('📜 «Что со Степаном? Сам не свой»',()=>{closeWin();if((S.lvl|0)<DS_LVL){log(mn()+': «Не лезь пока. Подрасти до '+DS_LVL+'-го — там посмотрим. Степановы дела — не для зелёных».','bad');return}
+      log(mn()+': «Сам не свой, говоришь? Будешь тут сам не свой, когда…» — дверь бара распахивается от пинка.','sys');dsScene()},'btn');
+    if(st===25&&!D.mdead)add('🔪 Убрать Митяя',dsGo(dsKillMityai),'btn');
+    if(st===34)add('📜 «Шрама больше нет»',()=>{closeWin();dsTalk(MITYAI.n,['— Слыхал, слыхал! Весь Колокол гудит. Книгу Шрама — в огонь! Да половина нашего народа теперь тебе по гроб жизни обязана. Ну, по гроб — это я загнул. До ужина точно.','— Скинулись тут всем миром. И Степан передал — из сундука Шрама, говорит. Тот бы не одобрил. Тем лучше.'],
+      [btn('Взять',()=>{closeWin();gainXp(5000);S.caps+=2500;add2('vest');Object.assign(S.ds,{end:'force',war:Date.now()+7*864e5,drink:1});dsSet(99,'«Долг Степана» пройден! Награда: 5000 опыта, 2500 крышек, бронежилет «Модуль-3». И одна бесплатная выпивка в баре. Но Вороны злы — неделю в Заречном налетают стаей.');updateHud()},'btn primary')])});
+    if(D.drink===1)add('🍺 «Налей»',()=>{closeWin();D.drink=2;add2v();log(mn()+': «За того, кто сжёг книгу! Первая — за счёт заведения. Вторая — тоже, но ты не привыкай».','good')});
+    if(TESTROOM){add('🧪 Тест: начать «Долг Степана»',()=>{closeWin();S.rr=Object.assign(S.rr||{},{st:7,seen:1,thx:Date.now()-2*864e5});dsClearEnemies();S.ds={mdead:D.mdead};dirty=true;dsScene()},'btn');
+      add('🧪 Тест: сбросить всё (и Митяя вернуть)',()=>{closeWin();dsClearEnemies();for(const k of ['ds_tag','ds_pack','ds_patch'])if(S.inv[k])take(k,S.inv[k]);S.ds={};DS_LIE.clear();DS_SWAY.clear();DSF.t=0;dsMityai();dirty=true;dsHud();log('Тест: «Долг Степана» сброшен, Митяй на месте.','sys')},'btn');
+      add('🧪 Тест: +6000 крышек',()=>{closeWin();S.caps+=6000;updateHud()},'btn')}}
+  if(n.id==='rr_stepan'){
+    if(st===1)add('📜 «Кто это был?»',()=>{closeWin();dsTalk('Водитель Степан',['— Шрам. Главный у Воронов. — Степан трёт лицо. — Не хотел я тебе говорить… Лекарства на тот рейс я брал в долг. У них. Думал: довезу, Колокол заплатит, отдам. Довёз, называется.',
+      '— Пять тысяч. А Шрам слово держит: сказал «ногу» — значит, ногу. Говорят, он их коллекционирует.','Как будете решать? Передумать на полпути можно только отменой квеста.'],
+      [btn('💰 Заплатить долг',()=>{closeWin();S.ds.p=1;dsSet(11,'Степан: «Ты… серьёзно? Пять тысяч?..» Шрам — в Доме №9 в Заречном, 4 этаж.')},'btn primary'),
+       btn('🤝 Отработать долг на Воронов',()=>{closeWin();S.ds.p=2;dsSet(21,'Степан: «С ними не работают. На них работают. Подумай ещё…» Поздно. Первое дело Шрама — дань с Чистильщиков на болоте.')},'btn primary'),
+       btn('🔫 Решить вопрос со Шрамом',()=>{closeWin();S.ds.p=3;dsSet(31,'Степан: «Ты псих. Спасибо.» Логово Шрама — Дом №9 в Заречном. У входа часовой.')},'btn primary'),
+       btn('Подумаю',()=>closeWin())])});
+    if(st===13)add('📜 «Долга больше нет»',()=>{closeWin();dsTalk('Водитель Степан',['— Заплатил?.. За меня?.. — Степан долго молчит.','— У меня осталась одна вещь. Единственная, которую Вороны не нашли — в запаске прятал. Бери. Тебе нужнее: я теперь только в бар хожу. Хромая.'],
+      [btn('Взять',()=>{closeWin();gainXp(4000);add2('saiga');S.ds.end='pay';dsSet(99,'«Долг Степана» пройден! Степан свободен. Награда: 4000 опыта, Сайга-12К. В Колоколе о вас говорят с уважением — а это дороже крышек. Почти.');updateHud()},'btn primary')])})}
+  if(n.id==='zoya'&&st===11&&!D.zoya)add('📜 «Степану нужны крышки»',()=>{closeWin();D.zoya=1;S.caps+=500;dirty=true;updateHud();log('Бабка Зоя: «На, тут пятьсот. Последние, на похороны копила. Ну да ладно — успею ещё накопить. Я живучая».','good')});
+  if(n.id==='ds_guard'){
+    if(!D.g&&([11,12,24].includes(st)||(st===23&&!has('ds_pack'))))add('💰 «Пропусти к Шраму» (500 крышек)',dsGo(dsGuardPass));
+    if(st===31){add('🍶 Угостить водкой',dsGo(dsGuardDrink));add('👊 Вырубить',dsGo(dsGuardKO),'btn')}}
+  if(n.id==='ds_snitch'&&st===32)add('🗣 Допросить',dsGo(dsInterrogate));
+  if(n.id==='ds_cour'&&st===23&&has('ds_pack'))add('📦 Отдать посылку',dsGo(dsCourier));
+  if(n.id==='ds_shram'){
+    if(st===11)add('💰 Отдать 5000 крышек',dsGo(dsPay5000));
+    if(st===12){add('💰 Заплатить ещё 1000',dsGo(dsPay1000));add('🔫 «Хватит. Разберёмся по-другому»',dsGo(()=>dsThrowOut('Ну смотри, ангел. Крылья-то и подрезать можно.')),'btn')}
+    if(st===23&&!has('ds_pack'))add('📦 «Давай работу»',dsGo(dsGivePack));
+    if(st===24)add('📜 «Ещё работа?»',()=>{closeWin();dsTalk('Шрам',['— Последнее. Митяй из «Кружки» тоже нам должен. Давно и много. И язык у него длинный — про колонну всем растрепал.','— Убери его — и долг Степана спишу. А тебя возьму к нам. В стаю.'],
+      [btn('Сделаю',()=>{closeWin();dsSet(25,'Шрам ждёт. Митяй — в баре «Ржавая кружка».')},'btn primary'),btn('Нет. Митяй — свой',dsGo(()=>dsThrowOut('Свой, говоришь? Ну, значит, и хоронить вас будут вместе.')),'btn')])})}
+  if(st>=1&&st<99&&['rr_stepan','mityai'].includes(n.id))add('✖ Отменить квест «Долг Степана»',()=>{closeWin();dsCancel()},'btn')}}
+function add2(id){add(id,1);dirty=true}function add2v(){add('vodka',1);dirty=true}
+// ---------- во вкладке «Задания» (с кнопкой отмены) ----------
+{const _qv=TABVIEW.quests;TABVIEW.quests=function(b){_qv(b);if(!DS_ON)return;const st=dsSt();if(st<1)return;const box=el('div');box.append(el('div','sec','📜 Сюжет: «Долг Степана»'),el('p','small',st>=99?'Пройден.':dsStepText(st)));
+  if(st<99)box.append(btn('✖ Отменить квест',()=>dsCancel(),'btn'));b.prepend(box)}}
+
+// ================= v65: ДВИЖЕНИЯ — СЕСТЬ / ЛЕЧЬ, ПОЛЗАНИЕ, НАСТОЯЩИЙ КУВЫРОК =================
+// Кнопка ⬇ (Z / Я): нажал — сел, ещё раз — лёг. Зажал — сразу лёг. Обратно так же: нажал — сел, ещё раз — встал; зажал — сразу встал.
+// Сидя: медленнее, чуть точнее и незаметнее. Лёжа и в движении — ползёт. Кувырок (X / Ч) — через плечо, с переворотом
+// и подъёмом на ноги; делается и на ходу.
+P.crouch=false;let STANCE_DIR='down';
+const stance=()=>P.prone?2:P.crouch?1:0;
+function setStance(n){if(!S||!M||paused)return;const was=stance();if(n===was)return;STANCE_DIR=n>was?'down':'up';P.prone=n===2;P.crouch=n===1;statCache=null;
+  floatText(P.x,P.y-1.1,['⬆ встал','⬇ сел','⬇ лёг'][n],'#cfe3ff');sendPresence();updMoveBtns()}
+function stanceTap(){const s=stance();setStance(s===0?1:s===2?1:(STANCE_DIR==='down'?2:0))}
+function stanceHold(){const s=stance();setStance(s===0?2:s===2?0:(STANCE_DIR==='down'?2:0))}
+// сидя: медленнее, точнее, заметность ниже
+{const _st=stats;stats=function(){const s=_st();if(P.crouch&&!P.prone)return Object.assign({},s,{speedPct:(s.speedPct||0)-35,accPct:(s.accPct||0)+10,aggroPct:(s.aggroPct||0)-25});return s}}
+// кувырок с колена/сидя — тоже можно; после кувырка — на ногах
+{const _r=doRoll;doRoll=function(){const was=P.rollT;_r();if(P.rollT!==was){P.crouch=false;statCache=null;updMoveBtns()}}}
+{const _em=enterMap;enterMap=function(id,x,y){P.crouch=false;return _em.apply(this,arguments)}}
+{const _u=updMoveBtns;updMoveBtns=function(){_u();const b=document.getElementById('bProne');if(b){const s=stance();b.classList.toggle('on',s>0);b.textContent=s===2?'⬆':s===1?'⏬':'⬇'}}}
+// ---------- клавиша Z / Я: короткое нажатие и удержание ----------
+const STH={t:null,held:false};
+addEventListener('keydown',e=>{if(!S||!titleEl.hidden||!ov.hidden||document.activeElement===chatIn)return;const k=keyOf(e);if(k!=='z'&&k!=='я')return;
+  e.preventDefault();e.stopImmediatePropagation();if(e.repeat||STH.t)return;STH.held=false;STH.t=setTimeout(()=>{STH.held=true;stanceHold()},350)},true);
+addEventListener('keyup',e=>{const k=keyOf(e);if(k!=='z'&&k!=='я'||!STH.t)return;clearTimeout(STH.t);STH.t=null;if(!STH.held)stanceTap()},true);
+// ---------- кнопка на телефоне ----------
+{const b=document.getElementById('bProne');if(b){b.onclick=e=>e.preventDefault();const T0={t:null,held:false};
+  b.addEventListener('pointerdown',e=>{e.preventDefault();T0.held=false;clearTimeout(T0.t);T0.t=setTimeout(()=>{T0.held=true;T0.t=null;stanceHold()},350)});
+  const up=e=>{if(!T0.t)return;clearTimeout(T0.t);T0.t=null;if(!T0.held)stanceTap()};b.addEventListener('pointerup',up);b.addEventListener('pointercancel',()=>{clearTimeout(T0.t);T0.t=null})}}
+// ---------- внешний вид ----------
+// кувырок по фазам: наклон через плечо → переворот в группировке → подъём на ноги
+function rollPose(c,x,y,k,dir){const ease=t=>t*t*(3-2*t);
+  if(k<.18){const u=ease(k/.18);c.translate(x,y+8);c.rotate(dir*.65*u);c.scale(1,1-.16*u);c.translate(-x,-y-8+1.5*u)}
+  else if(k<.78){const u=(k-.18)/.6;const rot=dir*(.65+ease(u)*(Math.PI*2-.65));const s=.74+.06*Math.cos(u*Math.PI*2);c.translate(x+dir*2*Math.sin(u*Math.PI),y+5);c.rotate(rot);c.scale(s,s);c.translate(-x,-y-2)}
+  else{const v=ease((k-.78)/.22);c.translate(x,y+9);c.scale(1,.8+.2*v);c.rotate(dir*.12*(1-v));c.translate(-x,-y-9+2*(1-v))}}
+{const _dh=drawHuman;drawHuman=function(c,x,y,o){if(!o)return _dh(c,x,y,o);const me=S&&o.eq===S.eq&&o.weapon!==undefined&&o.lk===S.lk;
+  let roll=0,prone=false,crouch=false,moving=!!o.moving,dir=Math.cos(o.aim||0)<0?-1:1;
+  if(me){if(P.rollT>now){roll=1-(P.rollT-now)/ROLL_MS;dir=Math.cos(P.rollA||0)<-.2?-1:Math.cos(P.rollA||0)>.2?1:dir}prone=P.prone;crouch=P.crouch&&!P.prone;moving=!!P.moving}
+  else{if(o.rl)roll=(now%ROLL_MS)/ROLL_MS;prone=!!o.pn;crouch=!!o.ch&&!prone}
+  if(!roll&&!prone&&!crouch)return _dh(c,x,y,o);
+  // рисуем «стоя», а позу задаём здесь (прежний переворот из v29 выключаем на время вызова)
+  // поза рисуется напрямую, мимо кэша готовых спрайтов (иначе кэш её затирает)
+  const sv=[P.rollT,P.prone],busy=drawHuman._busy;const o2=Object.assign({},o,{rl:false,pn:false});c.save();drawHuman._busy=true;
+  try{if(me){P.rollT=0;P.prone=false}
+    if(roll)rollPose(c,x,y,roll,dir);
+    else if(prone){const t=now/1000,cr=moving?Math.sin(t*7):0;c.translate(x+(moving?cr*3*dir:0),y+9-(moving?Math.abs(cr)*1.2:0));c.rotate(dir*Math.PI/2+(moving?Math.sin(t*7+1.2)*.13:0));c.scale(.95,.95);c.translate(-x,-y)}
+    else{c.translate(x,y+10);c.scale(1.04,.78);c.translate(-x,-y-10)}
+    return _dh(c,x,y,o2)}finally{drawHuman._busy=busy;if(me){P.rollT=sv[0];P.prone=sv[1]}c.restore()}}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
