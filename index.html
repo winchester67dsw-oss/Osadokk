@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793474593";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793480933";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -9403,6 +9403,42 @@ function odvNote(t,bad){let n=document.getElementById('odvNote');if(!t){if(n)n.r
   else if(dsSt()<1)t=(S.lvl|0)<DS_LVL?'Следующий сюжет — «Долг Степана», откроется с '+DS_LVL+'-го уровня. Тогда спросите Митяя в баре, что со Степаном.':'Новый сюжет «Долг Степана»: спросите Митяя в баре, что со Степаном — он сам не свой.';
   else if(dsSt()>=99&&NR_ON&&nrSt()<1)t='Новый сюжет «Новый маршрут»: поговорите со Степаном в баре — у него новое дело.';
   if(!t)return;const box=el('div');box.append(el('div','sec','📜 Дальше по сюжету'),el('p','small',t));b.prepend(box)}catch(e){}}}
+
+// ================= v69: ТОРГОВЦЫ — ОТСЕКИ, ПОКУПКА ПО 1/5/10/30, БЕЗ ПРЫЖКА НАВЕРХ =================
+// У всех торговцев и скупщиков вещи разложены по тем же отсекам, что и в рюкзаке (оружие, медикаменты, патроны…).
+// Купить можно сразу 1, 5, 10 или 30 штук. После покупки или продажи окно остаётся на том же месте, а не прыгает наверх.
+const SHOPCAT={buy:'all',sell:'all'};
+{const st=document.createElement('style');st.textContent='.buyn{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end}.buyn .btn{padding:5px 9px;min-width:0}.row.shopr{flex-wrap:wrap}.row.shopr .grow{flex:1 1 160px}';document.head.append(st)}
+// перерисовать окно и вернуть прокрутку на прежнее место
+function shopKeep(fn){const bd=ov.querySelector('.win .body'),y=bd?bd.scrollTop:0;fn();const nb=ov.querySelector('.win .body');if(nb)nb.scrollTop=y}
+function shopCats(b,ids,key,re){if(SHOPCAT[key]!=='all'&&!ids.some(id=>bagShelf(id)===SHOPCAT[key]))SHOPCAT[key]='all';
+  const cats=el('div','cats');for(const [k,nm] of BAGCAT){const cnt=k==='all'?ids.length:ids.filter(id=>bagShelf(id)===k).length;if(k!=='all'&&!cnt)continue;
+    const x=el('button',null,nm+' ('+cnt+')');x.setAttribute('aria-pressed',SHOPCAT[key]===k);x.onclick=()=>{SHOPCAT[key]=k;re()};cats.append(x)}b.append(cats)}
+// keep: 1 — перерисовка после покупки (прокрутка на месте), 2 — смена отсека; без keep — окно открыли заново
+shopBuy=function(n,keep){if(!keep)SHOPCAT.buy='all';const re=()=>shopKeep(()=>shopBuy(n,1));
+  openWin(n.n+' — купить',b=>{
+    b.append(el('p',null,'У вас '+S.caps+' крышек.'));
+    const rows=SELL[n.id].filter(e=>ITEMS[e[0]]);shopCats(b,rows.map(e=>e[0]),'buy',()=>shopBuy(n,2));
+    const list=el('div','list');
+    for(const [id,p,lvl=0,rep=0] of rows){if(SHOPCAT.buy!=='all'&&bagShelf(id)!==SHOPCAT.buy)continue;
+      const lockL=S.lvl<lvl,lockR=S.rep.order<rep;const q=ITEMS[id].k==='ammo'?10:1;const price=Math.round(p*q*priceK());
+      const info=(q>1?'×'+q+' · ':'')+price+' кр.'+(lockL?' · ранг '+rankOf(lvl)+' («'+rankName(lvl)+'», ур. '+lvl+')':'')+(lockR?' · реп. '+rep:'');
+      const bs=el('div','buyn');
+      for(const k of [1,5,10,30]){const cost=price*k,cnt=q*k;const x=btn(cnt+' шт.',()=>{if(S.caps<cost||lockL||lockR)return;S.caps-=cost;add(id,cnt);log('Куплено: '+ITEMS[id].n+(cnt>1?' ×'+cnt:'')+(k>1?' за '+cost+' кр.':''));re()},'btn'+(k===1?' primary':''),S.caps<cost||lockL||lockR);
+        x.title='Купить '+cnt+' шт. за '+cost+' кр.';bs.append(x)}
+      const r=itemRow(id,[el('span','q',info),bs]);r.classList.add('shopr');list.append(r)}
+    if(!list.children.length)list.append(el('div','muted small','Здесь пусто.'));
+    b.append(list);const o=el('div','startrow');o.style.marginTop='12px';o.append(btn('Назад',()=>npcDialog(n)));b.append(o)})};
+shopSell=function(n,keep){if(!keep)SHOPCAT.sell='all';const B=BUY[n.id];const re=()=>shopKeep(()=>shopSell(n,1));
+  openWin(n.n+' — продать',b=>{
+    b.append(el('p',null,'У вас '+S.caps+' крышек. '+({habar:'Хабарыч берёт всё, хабар — дороже.',ippolit:'Орден платит почти полную цену за трофеи с мутантов.',tolik:'Толик берёт только еду и воду.'}[n.id]||'')));
+    const ids=Object.keys(S.inv).filter(id=>{const it=ITEMS[id];if(!it||!it.p)return false;if(!B.cats.includes(it.k))return false;if(B.only&&!B.only.includes(id))return false;return S.inv[id]>equippedCount(id)});
+    if(ids.length)shopCats(b,ids,'sell',()=>shopSell(n,2));
+    const list=el('div','list');
+    if(!ids.length)list.append(el('div','muted small','Продавать нечего.'));
+    for(const id of ids){if(SHOPCAT.sell!=='all'&&bagShelf(id)!==SHOPCAT.sell)continue;const p=sellPrice(n,id);const free=S.inv[id]-equippedCount(id);
+      list.append(itemRow(id,[el('span','q','×'+free+' · '+p+' кр.'),btn('Продать',()=>{take(id);S.caps+=p;refSold(id,1,p);re()}),free>1?btn('Все',()=>{take(id,free);S.caps+=p*free;refSold(id,free,p);re()}):el('span')]))}
+    b.append(list);const o=el('div','startrow');o.style.marginTop='12px';o.append(btn('Назад',()=>npcDialog(n)));b.append(o)})};
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
