@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793403311";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793405232";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -7360,7 +7360,7 @@ if(typeof LOGTXT==='object')LOGTXT.created='создал(а) группиров�
 {const _pv=TABVIEW.profile;TABVIEW.profile=b=>{_pv(b);const box=el('div');box.style.marginTop='12px';box.append(el('div','sec','Группировки'));const l=el('div','list');const mf=myFac();
   for(const f of Object.keys(FAC)){const F=FAC[f];const r=el('div','row');r.append(facBadge(f,30));const gw=el('div','grow');const s=el('div','s',F.custom?'новая группировка':'база: '+(MAPS[F.base]?MAPS[F.base].name:'—'));gw.append(el('div','t',F.n),s);r.append(gw);
     if(FACD[f])s.textContent+=' · бойцов: '+Object.keys(FACD[f].members||{}).length;
-    if(mf===f)r.append(btn('Штаб',()=>hqWin(f),'btn primary'));else if(!mf){if(S.facApp===f)r.append(el('span','muted small','заявка подана'));else r.append(btn('Подать заявку',()=>facApply(f).then(()=>openTab('profile')),'btn',!!S.facApp))}l.append(r)}
+    if(mf===f)r.append(btn('Штаб',()=>hqWin(f),'btn primary'));else if(!mf){if(S.facApp===f)r.append(el('span','muted small','заявка подана'));else r.append(el('span','muted small','заявка — у ворот базы'))}l.append(r)}
   box.append(l,el('p','muted small','Заявку рассматривают лидер или заместители группировки.'));b.append(box)}}
 
 // ================= v48: ДЕТАЛЬНЫЕ ЗДАНИЯ — СТЕНЫ, ОКНА, КРЫШИ, ДВЕРИ =================
@@ -8469,7 +8469,7 @@ if(typeof TABVIEW.admin==='function'){const _av=TABVIEW.admin;TABVIEW.admin=b=>{
 // анархисты, сектанты, наёмники, учёные, вольные сталкеры). Администратор может переименовать любую группировку,
 // написать ей описание и выбрать идеологию. Всё хранится в подписанном списке группировок (для Ренегатов и Военных —
 // отдельные записи {id,meta:1}). Любой игрок в рейтинге (и на главном экране) нажимает на группировку и видит карточку:
-// эмблема, идеология, описание, состав, база и звания.
+// эмблема, идеология и описание.
 const IDEO={
   opg:{n:'ОПГ',d:'Братва по понятиям: свои — святое, чужие — добыча. Держат территорию, собирают дань, решают вопросы стволом.',
     r:{leader:'Батя',deputy:'Вор в законе',commander:'Смотрящий',master:'Портной',gunsmith:'Ствольщик',medic:'Лепила',storekeeper:'Барыга',sergeant:'Бригадир',private:'Пацан'}},
@@ -8504,14 +8504,14 @@ async function fregMeta(f,fn){if(FAC[f]&&FAC[f].custom)return fregEdit(f,fn);awa
 async function facCard(f){const F=FAC[f];if(!F)return;if(!titleEl.hidden)ov.style.zIndex='40';openWin('Группировка «'+F.n+'»',async b=>{
   const head=el('div','startrow');head.style.alignItems='center';const bd=facBadge(f,64);head.append(bd);const ht=el('div');const id=facIdeo(f);
   ht.append(el('b',null,F.n),el('div','muted small',id?'Идеология: '+IDEO[id].n:'Идеология не выбрана'));head.append(ht);b.append(head);
-  if(id)b.append(el('p','small',IDEO[id].d));
   b.append(el('div','sec','Описание'));const dsc=facDescText(F.desc);const p=el('p',dsc?'':'muted small',dsc||'Описание пока не добавлено.');p.style.whiteSpace='pre-wrap';b.append(p);
-  const info=el('div');b.append(el('div','sec','Состав и база'),info);info.append(el('p','muted small','Загружаем…'));
-  b.append(el('div','sec','Звания'));const rl=el('div','list');for(const r of RANKS_F){const row=el('div','row');row.append(el('div','grow',rn(f,r)));rl.append(row)}b.append(rl);
-  if(S&&!myFac()&&typeof facApply==='function'){const r=el('div','startrow');r.style.marginTop='10px';r.append(btn('Подать заявку в «'+F.n+'»',()=>facApply(f),'btn primary'));b.append(r)}
-  try{await facLoad(f)}catch(e){}if(!info.isConnected)return;const d=FACD[f]||{members:{}};const mem=Object.entries(d.members||{});const lead=mem.find(([,m])=>normR(m.r)==='leader');
-  info.replaceChildren(el('p','small','Бойцов: '+mem.length+(lead?' · '+rn(f,'leader')+': '+lead[1].n:' · лидера нет')+(typeof facRating==='function'?' · рейтинг: '+facRating(f,d):'')),
-    el('p','small','База: '+(MAPS[F.base]?MAPS[F.base].name+(MAPS[F.from]?' (вход — '+MAPS[F.from].name+')':''):'пока нет')))})}
+  b.append(el('div','sec','Вход на базу'),el('p','small',MAPS[F.base]&&MAPS[F.from]?MAPS[F.from].name:'Базы пока нет.'));
+  // личный состав: звание — имя, по старшинству; нажатие — профиль игрока
+  const ml=el('div','list');b.append(el('div','sec','Личный состав'),ml);ml.append(el('p','muted small','Загружаем…'));
+  try{await facLoad(f)}catch(e){}if(!ml.isConnected)return;
+  const mem=Object.entries((FACD[f]||{}).members||{}).filter(([,m])=>m&&m.n).sort((a,c)=>RANKS_F.indexOf(normR(a[1].r))-RANKS_F.indexOf(normR(c[1].r))||a[1].n.localeCompare(c[1].n,'ru'));
+  ml.replaceChildren();if(!mem.length)ml.append(el('p','muted small','Пока никого.'));
+  for(const [pid,m] of mem){const row=el('div','row');row.style.cursor='pointer';row.title='Открыть профиль';const gw=el('div','grow');gw.append(el('div','t',m.n),el('div','s',rn(f,m.r)));row.append(gw);row.onclick=()=>profileWin(pid,m.n);ml.append(row)}})}
 // рейтинг группировок во вкладке «Рейтинг»: строки нажимаются → карточка
 {const _rv=TABVIEW.rating;TABVIEW.rating=b=>{_rv(b);b.addEventListener('click',e=>{const row=e.target.closest('.row');if(!row||e.target.closest('button'))return;const t=row.querySelector('.t');if(!t)return;const s=t.textContent;
     const f=Object.keys(FAC).find(k=>s.includes(' '+FAC[k].n+' · рейтинг'));if(f)facCard(f)});
@@ -8563,6 +8563,78 @@ admFacEdit=function(f,box){const F=FAC[f];if(!F)return;box.replaceChildren();con
     const r=el('div','startrow');r.append(btn(b?'Перенести базу сюда':'Поставить базу здесь',async()=>{const h=fbaseHere();if(!h){log('Здесь нельзя поставить ворота.','bad');return}try{await fregEdit(f,g=>{g.base=h});log('База «'+F.n+'» стоит: '+MAPS[h.m].name+'.','good');admFacEdit(f,box)}catch(e){err(e)}},'btn',!here),
       btn('Убрать базу',async()=>{if(!b||!confirm('Убрать базу «'+F.n+'»? Склад и общак группировки сохранятся.'))return;try{await fregEdit(f,g=>{delete g.base});log('База убрана.','good');admFacEdit(f,box)}catch(e){err(e)}},'btn',!b));box.append(r)}
   const r2=el('div','startrow');r2.style.marginTop='10px';r2.append(btn('Штаб (права лидера)',()=>{hqTab='roster';hqWin(f)}),btn('Телепорт на базу',()=>admGoBase(f),'btn',!MAPS[F.base]),btn('Склад',()=>storeWin(f)));box.append(r2)};
+
+// ================= v60: ГРУППИРОВКИ И ЭМБЛЕМЫ — СРАЗУ ПРИ ВХОДЕ, СОХРАНЕНИЕ БЕЗ ПЕРЕЗАГРУЗКИ =================
+// Раньше после входа игра заново скачивала список группировок и эмблемы (эмблемы — до 11 секунд), и пока не скачает,
+// созданной администратором группировки «не было»: игрок выглядел не в группировке, значки — старые.
+// Теперь последнее известное состояние хранится в браузере и показывается сразу, а свежее подтягивается в фоне
+// и тут же обновляет экран. Ключ проверки подписи администратора берётся один раз за вход.
+const LSK=k=>'osadok_'+k+'_'+(TESTROOM||'v1');
+const lsGet=k=>{try{return JSON.parse(localStorage.getItem(LSK(k))||'null')}catch(e){return null}};
+const lsSet=(k,v)=>{try{localStorage.setItem(LSK(k),JSON.stringify(v))}catch(e){}};
+// ключ проверки подписи — один запрос за вход, а не на каждую эмблему
+{const _np=newsPub;let pr=null;newsPub=function(){if(!pr)pr=_np().then(k=>{if(!k)pr=null;return k},e=>{pr=null;throw e});return pr}}
+// всё, что показывает группировки, — перерисовать, когда пришли свежие данные
+function facUiRefresh(){try{if(!titleEl.hidden&&typeof titleFacs==='function')titleFacs();if(S){updateHud();if(typeof updFlBtn==='function')updFlBtn()}}catch(e){}}
+
+// ---------- список группировок ----------
+async function fregVerify(p){for(const k of [await newsPub().catch(()=>null),DEV_PUB]){if(!k)continue;try{const key=await crypto.subtle.importKey('jwk',k,ECP,false,['verify']);if(await crypto.subtle.verify(ECS,key,unb64(p.sig),enc.encode(p.ct)))return true}catch(e){}}return false}
+const fregKeep=()=>lsSet('freg',{at:FREG.at,ct:JSON.stringify(FREG.list)});
+// сразу при запуске — из памяти браузера
+{const c=lsGet('freg');if(c&&c.ct){try{const L=JSON.parse(c.ct);if(Array.isArray(L)){FREG.list=L;FREG.at=c.at||0;fregApply(L)}}catch(e){}}}
+let fregNetP=null;
+function fregNet(){if(!fregNetP)fregNetP=(async()=>{try{const p=await cloudGet(FREG_T,12000);if(p&&p.ct&&p.sig&&(p.at||0)>=FREG.at-1000&&await fregVerify(p)){FREG.list=JSON.parse(p.ct);FREG.at=Math.max(FREG.at,p.at||0);fregApply(FREG.list);fregKeep();facUiRefresh()}}catch(e){}finally{fregNetP=null}})();return fregNetP}
+// игроку не ждать сети, если список уже есть; администратору перед правкой — всегда свежий из облака
+fregLoad=function(){const pr=fregNet();return FREG.list.length&&!(S&&S.admin)?Promise.resolve():pr};
+{const _fs=fregSave;fregSave=async function(list){await _fs(list);fregKeep();facUiRefresh()}}
+
+// ---------- эмблемы ----------
+{const c=lsGet('femb');if(c&&typeof c==='object')for(const [f,u] of Object.entries(c))if(fembOkUrl(u))FEMBI.img[f]=u}
+const fembKeep=()=>lsSet('femb',FEMBI.img);
+fembLoad=async function(){try{const found=await subAll(FEMB_T('ok/'));await newsPub().catch(()=>null);let ch=false;
+  await Promise.all(Object.entries(found).map(async([f,d])=>{if(!/^[a-z0-9]{2,17}$/.test(f)||!(await fembVerify(f,d)))return;if(d.off){if(FEMBI.img[f]){delete FEMBI.img[f];ch=true}}else if(FEMBI.img[f]!==d.img){FEMBI.img[f]=d.img;ch=true}}));
+  fembKeep();if(ch)facUiRefresh()}catch(e){}};
+{const _fa=fembApprove;fembApprove=async function(f,img){await _fa(f,img);fembKeep();facUiRefresh()}}
+{const _fr=fembReset;fembReset=async function(f){await _fr(f);fembKeep();facUiRefresh()}}
+// проверка, что эмблема действительно легла в облако (читаем обратно)
+async function fembCheck(f,img){const found=await subAll(FEMB_T('ok/'),4000);const d=found[f];return img?!!(d&&d.img===img):!!(d&&d.off)}
+
+// ---------- данные группировок (состав, звания): последнее известное — сразу ----------
+{const c=lsGet('facd');if(c&&typeof c==='object')for(const [f,d] of Object.entries(c))if(d&&d.members&&!FACD[f])FACD[f]=Object.assign(emptyFac(),d)}
+{const _fl=facLoad;facLoad=async function(f){const d=await _fl(f);try{if(d&&(f===myFac()||(S&&S.admin))){const c=lsGet('facd')||{};c[f]={members:d.members,at:d.at};lsSet('facd',c)}}catch(e){}return d}}
+
+// ---------- админ: эмблема — «выбрать → посмотреть → 💾 Сохранить» ----------
+{const _ae=admFacEdit;admFacEdit=function(f,box){_ae(f,box);const F=FAC[f];if(!F)return;
+  const sec=[...box.querySelectorAll('.sec')].find(s=>s.textContent==='Картинка-эмблема');if(!sec)return;
+  // убираем старые строки (подсказка и ряд кнопок) и ставим новый блок
+  let n=sec.nextElementSibling;while(n&&!n.classList.contains('sec')){const nx=n.nextElementSibling;n.remove();n=nx}
+  const wrap=el('div');sec.after(wrap);let pick=null;
+  const cur=el('div','startrow');cur.style.alignItems='center';const pv=el('div');pv.innerHTML=emblemSVG(f,56);cur.append(pv,el('span','muted small',FEMBI.img[f]?'Сейчас стоит своя картинка.':'Своей картинки нет — обычный щиток.'));
+  const fi=document.createElement('input');fi.type='file';fi.accept='image/png,image/jpeg,image/webp,image/gif';fi.style.cssText='max-width:240px';
+  const st=el('span','muted small','');const sv=btn('💾 Сохранить эмблему',async()=>{if(!pick)return;if(!NEWS.priv){log('Сначала подтвердите код администратора — поле вверху панели.','bad');return}
+      sv.disabled=true;st.textContent='Сохраняем…';st.style.color='';try{await fembApprove(f,pick);st.textContent='Проверяем…';const ok=await fembCheck(f,pick);
+        if(ok){st.textContent='✔ Сохранено';st.style.color='#7fe08a';log('Эмблема «'+F.n+'» сохранена.','good');pv.innerHTML=emblemSVG(f,56);pick=null}else{st.textContent='Облако не подтвердило — нажмите ещё раз';st.style.color='#ec7a62';sv.disabled=false}}
+      catch(e){st.textContent='Не сохранено';st.style.color='#ec7a62';sv.disabled=false;log('Не удалось: '+(e.message==='nokey'?'подтвердите код администратора':e.message),'bad')}},'btn primary');sv.disabled=true;
+  fi.onchange=async()=>{try{pick=await fembFromFile(fi.files[0]);pv.innerHTML=fembSVG(f,pick,56);st.textContent='Так будет выглядеть — нажмите «Сохранить»';st.style.color='#f2b65c';sv.disabled=false}catch(e){pick=null;sv.disabled=true;st.textContent=e.message;st.style.color='#ec7a62'}};
+  const rm=btn('Убрать картинку',async()=>{if(!FEMBI.img[f])return;if(!confirm('Убрать картинку-эмблему «'+F.n+'»?'))return;st.textContent='Сохраняем…';try{await fembReset(f);const ok=await fembCheck(f,null);st.textContent=ok?'✔ Сохранено':'Облако не подтвердило — нажмите ещё раз';st.style.color=ok?'#7fe08a':'#ec7a62';pv.innerHTML=emblemSVG(f,56)}catch(e){st.textContent='Не сохранено';log('Не удалось: '+e.message,'bad')}},'btn',!FEMBI.img[f]);
+  const r=el('div','startrow');r.style.alignItems='center';r.append(fi,sv,rm,st);wrap.append(cur,el('p','muted small','PNG, JPG, WEBP или GIF до 30 КБ, уменьшится до 64×64.'),r)}}
+// после сохранения карточки — сразу показать новое везде
+{const _fm=fregMeta;fregMeta=async function(f,fn){await _fm(f,fn);facUiRefresh()}}
+fembLoad();
+
+// ================= v61: ЗАЯВКА В ГРУППИРОВКУ — ТОЛЬКО У ВОРОТ БАЗЫ =================
+// Подать заявку можно только придя к воротам базы группировки (или к её вербовщику). Пока заявку не приняли — на базу
+// не пускают. Кто уже состоит в группировке, не может подать заявку в другую и не может войти на чужую базу.
+let gateAskT=0;
+function gateAsk(f){const F=FAC[f];if(!F||!S||Date.now()<gateAskT||!ov.hidden)return;gateAskT=Date.now()+6000;
+  openWin('Ворота базы «'+F.n+'»',b=>{const head=el('div','startrow');head.style.alignItems='center';head.append(facBadge(f,48),el('b',null,F.n));b.append(head);const mf=myFac();
+    if(mf)b.append(el('p','small','Вы состоите в группировке «'+FAC[mf].n+'». На чужую базу не пускают, и подать заявку в другую группировку нельзя.'));
+    else if(S.facApp===f)b.append(el('p','small','Ваша заявка рассматривается. Войти на базу можно будет, когда вас примут.'));
+    else if(S.facApp&&FAC[S.facApp])b.append(el('p','small','У вас уже есть заявка в «'+FAC[S.facApp].n+'». Дождитесь ответа.'));
+    else{b.append(el('p','small','Сюда пускают только своих. Хотите вступить — подайте заявку: её рассмотрят '+rn(f,'leader').toLowerCase()+' или '+rn(f,'deputy').toLowerCase()+'.'));
+      const r=el('div','startrow');r.style.marginTop='8px';r.append(btn('Подать заявку в «'+F.n+'»',async()=>{closeWin();await facApply(f)},'btn primary'),btn('Уйти',()=>closeWin()));b.append(r)}})}
+{const _ce=checkExit;checkExit=function(){let f=null;try{if(S&&M&&!S.admin){const tx=Math.floor(P.x),ty=Math.floor(P.y);for(const e of M.exits){if(tx>=e.x&&tx<e.x+e.w&&ty>=e.y&&ty<e.y+e.h){const tm=MAPS[e.to];if(tm&&tm.fac&&tm.fac!==myFac())f=tm.fac;break}}}}catch(e){}
+  const r=_ce();if(f&&r===false)gateAsk(f);return r}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
