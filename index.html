@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793406011";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793407117";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -2566,7 +2566,7 @@ function hostDamage(e,dmg,a,kb,by){const d=EN[e.type];if(e.dying||!e.alive)retur
 damageEnemy=function(e,dmg,a,crit,kb=2){const d=EN[e.type];if(e.dying||!e.alive||e.hp<=0)return;sfx.hit(e.x,e.y);e.flash=now+90;
   floatText(e.x,e.y-.9,(crit?'КРИТ ':'')+Math.round(dmg),crit?'#ffe15a':'#ffd27a',crit);
   emit(crit?10:6,{x:e.x,y:e.y-.3,a,spread:1.2,v:3.5,life:.5,size:2,color:d.blood,type:'blood',g:6,vz:2,z:.4});if(Math.random()<.5)decal(e.x+Math.cos(a)*.4,e.y+Math.sin(a)*.4,.18+Math.random()*.2,d.blood);
-  const h=hostId(M.id);if(h===myNetId()||h===null&&!mobNet())hostDamage(e,dmg,a,kb,myNetId());else{e.hp-=dmg;e.predT=now;MOB.hits.push([e.id,r2(dmg),r2(a),kb])}};
+  const h=hostId(M.id);if(e.rr||h===myNetId()||h===null&&!mobNet())hostDamage(e,dmg,a,kb,myNetId());else{e.hp-=dmg;e.predT=now;MOB.hits.push([e.id,r2(dmg),r2(a),kb])}};
 function explodeHost(e){const d=EN[e.type];explodeFx(e.x,e.y);const dist=Math.hypot(P.x-e.x,P.y-e.y);if(dist<1.7){hurt(d.dmg*(1-dist/2.2),d.n);addRad(15)}
   if(mobNet())MOB.ev.push(['x',e.id,r2(e.x),r2(e.y),e.type]);const contrib=Object.keys(e.by||{});worldKill(e,0);if(contrib.includes(myNetId()))creditKill(e)}
 function explodeFx(x,y){emit(30,{x,y,v:6,life:.6,size:3,color:'#c8ff6a',type:'spark'});emit(14,{x,y,v:2,life:1.2,size:7,color:'rgba(150,220,80,.35)',type:'smoke'});light(x,y,5,250,'glow');sfx.boom(x,y);shake=Math.max(shake,.7);decal(x,y,.8,'#2a3a10','scorch')}
@@ -2625,7 +2625,7 @@ function applySnap(list,from){if(!Array.isArray(list))return;const r=rtFor(M.id)
   for(const s of list){if(!Array.isArray(s)||s.length<8)continue;const [id,type,x,y,a,hp,f,tg]=s;if(typeof id!=='string'||!EN[type])continue;const X=x/100,Y=y/100;if(!(X>0&&Y>0&&X<M.w&&Y<M.h))continue;ids.add(id);
     let e=byId.get(id);if(!e){e=mkEnemy(type,Math.floor(X),Math.floor(Y));e.id=id;e.x=X;e.y=Y;r.enemies.push(e)}
     e.tx=X;e.ty=Y;e.a=a/100;e.hp=e.predT&&now-e.predT<400?Math.min(e.hp,hp):hp;e.moving=!!(f&1);if((f&2)&&!e.dying){e.dying=.8;e.dieA=0}e.leapF=!!(f&4);if(f&8)e.bite=now;e.invisOn=!!(f&16);e.tg=typeof tg==='string'?tg:'';e.seen=!!e.tg;e.alive=true}
-  r.enemies=r.enemies.filter(e=>ids.has(e.id)||e.dying>0);r.pop=true}
+  r.enemies=r.enemies.filter(e=>ids.has(e.id)||e.dying>0||e.rr);r.pop=true}
 function applyEvent(ev){if(!Array.isArray(ev))return;const r=rtFor(M.id);const me=myNetId();const find=id=>r.enemies.find(e=>e.id===id);
   switch(ev[0]){
    case 'p':{const [,x,y,vx,vy,kind,dmg,life,src,sid]=ev;if(![x,y,vx,vy,life].every(Number.isFinite)||!['bullet','acid','rock'].includes(kind))return;
@@ -2651,7 +2651,7 @@ updateEnemies=function(dt){const r=rtFor(M.id),me=myNetId();
   if(mobNet()){const t=now;
     if(MOB.hits.length&&h&&h!==me&&t-MOB.lastFlush>90){mobSend({t:'h',m:M.id,to:h,h:MOB.hits.splice(0,60)});MOB.lastFlush=t}
     if(h===me){if(MOB.ev.length&&t-MOB.lastFlush>90){mobSend({t:'e',m:M.id,ev:MOB.ev.splice(0,80)});MOB.lastFlush=t}
-      if(t-MOB.lastSnap>190){MOB.lastSnap=t;MOB.snapN++;const arr=[];for(const e of r.enemies){if(!e.alive)continue;if(!mapPlayers(M.id).some(p=>Math.abs(p.x-e.x)<24&&Math.abs(p.y-e.y)<17))continue;let f=0;if(e.moving)f|=1;if(e.dying)f|=2;if(e.leap)f|=4;if(e.bite&&t-e.bite<250)f|=8;if(e.invisOn)f|=16;
+      if(t-MOB.lastSnap>190){MOB.lastSnap=t;MOB.snapN++;const arr=[];for(const e of r.enemies){if(!e.alive)continue;if(e.rr)continue;if(!mapPlayers(M.id).some(p=>Math.abs(p.x-e.x)<24&&Math.abs(p.y-e.y)<17))continue;let f=0;if(e.moving)f|=1;if(e.dying)f|=2;if(e.leap)f|=4;if(e.bite&&t-e.bite<250)f|=8;if(e.invisOn)f|=16;
         arr.push([e.id,e.type,Math.round(e.x*100),Math.round(e.y*100),Math.round(e.a*100),Math.max(0,Math.round(e.hp)),f,e.tg||''])}
         const o={t:'s',m:M.id,e:arr};if(MOB.snapN%10===0){const bags=r.drops.filter(p=>p.bag&&p.t>-1e8).map(bagWire);if(bags.length)o.b=bags}mobSend(o)}}}
   else{MOB.hits.length=0;MOB.ev.length=0}
@@ -8635,6 +8635,136 @@ function gateAsk(f){const F=FAC[f];if(!F||!S||Date.now()<gateAskT||!ov.hidden)re
       const r=el('div','startrow');r.style.marginTop='8px';r.append(btn('Подать заявку в «'+F.n+'»',async()=>{closeWin();await facApply(f)},'btn primary'),btn('Уйти',()=>closeWin()));b.append(r)}})}
 {const _ce=checkExit;checkExit=function(){let f=null;try{if(S&&M&&!S.admin){const tx=Math.floor(P.x),ty=Math.floor(P.y);for(const e of M.exits){if(tx>=e.x&&tx<e.x+e.w&&ty>=e.y&&ty<e.y+e.h){const tm=MAPS[e.to];if(tm&&tm.fac&&tm.fac!==myFac())f=tm.fac;break}}}}catch(e){}
   const r=_ce();if(f&&r===false)gateAsk(f);return r}}
+
+// ================= v62: СЮЖЕТНЫЙ КВЕСТ «ПОСЛЕДНИЙ РЕЙС» =================
+// Начинается у Сталкера Митяя в баре (с 15-го уровня): в бар вползает раненый водитель Степан — его колонна с лекарствами перевернулась в Городе Заречном,
+// напарницу Лиду утащили Ржавые Вороны. Игрок находит грузовик, поднимается в Дом №3 за Лидой, побеждает главаря,
+// ведёт Лиду живой в Колокол, забирает ящики с лекарствами на Химкомбинате и отдаёт их Бабке Зое. Примерно час.
+// Состояние — в сохранении (S.rr), враги квеста — «призванные» (не пропадают), точки — вычисляются по картам.
+Object.assign(ITEMS,{rr_med:{n:'Ящик лекарств',k:'quest',p:0,r:2,d:'Лекарства из колонны Степана. Нужно отнести Бабке Зое в Ржавый Колокол.'}});WT.rr_med=2;
+const RR_STEPS=['',
+  'Найдите перевёрнутый грузовик Степана в Городе Заречном.',
+  'Вороны увели Лиду в Дом №3. Поднимитесь на последний этаж и разберитесь с главарём.',
+  'Главарь повержен. Поговорите с Лидой — она на последнем этаже Дома №3.',
+  'Доведите Лиду до Ржавого Колокола живой. Не уходите далеко — она ранена.',
+  'Вороны увезли ящики с лекарствами на Химкомбинат «Заря». Найдите все три.',
+  'Отнесите три ящика лекарств Бабке Зое в Ржавый Колокол.',
+  'Квест пройден.'];
+const RR_LVL=15;
+const rrSt=()=>S&&S.rr?S.rr.st|0:0;
+function rrSet(st,msg){S.rr=S.rr||{};S.rr.st=st;dirty=true;if(msg)log(msg,'good');rrHud();try{saveLocal()}catch(e){}}
+// свободная клетка рядом с точкой (по кольцам) — одна и та же у всех игроков
+function rrFree(m,x0,y0,r0,r1){for(let r=r0;r<=r1;r++)for(let i=0;i<24;i++){const a=i/24*Math.PI*2;const x=Math.round(x0+Math.cos(a)*r),y=Math.round(y0+Math.sin(a)*r);const g=m.g;
+  if(!g[y]||!walkable(g[y][x])||!notExit(m,x,y))continue;let ok=true;for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]])if(!walkable(g[y+dy]?.[x+dx])){ok=false;break}if(ok)return [x,y]}return [x0|0,y0|0]}
+const RRP={};
+function rrPos(k){if(RRP[k])return RRP[k];let p=null;
+  if(k==='stepan')p=rrFree(MAPS.bar,17,9,2,4);
+  else if(k==='lidaHub')p=rrFree(MAPS.hub,16,12,2,5);
+  else if(k==='truck'){const m=MAPS.city,e=m.exits.find(x=>x.to==='cb3_1')||{x:m.w/2,y:m.h/2};p=rrFree(m,e.x,e.y,6,12)}
+  else if(k==='lida'){const m=MAPS.cb3_5;p=rrFree(m,m.w*.7,m.h*.5,0,6)}
+  else if(k==='boss'){const m=MAPS.cb3_5;p=rrFree(m,m.w*.45,m.h*.5,0,6)}
+  else if(k.startsWith('crate')){const m=MAPS.chem,i=+k.slice(5);p=rrFree(m,m.w*(.3+i*.2),m.h*.3,0,8)}
+  return RRP[k]=p}
+// ---------- NPC: водитель Степан и Лида ----------
+const LK=(g,skin,hair,hc,outfit,beard,eye)=>({g,skin,hair,hc,outfit,beard,eye});
+const RR_STEPAN={id:'rr_stepan',map:'bar',x:17,y:11,a:0,n:'Водитель Степан',role:'Раненый водитель колонны',lk:LK('m',1,'short','brown',2,'stubble',0),eq:{body:'jacket'},
+  lines:['Колонна… под Заречным… Лиду не бросай.','Зоя говорит, жить буду. Правда, она и про Кузьмича так говорила.','Ящики — на всё поселение. Ну и мне бы одну таблеточку. Две.']};
+const RR_LIDA={id:'rr_lida',map:'-',x:0,y:0,a:0,n:'Лида',role:'Напарница Степана',lk:LK('f',0,'bob','rust',3,'none',2),eq:{body:'jacket'},
+  lines:['Ты кто? Если Ворон — стреляй сразу, я устала.','Держись рядом. Упаду — не бросай: я тяжёлая, но благодарная.','Вороны умеют две вещи: грабить и отвратительно петь. Я слышала обе.']};
+NPCS.push(RR_STEPAN,RR_LIDA);
+const LIDA={trail:[],hp:100,m:null};
+function rrLidaPlace(){const st=rrSt();
+  if(st===3){const p=rrPos('lida');Object.assign(RR_LIDA,{map:'cb3_5',x:p[0],y:p[1]})}
+  else if(st===4&&M){if(LIDA.m!==M.id){LIDA.m=M.id;LIDA.trail=[];RR_LIDA.x=P.x-.5;RR_LIDA.y=P.y-.5}RR_LIDA.map=M.id}
+  else if(st>=5){const p=rrPos('lidaHub');Object.assign(RR_LIDA,{map:'hub',x:p[0],y:p[1]})}
+  else RR_LIDA.map='-';
+  if(rrSt()>=1&&rrSt()<7){RR_STEPAN.lines=['Нашёл Лиду?..','Ящики… людям лекарства нужны.']}
+  if(RRS.on)return;if(!S.rr||(!S.rr.seen&&rrSt()<1)){RR_STEPAN.map='-';return}const sp=rrPos('stepan');Object.assign(RR_STEPAN,{map:'bar',x:sp[0],y:sp[1],crawl:rrSt()===0})}
+// Лида идёт за игроком по его следу
+setInterval(()=>{if(!S||!M||rrSt()!==4)return;rrLidaPlace();const tr=LIDA.trail;const last=tr[tr.length-1];if(!last||Math.hypot(last[0]-P.x,last[1]-P.y)>.35)tr.push([P.x,P.y]);if(tr.length>40)tr.shift();
+  const tgt=tr.length>5?tr[tr.length-5]:tr[0];if(!tgt)return;const lx=RR_LIDA.x+.5,ly=RR_LIDA.y+.5;const dx=tgt[0]-lx,dy=tgt[1]-ly,d=Math.hypot(dx,dy);
+  if(d>12){RR_LIDA.x=P.x-.5;RR_LIDA.y=P.y-.5;return}const sp=Math.min(d,(d>3?.42:.22));if(d>.2){RR_LIDA.x+=dx/d*sp;RR_LIDA.y+=dy/d*sp;RR_LIDA.a=Math.atan2(dy,dx)}},60);
+// враги рядом с Лидой ранят её
+setInterval(()=>{if(!S||!M||rrSt()!==4||paused)return;const lx=RR_LIDA.x+.5,ly=RR_LIDA.y+.5;let dmg=0;for(const e of rtFor(M.id).enemies){if(!e.alive||e.dying)continue;if(Math.hypot(e.x-lx,e.y-ly)<1.4)dmg+=(EN[e.type]?.dmg||8)*.6}
+  if(!dmg)return;S.rr.hp=Math.max(0,(S.rr.hp??100)-dmg);floatText(lx,ly-1.2,'-'+Math.round(dmg),'#ec7a62');dirty=true;rrHud();
+  if(S.rr.hp<=0){S.rr.hp=100;S.rr.boss=0;S.rr.amb=0;rrSet(2);log('Лида упала без сил — Вороны снова утащили её в Дом №3. Придётся вернуться за ней.','bad')}},1000);
+// ---------- точки на картах: грузовик, ящики ----------
+const RR_MARK={1:()=>['city',rrPos('truck'),'🚚 Перевёрнутый грузовик'],2:()=>['cb3_5',rrPos('boss'),'⚠ Главарь Воронов'],3:()=>['cb3_5',rrPos('lida'),'Лида'],
+  4:()=>['hub',rrPos('stepan'),'Ржавый Колокол'],5:()=>{const i=[0,1,2].find(i=>!(S.rr.got||[])[i]);return ['chem',rrPos('crate'+(i??0)),'📦 Ящик лекарств']},6:()=>['hub',[13,12],'Бабка Зоя']};
+setInterval(()=>{if(!S||!M||paused)return;const st=rrSt();const f=RR_MARK[st];if(!f)return;const [m,p,n]=f();if(m!==M.id||!p)return;if(Math.hypot(P.x-p[0]-.5,P.y-p[1]-.5)<16)floatText(p[0]+.5,p[1]-.3,n,'#f2d28a')},2000);
+// грузовик в 2D: силуэт на боку
+{const _dt=drawTilesCached;drawTilesCached=function(c,x0,y0,x1,y1,t){_dt(c,x0,y0,x1,y1,t);if(!M||M.id!=='city'||!S||rrSt()<1)return;const p=rrPos('truck');const x=(p[0]+.5)*T,y=(p[1]+.5)*T;
+  c.save();c.translate(x,y);c.rotate(.25);c.fillStyle='rgba(0,0,0,.35)';c.fillRect(-40,-10,84,30);c.fillStyle='#4a5236';c.fillRect(-42,-16,58,28);c.fillStyle='#3a4029';c.fillRect(16,-12,24,24);c.fillStyle='#8aa0b0';c.fillRect(30,-8,8,10);
+  c.fillStyle='#111';for(const wx of [-30,-8,26]){c.beginPath();c.arc(wx,14,6,0,7);c.fill()}c.fillStyle='#6a5a3a';c.fillRect(-36,-12,10,8);c.fillRect(-20,-12,10,8);c.restore()}}
+// подсказка игроку: шаг и направление
+function rrHud(){let h=document.getElementById('rrHud');const st=rrSt();if(!S||st<1||st>=7||!titleEl.hidden){if(h)h.hidden=true;return}
+  if(!h){h=document.createElement('div');h.id='rrHud';h.style.cssText='position:fixed;left:50%;top:58px;transform:translateX(-50%);z-index:15;background:rgba(20,16,10,.85);border:1px solid #6a5034;border-radius:10px;padding:6px 12px;font:12px var(--mono,monospace);color:#f2d28a;max-width:min(560px,92vw);text-align:center;pointer-events:none';document.body.append(h)}
+  h.hidden=false;let s='📜 Последний рейс · '+RR_STEPS[st];if(st===4)s+=' · Лида: '+Math.round(S.rr.hp??100)+'%';if(st===5)s+=' ('+(S.rr.got||[]).filter(Boolean).length+'/3)';
+  const f=RR_MARK[st];if(f&&M){const [m,p]=f();if(m===M.id&&p){const dx=p[0]+.5-P.x,dy=p[1]+.5-P.y;const d=Math.round(Math.hypot(dx,dy));const ar='→↘↓↙←↖↑↗'[((Math.round(Math.atan2(dy,dx)/(Math.PI/4))%8)+8)%8];s+=' · '+ar+' '+d+' м'}else if(MAPS[m])s+=' · локация: '+MAPS[m].name}
+  h.textContent=s}
+setInterval(()=>{try{rrLidaPlace();rrHud()}catch(e){}},500);
+// ---------- события на картах ----------
+function rrSpawn(type,x,y,mul){const e=mkEnemy(type,x,y);e.id=rid();e.summoned=true;e.dead=1e15;e.seen=true;e.rr=1;if(mul){e.hp*=mul}rtFor(M.id).enemies.push(e);return e}
+{const _em=enterMap;enterMap=function(id,x,y){const r=_em.apply(this,arguments);try{const st=rrSt();
+  if(st===2&&id==='cb3_5'&&!rtFor(id).enemies.some(e=>e.rrBoss&&e.alive)){const b=rrPos('boss');const boss=rrSpawn('gunner',b[0],b[1],4);boss.rrBoss=1;for(const [dx,dy] of [[2,1],[-2,1]]){const q=rrFree(MAPS.cb3_5,b[0]+dx,b[1]+dy,0,3);rrSpawn('raider',q[0],q[1])}log('⚠ Наверху — главарь Воронов с охраной. Лида у них.','bad')}
+  if(st===4&&id==='city'&&!S.rr.amb){S.rr.amb=1;setTimeout(()=>{if(M.id!=='city')return;for(let i=0;i<3;i++){const a=P.a+Math.PI+(i-1)*.6;const q=rrFree(M,P.x+Math.cos(a)*7,P.y+Math.sin(a)*7,0,3);rrSpawn('dog',q[0],q[1])}log('Слепые псы учуяли кровь Лиды! Защитите её.','bad')},2500)}
+  if(st===4&&id==='hub'){rrSet(5,'Лида: «Спасибо… Вороны увезли ящики на Химкомбинат «Заря». Без них Колоколу конец». Ящики нужно вернуть.')}
+  if(st===5&&id==='chem'){const r=rtFor('chem');S.rr.got=S.rr.got||[];for(let i=0;i<3;i++){if(S.rr.got[i]||r.pickups.some(p=>p.rr===i+1))continue;const p=rrPos('crate'+i);r.pickups.push({item:'rr_med',q:1,x:p[0]+.5,y:p[1]+.5,gone:0,quest:1,rr:i+1})}
+    if(!S.rr.chem){S.rr.chem=1;for(let i=0;i<3;i++){const p=rrPos('crate'+i);for(const k of [0,1]){const q=rrFree(MAPS.chem,p[0]+(k?2:-2),p[1]+1,0,3);rrSpawn(k?'gunner':'raider',q[0],q[1])}}log('⚠ Склад Воронов на Химкомбинате охраняют. Осторожно.','bad')}}
+  rrLidaPlace();rrHud()}catch(e){}return r}}
+// подобранный ящик — отметить и убрать с карты; три собраны — следующий шаг
+setInterval(()=>{if(!S||!M||rrSt()!==5||M.id!=='chem')return;const r=rtFor('chem');S.rr.got=S.rr.got||[];for(const p of r.pickups)if(p.rr&&p.gone&&!S.rr.got[p.rr-1]){S.rr.got[p.rr-1]=1;dirty=true}
+  r.pickups=r.pickups.filter(p=>!(p.rr&&S.rr.got[p.rr-1]));if(S.rr.got.filter(Boolean).length>=3&&has('rr_med',3))rrSet(6,'Все три ящика у вас. Несите их Бабке Зое в Ржавый Колокол.');rrHud()},700);
+// главарь повержен
+{const _ck=creditKill;creditKill=function(e){const r=_ck.apply(this,arguments);try{if(e&&e.rrBoss&&rrSt()===2)rrSet(3,'Главарь Воронов повержен! Поговорите с Лидой.')}catch(x){}return r}}
+// грузовик: осмотреть (E / кнопка действия)
+{const _in=interact;interact=function(){if(!paused&&S&&M&&rrSt()===1&&M.id==='city'){const p=rrPos('truck');if(Math.hypot(P.x-p[0]-.5,P.y-p[1]-.5)<2.4){
+    openWin('Перевёрнутый грузовик',b=>{b.append(el('p','small','Кузов вскрыт, половины ящиков нет. На борту углём: «ВОРОНЫ». Ниже кто-то дописал: «…и кто это прочитал». Ржавые остряки. Кровавый след и следы сапог ведут к Дому №3.'),
+      el('p','small','Под сиденьем — обрывок записки Лиды: «…держат наверху…»'),btn('Идти по следу',()=>{closeWin();rrSet(2,'Следы ведут в Дом №3. Лиду держат на последнем этаже.')},'btn primary'))});return}}return _in()}}
+// разговоры
+{const _nd=npcDialog;npcDialog=function(n){_nd(n);const o=ov.querySelector('.opts');if(!o||!S)return;const add=(t,fn,cls)=>o.insertBefore(btn(t,fn,cls||'btn primary'),o.lastElementChild);const st=rrSt();
+  // квест начинается только у Митяя в баре (с 15-го уровня): кнопка → сценка с раненым водителем
+  if(n.id==='mityai'&&st===0&&!(S.rr&&S.rr.seen))add('📜 «Что нового слышно?»',()=>{closeWin();if((S.lvl|0)<RR_LVL){log('Митяй: «Есть одно дело, да не по тебе пока. Подрасти до '+RR_LVL+'-го — тогда и поговорим. А то хоронить нынче дорого.»','bad');return}
+    log('Митяй: «Слышно, что колонна из-за реки не пришла. А когда колонна не приходит, обычно приходит…» — за спиной со скрипом открывается дверь.','sys');rrScene()},'btn');
+  if(n.id==='rr_stepan'){if(st===0)add('📜 «Расскажи, что случилось»',()=>{closeWin();openWin('Водитель Степан',b=>{b.append(el('p','small','— Колонна шла из-за реки с лекарствами для Колокола. Под Заречным грузовик опрокинуло — засада Воронов. Я уполз, а Лида… осталась в кабине.'),
+      el('p','small','— Найди грузовик. Найди Лиду. Ящики — на всё поселение. Заплачу всем, что есть.'),btn('Взяться за дело',()=>{closeWin();S.rr={st:0,hp:100};rrSet(1,'Новое сюжетное задание: «Последний рейс». Грузовик — в Городе Заречном.')},'btn primary'),btn('Не сейчас',()=>closeWin()))})});
+    else if(st>=1&&st<7)add('📜 «Что дальше?»',()=>{closeWin();log('Степан: «'+RR_STEPS[st]+'»')},'btn')}
+  if(n.id==='rr_lida'){if(st===3)add('«Идём, я выведу тебя»',()=>{closeWin();S.rr.hp=100;S.rr.amb=0;LIDA.m=null;rrSet(4,'Лида идёт за вами. Доведите её до Ржавого Колокола — и не отходите далеко.')});
+    else if(st>=7){const day=Math.floor(Date.now()/864e5);if((S.rr.gift|0)<day)add('🎁 «Как ты, Лида?»',()=>{closeWin();S.rr.gift=day;add2()});}}
+  if(n.id==='zoya'&&st===6&&has('rr_med',3))add('📦 Отдать ящики лекарств',()=>{closeWin();take('rr_med',3);S.caps+=1500;gainXp(3000);add('medkit',3);add('bandage',5);S.rr.done=Date.now();
+    rrSet(7,'«Последний рейс» пройден! Бабка Зоя: «Спас ты нас. Теперь и помереть можно — но не сегодня, у меня пирог в печи». Награда: 1500 крышек, 3000 опыта, 3 аптечки, 5 бинтов. Лида теперь живёт в Колоколе.');updateHud()})}}
+function add2(){add('medkit',1);dirty=true;log('Лида: «Держи, на всякий случай». Получена аптечка (раз в сутки).','good')}
+// шаг квеста — и во вкладке «Задания»
+{const _qv=TABVIEW.quests;TABVIEW.quests=function(b){_qv(b);const st=rrSt();if(st<1)return;const box=el('div');box.append(el('div','sec','📜 Сюжет: «Последний рейс»'),el('p','small',st>=7?'Пройден. Лида живёт в Ржавом Колоколе.':'Шаг '+st+' из 6: '+RR_STEPS[st]));b.prepend(box)}}
+// ---------- сценка: раненый водитель вползает в бар к Митяю ----------
+// Видит только сам игрок (NPC и сценка — у него в браузере). Один раз; дальше Степан лежит у Митяя и ждёт разговора.
+const RRS={on:false};
+{const _dh=drawHuman;drawHuman=function(c,x,y,o){if(o&&o.lk===RR_STEPAN.lk&&RR_STEPAN.crawl){c.save();c.translate(x,y+6);c.rotate(-Math.PI/2*.92);const r=_dh(c,0,-6,o);c.restore();return r}return _dh(c,x,y,o)}}
+function rrScene(){if(RRS.on||!S||!M||M.id!=='bar'||rrSt()>0||(S.rr&&S.rr.seen))return;const hub=MAPS.bar;const zo=NPCS.find(n=>n.id==='mityai');if(!zo)return;
+  const gate=(hub.exits.find(e=>!e.door)||hub.exits[0]);const start=rrFree(hub,gate.x+(gate.w||1)/2,gate.y+(gate.h||1)/2,1,4);const end=rrPos('stepan');
+  RRS.on=true;const z0={x:zo.x,y:zo.y};Object.assign(RR_STEPAN,{map:'bar',x:start[0],y:start[1],crawl:true,a:Math.atan2(end[1]-start[1],end[0]-start[0])});
+  const say=(who,t,col)=>floatText(who.x+.5,who.y-.6,t,col||'#f2d28a',true);
+  log('Дверь бара со скрипом открывается…','sys');setTimeout(()=>say(RR_STEPAN,'Помогите!..','#ec7a62'),600);
+  const T0=Date.now(),DUR=11000;const lines=[[2500,'Колонна… Вороны…'],[5000,'Лида… осталась…'],[8000,'Не стреляйте, я свой… почти']];let li=0;
+  const iv=setInterval(()=>{if(!S||!M||M.id!=='bar'){clearInterval(iv);RRS.on=false;Object.assign(zo,z0);if(S){S.rr=S.rr||{st:0};S.rr.seen=1;dirty=true}return}
+    const k=Math.min(1,(Date.now()-T0)/DUR);RR_STEPAN.x=start[0]+(end[0]-start[0])*k;RR_STEPAN.y=start[1]+(end[1]-start[1])*k+Math.sin(k*40)*.05;
+    if(li<lines.length&&Date.now()-T0>lines[li][0]){say(RR_STEPAN,lines[li][1],'#ec7a62');li++}
+    // Зоя бежит навстречу на последних секундах
+    if(k>.6){const zk=Math.min(1,(k-.6)/.4);zo.x=z0.x+(end[0]+1-z0.x)*zk;zo.y=z0.y+(end[1]-z0.y)*zk;if(!RRS.zs){RRS.zs=1;say(zo,'Ёшкин кот! Шура, глуши гитару — тут человек помирает!')}}
+    if(k>=1){clearInterval(iv);setTimeout(()=>{say(zo,'Живой. Пока. Эй, ты — да, ты. Поговори с ним, у меня от крови изжога.');Object.assign(zo,z0);RRS.on=false;S.rr=S.rr||{st:0};S.rr.seen=1;dirty=true;rrLidaPlace();
+      log('Раненый водитель лежит у Митяя в баре. Подойдите и поговорите с ним.','good')},1200)}},50)}
+// ---------- смерть во время квеста — задание начинается заново ----------
+function rrReset(){const st=rrSt();if(st<1||st>=7||(M&&(M.arena||M.train)))return;const n=has('rr_med',1)?(S.inv.rr_med|0):0;if(n)take('rr_med',n);
+  for(const r of Object.values(RT)){r.enemies=r.enemies.filter(e=>!e.rr);r.pickups=r.pickups.filter(p=>!p.rr)}
+  Object.assign(S.rr,{boss:0,amb:0,chem:0,got:[],hp:100});LIDA.m=null;rrSet(1);log('📜 «Последний рейс»: вы погибли — задание начинается заново. Грузовик всё ещё в Заречном.','bad')}
+{const _die=die;die=function(src){const r=_die.apply(this,arguments);try{rrReset()}catch(e){}return r}}
+// ---------- враги квеста — только у этого игрока ----------
+// Пока в локации есть другой игрок и «ведущий» не мы, у наших квестовых врагов своё простое поведение: идут к игроку и бьют.
+{const _ue=updateEnemies;updateEnemies=function(dt){_ue(dt);try{if(!S||!M||hostId(M.id)===myNetId())return;const r=rtFor(M.id);
+  for(const e of r.enemies){if(!e.rr||!e.alive)continue;const d=EN[e.type];if(e.dying){e.dying-=dt;if(e.dying<=0)e.alive=false;continue}
+    const dx=P.x-e.x,dy=P.y-e.y,dist=Math.hypot(dx,dy);e.a=Math.atan2(dy,dx);e.cd=(e.cd||0)-dt;
+    if(dist>d.r+.45&&dist<18){const s=d.spd*dt;const nx=e.x+dx/dist*s,ny=e.y+dy/dist*s;if(!hitsSolid(nx,ny,d.r*.8)){e.x=nx;e.y=ny}e.moving=true;e.phase=(e.phase||0)+d.spd*dt*3.2}
+    else{e.moving=false;if(dist<=d.r+.5&&e.cd<=0&&!M.safe){e.cd=d.cd;e.bite=now;hurt(d.dmg,d.n)}}}}catch(x){}}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
