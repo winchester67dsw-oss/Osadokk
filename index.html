@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793480933";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793483070";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -9439,6 +9439,119 @@ shopSell=function(n,keep){if(!keep)SHOPCAT.sell='all';const B=BUY[n.id];const re
     for(const id of ids){if(SHOPCAT.sell!=='all'&&bagShelf(id)!==SHOPCAT.sell)continue;const p=sellPrice(n,id);const free=S.inv[id]-equippedCount(id);
       list.append(itemRow(id,[el('span','q','×'+free+' · '+p+' кр.'),btn('Продать',()=>{take(id);S.caps+=p;refSold(id,1,p);re()}),free>1?btn('Все',()=>{take(id,free);S.caps+=p*free;refSold(id,free,p);re()}):el('span')]))}
     b.append(list);const o=el('div','startrow');o.style.marginTop='12px';o.append(btn('Назад',()=>npcDialog(n)));b.append(o)})};
+
+// ================= v70: КОМПЛЕКТ «ПУСТОШЬ» — ТОЛЬКО ДЛЯ АДМИНА =================
+// Восемь уникальных вещей, обмотанных грязной тряпкой: пулемёт, снайперка, АКМ, мачете, фонарь, берет, бронежилет, арафатка.
+// Каждая сильнее всего, что есть в игре. Выдаются только администратору (сами появляются в рюкзаке, повторно — во вкладке «Админ»).
+// Продать, выбросить, передать или потерять при смерти их нельзя; другие игроки надеть их не могут.
+RAR[5]=['уникальное','#d8452f'];
+const PUST_D='Уникальная вещь из комплекта «Пустошь». Есть только у администратора: не продаётся, не выбрасывается, не передаётся и не выпадает при смерти.';
+const PUST={
+ pust_pkm:{n:'Пулемёт «Пустошь»',k:'weapon',cls:'rifle',dmg:42,rate:11,mag:150,ammo:'a762',spread:.09,range:16,reload:4,spd:36,auto:1,pierce:1,base:'pkm',w:9,role:'лучший пулемёт: 150 патронов, урон выше любого ствола'},
+ pust_snp:{n:'Снайперская винтовка «Пустошь»',k:'weapon',cls:'sniper',dmg:160,rate:1.4,mag:10,ammo:'a762',spread:.003,range:24,reload:2.6,spd:48,pierce:1,base:'svd',w:4.5,role:'мощнее Мосина и быстрее СВД'},
+ pust_ak:{n:'АКМ «Пустошь»',k:'weapon',cls:'rifle',dmg:34,rate:10,mag:40,ammo:'a545',spread:.045,range:15,reload:1.8,spd:32,auto:1,base:'ak',w:3.4,role:'самый сильный и точный автомат'},
+ pust_mach:{n:'Мачете «Пустошь»',k:'weapon',cls:'melee',dmg:60,rate:2.2,reach:1.45,base:'machete',w:.9,role:'повышенный урон: режет сильнее кувалды и быстрее ножа'},
+ pust_fl:{n:'Фонарь «Пустошь»',k:'light',w:.6,dd:'Самый дальний и широкий луч, батарейки держит вдвое дольше прожектора.'},
+ pust_beret:{n:'Берет «Пустошь»',k:'head',st:{def:5,accPct:15,critPct:8,radRes:.2},w:.2},
+ pust_vest:{n:'Бронежилет «Пустошь-Бродяга»',k:'body',st:{def:15,maxHp:50,radRes:.3,speedPct:5},w:4,dd:'+40 кг к переносимому грузу.'},
+ pust_scarf:{n:'Арафатка «Пустошь»',k:'face',st:{def:1,radRes:.9},w:.15,dd:'Почти полностью защищает от радиации.'}};
+const PUST_IDS=Object.keys(PUST);
+for(const [id,g] of Object.entries(PUST)){const it=Object.assign({},g);delete it.base;delete it.w;delete it.dd;it.p=0;it.r=5;it.adm=1;it.wearK=.25;it.d=(g.dd?g.dd+' ':'')+PUST_D;ITEMS[id]=it;WT[id]=g.w;
+  if(g.base){if(PX[g.base])PX[id]=PX[g.base];if(typeof WSND!=='undefined'&&WSND[g.base])WSND[id]=WSND[g.base]}}
+FLS.pust_fl={r:520,a:.6,s:1,min:15};
+BODYCOL.pust_vest='#7c6644';
+HDHAND.pust_mach=HDHAND.machete;
+{const _cc=carryCap;carryCap=function(){return _cc()+(S&&S.eq.body==='pust_vest'?40:0)}}
+if(typeof weapon3==='function'){const _w3=weapon3;weapon3=function(w){return _w3(PUST[w]&&PUST[w].base||w)}}
+
+// ---------- тряпичные обмотки поверх модели оружия ----------
+function pRnd(seed){let r=seed>>>0||1;return()=>{r=(Math.imul(r,1664525)+1013904223)>>>0;return r/4294967296}}
+const PCL=['#5e4c32','#6a563a','#4c3d27','#73603f','#564630','#665238'];
+// бахрома: свисающие рваные лоскуты; y — число или функция от x (нижний край детали)
+function pFringe(c,x0,x1,y,R,L){for(let x=x0+R()*3;x<x1;x+=2+R()*4){if(R()<.35)continue;const yy=typeof y==='function'?y(x):y;const l=1+R()*R()*L,w=1.4+R()*2.6,sw=(R()-.5)*1.4;
+  c.fillStyle=PCL[R()*PCL.length|0];c.beginPath();c.moveTo(x,yy-1.6);c.lineTo(x+w,yy-1.6);c.lineTo(x+w*.85,yy+l*.45);c.lineTo(x+w*.6+sw,yy+l);c.lineTo(x+w*.4+sw*.6,yy+l*.6);c.lineTo(x+w*.2+sw,yy+l*.85);c.lineTo(x+w*.05,yy+l*.3);c.closePath();c.fill();
+  c.strokeStyle='rgba(25,16,8,.5)';c.lineWidth=.3;c.stroke()}}
+// обмотка: рисуется только поверх уже нарисованной детали (source-atop), поэтому повторяет её форму
+function pWrap(c,x0,y0,x1,y1,o={}){const R=pRnd(o.seed||7),h=y1-y0,w0=x1-x0;c.save();c.beginPath();c.rect(x0,y0,w0,h);c.clip();c.globalCompositeOperation='source-atop';
+  c.fillStyle='rgba(84,66,42,.96)';c.fillRect(x0,y0,w0,h);
+  // слои бинта: широкие полосы внахлёст, края чуть темнее
+  if(o.vert){const sl=(o.ang??.25)*w0;for(let y=y0-Math.abs(sl)-3;y<y1+3;){const t=3+R()*3.5;c.fillStyle=PCL[R()*PCL.length|0];c.beginPath();c.moveTo(x0,y);c.lineTo(x1,y+sl+(R()-.5));c.lineTo(x1,y+sl+t);c.lineTo(x0,y+t+(R()-.5));c.closePath();c.fill();
+      c.strokeStyle='rgba(28,18,8,'+(.2+R()*.3)+')';c.lineWidth=.4;c.beginPath();c.moveTo(x0,y);c.lineTo(x1,y+sl);c.stroke();y+=t*(.6+R()*.3)}}
+  else{const sl=(o.ang??.5)*h;for(let x=x0-Math.abs(sl)-4;x<x1+4;){const t=3+R()*4;c.fillStyle=PCL[R()*PCL.length|0];c.beginPath();c.moveTo(x,y0);c.lineTo(x+t,y0);c.lineTo(x+t+sl+(R()-.5),y1);c.lineTo(x+sl+(R()-.5),y1);c.closePath();c.fill();
+      c.strokeStyle='rgba(28,18,8,'+(.2+R()*.3)+')';c.lineWidth=.4;c.beginPath();c.moveTo(x,y0);c.lineTo(x+sl,y1);c.stroke();x+=t*(.6+R()*.3)}}
+  // грязь, дыры и торчащие нитки
+  for(let i=0;i<w0*h/45;i++){c.fillStyle=R()<.6?'rgba(30,22,12,.32)':'rgba(120,96,60,.22)';c.beginPath();c.ellipse(x0+R()*w0,y0+R()*h,.8+R()*2.4,.5+R()*1.1,R()*3,0,7);c.fill()}
+  for(let i=0;i<w0*h/160;i++){c.fillStyle='rgba(18,13,8,.6)';c.beginPath();c.ellipse(x0+R()*w0,y0+R()*h,.5+R()*1.2,.3+R()*.6,R()*3,0,7);c.fill()}
+  c.strokeStyle='rgba(190,160,115,.22)';c.lineWidth=.25;for(let i=0;i<w0*h/14;i++){const tx=x0+R()*w0,ty=y0+R()*h;c.beginPath();c.moveTo(tx,ty);c.lineTo(tx+.6+R()*1.6,ty+(R()-.4)*1.2);c.stroke()}
+  const g=c.createLinearGradient(0,y0,0,y1);g.addColorStop(0,'rgba(255,225,170,.14)');g.addColorStop(.55,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.38)');c.fillStyle=g;c.fillRect(x0,y0,w0,h);c.restore();
+  if(o.fr)pFringe(c,x0,x1,o.fr,R,o.fl||6)}
+// грязь и ржавчина по металлу
+function pGrime(c,x0,y0,x1,y1,seed){const R=pRnd(seed||3);c.save();c.globalCompositeOperation='source-atop';
+  for(let i=0;i<(x1-x0)*(y1-y0)/40;i++){c.fillStyle=R()<.5?'rgba(74,54,30,.3)':'rgba(132,78,34,.24)';c.beginPath();c.ellipse(x0+R()*(x1-x0),y0+R()*(y1-y0),.6+R()*2.4,.4+R()*1.2,R()*3,0,7);c.fill()}
+  c.fillStyle='rgba(60,44,24,.18)';c.fillRect(x0,y0,x1-x0,y1-y0);c.restore()}
+// ремень, свисающий от приклада
+function pSling(c,pts,seed){const R=pRnd(seed||5);c.save();c.lineCap='round';c.lineJoin='round';const path=()=>{c.beginPath();c.moveTo(pts[0],pts[1]);c.bezierCurveTo(pts[2],pts[3],pts[4],pts[5],pts[6],pts[7])};
+  c.strokeStyle='#2e2416';c.lineWidth=4.2;path();c.stroke();c.strokeStyle='#7a6444';c.lineWidth=3;path();c.stroke();c.setLineDash([1.2,1.6]);c.strokeStyle='rgba(30,22,12,.6)';c.lineWidth=.4;path();c.stroke();c.setLineDash([]);
+  c.fillStyle='#5a5048';c.beginPath();c.arc(pts[0],pts[1],1.6,0,7);c.fill();c.restore()}
+const pSkin=(base,ext,fn)=>Object.assign({},HDDEF[base],ext,{d:c=>{HDDEF[base].d(c);fn(c)}});
+HDDEF.pust_pkm=pSkin('pkm',{y1:50},c=>{pGrime(c,0,-20,264,46,11);
+  pWrap(c,0,-9,64,15,{seed:21,ang:.35,fr:x=>14-(x-2)*10/64,fl:9});pWrap(c,84,4,108,31,{seed:22,vert:1,ang:-.3});pWrap(c,116,4,150,34,{seed:23,vert:1,ang:.12,fr:33,fl:6});
+  pWrap(c,154,-6,236,5.2,{seed:24,ang:.6,fr:5,fl:10});pWrap(c,218,6,232,30,{seed:25,vert:1,ang:.4})});
+HDDEF.pust_ak=pSkin('ak',{y1:52},c=>{pGrime(c,0,-18,252,42,12);
+  pWrap(c,0,-10,62,18,{seed:31,ang:.4,fr:x=>16-x*.11,fl:8});pWrap(c,82,4,104,31,{seed:32,vert:1,ang:-.35});pWrap(c,104,7,146,42,{seed:33,vert:1,ang:.25});
+  pWrap(c,142,-9,198,8,{seed:34,ang:.5,fr:7,fl:11});pSling(c,[6,15,8,50,46,48,60,12],35)});
+HDDEF.pust_snp=pSkin('svd',{y1:48},c=>{pGrime(c,0,-26,272,30,13);
+  pWrap(c,0,-14,82,18,{seed:41,ang:.4,fr:x=>17-x*.12,fl:9});pWrap(c,144,-6,208,7,{seed:42,ang:.55,fr:6.5,fl:10});
+  pWrap(c,92,-22,124,-11,{seed:43,ang:.4});pWrap(c,140,-22,166,-11,{seed:44,ang:.4});pSling(c,[10,14,14,46,40,46,62,14],45)});
+HDDEF.pust_mach=pSkin('machete',{y1:16},c=>{pGrime(c,30,-8,132,10,14);const R=pRnd(51);c.save();c.globalCompositeOperation='source-atop';
+  for(let i=0;i<26;i++){c.fillStyle='rgba(120,64,24,'+(.2+R()*.3)+')';c.beginPath();c.ellipse(34+R()*96,-6+R()*13,1+R()*4,.6+R()*1.6,R()*3,0,7);c.fill()}c.restore();
+  pWrap(c,-2,-5,31,6,{seed:52,ang:.6,fr:5,fl:5})});
+
+// ---------- берет и арафатка на персонаже ----------
+function pBadge(c,x,y,s){c.save();c.translate(x,y);c.scale(s,s);c.fillStyle='#2a1e10';c.beginPath();c.moveTo(-3.4,-3);c.lineTo(3.4,-3);c.lineTo(0,3.6);c.closePath();c.fill();
+  c.fillStyle='#d8a838';c.beginPath();c.moveTo(-2.7,-2.5);c.lineTo(2.7,-2.5);c.lineTo(0,2.7);c.closePath();c.fill();c.fillStyle='#1a1408';
+  for(let i=0;i<3;i++){const a=-Math.PI/2+i*Math.PI*2/3;c.beginPath();c.moveTo(0,-.6);c.arc(0,-.6,1.7,a-.5,a+.5);c.closePath();c.fill()}c.beginPath();c.arc(0,-.6,.4,0,7);c.fill();c.restore()}
+{const _hg=headgear;headgear=function(c,id,x,hy,view){if(id!=='pust_beret')return _hg(c,id,x,hy,view);
+  c.fillStyle=lg(c,0,hy-9,0,hy,'#6e5636','#3a2c1a');c.beginPath();c.ellipse(x+(view===1?-1:1),hy-3.6,7.9,4.3,-.15,0,7);c.fill();strokeO(c,.7);
+  const R=pRnd(61);for(let i=0;i<7;i++){c.fillStyle='rgba(30,20,10,.35)';c.beginPath();c.ellipse(x-5+R()*10,hy-6+R()*4,.5+R()*1.3,.3+R()*.6,0,0,7);c.fill()}
+  c.fillStyle='#2a2014';rrp(c,x-6.9,hy-2.7,13.8,1.7,.8);c.fill();if(view===0||view===2)pBadge(c,x+(view===2?3:-3.2),hy-4.4,.5)}}
+{const _fg=facegear;facegear=function(c,id,x,hy,view){if(id!=='pust_scarf')return _fg(c,id,x,hy,view);const fx=x+(view===1||view===2?1:0);
+  c.fillStyle=lg(c,0,hy+2,0,hy+10,'#8a6e48','#5a4428');c.beginPath();c.ellipse(fx,hy+5.6,7.8,3.6,0,0,7);c.fill();strokeO(c,.6);
+  c.strokeStyle='rgba(40,28,14,.55)';c.lineWidth=.4;for(let i=-6;i<=6;i+=2){c.beginPath();c.moveTo(fx+i,hy+2.6);c.lineTo(fx+i+1.2,hy+8.6);c.stroke()}
+  c.beginPath();c.moveTo(fx-7,hy+5);c.lineTo(fx+7,hy+5);c.stroke();const R=pRnd(62);pFringe(c,fx-6.5,fx+6.5,hy+8.8,R,2.4)}}
+
+// ---------- иконки одежды и фонаря ----------
+const PICON={
+ pust_beret:c=>{c.fillStyle='rgba(0,0,0,.35)';c.beginPath();c.ellipse(32,44,22,5,0,0,7);c.fill();c.fillStyle=lg(c,0,16,0,42,'#7a6040','#3a2c1a');c.beginPath();c.ellipse(31,30,22,12,-.12,0,7);c.fill();c.strokeStyle='#1e160c';c.lineWidth=1.2;c.stroke();
+   const R=pRnd(71);for(let i=0;i<22;i++){c.fillStyle='rgba(30,20,10,.3)';c.beginPath();c.ellipse(12+R()*38,22+R()*14,.8+R()*2.4,.5+R()*1.2,0,0,7);c.fill()}
+   c.fillStyle='#2a2014';rrp(c,11,36,42,5,2.4);c.fill();c.strokeStyle='rgba(200,170,120,.3)';c.lineWidth=.6;c.beginPath();c.moveTo(13,37);c.lineTo(51,37);c.stroke();pBadge(c,44,29,1.5)},
+ pust_scarf:c=>{c.fillStyle=lg(c,0,14,0,46,'#94784e','#5a4428');c.beginPath();c.moveTo(14,18);c.quadraticCurveTo(32,10,50,18);c.lineTo(46,42);c.quadraticCurveTo(32,48,18,42);c.closePath();c.fill();c.strokeStyle='#2a1e10';c.lineWidth=1;c.stroke();
+   c.save();c.clip();c.strokeStyle='rgba(40,28,14,.5)';c.lineWidth=.8;for(let i=0;i<70;i+=4){c.beginPath();c.moveTo(i,10);c.lineTo(i-14,50);c.stroke();c.beginPath();c.moveTo(i-14,10);c.lineTo(i,50);c.stroke()}
+   c.fillStyle='rgba(30,20,10,.4)';for(const y of [20,34])c.fillRect(0,y,64,3);c.restore();c.fillStyle='#3a2c1a';c.beginPath();c.ellipse(32,18,15,4,0,0,7);c.fill();pFringe(c,18,46,44,pRnd(72),6)},
+ pust_vest:c=>{c.fillStyle=lg(c,0,8,0,58,'#6e5838','#3e3020');c.beginPath();c.moveTo(20,8);c.lineTo(27,8);c.quadraticCurveTo(32,16,37,8);c.lineTo(44,8);c.lineTo(52,16);c.lineTo(50,52);c.lineTo(14,52);c.lineTo(12,16);c.closePath();c.fill();c.strokeStyle='#1e160c';c.lineWidth=1.2;c.stroke();
+   c.fillStyle='#8a7048';c.beginPath();c.moveTo(27,8);c.quadraticCurveTo(32,20,37,8);c.lineTo(35,24);c.lineTo(29,24);c.closePath();c.fill();
+   for(const [x,y] of [[15,30],[25,32],[37,32],[47,30]]){c.fillStyle='#4a3a24';rrp(c,x-4.5,y,9,11,1.5);c.fill();c.strokeStyle='#1e160c';c.lineWidth=.8;c.stroke();c.fillStyle='#5e4a2e';c.fillRect(x-4.5,y,9,3)}
+   const R=pRnd(73);for(let i=0;i<30;i++){c.fillStyle='rgba(25,16,8,.3)';c.beginPath();c.ellipse(14+R()*36,10+R()*40,.8+R()*2,.5+R()*1,0,0,7);c.fill()}pFringe(c,14,50,52,R,8);pFringe(c,10,16,20,R,10);pFringe(c,48,54,20,R,10)},
+ pust_fl:c=>{c.save();c.translate(32,32);c.rotate(-.35);c.fillStyle='rgba(255,220,140,.25)';c.beginPath();c.moveTo(22,-6);c.lineTo(34,-14);c.lineTo(34,14);c.lineTo(22,6);c.fill();
+   c.fillStyle=lg(c,0,-6,0,6,'#4a4038','#1e1a16');rrp(c,-26,-5,40,10,3);c.fill();c.fillStyle=lg(c,0,-7,0,7,'#6a5e50','#2a241e');rrp(c,13,-7,10,14,2);c.fill();c.strokeStyle='#14100c';c.lineWidth=.8;c.stroke();
+   c.fillStyle='#ffe2a0';c.beginPath();c.ellipse(23,0,1.6,5.5,0,0,7);c.fill();c.translate(0,0);pWrap(c,-26,-5,12,5,{seed:74,ang:.5,fr:5,fl:7});c.restore()}};
+{const _ic=iconCanvas;iconCanvas=function(id,size=40){const f=PICON[id];if(!f)return _ic(id,size);const c=document.createElement('canvas');const d=Math.min(2,window.devicePixelRatio||1);c.width=size*d;c.height=size*d;c.style.width=size+'px';c.style.height=size+'px';
+  const x=c.getContext('2d');x.scale(size*d/64,size*d/64);try{f(x)}catch(e){}return c}}
+
+// ---------- только у админа ----------
+// при смерти вещи «Пустошь» не попадают в выпавший рюкзак
+{const _die=die;die=function(){const keep={};if(S)for(const id of PUST_IDS)if(S.inv[id]){keep[id]=S.inv[id];delete S.inv[id]}
+  try{return _die.apply(this,arguments)}finally{if(S){for(const [id,q] of Object.entries(keep))S.inv[id]=(S.inv[id]|0)+q;statCache=null;dirty=true}}}}
+// в окнах подарка, обмена, тайника, склада и аукциона их просто нет в списке
+const PUST_NAMES=new Set(PUST_IDS.map(id=>ITEMS[id].n));
+new MutationObserver(()=>{const w=ov.querySelector('.win');const h=w&&w.querySelector('header h2');if(!h||!/^(Подарок|Обмен|Личный|Склад|Аукцион|Выставить)/.test(h.textContent))return;
+  for(const r of w.querySelectorAll('.row')){const t=r.querySelector('.t');if(t&&PUST_NAMES.has(t.textContent.replace(/ ×\d+$/,'').trim()))r.remove()}}).observe(ov,{childList:true,subtree:true});
+{const _ti=throwItem;throwItem=function(id,q){if(ITEMS[id]&&ITEMS[id].adm){log('Вещи «Пустошь» нельзя выбросить.','bad');return}return _ti(id,q)}}
+{const _eq=equip;equip=function(id,hint){const it=ITEMS[id];if(it&&it.adm&&!S.admin&&!equippedCount(id)){log('Это вещь администратора.','bad');return}return _eq(id,hint)}}
+function pustGive(force){if(!S||!S.admin)return;S.flags=S.flags||{};if(S.flags.pust&&!force)return;S.flags.pust=1;const got=[];
+  for(const id of PUST_IDS)if(!((S.inv[id]|0)>0)){add(id,1);got.push(ITEMS[id].n)}statCache=null;dirty=true;if(got.length)log('В рюкзак добавлен комплект «Пустошь»: '+got.join(', ')+'.','good');else if(force)log('Комплект «Пустошь» уже у вас.','sys');try{saveLocal()}catch(e){}}
+setInterval(()=>{try{pustGive()}catch(e){}},4000);
+if(typeof TABVIEW.admin==='function'){const _av=TABVIEW.admin;TABVIEW.admin=b=>{if(S&&S.admin){const sec=el('div');sec.append(el('div','sec','🎒 Комплект «Пустошь»'),el('p','muted small','Уникальные вещи только для вас. Если что-то пропало — кнопка вернёт недостающее.'),btn('Положить в рюкзак',()=>{pustGive(true);openTab('admin')},'btn primary'));b.append(sec)}_av(b)}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
