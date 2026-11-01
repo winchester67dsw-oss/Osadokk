@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793483070";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793533377";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -9265,7 +9265,8 @@ function nrMark(st){const D=S.nr||{};
   if(st===1||st===4)return ['bar',rrPos('stepan'),'Степан'];
   if(st===2){const i=[0,1,2].find(i=>!(D.sc||[])[i]);if(i==null)return null;const [m,k]=NR_SCOUT[i];return [m,nrPos(k),'📍 Разведка']}
   if(st===3){const left=NR_PARTS.filter(([id])=>!has(id));const here=left.find(([,m])=>M&&m===M.id)||left[0];if(!here)return null;return [here[1],nrPos(here[2]),here[3]]}
-  if(st===5){if(M&&M.id==='wild'&&D.tk)return ['wild',[D.tk.x-.5,D.tk.y-.5],'🚚 Грузовик'];return ['wild',nrPath()[0].map(v=>v-.5),'🚚 Грузовик']}
+  if(st===5){if(M&&M.id==='wild'&&D.tk){const f=nrFoes();if(f.length){const e=f.reduce((a,b)=>Math.hypot(a.x-P.x,a.y-P.y)<Math.hypot(b.x-P.x,b.y-P.y)?a:b);return ['wild',[e.x-.5,e.y-.5],'⚔ Засада: '+f.length]}}
+    if(M&&M.id==='wild'&&D.tk)return ['wild',[D.tk.x-.5,D.tk.y-.5],'🚚 Грузовик'];return ['wild',nrPath()[0].map(v=>v-.5),'🚚 Грузовик']}
   if(st===6){const e=nrPath()[nrPath().length-1];return ['wild',[e[0]-.5,e[1]-.5],'Степан']}return null}
 function nrHud(){let h=document.getElementById('nrHud');const st=nrSt();if(!NR_ON||!S||st<1||st>=99||!titleEl.hidden){if(h)h.hidden=true;return}
   if(!h){h=document.createElement('div');h.id='nrHud';h.style.cssText='position:fixed;left:50%;top:58px;transform:translateX(-50%);z-index:15;background:rgba(20,16,10,.85);border:1px solid #6a5034;border-radius:10px;padding:6px 12px;font:12px var(--mono,monospace);color:#f2d28a;max-width:min(560px,92vw);text-align:center;pointer-events:none';document.body.append(h)}
@@ -9277,7 +9278,17 @@ setInterval(()=>{try{nrHud()}catch(e){}},500);
 setInterval(()=>{if(!NR_ON||!S||!M||paused)return;const f=nrMark(nrSt());if(!f)return;const [m,p,n]=f;if(m!==M.id||!p)return;if(Math.hypot(P.x-p[0]-.5,P.y-p[1]-.5)<18)floatText(p[0]+.5,p[1]-.3,n,'#f2d28a')},2000);
 // ---------- враги ----------
 const nrHpK=()=>.55+(S.lvl|0)*.05;
-function nrSpawn(type,x,y,tag,mul){const e=rrSpawn(type,x,y,mul);e.nr=tag;return e}
+// враги квеста сразу «видят» игрока и идут на него издалека
+function nrSpawn(type,x,y,tag,mul){const e=rrSpawn(type,x,y,mul);e.nr=tag;try{e.tg=myNetId()}catch(_){}return e}
+const nrFoes=()=>rtFor('wild').enemies.filter(e=>e.nr==='amb'&&e.alive&&!e.dying&&e.hp>0);
+// враги квестов (Последний рейс, Новый маршрут) есть только у вас — поэтому думают у вас, даже если остальными мобами
+// на карте управляет другой игрок (раньше они стояли столбом, и засада не кончалась)
+{const _ru=replicaUpdate;replicaUpdate=function(dt){_ru(dt);const r=rtFor(M.id);const mine=r.enemies.filter(e=>e.rr&&e.alive&&!e.dying);if(!mine.length)return;
+  const all=r.enemies,top=r.topT,pop=r.pop,ev=MOB.ev.length;r.enemies=mine;r.topT=now+1e9;r.pop=true;
+  try{aiUpdate(dt)}finally{const out=r.enemies;r.enemies=all.filter(e=>!mine.includes(e)).concat(out.filter(e=>mine.includes(e)));r.topT=top;r.pop=pop;MOB.ev.length=ev}}}
+// бандиты засады, ушедшие далеко от грузовика (застряли за деревьями), возвращаются к нему
+setInterval(()=>{try{if(!NR_ON||!S||!M||M.id!=='wild'||nrSt()!==5||!S.nr.tk)return;const tk=S.nr.tk;
+  for(const e of nrFoes())if(Math.hypot(e.x-tk.x,e.y-tk.y)>16){const q=rrFree(M,tk.x+(Math.random()-.5)*8,tk.y+(Math.random()-.5)*8,2,6);e.x=q[0]+.5;e.y=q[1]+.5;e.tg=myNetId()}}catch(e){}},3000);
 function nrRing(types,cx,cy,r0,r1,tag,mul){types.forEach((t,i)=>{const a=i/types.length*Math.PI*2;const q=rrFree(M,cx+Math.cos(a)*(r0+r1)/2,cy+Math.sin(a)*(r0+r1)/2,0,3);nrSpawn(t,q[0],q[1],tag,mul)})}
 function nrCheck(id){if(!NR_ON||!S||!S.nr||!M||M.id!==id)return;const st=nrSt(),D=S.nr;D.sp=D.sp||{};
   // разведка: дошёл до точки — отметил (в Мёртвом городе на точке ждут псы)
@@ -9304,19 +9315,20 @@ function nrTruckInit(){const D=S.nr;if(D.tk)return;const p=nrPath()[0];D.tk={i:D
 function nrTruckBoom(){const D=S.nr;const tk=D.tk;try{explodeFx(tk.x,tk.y)}catch(e){}shake=Math.max(shake,1);floatText(tk.x,tk.y-1.5,'БАБАХ!','#ff6a3a',true);
   for(const r of Object.values(RT))r.enemies=r.enemies.filter(e=>e.nr!=='amb');D.tk=null;
   log('🚚 Грузовик взорвали! Степан успел выпрыгнуть: «Второй раз за неделю! Я так скоро летать научусь». Начинаем с последней засады.','bad');dirty=true;setTimeout(()=>{if(M&&M.id==='wild'&&nrSt()===5)nrTruckInit()},2500)}
-function nrAmbush(n){const D=S.nr,tk=D.tk,path=nrPath();const ahead=path[Math.min(path.length-1,Math.floor(tk.i)+10)];const k=nrHpK();
+// засада выскакивает прямо перед грузовиком (в паре метров впереди), а не за кадром
+function nrAmbush(n){const D=S.nr,tk=D.tk,path=nrPath();const ahead=path[Math.min(path.length-1,Math.floor(tk.i)+3)];const k=nrHpK();
   const sets=[['raider','raider','raider','dog'],['raider','raider','gunner','gunner'],['gunner','gunner','gunner','raider','raider']];
-  nrRing(sets[n],ahead[0],ahead[1],2,5,'amb',k);tk.amb=n+1;D.cp=Math.floor(tk.i);D.ambDone=n;
+  nrRing(sets[n],ahead[0],ahead[1],3,6,'amb',k);tk.amb=n+1;D.cp=Math.floor(tk.i);D.ambDone=n;
   const L=['Засада! Вороны! Я торможу — разберись с ними!','Опять они! У них что, абонемент на эту дорогу?!','Последние! Река уже видна — не подведи!'];floatText(tk.x,tk.y-1.6,L[n],'#ec7a62',true);log('⚠ Степан: «'+L[n]+'»','bad')}
 setInterval(()=>{if(!NR_ON||!S||!M||paused||nrSt()!==5||M.id!=='wild')return;const D=S.nr,tk=D.tk;if(!tk)return;const path=nrPath(),L=path.length-1;const dt=.1;
-  const foes=rtFor('wild').enemies.filter(e=>e.nr==='amb'&&e.alive&&!e.dying&&e.hp>0);
+  const foes=nrFoes();
   // враги рядом бьют по грузовику
   let dmg=0;for(const e of rtFor('wild').enemies){if(!e.alive||e.dying||e.hp<=0)continue;if(Math.hypot(e.x-tk.x,e.y-tk.y)<2)dmg+=(EN[e.type]?.dmg||8)*.06}
   if(dmg){tk.hp=Math.max(0,tk.hp-dmg);if(Math.random()<.15)floatText(tk.x,tk.y-1,'-'+Math.round(dmg*10),'#ec7a62');if(tk.hp<=0){nrTruckBoom();return}}
   const far=Math.hypot(P.x-tk.x,P.y-tk.y)>9;
   // засада на отметке пути
   const nextA=NR_AMB[tk.amb];if(nextA!=null&&tk.i>=nextA*L&&!foes.length){nrAmbush(tk.amb);return}
-  tk.wait=foes.length?'засада':far?'ждёт вас':'';if(foes.length||far){if(far&&Math.random()<.02)floatText(tk.x,tk.y-1.5,'Без охраны не поеду!','#f2d28a',true);return}
+  tk.wait=foes.length?'засада, осталось '+foes.length:far?'ждёт вас':'';if(foes.length||far){if(far&&Math.random()<.02)floatText(tk.x,tk.y-1.5,'Без охраны не поеду!','#f2d28a',true);return}
   if(tk.i>=L){nrSet(6);S.nr.tk=null;log('🚚 Брод! Степан: «Переехали! Ты понимаешь, что это значит? Колокол больше не на привязи у Воронов!» Поговорите со Степаном.','good');return}
   const sp=1.7*dt;let rem=sp;while(rem>0&&tk.i<L){const a=path[Math.floor(tk.i)],b=path[Math.min(L,Math.floor(tk.i)+1)];const seg=Math.hypot(b[0]-a[0],b[1]-a[1])||1;const f=tk.i-Math.floor(tk.i);const left=seg*(1-f);
     if(rem>=left){tk.i=Math.floor(tk.i)+1;rem-=left}else{tk.i+=rem/seg;rem=0}}
