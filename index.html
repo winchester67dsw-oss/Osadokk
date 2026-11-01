@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793536370";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793542119";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -9420,6 +9420,7 @@ function odvNote(t,bad){let n=document.getElementById('odvNote');if(!t){if(n)n.r
 // У всех торговцев и скупщиков вещи разложены по тем же отсекам, что и в рюкзаке (оружие, медикаменты, патроны…).
 // Купить можно сразу 1, 5, 10 или 30 штук. После покупки или продажи окно остаётся на том же месте, а не прыгает наверх.
 const SHOPCAT={buy:'all',sell:'all'};
+const SHOP_NOTE={habar:'Хабарыч берёт всё, хабар — дороже.',ippolit:'Орден платит почти полную цену за трофеи с мутантов.',tolik:'Толик берёт только еду и воду.'};
 {const st=document.createElement('style');st.textContent='.buyn{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end}.buyn .btn{padding:5px 9px;min-width:0}.row.shopr{flex-wrap:wrap}.row.shopr .grow{flex:1 1 160px}';document.head.append(st)}
 // перерисовать окно и вернуть прокрутку на прежнее место
 function shopKeep(fn){const bd=ov.querySelector('.win .body'),y=bd?bd.scrollTop:0;fn();const nb=ov.querySelector('.win .body');if(nb)nb.scrollTop=y}
@@ -9443,8 +9444,8 @@ shopBuy=function(n,keep){if(!keep)SHOPCAT.buy='all';const re=()=>shopKeep(()=>sh
     b.append(list);const o=el('div','startrow');o.style.marginTop='12px';o.append(btn('Назад',()=>npcDialog(n)));b.append(o)})};
 shopSell=function(n,keep){if(!keep)SHOPCAT.sell='all';const B=BUY[n.id];const re=()=>shopKeep(()=>shopSell(n,1));
   openWin(n.n+' — продать',b=>{
-    b.append(el('p',null,'У вас '+S.caps+' крышек. '+({habar:'Хабарыч берёт всё, хабар — дороже.',ippolit:'Орден платит почти полную цену за трофеи с мутантов.',tolik:'Толик берёт только еду и воду.'}[n.id]||'')));
-    const ids=Object.keys(S.inv).filter(id=>{const it=ITEMS[id];if(!it||!it.p)return false;if(!B.cats.includes(it.k))return false;if(B.only&&!B.only.includes(id))return false;return S.inv[id]>equippedCount(id)});
+    b.append(el('p',null,'У вас '+S.caps+' крышек. '+(SHOP_NOTE[n.id]||'')));
+    const ids=Object.keys(S.inv).filter(id=>{const it=ITEMS[id];if(!it||!it.p)return false;if(!B.cats.includes(it.k)&&!(B.ids&&B.ids[id]!=null))return false;if(B.only&&!B.only.includes(id))return false;return S.inv[id]>equippedCount(id)});
     if(ids.length)shopCats(b,ids,'sell',()=>shopSell(n,2));
     const list=el('div','list');
     if(!ids.length)list.append(el('div','muted small','Продавать нечего.'));
@@ -9569,6 +9570,78 @@ if(typeof TABVIEW.admin==='function'){const _av=TABVIEW.admin;TABVIEW.admin=b=>{
 // Старая хижина на юго-востоке болота стала лавкой Болотника (крыша сплошная), и пёс оказался замурован внутри —
 // к нему нельзя было подойти. Теперь он сидит на траве у восточной стены дома.
 if(MAPS.swamp)MAPS.swamp.dogAt=[42,28];
+
+// ================= v72: СКУПЩИКИ-СПЕЦИАЛИСТЫ И ЗАДАНИЯ НА ХЛАМ =================
+// Калибр дороже всех берёт оружие, патроны, гильзы, порох и оружейные детали; Механик Люда — снаряжение и детали к нему;
+// Медсестра Оля — медикаменты и химию. Хабарыч по-прежнему берёт всё, но дешевле. Болотник — трофеи и артефакты.
+// Скупщик никогда не платит больше, чем вы сами заплатили бы за эту вещь в любом магазине (иначе крышки рисовались бы из воздуха).
+const MEDS=Object.keys(ITEMS).filter(id=>ITEMS[id].k==='use'&&shelfOf(id)==='med');
+BUY.kalibr={cats:['weapon','ammo'],k:{weapon:.75,ammo:.8,def:.75},ids:{casing:.9,powder:.9,gunparts:.9,spring:.9}};
+BUY.luda={cats:['head','face','body','back','hands','light','det'],k:{def:.75},ids:{kevlar:.9,rubber:.9,rag:.9,tape:.9,glue:.9,nails:.9,wire:.9,lens:.9,cells:.9}};
+BUY.olya={cats:[],k:{def:.9},ids:Object.fromEntries([...MEDS,'chem','filter'].map(id=>[id,.9]))};
+SHOP_NOTE.kalibr='Калибр платит за стволы, патроны, гильзы и порох больше всех.';
+SHOP_NOTE.luda='Люда платит за броню, шлемы, рюкзаки, фонари и детали к ним больше всех.';
+SHOP_NOTE.olya='Оля платит за медикаменты и химию больше всех.';
+for(const [id,r] of [['kalibr','Торговец: оружие, патроны, броня · дороже всех скупает стволы, патроны, гильзы и порох'],['luda','Верстак · дороже всех скупает снаряжение и детали к нему'],['olya','Лечит за крышки · дороже всех скупает медикаменты']]){const n=NPCS.find(x=>x.id===id);if(n)n.role=r}
+// самая низкая цена вещи в магазинах
+const minShop=id=>{let m=Infinity;for(const L of Object.values(SELL))for(const e of L)if(e[0]===id)m=Math.min(m,e[1]);return m};
+{const _sp=sellPrice;sellPrice=function(n,id){const B=BUY[n.id],it=ITEMS[id];let p;
+  if(B&&B.ids&&B.ids[id]!=null){p=Math.max(1,Math.floor(it.p*B.ids[id]*(1+sk('trade')*.02)))}else p=_sp(n,id);
+  const ms=minShop(id);if(ms<Infinity)p=Math.min(p,Math.max(1,Math.floor(ms*priceK()*.95)));return p}}
+
+// ---------- задания на хлам: по два у каждого жителя, можно брать снова через 30 минут ----------
+const QJ_CD=30*60*1000;
+const QJ=[
+ ['seny','Ветошь на продажу','Тряпьё разбирают на портянки быстрее, чем я успеваю выложить. Принеси — продам с наценкой, тебе долю.','rag',8],
+ ['seny','Склейка','Кончился «Момент». Без клея у меня пол-прилавка разваливается, а вторая половина — уже.','glue',3],
+ ['kalibr','Гильзы на перезарядку','Стреляные гильзы не выбрасывай — неси мне. Набью порохом, и снова в дело.','casing',30],
+ ['kalibr','Пружины для затворов','Затворы без пружин — как Хабарыч без жадности: вроде есть, а не работает.','spring',4],
+ ['habar','Часы для коллекционера','Есть клиент — носит по трое часов на каждой руке. Ему мало.','watch',2],
+ ['habar','Медь в цене','Медная проволока нынче дороже совести. Совести у меня нет, так что неси проволоку.','wire',5],
+ ['tolik','Закуска к пиву','Крысиное вяленое расходится как семечки. Особенно после третьей кружки.','jerky',6],
+ ['tolik','Шланг для аппарата','Самогонный аппарат опять потёк. Резина нужна, а то весь бар пропахнет.','rubber',3],
+ ['grisha','Гвозди для частокола','Частокол у ворот разваливается. Гвоздей нужно — много. Ну хотя бы десяток.','nails',10],
+ ['grisha','Свет в ратуше','Сижу при лучине, как в прошлом веке. Батарейки нужны для фонаря.','cells',3],
+ ['luda','Электроплаты','Хочу собрать радио. Или бомбу. Посмотрим, что получится.','board',3],
+ ['luda','Изолента, много изоленты','Если что-то не работает — значит, мало изоленты. У меня всё не работает.','tape',5],
+ ['zoya','Книжки на зиму','Зимой ночи длинные. Принеси книжек — хоть каких, хоть без обложки.','book',3],
+ ['zoya','Пластинки','Патефон есть, а пластинок нет. Найди хоть какую — буду слушать и вспоминать.','vinyl',2],
+ ['pasha','Увеличительное стекло','Виски ровнее стричь, когда видно. Линзы нужны — пара штук.','lens',2],
+ ['pasha','Цирюльнику — блеск','Клиент доверяет мастеру при золоте. Цепочку бы мне.','goldchain',1],
+ ['ippolit','Реактивы для фильтров','Ордену нужны химреактивы. Фильтры сами себя не очистят — как и души.','chem',3],
+ ['ippolit','Клыки для обряда','Клыки слепых псов идут на обереги. Не спрашивай, работает ли. Работает.','fang',4],
+ ['mityai','Звонок бывшей','Хочу позвонить бывшей. Сети нет двадцать лет — но вдруг.','phone',2],
+ ['mityai','Фото на память','Найди «Зенит». Сфотографирую бар, пока его не снесло.','camera',1],
+ ['shura','Струны','Медная проволока сойдёт за струны. Звучит ужасно, зато громко.','wire',3],
+ ['shura','Барабан из покрышки','Хочу барабан. Резины нужно, пару кусков — и будет ритм-секция.','rubber',4],
+ ['valet','Часы на кон','Без часов за стол не сажусь: надо же знать, сколько я уже проигрываю.','watch',1],
+ ['valet','Цепочка на удачу','Золото на шее — к выигрышу. Или к ограблению. Проверим.','goldchain',1],
+ ['gosha','Носитель данных','Есть покупатель на лабораторные носители. Не спрашивай кто — сам не знаю.','labdrive',1],
+ ['gosha','Секретные бумаги','Документы с печатями — лучший товар. Особенно те, что «не для всех».','docs',1],
+ ['hmury','Порох для заставы','Набиваем патроны сами. Пороха не хватает — неси.','powder',5],
+ ['hmury','Металл на баррикаду','Баррикаду опять прострелили. Металлолом нужен, побольше.','scrap',10],
+ ['olya','Бинты из тряпья','Бинтов не хватает, режу простыни. Простыни кончились. Неси тряпьё.','rag',6],
+ ['olya','Реактивы для анализов','Хочу понять, чем вы все тут болеете. Химреактивы нужны.','chem',2],
+ ['grom','Резина для ринга','Канаты на арене истёрлись. Резина нужна — обмотаем.','rubber',5],
+ ['grom','Ящики под трибуны','Зрителям сидеть не на чем. Металлические ящики сойдут.','box',2],
+ ['hunter','Пружины для капканов','Капканы без пружин только щёлкают обидно. Неси пружины.','spring',3],
+ ['hunter','Гвозди для засеки','Строим засеку от стаи. Гвозди нужны.','nails',8],
+ ['vet','Подстилки для приюта','Питомцам холодно. Тряпьё на подстилки — сколько не жалко.','rag',5],
+ ['vet','Игрушки для щенков','Щенки грызут всё подряд. Пусть лучше резину, чем мои сапоги.','rubber',3],
+ ['mihalych','Пешка из гайки','Пешку потерял. Выточу новую из металлолома — принеси пару кусков.','scrap',4],
+ ['mihalych','Шахматные книжки','Довоенные книжки — там партии великих. Хочу разобрать пару.','book',2],
+ ['bolotnik','Колбы для зелий','Зелья в банку из-под тушёнки не нальёшь. Нужна колба-фильтр.','filter',1],
+ ['bolotnik','Топливо для перегонки','Перегонный куб на бензине. Канистра нужна.','fuel',1],
+ ['auction','Лот для торгов','Публика заскучала. Нужен эффектный лот — «Зенит», например.','camera',1],
+ ['auction','Замки для витрин','Витрины открывают все кому не лень. Кодовые замки нужны.','codelock',2],
+ ['patient','Батарейки для приёмника','В палате скучно. Приёмник есть — батареек нет.','cells',2],
+ ['patient','Почитать','Принеси книжку. Любую. Я уже прочитал инструкцию к капельнице — три раза.','book',1]];
+QJ.forEach(([giver,t,d,item,n],i)=>{if(!ITEMS[item]||!NPCS.some(x=>x.id===giver))return;const id='qj_'+giver+'_'+(i%2+1);const v=ITEMS[item].p*n;const caps=Math.max(20,Math.round(v*1.5/5)*5+10);
+  const q={giver,t,d:d+' (Принести: '+ITEMS[item].n+' ×'+n+'.)',goal:{bring:item,n},rew:{caps,xp:Math.round(caps*1.5)},junk:1};
+  // снова доступно через 30 минут после сдачи
+  Object.defineProperty(q,'rep',{get(){const s=S&&S.quests&&S.quests[id];return !s||!s.doneAt||Date.now()-s.doneAt>QJ_CD},enumerable:true});
+  QUESTS[id]=q});
+{const _ti=turnIn;turnIn=function(id){const r=_ti.apply(this,arguments);try{if(QUESTS[id]&&QUESTS[id].junk&&S.quests[id])S.quests[id].doneAt=Date.now()}catch(e){}return r}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
