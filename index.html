@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793546176";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793547539";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -9796,6 +9796,154 @@ function kitBox(eq,all){const box=el('div','refbox');box.append(el('div','sec','
 if(typeof TABVIEW.enc==='function'){const _ev=TABVIEW.enc;TABVIEW.enc=b=>{if(ENC.sec!=='kits'){_ev(b);const s=b.querySelector('.cats');if(s&&!s.querySelector('.kitsbtn')){const x=el('button','kitsbtn','🧩 Комплекты');x.setAttribute('aria-pressed',false);x.onclick=()=>{ENC.sec='kits';openTab('enc')};s.append(x)}return}
   ENC.sec='items';_ev(b);ENC.sec='kits';const keep=b.querySelector('.cats');const st=b.querySelector('style');b.replaceChildren(st,keep);for(const x of keep.querySelectorAll('button'))x.setAttribute('aria-pressed',false);
   const x=el('button','kitsbtn','🧩 Комплекты');x.setAttribute('aria-pressed',true);keep.append(x);b.append(kitBox(S?S.eq:{},true))}}
+
+// ================= v75: У КАЖДОЙ ВЕЩИ — СВОЙ ВИД, КОМПЛЕКТЫ — В ОДНОМ СТИЛЕ =================
+// 1) У каждого комплекта своя гамма: броня, голова, лицо и руки нарисованы в одних цветах (и на иконке, и на персонаже).
+//    Где комплект собирался из общих вещей (обычная балаклава, ГП-5, тактические перчатки…), у него теперь свои — с теми же
+//    характеристиками. Общие вещи остались в игре как отдельные.
+// 2) Ни одна иконка не повторяется: сюжетные предметы, документы «Х-9», тайник и оружие группировок получили свой вид.
+const shd=(h,k)=>{const n=parseInt(h.slice(1),16);const f=v=>Math.max(0,Math.min(255,Math.round(k>1?v+(255-v)*(k-1):v*k)));return '#'+[n>>16,n>>8&255,n&255].map(v=>f(v).toString(16).padStart(2,'0')).join('')};
+const KPAL={k1:['#7a6e5e','#c8c0a8'],k2:['#6e4a30','#d8a050'],k3:['#6a7048','#c8b070'],k4:['#7a8a2e','#e0c040'],k5:['#4a504a','#e07a2a'],k6:['#5a5e66','#e89a3a'],k7:['#7a5a3a','#d8c098'],
+ k8:['#8a8e94','#c8302a'],k9:['#4e6a3a','#a8c070'],k10:['#56604a','#c8a050'],k11:['#c0a03a','#e86a1a'],k12:['#44484c','#ff8a2a'],k13:['#2a2620','#c0282a'],k14:['#4a5a30','#d8c050']};
+const pal=h=>[shd(h,1.45),h,shd(h,.32)];
+// свои вещи для комплектов (характеристики — как у общих вещей, которые они заменяют)
+const NEWK=[
+ ['k1f','Шарф бродяги','face','balaclava',{sell:['kalibr',45]}],['k1g','Митенки бродяги','hands','mitts',{sell:['kalibr',24]}],
+ ['k2f','Респиратор сталкера','face','respirator',{sell:['kalibr',40,2]}],
+ ['k4f','Противогаз химика','face','gasmask',{sell:['ippolit',90,4]}],['k4g','Перчатки химика','hands','rgloves',{sell:['ippolit',30,4]}],
+ ['k5f','Очки штурмовика','face','goggles',{sell:['kalibr',75,6]}],['k5g','Перчатки штурмовика','hands','tgloves',{sell:['kalibr',90,6]}],
+ ['k9f','Противогаз ПМК','face','gasmask',{sell:['ippolit',95]}],['k9g','Перчатки ОЗК','hands','rgloves',{sell:['ippolit',30]}],
+ ['k10h','Шлем «Модуль»','head','helmet',{sell:['kalibr',60,5]}],['k10g','Перчатки «Модуль»','hands','tgloves',{sell:['kalibr',90,5]}]];
+for(const [id,n,k,from,o] of NEWK){const b=ITEMS[from];ITEMS[id]={n,k,st:Object.assign({},b.st),p:b.p,r:b.r};WT[id]=WT[from]??.2;if(o.sell&&SELL[o.sell[0]])SELL[o.sell[0]].push([id,...o.sell.slice(1)])}
+const KITSET={k1:{face:['k1f'],hands:['k1g']},k2:{face:['k2f']},k3:{head:['s3h']},k4:{face:['k4f'],hands:['k4g']},k5:{face:['k5f'],hands:['k5g']},k9:{face:['k9f'],hands:['k9g']},k10:{head:['k10h'],hands:['k10g']}};
+for(const [kid,sl] of Object.entries(KITSET)){const k=KITS.find(x=>x.id===kid);if(k)Object.assign(k.parts,sl)}
+// какая вещь к какому комплекту относится (для цвета) и как выглядит
+const KOF={};for(const k of KITS)for(const ids of Object.values(k.parts))for(const id of ids)if(!KOF[id])KOF[id]=k.id;
+const KSTYLE={k1f:'scarf',k2f:'resp',s3f:'shemag',k4f:'gas',k5f:'goggles',s6f:'visor',hide_f:'fur',tin_f:'weld',k9f:'gasside',mod_f:'glasses',seva_f:'sphere',exo_f:'module',
+ k1g:'knit',s2g:'leather',s3g:'camo',k4g:'longrub',k5g:'tact',s6g:'armored',hide_g:'mitten',tin_g:'bracer',k9g:'rubband',k10g:'velcro',seva_g:'sphereg',exo_g:'power',ren_gloves:'reng',mil_gloves:'milg',
+ hide_h:'furhat',tin_h:'bucket',ozk_h:'hood',k10h:'modhelm',seva_h:'spherehelm',exo_h:'exohelm'};
+const kp=id=>{const k=KPAL[KOF[id]]||['#6a6a60','#c0a060'];return {m:pal(k[0]),a:pal(k[1]),b:k[0],c:k[1]}};
+// ---------- иконки (100×100, теми же кистями, что и остальные вещи игры) ----------
+const GP=c=>hP(c,[[30,90],[28,52],[22,40],['q',18,30,26,30],[34,42],[34,22],['q',38,14,42,22],[44,38],[46,16],['q',51,10,55,16],[56,38],[58,20],['q',63,14,67,22],[66,42],[70,30],['q',76,26,78,34],[74,56],[72,90]]);
+function kMask(c,P,o={}){const face=hP(c,[[24,30],['b',30,16,70,16,76,30],['b',82,52,72,80,50,84],['b',28,80,18,52,24,30]]);gR(c,face,P.m,50,48,36);gWeave(c,face,.06);
+  for(const x of [38,62]){hF(c,()=>{c.beginPath();c.arc(x,44,9,0,7)},HDM.blk,35,53);gR(c,()=>{c.beginPath();c.arc(x,44,6.6,0,7)},o.lens||['#a8c8d0','#3a5a68','#0a141a'],x,44,7,{hi:.5})}}
+const KICON={
+ scarf:(c,P)=>{const p=hP(c,[[14,40],['q',50,30,86,40],[88,72],['q',50,84,12,72]]);gR(c,p,P.m,50,56,40);gWeave(c,p,.25);c.strokeStyle='rgba(0,0,0,.25)';c.lineWidth=1;for(let y=46;y<76;y+=6){c.beginPath();c.moveTo(14,y);c.quadraticCurveTo(50,y+8,88,y);c.stroke()}
+   for(const x of [66,76]){hF(c,hR(c,x,70,8,24,2),P.m,70,94);for(let i=0;i<3;i++){c.fillStyle=P.m[2];c.fillRect(x+1+i*2.5,93,1.2,4)}}},
+ resp:(c,P)=>{c.strokeStyle=P.m[2];c.lineWidth=2.4;c.beginPath();c.moveTo(26,46);c.lineTo(6,40);c.moveTo(74,46);c.lineTo(94,40);c.stroke();const m=hP(c,[[24,40],['b',34,26,66,26,76,40],['b',80,60,66,78,50,80],['b',34,78,20,60,24,40]]);gR(c,m,P.m,50,50,34);gWeave(c,m,.08);
+   for(const x of [28,72])gR(c,()=>{c.beginPath();c.arc(x,62,11,0,7)},P.a,x,62,11,{hi:.4});c.fillStyle='rgba(0,0,0,.45)';for(const x of [28,72])for(let i=-1;i<=1;i++)c.fillRect(x-6,61+i*3,12,1)},
+ shemag:(c,P)=>{const h=hP(c,[[12,94],['b',8,30,28,6,50,6],['b',72,6,92,30,88,94]]);gR(c,h,P.m,50,42,46);c.save();h();c.clip();c.strokeStyle=P.c;c.globalAlpha=.35;c.lineWidth=1.2;for(let i=0;i<110;i+=7){c.beginPath();c.moveTo(i,0);c.lineTo(i-40,100);c.stroke();c.beginPath();c.moveTo(i-40,0);c.lineTo(i,100);c.stroke()}c.restore();
+   hF(c,hR(c,26,36,48,10,5),HDM.black,36,46);c.fillStyle='#e0b896';for(const x of [38,62]){c.beginPath();c.ellipse(x,41,5,3.2,0,0,7);c.fill()}},
+ gas:(c,P)=>{c.strokeStyle='#1a1a18';c.lineWidth=3;c.beginPath();c.moveTo(20,40);c.lineTo(4,30);c.moveTo(80,40);c.lineTo(96,30);c.stroke();kMask(c,P);gR(c,()=>{c.beginPath();c.ellipse(50,72,11,12,0,0,7)},P.a,50,72,12);c.strokeStyle='rgba(0,0,0,.6)';c.lineWidth=.8;for(let i=-2;i<=2;i++){c.beginPath();c.moveTo(42,72+i*3);c.lineTo(58,72+i*3);c.stroke()}},
+ gasside:(c,P)=>{kMask(c,P,{lens:['#d0e0a0','#5a7030','#141a08']});hF(c,hR(c,40,64,20,10,4),HDM.blk,64,74);c.save();c.translate(20,76);c.rotate(-.5);gR(c,hR(c,-10,-8,20,30,6),P.a,0,6,18);c.fillStyle='rgba(0,0,0,.4)';for(let y=-4;y<20;y+=4)c.fillRect(-8,y,16,1.2);c.restore()},
+ goggles:(c,P)=>{c.strokeStyle=P.m[1];c.lineWidth=7;c.beginPath();c.moveTo(6,50);c.quadraticCurveTo(50,32,94,50);c.stroke();for(const x of [32,68]){gR(c,()=>{c.beginPath();c.ellipse(x,50,17,13,0,0,7)},P.m,x,50,17);gR(c,()=>{c.beginPath();c.ellipse(x,50,13,9.5,0,0,7)},P.a,x,50,13,{hi:.6})}hF(c,hR(c,46,46,8,6,2),P.m,46,52)},
+ visor:(c,P)=>{const p=hP(c,[[18,22],['q',50,10,82,22],[84,66],['q',50,94,16,66]]);gR(c,p,P.m,50,50,44);gWeave(c,p,.04);hF(c,hR(c,24,36,52,9,4),HDM.black,36,45);gGlow(c,50,40,22,'rgba(255,90,40,.45)');c.fillStyle='#ff6a3a';c.fillRect(28,39,44,3);hSlots(c,34,58,2.4,10,6,3)},
+ fur:(c,P)=>{const p=hP(c,[[20,24],['q',50,6,80,24],[84,62],['q',50,96,16,62]]);gR(c,p,P.m,50,50,44);gWeave(c,p,.35);c.fillStyle='#1a120a';for(const x of [36,64]){c.beginPath();c.ellipse(x,44,7,5,x<50?-.2:.2,0,7);c.fill()}
+   gStitch(c,p,50,52,.86,'rgba(255,230,180,.45)');c.strokeStyle=P.m[2];c.lineWidth=1.4;for(let i=0;i<14;i++){const a=i/14*6.28;c.beginPath();c.moveTo(50+Math.cos(a)*38,52+Math.sin(a)*40);c.lineTo(50+Math.cos(a)*44,52+Math.sin(a)*46);c.stroke()}},
+ weld:(c,P)=>{const p=hR(c,18,14,64,76,10);gR(c,p,P.m,50,46,44);c.save();p();c.clip();for(let i=0;i<6;i++){c.fillStyle=i%2?'#f0f0ec':P.c;c.fillRect(18,14+i*5,64,5)}c.restore();hF(c,hR(c,28,46,44,14,3),HDM.black,46,60);gR(c,hR(c,31,48,38,10,2),['#5a8a3a','#1a3010','#050a03'],50,53,20,{hi:.5});for(const [x,y] of [[24,20],[76,20],[24,84],[76,84]])gR(c,()=>{c.beginPath();c.arc(x,y,2.6,0,7)},HDM.steel,x,y,3)},
+ glasses:(c,P)=>{c.strokeStyle=P.m[2];c.lineWidth=3;c.beginPath();c.moveTo(10,48);c.lineTo(2,40);c.moveTo(90,48);c.lineTo(98,40);c.stroke();const v=hP(c,[[10,40],['q',50,30,90,40],[86,60],['q',70,66,54,58],[50,54],[46,58],['q',30,66,14,60]]);gR(c,v,P.m,50,48,44);
+   const g=hP(c,[[16,43],['q',50,34,84,43],[81,57],['q',68,62,55,55],[50,51],[45,55],['q',32,62,19,57]]);gR(c,g,P.a,50,48,38,{hi:.7})},
+ sphere:(c,P)=>{gR(c,()=>{c.beginPath();c.arc(50,48,40,0,7)},P.m,50,48,40);gR(c,()=>{c.beginPath();c.arc(50,46,30,0,7)},['#c8e0e8','#4a6a78','#0a1418'],50,46,30,{hi:.7});c.fillStyle='rgba(255,255,255,.35)';c.beginPath();c.ellipse(38,34,10,5,-.6,0,7);c.fill();
+   for(const x of [10,90])gR(c,()=>{c.beginPath();c.arc(x,72,10,0,7)},P.a,x,72,10,{hi:.4})},
+ module:(c,P)=>{gR(c,hR(c,28,46,44,32,6),P.m,50,62,30);for(const x of [34,66]){c.strokeStyle='#1a1a1a';c.lineWidth=5;c.beginPath();c.moveTo(x,50);c.quadraticCurveTo(x<50?10:90,40,x<50?14:86,18);c.stroke()}hSlots(c,36,62,2.2,10,5,3.6);for(const x of [36,64]){gGlow(c,x,54,7,'rgba(255,140,40,.8)');c.fillStyle=P.c;c.beginPath();c.arc(x,54,2.4,0,7);c.fill()}},
+ knit:(c,P)=>gGlove(c,P.m,{knit:1,cut:1,cuff:P.a}),
+ leather:(c,P)=>{gGlove(c,P.m,{cuff:P.m});gStrap(c,26,72,74,68,6,P.a);gR(c,()=>{c.beginPath();c.arc(72,68,3.2,0,7)},HDM.brass,72,68,3)},
+ camo:(c,P)=>{gGlove(c,P.m,{cuff:P.a});const p=GP(c);gCamo(c,p,['rgba(40,44,24,.5)','rgba(150,140,90,.4)'],5,9);hF(c,hR(c,30,46,34,10,4),HDM.black,46,56)},
+ longrub:(c,P)=>{hF(c,hR(c,26,70,48,28,6),P.m,70,98);gGlove(c,P.m,{cuff:P.m});c.strokeStyle='rgba(0,0,0,.3)';c.lineWidth=1;for(const y of [80,88]){c.beginPath();c.moveTo(27,y);c.lineTo(73,y);c.stroke()}hF(c,hR(c,26,94,48,4,2),P.a,94,98)},
+ tact:(c,P)=>gGlove(c,P.m,{knuckle:1,cuff:P.a}),
+ armored:(c,P)=>{gGlove(c,P.m,{cuff:P.m});for(const [x,y] of [[36,24],[48,18],[60,24],[70,36]])hF(c,hR(c,x-4,y,8,12,2),HDM.steel,y,y+12,{hi:.4});hF(c,hR(c,32,44,36,22,4),HDM.steel,44,66,{hi:.4});c.fillStyle=P.c;c.fillRect(34,54,32,2)},
+ mitten:(c,P)=>{const p=hP(c,[[30,90],[28,52],[20,42],['q',14,32,24,30],[32,40],[32,24],['q',50,4,70,24],[72,56],[72,90]]);gR(c,p,P.m,50,50,46);gWeave(c,p,.35);hF(c,hR(c,24,76,52,16,7),P.a,76,92);gWeave(c,hR(c,24,76,52,16,7),.4)},
+ bracer:(c,P)=>{gGlove(c,P.m,{cuff:P.m});const b=hR(c,24,56,52,36,5);gR(c,b,P.m,50,72,32);c.save();b();c.clip();for(let i=-60;i<100;i+=12){c.fillStyle=(i/12|0)%2?'#f0f0ec':P.c;c.beginPath();c.moveTo(i,56);c.lineTo(i+6,56);c.lineTo(i+42,92);c.lineTo(i+36,92);c.fill()}c.restore();for(const x of [28,72])gR(c,()=>{c.beginPath();c.arc(x,60,2.4,0,7)},HDM.steel,x,60,3)},
+ rubband:(c,P)=>{gGlove(c,P.m,{cuff:P.m});for(const y of [80,86])hF(c,hR(c,27,y,46,3,1),P.a,y,y+3)},
+ velcro:(c,P)=>{gGlove(c,P.m,{cuff:P.a});const v=hR(c,34,58,32,12,3);hF(c,v,P.a,58,70);gStitch(c,v,50,64,.85);gWeave(c,v,.3)},
+ sphereg:(c,P)=>{gGlove(c,P.m,{cuff:P.a});c.fillStyle='rgba(0,0,0,.35)';for(let y=48;y<74;y+=6)for(let x=36;x<66;x+=6){c.beginPath();c.arc(x,y,1.3,0,7);c.fill()}},
+ power:(c,P)=>{gGlove(c,P.m,{cuff:P.m});for(const [x,y] of [[36,24],[48,18],[60,24],[70,36],[24,40]])hF(c,hR(c,x-5,y,10,14,2),P.m,y,y+14,{hi:.5});const h=hP(c,[[34,46],[66,46],[70,58],[66,70],[34,70],[30,58]]);gR(c,h,P.m,50,58,22);for(const x of [42,58]){gGlow(c,x,58,7,'rgba(255,140,40,.8)');c.fillStyle=P.c;c.beginPath();c.arc(x,58,2.2,0,7);c.fill()}},
+ reng:(c,P)=>{gGlove(c,P.m,{knuckle:1,cuff:P.m});c.fillStyle=P.c;c.beginPath();c.moveTo(40,58);c.lineTo(60,58);c.lineTo(50,72);c.closePath();c.fill();c.fillRect(28,80,44,3)},
+ milg:(c,P)=>{gGlove(c,P.m,{knuckle:1,cuff:P.a});gText(c,'★',50,62,16,P.c)},
+ furhat:(c,P)=>{const d=hP(c,[[14,56],['b',12,20,34,10,50,10],['b',66,10,88,20,86,56]]);gR(c,d,P.m,50,34,40);gWeave(c,d,.35);for(const x of [10,72])hF(c,hR(c,x,44,18,34,8),P.a,44,78);gWeave(c,hR(c,10,44,18,34,8),.4);gWeave(c,hR(c,72,44,18,34,8),.4);hF(c,hR(c,12,50,76,12,6),P.a,50,62)},
+ bucket:(c,P)=>{const b=hP(c,[[22,20],[78,20],[88,74],[12,74]]);gR(c,b,P.m,50,44,44);c.save();b();c.clip();c.fillStyle=P.c;c.fillRect(0,48,100,8);c.fillStyle='#f0f0ec';c.fillRect(0,56,100,4);c.restore();c.strokeStyle='rgba(0,0,0,.35)';c.lineWidth=1;for(const y of [30,40,66]){c.beginPath();c.moveTo(14,y);c.lineTo(86,y);c.stroke()}
+   c.strokeStyle=HDM.steel[1];c.lineWidth=2.4;c.beginPath();c.moveTo(16,62);c.quadraticCurveTo(50,96,84,62);c.stroke();for(const x of [16,84])gR(c,()=>{c.beginPath();c.arc(x,62,3,0,7)},HDM.steel,x,62,3)},
+ hood:(c,P)=>{const h=hP(c,[[10,92],['b',4,40,24,8,50,8],['b',76,8,96,40,90,92]]);gR(c,h,P.m,50,40,46);gWeave(c,h,.1);gR(c,()=>{c.beginPath();c.ellipse(50,54,22,26,0,0,7)},['#3a3a34','#1a1a16','#060604'],50,54,24);c.strokeStyle=P.c;c.lineWidth=1.6;c.beginPath();c.ellipse(50,54,24,28,0,0,7);c.stroke();for(const x of [36,64]){c.beginPath();c.moveTo(x,80);c.lineTo(x,94);c.stroke()}},
+ modhelm:(c,P)=>{gHelmet(c,P.m,{strap:1,rails:1});const v=hR(c,40,30,20,12,2);hF(c,v,P.a,30,42);gWeave(c,v,.3)},
+ spherehelm:(c,P)=>{gHelmet(c,P.m,{});gR(c,()=>{c.beginPath();c.ellipse(50,52,26,16,0,0,7)},['#c8e0e8','#4a6a78','#0a1418'],50,52,26,{hi:.7});hF(c,hR(c,14,62,72,6,3),P.a,62,68)},
+ exohelm:(c,P)=>{gHelmet(c,P.m,{rails:1});hF(c,hR(c,30,44,40,8,3),HDM.black,44,52);hF(c,hR(c,46,44,8,26,3),HDM.black,44,70);gGlow(c,50,48,20,'rgba(255,140,40,.55)');c.fillStyle=P.c;c.fillRect(32,46,36,3);c.fillRect(48,48,4,18);hF(c,hP(c,[[24,64],[76,64],[70,84],['q',50,92,30,84]]),P.m,64,90)}};
+// у этих вещей больше нет «чужой» модели (раньше выглядели как обычный противогаз/шлем) — рисуются сами, в цветах комплекта
+for(const [id,st] of Object.entries(KSTYLE))if(ITEMS[id]){delete ITEMS[id].look;GDEF[id]=c=>KICON[st](c,kp(id))}
+// ---------- уникальные иконки сюжетных предметов, документов и тайника ----------
+const QI={
+ rr_med:c=>{const b=hR(c,14,26,72,56,4);gR(c,b,HDM.wood,50,54,44);c.strokeStyle='rgba(0,0,0,.4)';c.lineWidth=1;for(const y of [40,54,68]){c.beginPath();c.moveTo(14,y);c.lineTo(86,y);c.stroke()}hF(c,hR(c,42,38,16,32,1),HDM.white,38,70);hF(c,hR(c,34,46,32,16,1),HDM.white,46,62);c.fillStyle='#c82a22';c.fillRect(45,41,10,26);c.fillRect(37,49,26,10)},
+ ds_tag:c=>{c.strokeStyle='#8a8e92';c.lineWidth=1.6;c.setLineDash([2,1.4]);c.beginPath();c.moveTo(50,8);c.quadraticCurveTo(20,20,36,36);c.stroke();c.setLineDash([]);const t=hR(c,26,34,48,56,14);gR(c,t,HDM.steel,50,58,34,{hi:.5});c.fillStyle='rgba(0,0,0,.45)';for(const y of [52,60,68])c.fillRect(34,y,32,2);gR(c,()=>{c.beginPath();c.arc(50,42,3,0,7)},HDM.blk,50,42,3)},
+ ds_pack:c=>{const b=hR(c,14,28,72,56,3);gR(c,b,HDM.paper,50,54,44);hF(c,hR(c,44,28,12,56,1),HDM.tape,28,84);hF(c,hR(c,14,50,72,12,1),HDM.tape,50,62);c.strokeStyle='#5a3a1a';c.lineWidth=1.4;c.beginPath();c.moveTo(50,28);c.quadraticCurveTo(40,16,30,22);c.moveTo(50,28);c.quadraticCurveTo(60,16,70,22);c.stroke()},
+ ds_patch:c=>{const s=hP(c,[[20,16],[80,16],[80,56],['q',80,80,50,92],['q',20,80,20,56]]);gR(c,s,HDM.black,50,50,44);c.strokeStyle='#c82a22';c.lineWidth=3;s();c.stroke();c.fillStyle='#d8d8d0';c.beginPath();c.moveTo(30,52);c.quadraticCurveTo(42,36,50,44);c.quadraticCurveTo(58,36,70,52);c.quadraticCurveTo(58,48,52,58);c.lineTo(50,70);c.lineTo(48,58);c.quadraticCurveTo(42,48,30,52);c.fill();c.fillStyle='#c82a22';c.beginPath();c.arc(50,46,2,0,7);c.fill()},
+ nr_fuel:c=>{const b=hP(c,[[20,22],[64,22],[80,38],[80,90],[20,90]]);gR(c,b,['#e04a3a','#a8261a','#3a0a04'],50,56,44);hF(c,hR(c,28,10,30,12,4),HDM.blk,10,22);c.strokeStyle='rgba(0,0,0,.35)';c.lineWidth=3;c.beginPath();c.moveTo(26,36);c.lineTo(74,84);c.moveTo(74,36);c.lineTo(26,84);c.stroke();gR(c,hR(c,68,24,12,10,3),HDM.tin,74,29,6)},
+ nr_wheel:c=>{gR(c,()=>{c.beginPath();c.arc(50,50,42,0,7)},HDM.black,50,50,42);c.strokeStyle='#3a3a3a';c.lineWidth=3;for(let i=0;i<16;i++){const a=i/16*6.28;c.beginPath();c.moveTo(50+Math.cos(a)*34,50+Math.sin(a)*34);c.lineTo(50+Math.cos(a)*42,50+Math.sin(a)*42);c.stroke()}gR(c,()=>{c.beginPath();c.arc(50,50,22,0,7)},HDM.steel,50,50,22,{hi:.5});for(let i=0;i<6;i++){const a=i/6*6.28;gR(c,()=>{c.beginPath();c.arc(50+Math.cos(a)*13,50+Math.sin(a)*13,2.6,0,7)},HDM.blk,50,50,3)}},
+ nr_batt:c=>{const b=hR(c,12,30,76,54,4);gR(c,b,HDM.black,50,57,44);hF(c,hR(c,12,30,76,10,3),HDM.blk,30,40);hF(c,hR(c,20,20,12,10,2),['#e05a4a','#a8261a','#3a0a04'],20,30);hF(c,hR(c,68,20,12,10,2),['#5a8ae0','#1a4aa8','#04103a'],20,30);hF(c,hR(c,24,52,52,18,2),HDM.paper,52,70);gText(c,'12V',50,61,12,'#2a2a2a')}};
+const NOTEC=[['#d8c890','#a89050'],['#90b0d8','#4a70a8'],['#d89090','#a84a4a']];
+for(let i=1;i<=3;i++)QI['labnote'+i]=c=>{const [a,b]=NOTEC[i-1];gR(c,hR(c,14,10,72,82,3),[shd(a,1.2),a,shd(b,.4)],50,50,46);gR(c,hR(c,22,18,56,66,2),HDM.paper,50,50,40);c.fillStyle='rgba(0,0,0,.35)';for(let y=28;y<80;y+=6)c.fillRect(28,y,40,1.4);
+  c.save();c.translate(58,74);c.rotate(-.25);c.strokeStyle='#c82a22';c.lineWidth=2;c.strokeRect(-16,-8,32,16);gText(c,'Х-9',0,0,11,'#c82a22');c.restore();gR(c,()=>{c.beginPath();c.arc(50,44,22,0,7)},[shd(a,1.2),a,shd(b,.5)],50,44,22);gText(c,String(i),50,45,30,'#1a1a1a')};
+QI.stash=c=>{gR(c,()=>{c.beginPath();c.ellipse(50,74,44,16,0,0,7)},['#7a6040','#4a3820','#1a1208'],50,74,44);const b=hR(c,22,34,56,40,3);gR(c,b,HDM.woodD||HDM.wood,50,54,36);hF(c,hR(c,20,30,60,10,3),HDM.wood,30,40);for(const x of [30,70])hF(c,hR(c,x-3,34,6,40,1),HDM.steel,34,74);gR(c,()=>{c.beginPath();c.arc(50,52,5,0,7)},HDM.brass,50,52,5,{hi:.5})};
+QI.ren_mask=c=>{GDEF.balaclava(c);c.fillStyle='#c0282a';c.fillRect(14,34,72,5);c.beginPath();c.moveTo(42,66);c.lineTo(58,66);c.lineTo(50,78);c.closePath();c.fill()};
+for(const [id,f] of Object.entries(QI))if(ITEMS[id])GDEF[id]=f;
+// ---------- оружие группировок: своя обмотка поверх базовой модели ----------
+const FSKIN={ren_aks:['aks','#b8302a','#1a1614'],ren_saiga:['saiga','#b8302a','#1a1614'],mil_ak:['ak','#5a6a34','#2a3218'],mil_svd:['svd','#5a6a34','#2a3218']};
+for(const [id,[base,c1,c2]] of Object.entries(FSKIN)){const d=HDDEF[base];if(!d||!ITEMS[id])continue;HDDEF[id+'_sk']=Object.assign({},d,{d:c=>{d.d(c);c.save();c.globalCompositeOperation='source-atop';
+  for(const f of [.18,.42,.68]){const x=d.L*f;c.fillStyle=c2;c.fillRect(x-4,d.y0-2,8,d.y1-d.y0+4);c.fillStyle=c1;c.fillRect(x-2.5,d.y0-2,5,d.y1-d.y0+4)}c.restore()}})}
+{const _hs=hdSprite;hdSprite=function(id,s){return _hs(FSKIN[id]&&HDDEF[id+'_sk']?id+'_sk':id,s)}}
+// у этих вещей объёмная (3D) иконка совпадала с другой — для них всегда рисуется своя, плоская
+const ICON2D=new Set(['stash','labnote1','labnote2','labnote3','ren_mask','ren_saiga','ren_aks','mil_ak','mil_svd','akmaple','ermak','nvg_g','nvg_r','nvg_b','tt','s3h','det4','ren_helm','mil_helm','ren_jacket','mil_vest','mil_gas']);
+// снаряжение группировок — в цветах своих комплектов
+{const R=kp('ren_gloves'),Mi=kp('mil_gloves');
+ GDEF.ren_helm=c=>{gHelmet(c,R.m,{strap:1});hF(c,hR(c,14,40,72,6,2),R.a,40,46)};
+ GDEF.mil_helm=c=>{gHelmet(c,Mi.m,{strap:1,net:1});gText(c,'★',50,36,16,Mi.c)};
+ GDEF.ren_jacket=c=>{gGarment(c,R.m,{zip:1,collar:R.m});hF(c,hR(c,24,40,52,5,1),R.a,40,45);c.fillStyle=R.c;c.beginPath();c.moveTo(62,56);c.lineTo(72,56);c.lineTo(67,64);c.closePath();c.fill()};
+ GDEF.mil_vest=c=>{gGarment(c,Mi.m,{vest:1,chest:1,pockets:1,pm:Mi.m});gText(c,'★',50,24,12,Mi.c)};
+ GDEF.mil_gas=c=>{c.strokeStyle='#1a1a18';c.lineWidth=3;c.beginPath();c.moveTo(20,40);c.lineTo(4,30);c.moveTo(80,40);c.lineTo(96,30);c.stroke();kMask(c,Mi);gR(c,()=>{c.beginPath();c.ellipse(50,72,11,12,0,0,7)},Mi.m,50,72,12);gText(c,'★',50,72,12,Mi.c)};
+ // и на персонаже — без подмены на чужую модель
+ for(const id of ['ren_helm','mil_helm','mil_gas'])if(ITEMS[id]){KOF[id]=id[0]==='r'?'k13':'k14'}
+ KSTYLE.ren_helm='modhelm';KSTYLE.mil_helm='modhelm';KSTYLE.mil_gas='gas';for(const id of ['ren_helm','mil_helm','mil_gas'])if(ITEMS[id])delete ITEMS[id].look}
+// броня и головные уборы комплектов — тоже в общей гамме комплекта, чтобы набор читался как набор
+{const B={s1b:c=>{const P=kp('s1b');gGarment(c,P.m,{hood:1,weave:.14,pockets:1,pm:P.m})},
+  s2b:c=>{const P=kp('s2b');gGarment(c,P.m,{zip:1,collar:P.a,chest:1,pm:P.m,belt:70})},
+  s3b:c=>{const P=kp('s3b');gGarment(c,P.m,{camo:['rgba(40,44,24,.5)','rgba(150,140,90,.4)'],pockets:1,pm:P.m,belt:66})},
+  s4b:c=>{const P=kp('s4b');gGarment(c,P.m,{hood:1,zip:1,belt:66,weave:.05});hF(c,hR(c,24,40,52,4,1),P.a,40,44)},
+  s5b:c=>{const P=kp('s5b');gGarment(c,P.m,{vest:1,chest:1,pockets:1,pm:P.m});hF(c,hR(c,40,22,20,8,2),P.a,22,30)},
+  s6b:c=>{const P=kp('s6b');gGarment(c,P.m,{weave:0});for(let i=0;i<4;i++)hF(c,hR(c,28,24+i*13,44,11,3),HDM.steel,24+i*13,35+i*13,{hi:.35});gR(c,()=>{c.beginPath();c.arc(50,30,5,0,7)},P.a,50,30,5,{hi:.5})},
+  jacket:c=>{const P=kp('jacket');gGarment(c,P.m,{zip:1,collar:P.a,weave:.18});gWeave(c,hR(c,34,12,32,12,4),.4)},
+  plate:c=>{const P=kp('plate');gGarment(c,P.m,{vest:1});const p=hR(c,28,28,44,40,3);gR(c,p,HDM.steel,50,48,30);c.save();p();c.clip();for(let i=0;i<5;i++){c.fillStyle=i%2?'#f0f0ec':P.c;c.fillRect(28,28+i*8,44,8)}c.restore();for(const [x,y] of [[30,30],[70,30],[30,66],[70,66]])gR(c,()=>{c.beginPath();c.arc(x,y,2,0,7)},HDM.steel,x,y,2)},
+  ozk:c=>{const P=kp('ozk');gGarment(c,P.m,{hood:1,zip:1,weave:.04});for(const y of [40,60])hF(c,hR(c,24,y,52,3,1),P.a,y,y+3)},
+  vest:c=>{const P=kp('vest');gGarment(c,P.m,{vest:1,chest:1,pockets:1,pm:P.m});hF(c,hR(c,24,66,52,6,2),P.a,66,72)},
+  seva:c=>{const P=kp('seva');gGarment(c,P.m,{hood:1,zip:1,belt:64});for(const x of [26,74])hF(c,hR(c,x-4,30,8,30,3),P.a,30,60)},
+  exo:c=>{const P=kp('exo');gGarment(c,P.m,{weave:.02});for(const x of [30,70])hF(c,hR(c,x-4,18,8,64,3),HDM.steel,18,82,{hi:.4});hF(c,hR(c,26,46,48,8,3),HDM.steel,46,54);for(const x of [36,64]){gGlow(c,x,32,8,'rgba(255,140,40,.8)');c.fillStyle=P.c;c.beginPath();c.arc(x,32,2.4,0,7);c.fill()}},
+  s1h:c=>{const P=kp('s1h');const d=hP(c,[[18,66],['b',16,24,34,12,50,12],['b',66,12,84,24,82,66]]);gR(c,d,P.m,50,40,40);gWeave(c,d,.3);hF(c,hR(c,16,58,68,14,6),P.a,58,72);gWeave(c,hR(c,16,58,68,14,6),.3);gR(c,()=>{c.beginPath();c.arc(50,12,7,0,7)},P.a,50,12,7)},
+  s2h:c=>{const P=kp('s2h');const d=hP(c,[[20,62],['b',18,26,34,16,50,16],['b',66,16,82,26,80,62]]);gR(c,d,P.m,50,40,36);gWeave(c,d,.1);hF(c,hP(c,[[44,58],[92,58],['q',96,70,80,72],[44,66]]),P.m,58,72);hF(c,hR(c,22,52,58,6,2),P.a,52,58)},
+  s3h:c=>{const P=kp('s3h');gHelmet(c,P.m,{strap:1,camo:['rgba(40,44,24,.5)','rgba(150,140,90,.4)']})},
+  s4h:c=>{const P=kp('s4h');const hood=hP(c,[[10,92],['b',4,40,24,8,50,8],['b',76,8,96,40,90,92]]);gR(c,hood,P.m,50,40,46);gWeave(c,hood,.1);c.save();c.translate(50,54);c.scale(.8,.8);c.translate(-50,-54);kMask(c,P);gR(c,()=>{c.beginPath();c.ellipse(50,72,10,11,0,0,7)},P.a,50,72,11);c.restore()},
+  s5h:c=>{const P=kp('s5h');gHelmet(c,P.m,{rails:1});c.strokeStyle=P.m[2];c.lineWidth=5;c.beginPath();c.moveTo(14,50);c.quadraticCurveTo(50,36,86,50);c.stroke();for(const x of [36,64]){gR(c,()=>{c.beginPath();c.ellipse(x,48,11,8,0,0,7)},P.m,x,48,11);gR(c,()=>{c.beginPath();c.ellipse(x,48,8,5.5,0,0,7)},P.a,x,48,8,{hi:.6})}}};
+ for(const [id,f] of Object.entries(B))if(ITEMS[id])GDEF[id]=f;
+ for(const k of KITS)if(k.id!=='k15')for(const ids of Object.values(k.parts))for(const id of ids)ICON2D.add(id)}
+{const _ic=iconCanvas;iconCanvas=function(id,size=40){if(!ICON2D.has(id)||typeof C3==='undefined')return _ic(id,size);const st=C3.st;C3.st=0;try{return _ic(id,size)}finally{C3.st=st}}}
+// ---------- на персонаже: лицо и голова в цветах своего комплекта ----------
+const KFACE={scarf:1,resp:1,shemag:1,gas:1,gasside:1,goggles:1,visor:1,fur:1,weld:1,glasses:1,sphere:1,module:1};
+{const _fg=facegear;facegear=function(c,id,x,hy,view){const st=KSTYLE[id];if(!st||!KFACE[st])return _fg(c,id,x,hy,view);const P=kp(id),side=view===1||view===2,fx=x+(side?1.6:0);
+  const lens=(ex,ey,r,col)=>{c.fillStyle='#14171a';circ(c,ex,ey,r);c.fillStyle=col;circ(c,ex,ey,r*.72)};const eyes=side?[1]:[-1,1];
+  if(st==='scarf'||st==='shemag'){c.fillStyle=lg(c,0,hy+1,0,hy+9,P.m[0],P.m[1]);c.beginPath();c.ellipse(fx,hy+(st==='shemag'?3:5),7.6,st==='shemag'?6:3.6,0,0,7);c.fill();strokeO(c,.6);c.strokeStyle=P.c;c.lineWidth=.5;for(let i=-5;i<=5;i+=2.5){c.beginPath();c.moveTo(fx+i,hy+1);c.lineTo(fx+i+1,hy+8.5);c.stroke()}}
+  else if(st==='resp'){c.fillStyle=P.m[1];c.beginPath();c.ellipse(fx+(side?2:0),hy+3.4,side?3.6:4.6,3,0,0,7);c.fill();strokeO(c,.7);c.fillStyle=P.c;for(const s of eyes)circ(c,fx+s*4.2+(side?1:0),hy+3.6,1.7)}
+  else if(st==='gas'||st==='gasside'||st==='sphere'){c.fillStyle=lg(c,fx-6,0,fx+6,0,P.m[0],P.m[1]);rrp(c,fx-(side?4.6:6),hy-3.4,side?10:12,9.6,3.6);c.fill();strokeO(c,.8);
+    if(st==='sphere'){c.fillStyle='rgba(150,200,220,.7)';ellp(c,fx,hy-.6,side?3.6:5,3.2);c.fill()}else for(const s of eyes)lens(fx+s*2.6,hy-.4,2.3,'rgba(170,220,230,.7)');
+    c.fillStyle=P.c;ellp(c,fx+(st==='gasside'?-5:(side?3:0)),hy+5.4,2.6,2.4);c.fill();strokeO(c,.6)}
+  else if(st==='goggles'||st==='glasses'){c.strokeStyle=P.m[2];c.lineWidth=1.4;c.beginPath();c.moveTo(x-6.8,hy-.6);c.lineTo(x+6.8,hy-.6);c.stroke();if(st==='glasses'){c.fillStyle=P.c;rrp(c,fx-(side?3:6),hy-2.4,side?6:12,3.6,1.6);c.fill();strokeO(c,.5)}else for(const s of eyes)lens(fx+s*2.6,hy-.4,2.4,P.c)}
+  else if(st==='visor'||st==='weld'||st==='module'){c.fillStyle=lg(c,0,hy-4,0,hy+8,P.m[0],P.m[1]);rrp(c,fx-(side?4.6:6.4),hy-3.6,side?10:12.8,st==='module'?6:11,2.4);if(st==='module')c.translate(0,0);c.fill();strokeO(c,.7);
+    c.fillStyle=st==='weld'?'#2a4a1a':'#ff7a3a';c.fillRect(fx-(side?3:4.6),hy-1.4,side?6:9.2,1.6);if(st==='weld'){c.fillStyle=P.c;c.fillRect(fx-(side?4:6),hy-3.2,side?8:12,1.2)}}
+  else if(st==='fur'){c.fillStyle=lg(c,0,hy-4,0,hy+8,P.m[0],P.m[2]);c.beginPath();c.ellipse(fx,hy+1,side?5:6.6,7,0,0,7);c.fill();strokeO(c,.7);c.fillStyle='#1a120a';for(const s of eyes)ellp(c,fx+s*2.6,hy-.6,1.6,1.1),c.fill()}}}
+const KHEAD={furhat:1,bucket:1,hood:1,modhelm:1,spherehelm:1,exohelm:1};
+{const _hg=headgear;headgear=function(c,id,x,hy,view){const st=KSTYLE[id];if(!st||!KHEAD[st])return _hg(c,id,x,hy,view);const P=kp(id),side=view===1||view===2;
+  if(st==='hood'){c.fillStyle=lg(c,0,hy-9,0,hy+8,P.m[0],P.m[1]);ellp(c,x,hy-.2,8.3,8.4);c.fill();strokeO(c,.8);c.fillStyle=P.c;c.fillRect(x-7.6,hy+4.8,15.2,1)}
+  else if(st==='bucket'){c.fillStyle=lg(c,0,hy-10,0,hy,P.m[0],P.m[1]);c.beginPath();c.moveTo(x-5.6,hy-9.6);c.lineTo(x+5.6,hy-9.6);c.lineTo(x+8,hy-.4);c.lineTo(x-8,hy-.4);c.closePath();c.fill();strokeO(c,.7);c.fillStyle=P.c;c.fillRect(x-7,hy-4.4,14,1.6);c.fillStyle='#f0f0ec';c.fillRect(x-7.3,hy-2.8,14.6,.9)}
+  else if(st==='furhat'){c.fillStyle=lg(c,0,hy-9,0,hy+2,P.m[0],P.m[1]);c.beginPath();c.ellipse(x,hy-2,8,7,0,Math.PI,0);c.closePath();c.fill();strokeO(c,.7);c.fillStyle=P.c;c.fillRect(x-8.4,hy-2.6,16.8,2.4);if(view!==3)for(const s of side?[-1]:[-1,1]){rrp(c,x+s*7-1.6,hy-1,3.2,6,1.4);c.fill()}}
+  else{const p=new Path2D();p.ellipse(x,hy-1.2,8.4,7.8,0,Math.PI,0);p.lineTo(x+9.2,hy-.2);p.lineTo(x-9.2,hy-.2);p.closePath();c.fillStyle=rg(c,x-3,hy-6,1,10,P.m[0],P.m[1]);c.fill(p);c.strokeStyle=OL;c.lineWidth=.9;c.stroke(p);
+    if(st==='spherehelm'&&view!==3){c.fillStyle='rgba(150,200,220,.75)';ellp(c,x+(side?3:0),hy-2.4,side?3.4:5.6,2.6);c.fill()}
+    if(st==='exohelm'&&view!==3){c.fillStyle='#ff8a2a';c.fillRect(x-(side?1:5),hy-3.6,side?6:10,1.4);c.fillRect(x+(side?3:-.7),hy-3.6,1.4,4)}
+    if(st==='modhelm'){c.fillStyle=P.c;c.fillRect(x-2.4,hy-6.4,4.8,2)}c.fillStyle='rgba(255,255,255,.16)';ellp(c,x-3,hy-5.5,2.6,1.2);c.fill()}}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
