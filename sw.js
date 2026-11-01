@@ -1,7 +1,7 @@
 // Осадок: сервис-воркер приложения.
 // Сначала всегда берём свежую версию из сети (так обновления с GitHub приходят сразу),
 // а сохранённую копию отдаём, только если интернета нет.
-const CACHE = 'osadok-v2';
+const CACHE = 'osadok-v1';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
