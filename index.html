@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793542119";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793542603";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -9642,6 +9642,86 @@ QJ.forEach(([giver,t,d,item,n],i)=>{if(!ITEMS[item]||!NPCS.some(x=>x.id===giver)
   Object.defineProperty(q,'rep',{get(){const s=S&&S.quests&&S.quests[id];return !s||!s.doneAt||Date.now()-s.doneAt>QJ_CD},enumerable:true});
   QUESTS[id]=q});
 {const _ti=turnIn;turnIn=function(id){const r=_ti.apply(this,arguments);try{if(QUESTS[id]&&QUESTS[id].junk&&S.quests[id])S.quests[id].doneAt=Date.now()}catch(e){}return r}}
+
+// ================= v73: АПТЕЧКИ И ПОБОЧНЫЕ ЭФФЕКТЫ =================
+// Обычная аптечка лечит меньше (+50 ХП), зато появились ещё три: самодельная, армейская и научная.
+// У препаратов — небольшая побочка: сонливость, дрожь в руках, онемение, слабость, тошнота. Видно на панели эффектов с таймером.
+Object.assign(BUFN,{drowsy:'сонливость',shake:'дрожь в руках',numb:'онемение',weak:'слабость'});
+const SIDEFX={drowsy:['speedPct',-10,'скорость −10%'],shake:['accPct',-15,'точность −15%'],numb:['reloadPct',-15,'перезарядка −15%'],weak:['dmgPct',-10,'урон −10%']};
+{const _st=stats;stats=function(){const s=Object.assign({},_st());for(const [k,[stat,v]] of Object.entries(SIDEFX))if(buffOn(k))s[stat]=(s[stat]||0)+v;return s}}
+const MEDV={
+ medkit_s:{n:'Самодельная аптечка',p:18,w:.25,r:0,use:{hp:30},side:{weak:60},tint:'#8a6a3a',d:'Бинты, самогон и честное слово. Лечит слабо, после неё ломит всё тело.'},
+ medkit_army:{n:'Армейская аптечка',p:75,w:.4,r:2,use:{hp:75},buff:{regen:30},side:{drowsy:30},tint:'#4a6a3a',d:'Из запасов военных: сильное лечение и регенерация, но клонит в сон.'},
+ medkit_sci:{n:'Научная аптечка',p:180,w:.4,r:3,use:{hp:100,rad:-40},side:{shake:30},tint:'#3a6aa8',d:'Разработка учёных: лечит почти всё и выводит радиацию. Руки потом трясутся.'}};
+for(const [id,m] of Object.entries(MEDV)){ITEMS[id]={n:m.n,k:'use',p:m.p,r:m.r,use:m.use,d:m.d};if(m.buff)ITEMS[id].buff=m.buff;WT[id]=m.w}
+ITEMS.medkit.use={hp:50};
+// побочные эффекты (в секундах)
+const MEDSIDE={medkit:{drowsy:40},stim:{shake:60},painkill:{numb:90},medkit_s:{weak:60},medkit_army:{drowsy:30},medkit_sci:{shake:30}};
+const MEDNAUSEA={antirad:10};
+for(const [id,sd] of Object.entries(MEDSIDE)){const it=ITEMS[id];if(!it)continue;const t=Object.entries(sd).map(([k,s])=>SIDEFX[k][2]+' на '+s+' с').join(', ');it.side=sd;it.d=(it.d?it.d+' ':'')+'Побочно: '+t+'.'}
+ITEMS.antirad.d=(ITEMS.antirad.d?ITEMS.antirad.d+' ':'')+'Побочно: тошнота — −10 еды и −10 воды.';
+{const _ui=useItem;useItem=function(id){const it=ITEMS[id];const before=S&&S.inv[id]|0;const r=_ui.apply(this,arguments);try{if(it&&it.k==='use'&&(S.inv[id]|0)<before){
+  if(MEDSIDE[id])for(const [k,s] of Object.entries(MEDSIDE[id]))addBuff(k,s);
+  if(MEDNAUSEA[id]){S.hunger=Math.max(0,S.hunger-MEDNAUSEA[id]);S.thirst=Math.max(0,S.thirst-MEDNAUSEA[id])}}}catch(e){}return r}}
+// где взять
+SELL.seny.push(['medkit_s',20]);SELL.hmury.push(['medkit_army',85,6]);if(SELL.mil_trader)SELL.mil_trader.push(['medkit_army',80]);
+SELL.gosha.push(['medkit_sci',200,12]);SELL.olya.push(['medkit_s',22],['medkit_army',88,6],['medkit_sci',195,10]);
+LOOTT.push(['medkit_s',1,1,2,0],['medkit_army',1,1,.6,1],['medkit_sci',1,1,.25,2]);
+if(typeof RECIPES!=='undefined')RECIPES.push({cat:'Медицина',out:'medkit_s',q:1,need:{bandage:1,rag:2,samogon:1}});
+if(BUY.olya)for(const id of Object.keys(MEDV))BUY.olya.ids[id]=.9;
+// иконки: та же аптечка, перекрашенная в свой цвет
+{const _ic=iconCanvas;iconCanvas=function(id,size=40){const m=MEDV[id];if(!m)return _ic(id,size);const c=_ic('medkit',size);try{const x=c.getContext('2d');x.save();x.setTransform(1,0,0,1,0,0);x.globalCompositeOperation='source-atop';x.globalAlpha=.55;x.fillStyle=m.tint;x.fillRect(0,0,c.width,c.height);x.restore()}catch(e){}return c}}
+{const _di=drawItem;drawItem=function(c,id,x,y,t){return _di(c,MEDV[id]?'medkit':id,x,y,t)}}
+// быстрое лечение (H): при тяжёлом ранении — самое сильное, иначе — самое слабое
+quickHeal=function(){if(paused||!S)return;const order=S.hp<effMax()*.5?['medkit_sci','medkit_army','medkit','medkit_s','bandage','stew']:['bandage','medkit_s','stew','medkit','medkit_army','medkit_sci'];const id=order.find(i=>has(i));
+  if(!id){log('Нечем лечиться. Купите бинты у Сени.','bad');return}if(S.hp>=effMax()){log('Вы и так здоровы.');return}useItem(id)};
+
+// ================= v73: ЭНЦИКЛОПЕДИЯ =================
+// Отдельная вкладка рядом с «Рейтингом»: все предметы по полочкам (как в рюкзаке), персонажи, мутанты, локации и игры.
+// У предмета видно, что он даёт, сколько стоит и весит, где его купить и кто дороже всех скупает.
+const ENC={sec:'items',cat:'all',sel:null,q:''};
+const ENC_SHELF=[...BAGCAT.filter(([k])=>k!=='mat'&&k!=='all'),['mat','Материалы'],['trophy','Трофеи мутантов'],['quest','Сюжетные']];
+const encShelf=id=>{const it=ITEMS[id];if(it.k==='trophy')return 'trophy';if(it.k==='quest')return 'quest';return bagShelf(id)};
+const encItems=()=>Object.keys(ITEMS).filter(id=>{const it=ITEMS[id];return it&&it.n&&!it.adm&&id!=='ds_pack'});
+const ENC_GAMES=[['🎲 Кости','tolik','Бросаете кости против бармена на крышки.'],['🃏 Очко','valet','Карточная игра на крышки: набрать 21 и не перебрать.'],['♟ Шахматы и шашки','mihalych','Партия на крышки с дедом Михалычем.'],
+ ['🃏 Дурак, шахматы, шашки и «однорукий бандит»','patient','Развлечения в больничной палате, пока ждёте выписки.'],['⚔ Арена','grom','Бой один на один с другим выжившим, у обоих одинаковое оружие.'],['🔨 Аукцион','auction','Выставляйте вещи на торги и покупайте лоты других игроков.'],
+ ['🤝 Обмен и подарки','','Нажмите на другого игрока рядом: можно предложить обмен или подарить вещь.']];
+ICO.enc='<svg viewBox="0 0 24 24"><path d="M4 5c3-1 5-1 8 1 3-2 5-2 8-1v14c-3-1-5-1-8 1-3-2-5-2-8-1z"/><path d="M12 6v14"/></svg>';
+TABS.splice(TABS.findIndex(t=>t[0]==='rating')+1,0,['enc','Энциклопедия']);
+const npcName=id=>{const n=NPCS.find(x=>x.id===id);return n?n.n:id};
+const mapName=id=>MAPS[id]&&MAPS[id].name||'';
+TABVIEW.enc=b=>{const st=el('style');st.textContent='.encg{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:6px}.encg button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;border-radius:9px;border:1px solid #4a3c28;background:rgba(30,24,16,.75);color:#ebe1cc;font:11px var(--sans,sans-serif);min-height:88px;text-align:center}.encg button.sel{border-color:#e8c060;box-shadow:0 0 10px rgba(232,192,96,.35)}.encd{display:flex;gap:10px;align-items:flex-start;padding:10px;margin-bottom:8px;border:1px solid #6a5a38;border-radius:10px;background:rgba(40,32,20,.75)}.encd .s{margin-top:3px}.encsearch{width:100%;margin:0 0 8px;padding:7px 10px;border-radius:8px;border:1px solid #4a3c28;background:#14110c;color:#f2e2b8}.enccard{padding:9px 10px;border:1px solid #4a3c28;border-radius:9px;background:rgba(30,24,16,.75);margin-bottom:6px}';b.append(st);
+  const re=()=>openTab('enc');const secs=el('div','cats');
+  for(const [k,n] of [['items','📦 Предметы'],['npcs','🧑 Персонажи'],['mobs','🐀 Мутанты и враги'],['maps','🗺 Локации'],['games','🎲 Игры']]){const x=el('button',null,n);x.setAttribute('aria-pressed',ENC.sec===k);x.onclick=()=>{ENC.sec=k;ENC.sel=null;ENC.cat='all';re()};secs.append(x)}b.append(secs);
+  if(ENC.sec==='items'){const all=encItems();
+    const inp=document.createElement('input');inp.className='encsearch';inp.placeholder='Поиск по названию…';inp.value=ENC.q;inp.oninput=()=>{ENC.q=inp.value;clearTimeout(ENC.t);ENC.t=setTimeout(()=>{re();const i=ov.querySelector('.encsearch');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length)}},250)};b.append(inp);
+    const cats=el('div','cats');for(const [k,n] of [['all','Всё'],...ENC_SHELF]){const cnt=k==='all'?all.length:all.filter(id=>encShelf(id)===k).length;if(k!=='all'&&!cnt)continue;const x=el('button',null,n+' ('+cnt+')');x.setAttribute('aria-pressed',ENC.cat===k);x.onclick=()=>{ENC.cat=k;ENC.sel=null;re()};cats.append(x)}b.append(cats);
+    if(ENC.sel&&ITEMS[ENC.sel])b.append(encItemCard(ENC.sel));
+    const q=ENC.q.trim().toLowerCase();const ids=all.filter(id=>(ENC.cat==='all'||encShelf(id)===ENC.cat)&&(!q||ITEMS[id].n.toLowerCase().includes(q))).sort((a,c)=>(ITEMS[a].r|0)-(ITEMS[c].r|0)||ITEMS[a].n.localeCompare(ITEMS[c].n,'ru'));
+    if(!ids.length){b.append(el('p','muted','Ничего не найдено.'));return}
+    const g=el('div','encg');for(const id of ids){const it=ITEMS[id];const x=el('button',ENC.sel===id?'sel':'');x.style.borderBottom='3px solid '+(RAR[it.r|0]||RAR[0])[1];try{x.append(iconCanvas(id,44))}catch(e){}x.append(el('span',null,it.n));x.onclick=()=>{ENC.sel=ENC.sel===id?null:id;re();const bd=ov.querySelector('.win .body');if(bd)bd.scrollTop=0};g.append(x)}b.append(g);return}
+  if(ENC.sec==='npcs'){const list=NPCS.filter(n=>n.map&&n.map!=='-'&&MAPS[n.map]&&n.n&&!n.dog);
+    for(const n of list.sort((a,c)=>a.n.localeCompare(c.n,'ru'))){const c=el('div','encd');try{c.append(portrait(n))}catch(e){}const gw=el('div','grow');gw.append(el('div','t',n.n),el('div','muted small',(n.role||'')+' · '+mapName(n.map)));
+      const sells=(SELL[n.id]||[]).filter(e=>ITEMS[e[0]]&&!ITEMS[e[0]].adm).length;const qs=Object.values(QUESTS).filter(q=>q.giver===n.id).length;const info=[];if(sells)info.push('продаёт '+sells+' товаров');if(BUY[n.id])info.push('скупает вещи');if(qs)info.push('заданий: '+qs);
+      if(info.length)gw.append(el('div','s',info.join(' · ')));if(n.lines&&n.lines.length)gw.append(el('div','muted small','«'+n.lines[0]+'»'));c.append(gw);b.append(c)}return}
+  if(ENC.sec==='mobs'){for(const [id,e] of Object.entries(EN).sort((a,c)=>(a[1].hp|0)-(c[1].hp|0))){if(!e.n)continue;const c=el('div','enccard');c.append(el('div','t',e.n));
+      const s=['ХП '+Math.round(e.hp||0),'урон '+Math.round(e.dmg||0),e.ranged?'стреляет издалека':'бьёт вблизи'];if(e.fac)s.push('группировка');if(e.explode)s.push('взрывается');if(e.leap||e.charge)s.push('прыгает / таранит');c.append(el('div','s',s.join(' · ')));
+      const where=[...new Set(Object.values(MAPS).filter(m=>(m.bosses||[]).some(x=>x.type===id)||m.bossAt&&m.bossAt[id]).map(m=>m.name))];if(where.length)c.append(el('div','muted small','Логово: '+where.join(', ')));b.append(c)}return}
+  if(ENC.sec==='maps'){const seen=new Set();const ms=Object.values(MAPS).filter(m=>m&&m.name&&!/^t_/.test(m.id)&&!seen.has(m.name)&&seen.add(m.name));
+    for(const [title,f] of [['Открытые земли',m=>!m.interior],['Помещения',m=>m.interior]]){const L=ms.filter(f);if(!L.length)continue;b.append(el('div','sec',title));
+      for(const m of L.sort((a,c)=>a.name.localeCompare(c.name,'ru'))){const c=el('div','enccard');c.append(el('div','t',m.name));const s=[];if(m.safe)s.push('безопасно');if(m.pvp)s.push('опасная зона (PvP)');if(m.rad)s.push('радиация');if(m.mob)s.push('водятся мутанты');if(s.length)c.append(el('div','s',s.join(' · ')));
+        const who=NPCS.filter(n=>n.map===m.id&&n.n&&!n.dog).map(n=>n.n);if(who.length)c.append(el('div','muted small','Здесь: '+who.join(', ')));const to=[...new Set((m.exits||[]).map(x=>mapName(x.to)).filter(Boolean))];if(to.length)c.append(el('div','muted small','Переходы: '+to.join(', ')));b.append(c)}}return}
+  if(ENC.sec==='games'){for(const [t,who,d] of ENC_GAMES){if(who&&!NPCS.some(n=>n.id===who))continue;const c=el('div','enccard');c.append(el('div','t',t),el('p','small',d));if(who){const n=NPCS.find(x=>x.id===who);c.append(el('div','muted small','Где: '+n.n+', '+mapName(n.map)))}b.append(c)}}};
+function encItemCard(id){const it=ITEMS[id];const d=el('div','encd');try{d.append(iconCanvas(id,64))}catch(e){}const gw=el('div','grow');const rar=RAR[it.r|0]||RAR[0];
+  const t=el('div','t',it.n);t.style.color=rar[1];gw.append(t,el('div','muted small',rar[0]+' · вес '+fmtKg(wOf(id))+(it.p?' · цена ~'+it.p+' кр.':'')));
+  try{gw.append(el('div','s',describe(id)))}catch(e){}if(it.role)gw.append(el('div','s','★ '+it.role));
+  const sellers=[];for(const [nid,L] of Object.entries(SELL))for(const e of L)if(e[0]===id){const n=NPCS.find(x=>x.id===nid);if(n&&n.map!=='-')sellers.push(n.n+' — '+e[1]+' кр.'+(e[2]?' (с '+e[2]+' ур.)':''))}
+  if(sellers.length)gw.append(el('div','small','🛒 Где купить: '+[...new Set(sellers)].join('; ')));
+  if(it.p){const buyers=[];for(const [nid,B] of Object.entries(BUY)){if(!(B.cats.includes(it.k)||B.ids&&B.ids[id]!=null)||B.only&&!B.only.includes(id))continue;const n=NPCS.find(x=>x.id===nid);if(!n)continue;let p=0;try{p=sellPrice(n,id)}catch(e){}buyers.push([p,n.n])}
+    buyers.sort((a,c)=>c[0]-a[0]);if(buyers.length)gw.append(el('div','small','💰 Кто купит: '+buyers.slice(0,3).map(([p,n])=>n+' — '+p+' кр.').join('; ')))}
+  const rec=typeof RECIPES!=='undefined'&&RECIPES.find(r=>r.out===id);if(rec)gw.append(el('div','small','🔧 Крафт: '+Object.entries(rec.need).map(([k,v])=>(ITEMS[k]?ITEMS[k].n:k)+' ×'+v).join(', ')+(rec.bench?' (на верстаке)':'')));
+  const qs=Object.values(QUESTS).filter(q=>q.goal&&q.goal.bring===id);if(qs.length)gw.append(el('div','small','📜 Нужно в заданиях: '+[...new Set(qs.map(q=>npcName(q.giver)))].join(', ')));
+  d.append(gw);return d}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
