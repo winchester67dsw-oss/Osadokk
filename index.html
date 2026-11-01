@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793542603";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793546176";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -9722,6 +9722,80 @@ function encItemCard(id){const it=ITEMS[id];const d=el('div','encd');try{d.appen
   const rec=typeof RECIPES!=='undefined'&&RECIPES.find(r=>r.out===id);if(rec)gw.append(el('div','small','🔧 Крафт: '+Object.entries(rec.need).map(([k,v])=>(ITEMS[k]?ITEMS[k].n:k)+' ×'+v).join(', ')+(rec.bench?' (на верстаке)':'')));
   const qs=Object.values(QUESTS).filter(q=>q.goal&&q.goal.bring===id);if(qs.length)gw.append(el('div','small','📜 Нужно в заданиях: '+[...new Set(qs.map(q=>npcName(q.giver)))].join(', ')));
   d.append(gw);return d}
+
+// ================= v74: КОМПЛЕКТЫ СНАРЯЖЕНИЯ =================
+// Почти вся броня теперь — часть комплекта: броня + головной убор + маска/противогаз + перчатки (у «Листопада» — плащ).
+// 2 вещи из комплекта дают первый бонус, полный комплект — ещё один, сильнее. Одна вещь может входить в несколько комплектов
+// (например, противогаз ГП-5 подходит и «Химику», и «Защитнику»). Недостающие части добавлены: в магазины и в крафт.
+const RCAT=(RECIPES.find(r=>r.out==='exo')||RECIPES.find(r=>r.out==='plate')||{}).cat||'Броня';
+// новые вещи: [id, название, слот, характеристики, цена, вес, похожая модель, где взять]
+const NEWG=[
+ ['s2g','Перчатки сталкера','hands',{reloadPct:8},45,.15,null,{sell:['seny',50]}],
+ ['s3f','Шемаг ополченца','face',{aggroPct:-8,critPct:2},60,.15,'balaclava',{sell:['kalibr',65,3]}],
+ ['s3g','Перчатки ополченца','hands',{reloadPct:6,def:1},40,.15,null,{sell:['kalibr',45,3]}],
+ ['s6f','Маска Стража','face',{def:1,radRes:.3},500,.4,'gasmask',{craft:{gland:2,chem:2,rubber:3,tape:2}}],
+ ['s6g','Перчатки Стража','hands',{def:1,meleePct:15},350,.3,null,{craft:{kevlar:2,hide:3,tape:2}}],
+ ['hide_h','Шапка из шкуры','head',{maxHp:5,critPct:2},30,.3,'ushanka',{craft:{hide:2,tape:1}}],
+ ['hide_f','Маска из шкуры','face',{aggroPct:-8},25,.15,'balaclava',{craft:{hide:1,rag:1}}],
+ ['hide_g','Рукавицы из шкуры','hands',{meleePct:10},25,.2,null,{craft:{hide:2}}],
+ ['tin_h','Шлем из ведра','head',{def:2,speedPct:-1},35,1.2,'helmet',{craft:{scrap:4,tape:1}}],
+ ['tin_f','Сварочная маска','face',{def:1,accPct:-3},40,.6,'goggles',{craft:{scrap:2,lens:1,tape:1}}],
+ ['tin_g','Наручи из знаков','hands',{def:1},30,.8,null,{craft:{scrap:3,tape:1}}],
+ ['ozk_h','Капюшон ОЗК','head',{radRes:.15},50,.3,'s4h',{sell:['ippolit',55]}],
+ ['mod_f','Баллистические очки','face',{accPct:8,def:1},90,.2,'goggles',{sell:['kalibr',100,5]}],
+ ['seva_h','Шлем «Сфера»','head',{def:2,radRes:.25},450,1,'s4h',{sell:['ippolit',480,10,20]}],
+ ['seva_f','Фильтр «Сфера»','face',{radRes:.3},300,.4,'gasmask',{sell:['ippolit',320,10,20]}],
+ ['seva_g','Перчатки «Сфера»','hands',{radRes:.1,reloadPct:6},200,.2,null,{sell:['ippolit',215,10,20]}],
+ ['exo_h','Экзошлем «Атлант»','head',{def:5,maxHp:15},2200,3,'s6h',{craft:{helmet:1,kevlar:3,gunparts:4,battery:2,bruteHand:1}}],
+ ['exo_f','Дыхательный модуль «Атлант»','face',{def:1,radRes:.4},1200,1,'gasmask',{craft:{gasmask:1,battery:2,board:2,chem:2}}],
+ ['exo_g','Силовые перчатки «Атлант»','hands',{def:1,meleePct:25},1500,1.5,null,{craft:{kevlar:2,gunparts:3,battery:2,bruteHand:1}}],
+ ['ren_gloves','Перчатки ренегата','hands',{def:1,reloadPct:6},200,.2,null,{sell:['ren_trader',220],fac:'ren'}],
+ ['mil_gloves','Перчатки военного','hands',{def:1,accPct:5},220,.2,null,{sell:['mil_trader',240],fac:'mil'}]];
+for(const [id,n,k,st,p,w,look,o] of NEWG){const it={n,k,st,p};if(look)it.look=look;if(o.fac){it.fac=o.fac;it.r=3}ITEMS[id]=it;WT[id]=w;
+  if(it.r==null)it.r=p<15?0:p<70?1:p<300?2:p<1200?3:4;
+  if(o.sell&&SELL[o.sell[0]])SELL[o.sell[0]].push([id,...o.sell.slice(1)]);
+  if(o.craft)RECIPES.push({cat:RCAT,out:id,q:1,need:o.craft,bench:1,craft:p>=1000?4:p>=300?3:1})}
+// комплекты: части по слотам (в слоте может подойти любая из перечисленных вещей)
+const KITS=[
+ {id:'k1',n:'Бродяга',parts:{body:['s1b'],head:['s1h'],face:['balaclava'],hands:['mitts']},b2:{maxHp:10},full:{maxHp:10,speedPct:4}},
+ {id:'k2',n:'Сталкер',parts:{body:['s2b'],head:['s2h'],face:['respirator'],hands:['s2g']},b2:{speedPct:5},full:{accPct:8,radRes:.1}},
+ {id:'k3',n:'Ополченец',parts:{body:['s3b'],head:['s3h','beret'],face:['s3f'],hands:['s3g']},b2:{reloadPct:10},full:{def:2,critPct:4}},
+ {id:'k4',n:'Химик',parts:{body:['s4b'],head:['s4h'],face:['gasmask'],hands:['rgloves']},b2:{radRes:.15,maxHp:10},full:{radRes:.15,regen:1}},
+ {id:'k5',n:'Штурмовик',parts:{body:['s5b'],head:['s5h'],face:['goggles'],hands:['tgloves']},b2:{dmgPct:8},full:{dmgPct:6,critPct:5}},
+ {id:'k6',n:'Страж Пустоши',parts:{body:['s6b'],head:['s6h'],face:['s6f'],hands:['s6g']},b2:{def:2,regen:1},full:{def:3,maxHp:20}},
+ {id:'k7',n:'Зверобой',parts:{body:['jacket'],head:['hide_h'],face:['hide_f'],hands:['hide_g']},b2:{meleePct:10},full:{maxHp:15,meleePct:10}},
+ {id:'k8',n:'Жестянщик',parts:{body:['plate'],head:['tin_h'],face:['tin_f'],hands:['tin_g']},b2:{def:2},full:{def:2,maxHp:15}},
+ {id:'k9',n:'Защитник',parts:{body:['ozk'],head:['ozk_h'],face:['gasmask','respirator'],hands:['rgloves']},b2:{radRes:.15},full:{radRes:.15,maxHp:15}},
+ {id:'k10',n:'Модуль',parts:{body:['vest'],head:['helmet'],face:['mod_f'],hands:['tgloves']},b2:{def:2},full:{def:2,dmgPct:5}},
+ {id:'k11',n:'Сфера',parts:{body:['seva'],head:['seva_h'],face:['seva_f'],hands:['seva_g']},b2:{radRes:.15},full:{radRes:.2,maxHp:20,regen:1}},
+ {id:'k12',n:'Атлант',parts:{body:['exo'],head:['exo_h'],face:['exo_f'],hands:['exo_g']},b2:{def:3},full:{def:4,speedPct:8,maxHp:30}},
+ {id:'k13',n:'Скорпион (Ренегаты)',parts:{body:['ren_jacket'],head:['ren_helm'],face:['ren_mask'],hands:['ren_gloves']},b2:{speedPct:4},full:{critPct:6,aggroPct:-10}},
+ {id:'k14',n:'Нетопырь (Военные)',parts:{body:['mil_vest'],head:['mil_helm'],face:['mil_gas'],hands:['mil_gloves']},b2:{def:2},full:{accPct:8,maxHp:15}},
+ {id:'k15',n:'Листопад',parts:{body:['autumncoat'],head:['mushhat'],face:['leafscarf'],back:['leafcloak']},b2:{regen:1},full:{maxHp:20,radRes:.1}}].filter(k=>Object.values(k.parts).flat().every(id=>ITEMS[id]));
+const STN={def:'защита',maxHp:'ХП',radRes:'защита от радиации',speedPct:'скорость',accPct:'точность',critPct:'крит',dmgPct:'урон',meleePct:'урон в ближнем бою',reloadPct:'перезарядка',regen:'регенерация',aggroPct:'заметность'};
+const fmtSt=o=>Object.entries(o).map(([k,v])=>(k==='radRes'?(v>0?'+':'')+Math.round(v*100)+'%':(v>0?'+':'')+v+(/Pct$/.test(k)?'%':''))+' '+(STN[k]||k)).join(', ');
+const kitHave=(k,eq)=>Object.entries(k.parts).filter(([sl,ids])=>ids.includes(eq[sl])).length;
+const kitsOf=id=>KITS.filter(k=>Object.values(k.parts).some(ids=>ids.includes(id)));
+// бонусы: старый бонус «броня+шлем того же набора» заменён новым подсчётом
+{const _st=stats;stats=function(){const s=Object.assign({},_st());if(!S)return s;
+  const sb=ITEMS[S.eq.body],sh=ITEMS[S.eq.head];if(sb&&sh&&sb.set&&sb.set===sh.set&&SETS[sb.set])for(const kk in SETS[sb.set].bonus)s[kk]-=SETS[sb.set].bonus[kk];
+  for(const k of KITS){const h=kitHave(k,S.eq);if(h<2)continue;const add=o=>{for(const kk in o)s[kk]=(s[kk]||0)+o[kk]};add(k.b2);if(h>=Object.keys(k.parts).length)add(k.full)}
+  s.radRes=Math.min(.9,s.radRes);s.speedPct=Math.min(60,s.speedPct);return s}}
+// описание вещи: в какой комплект входит
+{const _d=describe;describe=function(id){let t=_d(id);try{for(const k of kitsOf(id))t+=' · Комплект «'+k.n+'»'}catch(e){}return t}}
+for(const [id,,,, ,,,o] of NEWG)if(o.fac)ITEMS[id].d='Снаряжение группировки «'+FAC[o.fac].n+'». Носить могут только её члены.';
+// блок «Комплекты» во вкладке «Снаряжение»
+function kitBox(eq,all){const box=el('div','refbox');box.append(el('div','sec','🧩 Комплекты'));let any=false;
+  for(const k of KITS){const h=kitHave(k,eq),N=Object.keys(k.parts).length;if(!all&&!h)continue;any=true;const c=el('div','enccard');
+    const t=el('div','t','«'+k.n+'» — '+h+'/'+N+(h>=N?' ✓ полный':''));if(h>=2)t.style.color='#9ad87a';c.append(t);
+    const SL={body:'броня',head:'голова',face:'лицо',hands:'руки',back:'спина'};c.append(el('div','small',Object.entries(k.parts).map(([sl,ids])=>(ids.includes(eq[sl])?'✓ ':'○ ')+ids.map(i=>ITEMS[i].n).join(' / ')+' ('+SL[sl]+')').join('   ')));
+    c.append(el('div','muted small','2 вещи: '+fmtSt(k.b2)+' · полный: ещё '+fmtSt(k.full)));box.append(c)}
+  if(!any)box.append(el('p','muted small','Наденьте вещи из одного комплекта — 2 вещи дают бонус, полный комплект — ещё один.'));return box}
+{const _iv=TABVIEW.inv;invView=TABVIEW.inv=function(b){_iv(b);try{if(!S)return;const box=kitBox(S.eq,false);const d=b.querySelector('.doll');const at=d&&(d.closest('.artrow')||d);if(at&&at.parentNode)at.parentNode.insertBefore(box,at.nextSibling);else b.prepend(box)}catch(e){}}}
+// энциклопедия: раздел «Комплекты»
+if(typeof TABVIEW.enc==='function'){const _ev=TABVIEW.enc;TABVIEW.enc=b=>{if(ENC.sec!=='kits'){_ev(b);const s=b.querySelector('.cats');if(s&&!s.querySelector('.kitsbtn')){const x=el('button','kitsbtn','🧩 Комплекты');x.setAttribute('aria-pressed',false);x.onclick=()=>{ENC.sec='kits';openTab('enc')};s.append(x)}return}
+  ENC.sec='items';_ev(b);ENC.sec='kits';const keep=b.querySelector('.cats');const st=b.querySelector('style');b.replaceChildren(st,keep);for(const x of keep.querySelectorAll('button'))x.setAttribute('aria-pressed',false);
+  const x=el('button','kitsbtn','🧩 Комплекты');x.setAttribute('aria-pressed',true);keep.append(x);b.append(kitBox(S?S.eq:{},true))}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
