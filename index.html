@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793547539";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Осадок</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0a08"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Осадок"><script>if(location.protocol==="http:"&&!/^(localhost|127\.|\[::1\])/.test(location.hostname))location.replace("https://"+location.host+location.pathname+location.search+location.hash);window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;window.dispatchEvent(new Event("osadok-installable"))});if("serviceWorker" in navigator&&/^https:|^http:\/\/localhost/.test(location.href))addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});window.OSADOK_BUILD="1793620000";if(/^https:/.test(location.href))addEventListener("load",function(){fetch(location.pathname+"?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=/OSADOK_BUILD="(\d+)"/.exec(t);if(!m||m[1]===window.OSADOK_BUILD)return;var k="osadok_upd_"+m[1];try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,"1")}catch(e){}var q=location.search.replace(/[?&]v=\d+/,"").replace(/^&/,"?");location.replace(location.pathname+(q?q+"&":"?")+"v="+m[1]+location.hash)}).catch(function(){})});</script><style>*{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}</style><script>
 (function(){
   function rr(x,y,w,h,r){var a=[0,0,0,0];if(r==null)r=0;if(typeof r==='number')a=[r,r,r,r];else if(r.length){var v=[];for(var i=0;i<r.length;i++)v.push(typeof r[i]==='number'?r[i]:(r[i]&&r[i].x)||0);a=v.length===1?[v[0],v[0],v[0],v[0]]:v.length===2?[v[0],v[1],v[0],v[1]]:v.length===3?[v[0],v[1],v[2],v[1]]:v}
     var m=Math.min(Math.abs(w),Math.abs(h))/2;for(var j=0;j<4;j++)a[j]=Math.max(0,Math.min(a[j],m));
@@ -1770,7 +1770,9 @@ function creator(){titleBody.replaceChildren();
   else if(!inClaude()&&ACC.login)row.append(btn('Выйти из аккаунта',logout));
   form.append(row);box.append(pv,form);titleBody.append(box);addFsBanner();if(!coarse())setTimeout(()=>ni.focus(),50)}
 function startGame(save,fresh){
+  let veteran=false;if(fresh){try{veteran=!!(remoteSave||loadLocal())}catch(e){}}
   S=save;titleEl.hidden=true;cancelAnimationFrame(window.__pv);clearInterval(window.__spin);S.unlocked=S.unlocked||{hair:[],colors:[]};statCache=null;
+  S.flags=S.flags||{};if(fresh)S.flags.tut=veteran?1:0;tutStop();
   for(const k of ['w1','w2'])if(S.eq[k]&&ITEMS[S.eq[k]]?.mag&&S.mag[S.eq[k]]==null)S.mag[S.eq[k]]=0;
   const m=MAPS[S.map]?S.map:'hub';enterMap(m,S.x??20.5,S.y??16.5);if(hitsSolid(P.x,P.y,.28))enterMap('hub',20.5,16.5);
   camX=P.x*T-VW/2;camY=P.y*T-VH/2;updateHud();saveLocal();pushBoard();
@@ -1778,6 +1780,7 @@ function startGame(save,fresh){
   else log('С возвращением, '+S.name+'. Пустошь по вам не скучала.');
   if(fresh)pushCloud(true);setTimeout(()=>pushRating(true),3000);
   if(coarse())document.getElementById('hint').hidden=true;else setTimeout(()=>{document.getElementById('hint').style.opacity=0},20000);
+  if(S.flags.tut===0)setTimeout(()=>{if(S===save)tutStart()},fresh?1500:900);
   checkRotate();resize()}
 
 // ================= ЗВУК (синтез, без файлов) =================
@@ -9944,6 +9947,96 @@ const KHEAD={furhat:1,bucket:1,hood:1,modhelm:1,spherehelm:1,exohelm:1};
     if(st==='spherehelm'&&view!==3){c.fillStyle='rgba(150,200,220,.75)';ellp(c,x+(side?3:0),hy-2.4,side?3.4:5.6,2.6);c.fill()}
     if(st==='exohelm'&&view!==3){c.fillStyle='#ff8a2a';c.fillRect(x-(side?1:5),hy-3.6,side?6:10,1.4);c.fillRect(x+(side?3:-.7),hy-3.6,1.4,4)}
     if(st==='modhelm'){c.fillStyle=P.c;c.fillRect(x-2.4,hy-6.4,4.8,2)}c.fillStyle='rgba(255,255,255,.16)';ellp(c,x-3,hy-5.5,2.6,1.2);c.fill()}}}
+
+// ================= ОБУЧЕНИЕ НОВИЧКА =================
+// S.flags.tut: 0 — обучение идёт (новый персонаж), 1 — пройдено, 2 — пропущено.
+// У старых сохранений флага нет вовсе — им обучение не показываем. Повторить можно из «Настроек».
+{const st=document.createElement('style');st.textContent=`
+#tut{position:absolute;z-index:7;left:50%;top:calc(44px + var(--sat));transform:translateX(-50%);width:min(440px,calc(100% - 32px));box-sizing:border-box;background:rgba(20,17,12,.95);border:1px solid var(--accent);border-radius:12px;padding:10px 12px;box-shadow:0 10px 30px rgba(0,0,0,.55);font-size:13px;line-height:1.45;touch-action:manipulation}
+#tut .th{display:flex;align-items:baseline;gap:8px}
+#tut .th b{font-family:var(--display);font-weight:400;font-size:15px;color:var(--accent-2);flex:1;min-width:0}
+#tut .th small{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
+#tut .pb{height:3px;background:#0c0b08;border-radius:2px;overflow:hidden;margin:5px 0 7px}#tut .pb u{display:block;height:100%;background:var(--accent);text-decoration:none;transition:width .3s}
+#tut p{margin:0 0 6px}
+#tut kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 5px;background:var(--panel2);color:var(--fg)}
+#tut .tgo{font-family:var(--mono);font-size:11px;color:var(--muted);margin:0 0 7px}#tut .tgo.ok{color:var(--rad)}
+#tut .tr{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+#tut .tr .btn{padding:6px 12px;font-size:12.5px}
+.tutHi{animation:tutPulse 1.3s ease-in-out infinite!important}
+@keyframes tutPulse{0%,100%{box-shadow:0 0 0 2px var(--accent-2),0 0 0 0 rgba(242,182,92,.6)}50%{box-shadow:0 0 0 2px var(--accent-2),0 0 0 12px rgba(242,182,92,0)}}
+@media (pointer:coarse){#tut{top:calc(92px + var(--sat));width:min(390px,44vw);font-size:13px;padding:8px 11px}#tut .th b{font-size:15px}#tut .tr .btn{padding:8px 13px;font-size:13.5px}}
+@media (pointer:coarse) and (orientation:portrait){#tut{top:auto;bottom:calc(236px + var(--sab));width:calc(100% - 32px)}}
+@media (prefers-reduced-motion:reduce){.tutHi{animation:none!important;box-shadow:0 0 0 2px var(--accent-2)!important}}`;document.head.append(st)}
+const TUT={on:false,i:0,box:null,t0:0,ok:0,hi:[],drop:null,dropMap:null,dropT:0,dist:0,lx:0,ly:0,lm:null,shot:0,rel:null,sawInv:false,mark:0,timer:null};
+const tutK=s=>'<kbd>'+s+'</kbd>';
+const tutEl=id=>document.getElementById(id);
+const tutInvBtn=()=>document.querySelector('#topbar [data-tab="inv"]');
+function tutSpawnDrop(){const r=rtFor(M.id);let x=P.x+.9,y=P.y;
+  for(let k=0;k<30;k++){const a=k*.85+Math.random()*.3,d=2.2+(k%3)*.7,tx=P.x+Math.cos(a)*d,ty=P.y+Math.sin(a)*d;if(!hitsSolid(tx,ty,.4)&&los(P.x,P.y,tx,ty)&&!npcBlock(tx,ty,.2)){x=tx;y=ty;break}}
+  const o={x,y,item:'can',q:1,t:now,tut:1};r.drops.push(o);TUT.drop=o;TUT.dropMap=M.id;TUT.dropT=now}
+// Шаги: title, html(), goal (что сделать), hi() — что подсветить, start(), done(), btn — ручная кнопка, auto — авто-переход (мс), fb — через сколько мс показать «Далее» на всякий случай
+const TUT_STEPS=[
+  {title:'Добро пожаловать в Осадок',html:()=>'Короткое обучение на пару минут: <b>движение</b>, <b>бой</b>, <b>показатели</b>, <b>добыча</b> и <b>снаряжение</b>. Его можно пропустить в любой момент — вернуть потом можно в «Настройках».',btn:'Начать'},
+  {title:'Движение',goal:'Пройдите несколько шагов',
+    html:()=>coarse()?'Ведите пальцем по <b>джойстику</b> слева внизу — выживший пойдёт в ту сторону. Чем дальше палец от центра, тем быстрее шаг.':
+      'Идите клавишами '+tutK('W')+tutK('A')+tutK('S')+tutK('D')+' или стрелками.'+(V3.on?' Кликните по игре, чтобы вращать камеру мышью; '+tutK('Esc')+' — вернуть курсор.':' Мышь — прицел.'),
+    hi:()=>coarse()?[tutEl('joy')]:[],start:()=>{TUT.dist=0;TUT.lx=P.x;TUT.ly=P.y;TUT.lm=M.id},done:()=>TUT.dist>=4,fb:45000},
+  {title:'Стрельба',goal:'Сделайте выстрел',
+    html:()=>(coarse()?'Жмите <b>ОГОНЬ</b> справа внизу — прицел сам наводится на ближайшего врага.':'Наведите мышь и нажмите '+tutK('ЛКМ')+(V3.on?'':' или '+tutK('Пробел'))+'.')+' В посёлке врагов нет, так что стреляйте смело. Оружие и патроны видны '+(coarse()?'справа вверху':'справа внизу')+': «в магазине / в запасе».',
+    hi:()=>coarse()?[tutEl('bFire'),tutEl('wpn')]:[tutEl('wpn')],start:()=>{TUT.shot=P.nextShot||0},done:()=>(P.nextShot||0)>TUT.shot,fb:45000},
+  {title:'Перезарядка и смена оружия',goal:'Перезарядите оружие',
+    html:()=>'Магазин у самопала маленький. Перезарядка — '+(coarse()?'кнопка <b>ПЕРЕЗ.</b>':tutK('R'))+'; при пустом магазине она начнётся сама. '+(coarse()?'<b>СМЕНА</b>':tutK('Q'))+' — переключиться на нож для ближнего боя: он не тратит патроны.'+(TUT.rel&&TUT.rel.skip?' <b>Сейчас перезаряжать нечего</b> — просто запомните.':''),
+    hi:()=>coarse()?[tutEl('bRel'),tutEl('bSwap')]:[tutEl('wpn')],
+    start:()=>{const id=curW(),it=ITEMS[id];const mag=S.mag[id]||0;TUT.rel={id,mag,skip:!it||it.cls==='melee'||!it.ammo||!has(it.ammo)||mag>=wStats(id).mag}},
+    done:()=>{const r=TUT.rel;if(!r)return true;if(r.skip)return now-TUT.t0>7000;return P.reloadT>0||curW()!==r.id||(S.mag[r.id]||0)>r.mag},fb:45000},
+  {title:'Показатели',
+    html:()=>'Слева вверху — ваше состояние. <b style="color:var(--hp)">ХП</b> — здоровье; лечение — '+(coarse()?'<b>ЛЕЧ.</b>':tutK('H'))+' (тратит бинт). <b style="color:var(--food)">ЕДА</b> и <b style="color:var(--water)">ВОДА</b> понемногу убывают — на нуле начнёт уходить здоровье. <b style="color:var(--rad)">РАД</b> — радиация: срезает запас здоровья, снимается антирадином. <b style="color:var(--xp)">ОПЫТ</b> — за врагов и задания, с уровнем дают очки навыков.',
+    hi:()=>[tutEl('hud')],btn:'Понятно',auto:40000},
+  {title:'Добыча',goal:'Подберите тушёнку',
+    html:()=>'Рядом лежит <b>тушёнка</b> — подойдите к ней, вещи подбираются сами. Добычу оставляют враги, а ящики и тайники открываются '+(coarse()?'кнопкой <b>ДЕЛО</b>':'клавишей '+tutK('E'))+'.',
+    start:()=>tutSpawnDrop(),done:()=>!!TUT.drop&&TUT.drop.t<-1e8,
+    tick:()=>{const d=TUT.drop;if(!d||d.t<-1e8)return;const r=rtFor(M.id);if((TUT.dropMap!==M.id||!r.drops.includes(d))&&now-TUT.dropT>3000)tutSpawnDrop();else if(TUT.dropMap===M.id&&now-TUT.mark>1300){TUT.mark=now;floatText(d.x,d.y-.5,'▼ сюда','#f2b65c')}},fb:60000},
+  {title:'Снаряжение',goal:'Откройте и закройте снаряжение',
+    html:()=>'Откройте <b>снаряжение</b> — кнопка с рюкзаком справа вверху'+(coarse()?'':' или '+tutK('I'))+'. Там еда, вода, бинты и одежда: нажмите на вещь, чтобы съесть, выпить или надеть. Осмотритесь и закройте окно ('+(coarse()?'✕':'✕ или '+tutK('Esc'))+').',
+    hi:()=>[tutInvBtn()],start:()=>{TUT.sawInv=false},done:()=>TUT.sawInv&&ov.hidden,fb:60000},
+  {title:'Ваша цель',
+    html:()=>'Выжить и стать сильнее. Поговорите с жителями посёлка ('+(coarse()?'<b>ДЕЛО</b>':tutK('E'))+') — они дают <b>задания</b> (кнопка-листок справа вверху'+(coarse()?'':', '+tutK('J'))+'). За них — крышки, опыт и снаряжение. Выходы подписаны «→». За воротами опасно: следите за водой, едой и радиацией, а умирать лучше не надо.',
+    hi:()=>[document.querySelector('#topbar [data-tab="quests"]')],btn:'В Пустошь!',last:true}
+];
+function tutHi(list){for(const e of TUT.hi)e.classList.remove('tutHi');TUT.hi=(list||[]).filter(Boolean);for(const e of TUT.hi)e.classList.add('tutHi')}
+function tutBtn(label,fn,cls){const b=btn(label,()=>{try{b.blur()}catch(e){}fn()},cls);b.addEventListener('mousedown',e=>e.preventDefault());return b}
+function tutRender(){const s=TUT_STEPS[TUT.i];if(!s||!TUT.box)return;const b=TUT.box;b.replaceChildren();
+  const th=el('div','th');th.append(el('b',null,s.title),el('small',null,TUT.i?'шаг '+TUT.i+' из '+(TUT_STEPS.length-1):'обучение'));
+  const pb=el('div','pb');const u=document.createElement('u');u.style.width=(TUT.i/(TUT_STEPS.length-1)*100)+'%';pb.append(u);
+  const p=document.createElement('p');p.innerHTML=s.html();b.append(th,pb,p);
+  if(s.goal)b.append(el('div','tgo'+(TUT.ok?' ok':''),TUT.ok?'✓ Готово!':'Задача: '+s.goal));
+  const r=el('div','tr');if(!s.last)r.append(tutBtn('Пропустить обучение',()=>tutFinish(2)));
+  if(s.btn)r.append(tutBtn(s.btn,()=>s.last?tutFinish(1):tutGo(TUT.i+1),'btn primary'));
+  else if(s.fb&&now-TUT.t0>s.fb&&!TUT.ok)r.append(tutBtn('Далее',()=>tutGo(TUT.i+1),'btn primary'));
+  b.append(r);TUT.fbShown=!!(s.fb&&now-TUT.t0>s.fb)}
+function tutGo(i){if(!S)return;TUT.i=i;TUT.ok=0;TUT.t0=now;const s=TUT_STEPS[i];if(!s){tutFinish(1);return}
+  try{s.start&&s.start()}catch(e){}tutHi(s.hi?s.hi():[]);tutRender()}
+function tutStart(){if(!S||!M)return;tutStop();S.flags=S.flags||{};if(S.flags.tut!==0){S.flags.tut=0;dirty=true}
+  TUT.on=true;TUT.box=el('div');TUT.box.id='tut';TUT.box.setAttribute('role','dialog');TUT.box.setAttribute('aria-label','Обучение');tutEl('stage').append(TUT.box);
+  tutGo(0);TUT.timer=setInterval(tutTick,250)}
+function tutStop(){TUT.on=false;clearInterval(TUT.timer);TUT.timer=null;tutHi([]);if(TUT.box)TUT.box.remove();TUT.box=null;TUT.drop=null}
+function tutFinish(code){if(S){S.flags=S.flags||{};S.flags.tut=code;dirty=true;try{saveLocal()}catch(e){}}tutStop();
+  if(S)log(code===1?'Обучение пройдено. Удачи в Пустоши!':'Обучение пропущено. Вернуть его можно в «Настройках».','good')}
+function tutTick(){if(!TUT.on||!TUT.box)return;if(!S||!M){tutStop();return}
+  const s=TUT_STEPS[TUT.i];if(!s)return;
+  const ovOpen=!ov.hidden;if(ovOpen){const h=ov.querySelector('.win h2'),tb=ov.querySelector('.tabs [aria-selected="true"]');if(h&&/^Выживший/.test(h.textContent)&&tb&&/Снаряжение/.test(tb.textContent))TUT.sawInv=true}
+  TUT.box.hidden=!titleEl.hidden||ovOpen||!!document.getElementById('suiOv');
+  if(TUT.lm===M.id){const d=Math.hypot(P.x-TUT.lx,P.y-TUT.ly);if(d<3)TUT.dist+=d}TUT.lx=P.x;TUT.ly=P.y;TUT.lm=M.id;
+  try{s.tick&&s.tick()}catch(e){}
+  if(TUT.ok){if(now-TUT.ok>1100)tutGo(TUT.i+1);return}
+  if(now-TUT.t0<2500)return;// дать прочитать подсказку, даже если действие уже сделано
+  let fin=false;try{fin=!!(s.done&&s.done())}catch(e){fin=true}
+  if(fin){TUT.ok=now;tutRender();return}
+  if(s.auto&&now-TUT.t0>s.auto){s.last?tutFinish(1):tutGo(TUT.i+1);return}
+  if(s.fb&&!TUT.fbShown&&now-TUT.t0>s.fb)tutRender()}
+// кнопка «Пройти обучение заново» в «Настройках»
+{const _sv=TABVIEW.settings;TABVIEW.settings=b=>{_sv(b);const box=el('div');box.append(el('div','sec','Обучение'));const r=el('div','startrow');
+  r.append(btn('Пройти обучение заново',()=>{closeWin();tutStart()}));box.append(r,el('p','muted small','Короткие подсказки по управлению, показателям, добыче и снаряжению.'));b.append(box)}}
 
 // ================= ЗАПУСК =================
 async function boot(data){resize();requestAnimationFrame(frame);initOnline();
