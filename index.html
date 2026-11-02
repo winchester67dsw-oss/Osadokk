@@ -730,7 +730,7 @@ function killEnemy(e,a){
   if(e.type==='king')S.flags.kingDead=1;if(e.type==='queen')S.flags.queenDead=1;
   gainXp(d.xp);
   const caps=Math.round((d.caps[0]+Math.floor(Math.random()*(d.caps[1]-d.caps[0]+1)))*(1+stats().capsPct/100));if(caps){S.caps+=caps;floatText(e.x,e.y-1.3,'+'+caps+' крыш.','#f2b65c')}
-  for(const [it,ch,q] of d.loot)if(Math.random()<ch)rtFor(M.id).drops.push({x:e.x+(Math.random()-.5)*.8,y:e.y+(Math.random()-.5)*.8,item:it,q:q||1,t:now});
+  corpseOf(e);for(const [it,ch,q] of d.loot)if(Math.random()<ch)corpseAdd(e,it,q||1);
   emit(16,{x:e.x,y:e.y-.3,v:3,life:.7,size:2.4,color:d.blood,type:'blood',g:6,vz:3,z:.5});
   decal(e.x,e.y,d.boss?.9:.45,d.blood);
   if(d.boss)log(d.n+' повержен! '+(e.type==='king'?'Корона оказалась крышкой от кастрюли.':'Болото стихло.'),'good');
@@ -892,6 +892,19 @@ function openWin(title,build,{tabs,active,onTab}={}){
   if(tabs){const tb=document.createElement('div');tb.className='tabs';tb.setAttribute('role','tablist');for(const [k,label] of tabs){const b=document.createElement('button');b.innerHTML=(ICO[k]||'')+'<span></span>';b.lastChild.textContent=label;b.setAttribute('role','tab');b.setAttribute('aria-selected',k===active);b.onclick=()=>onTab(k);tb.append(b)}w.append(tb)}
   const body=document.createElement('div');body.className='body';w.append(body);build(body);ov.append(w);ov.onclick=e=>{if(e.target===ov)closeWin()}}
 function closeWin(){ov.hidden=true;ov.replaceChildren();paused=false;stopLock&&stopLock();updateHud()}
+// Трупы: добыча с убитых не разлетается по земле, а лежит в теле 5 минут — обыскать на E / ДЕЛО.
+const CORPSE_MS=300000;
+function corpseOf(e){if(e._cp&&now-e._cp.t<1500)return e._cp;const r=rtFor(M.id),k=Object.assign({},e,{corpse:true,dying:0,items:{},t:now,_cp:null});(r.corpses||(r.corpses=[])).push(k);e._cp=k;return k}
+function corpseAdd(e,it,q){if(!ITEMS[it])return;const k=corpseOf(e);k.items[it]=(k.items[it]||0)+q}
+function nearCorpse(){let best=null,bd=1.6;for(const k of rtFor(M.id).corpses||[]){if(now-k.t>=CORPSE_MS||!Object.keys(k.items).length)continue;const d=Math.hypot(k.x-P.x,k.y-P.y);if(d<bd){bd=d;best=k}}return best}
+function openCorpse(k){
+  const take=id=>{const q=k.items[id];if(!q)return;add(id,q);delete k.items[id];sfx.pickup();floatText(k.x,k.y-.6,'+'+ITEMS[id].n+(q>1?' ×'+q:''),'#f2b65c')};
+  openWin(EN[k.type].n,b=>{const ids=Object.keys(k.items);
+    if(!ids.length){b.append(el('p','muted','Пусто — всё уже забрали.'));return}
+    b.append(el('p','muted small','Возьмите нужное — остальное пусть лежит. Тело исчезнет через '+Math.max(1,Math.ceil((CORPSE_MS-(now-k.t))/60000))+' мин.'));
+    for(const id of ids){const row=el('div');row.style.cssText='display:flex;justify-content:space-between;align-items:center;gap:8px;margin:6px 0';
+      row.append(el('span',null,ITEMS[id].n+(k.items[id]>1?' ×'+k.items[id]:'')),btn('Взять',()=>{take(id);Object.keys(k.items).length?openCorpse(k):closeWin()}));b.append(row)}
+    b.append(btn('Взять всё',()=>{for(const id of Object.keys(k.items))take(id);closeWin()}))})}
 function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
 function btn(label,fn,cls='btn',dis=false){const b=el('button',cls,label);b.onclick=fn;b.disabled=dis;return b}
 function itemRow(id,right){const r=el('div','row');r.append(iconCanvas(id,42));r.style.borderLeft='3px solid '+RAR[(ITEMS[id]&&ITEMS[id].r)||0][1];const gw=el('div','grow');gw.append(el('div','t',ITEMS[id].n),el('div','s',describe(id)));r.append(gw);if(right)for(const x of right)r.append(x);return r}
@@ -1558,6 +1571,7 @@ function render(t){
   const ents=[];
   for(const n of npcsHere()){const x=(n.x+.5)*T,y=(n.y+.5)*T;if(x<CX-80||x>CX+VW+80||y<CY-80||y>CY+VH+90)continue;const near=Math.hypot(P.x-n.x-.5,P.y-n.y-.5)<3.5;const lookA=near?Math.atan2(P.y-n.y-.5,P.x-n.x-.5):n.a;
     ents.push({y:n.y+.5,f:()=>n.dog?drawDog(ctx,x,y+2,0,0):drawHuman(ctx,x,y-2,{lk:n.lk,eq:n.eq,view:viewOf(lookA),aim:n.eq.w1?lookA+.9:lookA,weapon:n.eq.w1}),lab:()=>label(ctx,x,y-32,n.n,n.dog?'#ebe1cc':'#f2b65c')})}
+  if(r.corpses){r.corpses=r.corpses.filter(k=>now-k.t<CORPSE_MS);for(const k of r.corpses){const x=k.x*T,y=k.y*T;if(x<CX-80||x>CX+VW+80||y<CY-80||y>CY+VH+90)continue;const near=Object.keys(k.items).length&&Math.hypot(k.x-P.x,k.y-P.y)<1.6;ents.push({y:k.y-.3,f:()=>drawEnemy(ctx,k,x,y-4,t),lab:near?()=>label(ctx,x,y-30,(IS_COARSE?'ДЕЛО':'E')+' — обыскать','#f2b65c'):null})}}
   for(const e of r.enemies){if(!e.alive)continue;if(typeof dsHide==='function'&&dsHide(e))continue;const x=e.x*T,y=e.y*T;if(x<CX-80||x>CX+VW+80||y<CY-80||y>CY+VH+90)continue;if(seeHid(e,e.x,e.y,0))continue;ents.push({y:e.y,f:()=>drawEnemy(ctx,e,x,y-4,t),lab:EN[e.type].boss&&!e.dying?()=>label(ctx,x,y-(e.type==='queen'?50:42),EN[e.type].n,'#ec7a62'):null})}
   if(room){for(const p of room.peers()){if(p.sameTab||p.kind!=='viewer')continue;const pr=p.presence||{};if(pr.m!==M.id||typeof pr.x!=='number'||typeof pr.y!=='number')continue;
     let pp=peerPos.get(p.peer);if(!pp){pp={x:pr.x,y:pr.y,ph:0,sh:pr.sh,ft:0};peerPos.set(p.peer,pp)}const ox=pp.x,oy=pp.y;pp.x+=(pr.x-pp.x)*.25;pp.y+=(pr.y-pp.y)*.25;const mvd=Math.hypot(pp.x-ox,pp.y-oy);pp.ph+=mvd*7;
@@ -2657,7 +2671,7 @@ function worldKill(e,a){const d=EN[e.type];if(e.dying)return;sfx.voice(e.type,e.
 function creditKill(e){const d=EN[e.type];S.stats.k[e.type]=(S.stats.k[e.type]||0)+1;if(d.fac==='crows')S.rep.crows-=2;
   if(e.type==='king')S.flags.kingDead=1;if(e.type==='queen')S.flags.queenDead=1;gainXp(d.xp);
   const caps=Math.round((d.caps[0]+Math.floor(Math.random()*(d.caps[1]-d.caps[0]+1)))*(1+stats().capsPct/100));if(caps){S.caps+=caps;floatText(e.x,e.y-1.3,'+'+caps+' крыш.','#f2b65c')}
-  const lk=1+stats().lootPct/100;for(const [it,ch,q] of d.loot)if(ITEMS[it]&&Math.random()<Math.min(1,ch*lk))rtFor(M.id).drops.push({x:e.x+(Math.random()-.5)*.8,y:e.y+(Math.random()-.5)*.8,item:it,q:q||1,t:now});
+  const lk=1+stats().lootPct/100;corpseOf(e);for(const [it,ch,q] of d.loot)if(ITEMS[it]&&Math.random()<Math.min(1,ch*lk))corpseAdd(e,it,q||1);
   for(const [qid,q] of Object.entries(S.quests))if(q.st==='active'&&QUESTS[qid]&&QUESTS[qid].goal.kill===e.type){q.prog=(q.prog||0)+1;if(q.prog===QUESTS[qid].goal.n)log('«'+QUESTS[qid].t+'»: цель выполнена. Возвращайтесь за наградой.','good')}
   if(typeof rqOnKill==='function')rqOnKill(e.type);checkAch();dirty=true}
 killEnemy=function(e,a){worldKill(e,a);creditKill(e)};
@@ -9993,7 +10007,7 @@ const TUT_STEPS=[
     html:()=>'Слева вверху — ваше состояние. <b style="color:var(--hp)">ХП</b> — здоровье; лечение — '+(coarse()?'<b>ЛЕЧ.</b>':tutK('H'))+' (тратит бинт). <b style="color:var(--food)">ЕДА</b> и <b style="color:var(--water)">ВОДА</b> понемногу убывают — на нуле начнёт уходить здоровье. <b style="color:var(--rad)">РАД</b> — радиация: срезает запас здоровья, снимается антирадином. <b style="color:var(--xp)">ОПЫТ</b> — за врагов и задания, с уровнем дают очки навыков.',
     hi:()=>[tutEl('hud')],btn:'Понятно',auto:40000},
   {title:'Добыча',goal:'Подберите тушёнку',
-    html:()=>'Рядом лежит <b>тушёнка</b> — подойдите к ней, вещи подбираются сами. Добычу оставляют враги, а ящики и тайники открываются '+(coarse()?'кнопкой <b>ДЕЛО</b>':'клавишей '+tutK('E'))+'.',
+    html:()=>'Рядом лежит <b>тушёнка</b> — подойдите к ней, вещи подбираются сами. А вот с убитых врагов добыча остаётся в телах на 5 минут — подойдите и обыщите тело; так же открываются ящики и тайники:'+(coarse()?'кнопкой <b>ДЕЛО</b>':'клавишей '+tutK('E'))+'.',
     start:()=>tutSpawnDrop(),done:()=>!!TUT.drop&&TUT.drop.t<-1e8,
     tick:()=>{const d=TUT.drop;if(!d||d.t<-1e8)return;const r=rtFor(M.id);if((TUT.dropMap!==M.id||!r.drops.includes(d))&&now-TUT.dropT>3000)tutSpawnDrop();else if(TUT.dropMap===M.id&&now-TUT.mark>1300){TUT.mark=now;floatText(d.x,d.y-.5,'▼ сюда','#f2b65c')}},fb:60000},
   {title:'Снаряжение',goal:'Откройте и закройте снаряжение',
@@ -10043,6 +10057,11 @@ async function boot(data){resize();requestAnimationFrame(frame);initOnline();
   if(data&&data.S&&data.S.v===2){if(!inClaude())await restoreSession();startGame(data.S);return}
   if(!inClaude()){titleBody.replaceChildren(el('p','muted','Загрузка…'))}
   renderTitle();if(ACC.login)cloudCheckNewer();subRating()}
+// Трупы — последним слоем поверх всех версий drawEnemy/interact: тело лежит набок, E/ДЕЛО — обыскать.
+{const _de=drawEnemy;drawEnemy=function(c,e,x,y,t){if(!e.corpse)return _de(c,e,x,y,t);
+  c.save();c.globalAlpha=.85;c.translate(x,y+10);c.rotate(1.4*(Math.cos(e.dieA||0)>=0?1:-1));c.translate(-x,-y-10);
+  try{_de(c,Object.assign({},e,{corpse:false,dying:0,flash:0}),x,y,t)}finally{c.restore()}}}
+{const _in=interact;interact=function(){if(!paused&&S){const cp=nearCorpse();if(cp){openCorpse(cp);return}}return _in()}}
 try{window.claude?.hot?.snapshot?.(()=>({S}))}catch(e){}
 const hot=window.claude?.hot;hot?.ready?hot.ready(boot):boot(hot?.data??{});
 </script>
